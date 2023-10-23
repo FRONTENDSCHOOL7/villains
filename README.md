@@ -7,4 +7,10 @@ Currently, two official plugins are available:
 - [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
 - [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
 
-이렇게 막 작업을 했어요!!
+# 브랜치 전략
+
+main : 최종 배포용 브랜치
+
+development : 테스트용 브랜치
+
+feat/ : 기능별 작업용 브랜치
