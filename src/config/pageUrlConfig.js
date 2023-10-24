@@ -1,5 +1,6 @@
 class pageUlrConfig {
   homePage = `/main`;
+  splashPage = `/`;
 
   addParams(url, params) {
     let querystring = [];
