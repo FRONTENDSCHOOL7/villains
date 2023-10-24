@@ -9,11 +9,11 @@ const queryClient = new QueryClient();
 
 const App = () => {
   return (
-    <QueryClientProvider client={queryClient}>
+    <QueryClientProvider client={queryClient} contextSharing={true}>
       <RecoilRoot>
           <RouterProvider router={routers} />
       </RecoilRoot>
-      <ReactQueryDevtools/>
+      <ReactQueryDevtools  initialIsOpen={false} />
     </QueryClientProvider>
   );
 };

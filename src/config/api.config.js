@@ -7,7 +7,9 @@ const apis = axios.create({
 });
 
 // apis.defaults.headers.common['Authorization'] = AUTH_TOKEN;
-
+const maps = axios.create({
+  baseURL: `//dapi.kakao.com/v2/maps/sdk.js?appkey=${import.meta.VITE_MAP_KEY}`,
+});
 class api {
   DefaultType = {
     headers: { 'Content-Type': 'application/json' },
@@ -56,5 +58,7 @@ class api {
   }
 }
 const client = new api();
+
+export { maps };
 
 export default client;
