@@ -1,8 +1,9 @@
 import React from 'react';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
-import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import {  RouterProvider } from 'react-router-dom';
 import { RecoilRoot } from 'recoil';
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
+import routers from './config/route.config';
 
 const queryClient = new QueryClient();
 
@@ -10,11 +11,7 @@ const App = () => {
   return (
     <QueryClientProvider client={queryClient}>
       <RecoilRoot>
-          <BrowserRouter>
-            <Routes>
-              {/* <Route path="/" element={<Main />} /> */}
-            </Routes>
-          </BrowserRouter>
+          <RouterProvider router={routers} />
       </RecoilRoot>
       <ReactQueryDevtools/>
     </QueryClientProvider>
