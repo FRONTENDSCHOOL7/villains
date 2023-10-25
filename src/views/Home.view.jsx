@@ -2,7 +2,7 @@ import React from "react";
 import PageTemplate from "../components/PageTemplate";
 import SearchBar from "../components/searchbar/searchbar";
 import useGeoLocation from "../hooks/useGeoLocation";
-import { Map } from "react-kakao-maps-sdk";
+import { Map, MapMarker } from "react-kakao-maps-sdk";
 
 const HomePage = () => {
   const {location} = useGeoLocation();
@@ -15,6 +15,7 @@ const HomePage = () => {
         style={{ width: '100%', height: '600px' }} 
         level={3}                                  
       >
+        <MapMarker position={{lat: location.latitude, lng: location.longitude}}></MapMarker>
       </Map>
     </PageTemplate>
   )
