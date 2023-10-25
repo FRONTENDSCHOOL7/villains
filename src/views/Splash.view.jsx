@@ -21,11 +21,11 @@ const SplashPage = () => {
   }, []);
 
   const moveToLogin = () => {
-    navigate(pageUrlConfig.loginPage);
+    // navigate(pageUrlConfig.loginPage);
   };
 
   const moveToSingUp = () => {
-    navigate(pageUrlConfig.SignUpPage);
+    navigate(pageUrlConfig.signUpPage);
   };
 
   return (
@@ -78,8 +78,8 @@ const SnsWrap = styled.div`
 `;
 const SnsButton = styled.button`
   color: #767676;
-  padding: 13px 0 11px 0;
-  border-radius: 44px;
+  padding: 11px 0 11px 0;
+  border-radius: 9999px;
   border-width: 1px;
   border-style: solid;
   border-color: ${(props) => props.border};
@@ -100,11 +100,9 @@ const ButtonWrap = styled.div`
   display: flex;
   gap: 12px;
   justify-content: center;
-  align-items: center;
 `;
 const BottomBtn = styled.button`
   font-size: 12px;
   color: #767676;
 `;
-
 export default SplashPage;
