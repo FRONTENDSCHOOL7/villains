@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useState, useEffect}  from "react";
 import styled from 'styled-components';
 import PageTemplate from "../components/PageTemplate";
 import SearchBar from "../components/searchbar/searchbar";
@@ -14,9 +14,12 @@ const HomePage = () => {
   
   //로컬 스토리지의 사용자를 관리자로 해놓았습니다. 이 부분 나중에 교체 필요!!
   const user = JSON.parse(localStorage.getItem('admin'));
-  const {data, isError, isLoading} = useQuery(contactQuery(user));
+  const {data, isError, isLoading, isFetching} = useQuery(contactQuery(user));
+  const [posts, setPosts] = useState([]);
 
-  const myPostList = data.data.post;
+  useEffect(()=>{
+    setPosts(data.data.post);
+  }, [!isLoading])
 
   return(
     <PageTemplate>
@@ -27,11 +30,12 @@ const HomePage = () => {
         level={3}                                  
       >
        
-      {myPostList.map((post, index) => {
-          const content = JSON.parse(post.content.split("'").join('"'));
+      {posts && posts.map((post, index) => {
+          // const content = JSON.parse(post.content.split("'").join('"'));
+          // 계정마다 쓰인 content가 달라서 위의 경우는 문제가 생깁니다.
           return (
-            <CustomOverlayMap key={index} position={{ lat:content.latitude, lng: content.longitude }}>
-              <StyledMarker>{content.content}</StyledMarker>
+            <CustomOverlayMap key={index} position={{ lat:post?.latitude ?? latitude+index+5, lng: post?.longitude ?? longitude+index+5}}>
+              <StyledMarker>{post.content}</StyledMarker>
             </CustomOverlayMap>
           )
       })}

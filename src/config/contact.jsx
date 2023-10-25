@@ -1,8 +1,7 @@
-
 const seed = async () => {
-    localStorage.clear();
+  localStorage.clear();
   const initialData = {
-    accountname: 'account_test1',
+    accountname: 'villan_1',
     token: import.meta.env.VITE_ADMIN_KEY
     };
   const contacts = await localStorage.getItem('admin')
