@@ -29,6 +29,7 @@ function Splash() {
     border-radius: 20px 20px 0 0;
   `;
   const SnsButton = styled.button`
+    color: #767676;
     padding: 13px 0 11px 0;
     border-radius: 44px;
     border-width: 1px;
@@ -51,7 +52,7 @@ function Splash() {
     display: flex;
     gap: 12px;
     justify-content: center;
-    align-item: center;
+    align-items: center;
   `;
   const BottomBtn = styled.button`
     font-size: 12px;
@@ -72,7 +73,7 @@ function Splash() {
 
   const moveToSingUp = () => {
     navigate(pageUrlConfig.SignUpPage);
-  }
+  };
 
   return (
     <div>
