@@ -11,7 +11,7 @@ const useGeoLocation = (options) => {
         setLocation({latitude, longitude})
     }
     const handleError = (error) => {
-        setError(error.message);
+        setError(error);
     }
     useEffect(()=>{
         const {geolocation} = navigator;
