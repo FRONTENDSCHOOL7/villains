@@ -8,17 +8,29 @@ const FeedPage = () => {
 
   useEffect(() => {
     // const token = localStorage.getItem('token');
-    const token =
-      'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY1MWY1ZTA2YjJjYjIwNTY2Mzc2ZTUwMCIsImV4cCI6MTcwMTczOTgyNCwiaWF0IjoxNjk2NTU1ODI0fQ.RV7081-8RzIxr119fDKy4ycpOfYXVu_I5FpdjY0pH74';
-    const headers = client.AuthType(token);
 
-    console.log(headers);
+    const headers = client.AuthType(token);
 
     const fetchPosts = async () => {
       try {
         const response = await client.get('/post', { ...headers });
+
+        const filteredData = response.data.posts.filter((item) => {
+          let parsedContent;
+          try {
+            parsedContent = JSON.parse(item.content);
+          } catch (e) {
+            // JSON 파싱에 실패한 경우
+            return false;
+          }
+          console.log(parsedContent);
+          return Boolean(parsedContent.postId); // postId가 존재하는지 확인
+        });
+
+        console.log(filteredData);
+
         setPosts(response.data);
-        console.log(response.data);
+        console.log(response.data.posts);
         setLoading(false);
       } catch (error) {
         setError(error);
