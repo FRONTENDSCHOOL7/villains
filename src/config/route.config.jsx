@@ -1,6 +1,5 @@
 import HomePage from '../views/Home.view';
 import SplashPage from '../views/Splash.view';
-import LoginPage from '../views/Login.view';
 
 /** 라우트 등록하기
  * 1. routeConfig의 children에 객체를 이용해서 path와 element 입력하기
@@ -12,7 +11,7 @@ const routeConfig = (queryClient) => {
       //이상한 경로를 입력했을 때 보여줄 기본 페이지
       path: '',
       //스플래시 페이지로 교체하기
-      element: <HomePage />,
+      element: <SplashPage />,
       children: [
         { path: `/main`, element: <HomePage /> },
         { path: `/`, element: <SplashPage /> },
