@@ -4,7 +4,7 @@ import {  RouterProvider } from 'react-router-dom';
 import { RecoilRoot } from 'recoil';
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
 import routeConfig from './config/route.config';
-import { createHashRouter } from 'react-router-dom';
+import { createBrowserRouter } from 'react-router-dom';
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -22,7 +22,7 @@ const queryClient = new QueryClient({
   }),
 });
 
-const router = createHashRouter(routeConfig(queryClient));
+const router = createBrowserRouter(routeConfig);
 
 const App = () => {
   return (
