@@ -1,20 +1,27 @@
 import styled from 'styled-components';
-import heart from '../assets/heart.svg';
-import comment from '../assets/message-circle.svg';
+import heart from '../../assets/heart.svg';
+import comment from '../../assets/message-circle.svg';
+import { useNavigate } from 'react-router-dom';
+import pageUlrConfig from '../../config/pageUrlConfig';
 
 const formatDate = (stringDate) => {
   const date = new Date(stringDate);
 
   const year = date.getFullYear();
-  const month = date.getMonth() + 1; // 월은 0부터 시작하므로 1을 더해줍니다.
+  const month = date.getMonth() + 1;
   const day = date.getDate();
 
   return `${year}년 ${month}월 ${day}일`;
 };
 
 const PostCard = ({ post }) => {
+  const navigate = useNavigate();
+
+
   return (
-    <Card>
+    <Card onClick={() => {
+      navigate(pageUlrConfig.feedDetailPage);
+    }}>
       {post.image && <CardImage src={post.image} alt="" />}
       <CardContent>
         <h2>{post.content.postId}</h2>
@@ -24,7 +31,7 @@ const PostCard = ({ post }) => {
         <Author>@ {post.author.accountname}</Author>
         <Time>{formatDate(post.author.createdAt)}</Time>
         <IconsContainer>
-          <CardBtn>
+          <CardBtn onClick={(e) => e.stopPropagation()}>
             <img src={heart} alt="" />
             <span>{post.heartCount}</span>
           </CardBtn>
@@ -42,11 +49,11 @@ export default PostCard;
 
 const Card = styled.li`
   width: 350px;
-  /* height: 250px; */
   margin-bottom: 20px;
   border-radius: 10px;
   border: 1px solid #dbdbdb;
   position: relative;
+  cursor: pointer;
 `;
 
 const CardImage = styled.img`

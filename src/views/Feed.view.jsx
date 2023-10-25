@@ -1,7 +1,8 @@
 import PageTemplate from '../components/PageTemplate';
-import ErrorPage from '../views/Error.view';
-import Feed from './Feed';
-import usePosts from './usePosts';
+import Feed from '../components/feed/Feed';
+import usePosts from '../hooks/usePosts';
+import ErrorPage from './Error.view';
+
 
 const FeedPage = () => {
   const { posts, loading, error } = usePosts();

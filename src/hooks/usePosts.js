@@ -8,8 +8,8 @@ const usePosts = () => {
 
   useEffect(() => {
     // const token = localStorage.getItem('token');
-    const token =
-      'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY1MWY1ZTA2YjJjYjIwNTY2Mzc2ZTUwMCIsImV4cCI6MTcwMTczOTgyNCwiaWF0IjoxNjk2NTU1ODI0fQ.RV7081-8RzIxr119fDKy4ycpOfYXVu_I5FpdjY0pH74';
+    const token = import.meta.env.VITE_ADMIN_KEY;
+
     const headers = client.AuthType(token);
 
     const fetchPosts = async () => {
@@ -35,7 +35,7 @@ const usePosts = () => {
         // });
         // setPosts(transformedPosts);
         console.log(response.data.posts);
-        setPosts(response.data.posts);
+        setPosts(response.data.posts); // 임시 테스트용
         setLoading(false);
       } catch (error) {
         setError(error);
