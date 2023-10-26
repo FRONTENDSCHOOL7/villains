@@ -1,7 +1,7 @@
 import client from '../config/api.config';
 
 const getUerPostList = (accountname, token) => {
-  return client.get(`/post/${accountname}/userpost`, { ...client.AuthType(token) });
+  return client.get(`/post/${accountname}/userpost`, {}, client.AuthType(token));
 };
 
 const contactQuery = (info) => ({
