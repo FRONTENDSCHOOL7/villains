@@ -20,7 +20,7 @@ const SignUpPage = () => {
   const [signInError, setSignInError] = useState('');
   const [checkIDMessage, setCheckIdMessage] = useState('');
   const [checkEmailMessage, setCheckEmailMessage] = useState('');
-
+  // 중복 방지 버튼 누른 후 다시 입력 폼을 사용자가 수정할 시 표시 내용 초기화
   useEffect(() => {
     setCheckIdMessage('');
   }, [userAccountId]);
@@ -29,7 +29,7 @@ const SignUpPage = () => {
   }, [userEmail]);
   // navigate
   const navigate = useNavigate();
-
+  // 계정 id 중복방지 함수
   const checkID = async (e) => {
     e.preventDefault();
     try {
@@ -44,10 +44,10 @@ const SignUpPage = () => {
         setCheckIdMessage(response.data.message);
       }
     } catch (error) {
-      setCheckIdMessage(error.response.data);
+      setCheckIdMessage(error.response.data.message);
     }
   };
-
+  // 이메일 중복방지 함수
   const checkEmail = async (e) => {
     e.preventDefault();
     try {
@@ -62,30 +62,31 @@ const SignUpPage = () => {
         setCheckEmailMessage(response.data.message);
       }
     } catch (error) {
-      setCheckEmailMessage(error.response.data);
+      setCheckEmailMessage(error.response.data.message);
     }
   };
-
+  // 회원가입 함수
   const signUpFunc = async (e) => {
     e.preventDefault();
     try {
       const response = await client.post('/user', {
         user: {
+          // username이랑 accountname이 필수로 들어가야하는데 저희는 회원가입 폼에 계정id 하나밖에 없어서 일단 동일하게 넣었습니다.
           username: userAccountId,
           email: userEmail,
           password: userPwd,
           accountname: userAccountId,
         },
       });
+      console.log(response);
       if (response.status === 200) {
         console.log(response.data);
-        alert("회원가입이 완료되었습니다.");
+        alert('회원가입이 완료되었습니다.');
         navigate(pageUrlConfig.signInPage);
       }
-      if (response.data.status === 422) setSignInError(response.data.message);
     } catch (error) {
       console.log(error.response.data);
-      setSignInError(error.response.data);
+      setSignInError(error.response.data.message);
     }
   };
 

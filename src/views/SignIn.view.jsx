@@ -19,7 +19,7 @@ const SignInPage = () => {
   const [signInError, setSignInError] = useState('');
   // navigate
   const navigate = useNavigate();
-
+  // 로그인 함수
   const signInFunc = async (e) => {
     e.preventDefault();
     try {
@@ -29,16 +29,18 @@ const SignInPage = () => {
           password: userPwd,
         },
       });
-      if (response.status === 200) {
+      console.log(response);
+      // 성공시 localstorage 저장 후 /main 이동
+      if (response.data.status === 200) {
         console.log(response.data);
         localStorage.setItem('accountname', response.data.user.accountname);
         localStorage.setItem('token', response.data.user.token);
         navigate(pageUrlConfig.homePage);
       }
+      // 실패시 실패 메시지 띄워주기
       if (response.data.status === 422) setSignInError(response.data.message);
     } catch (error) {
-      console.log(error.response.data);
-      setSignInError(error.response.data);
+      console.log(error);
     }
   };
 
