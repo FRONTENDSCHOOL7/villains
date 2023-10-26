@@ -18,19 +18,20 @@ const HomePage = () => {
   const [posts, setPosts] = useState([]);
 
   useEffect(()=>{
-    setPosts(data.data.post);
+    setPosts(data?.data.post);
   }, [!isLoading])
 
   return(
     <PageTemplate>
       <SearchBar placeholder={"지하철역을 검색해주세요!"}/>
+      {posts && 
       <Map 
         center={{ lat: latitude, lng: longitude }}   
         style={{ width: '100%', height: '600px' }} 
         level={3}                                  
       >
        
-      {posts && posts.map((post, index) => {
+      {posts.map((post, index) => {
           // const content = JSON.parse(post.content.split("'").join('"'));
           // 계정마다 쓰인 content가 달라서 위의 경우는 문제가 생깁니다.
           return (
@@ -41,6 +42,7 @@ const HomePage = () => {
       })}
       <MapMarker position={{lat: latitude, lng: longitude}}></MapMarker>
       </Map>
+      }
     </PageTemplate>
   )
 }

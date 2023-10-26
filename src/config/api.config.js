@@ -11,50 +11,53 @@ const maps = axios.create({
   baseURL: `//dapi.kakao.com/v2/maps/sdk.js?appkey=${import.meta.VITE_MAP_KEY}`,
 });
 class api {
+  params(data, headers = this.DefaultType) {
+    console.log(headers);
+    return {
+      headers: headers,
+      ...data,
+    };
+  }
+
   DefaultType = {
-    headers: { 'Content-Type': 'application/json' },
+    'Content-Type': 'application/json',
   };
 
   FormType = {
-    headers: { 'Content-type': 'multipart/form-data' },
+    'Content-type': 'multipart/form-data',
   };
 
   AuthType(token) {
     return {
-      headers: {
-        ...this.DefaultType.headers,
-        Authorization: `Bearer ${token}`,
-      },
+      Authorization: `Bearer ${token}`,
+    };
+  }
+
+  BothType(token) {
+    return {
+      ...this.DefaultType,
+      ...this.AuthType(token),
     };
   }
 
   /**
    * @param url : 서버 api url
-   * @param {params, headers}: 전달할 데이터, 헤더 정보
+   * @param {data, headers}: 전달할 데이터, 헤더 정보
    **/
-  async get(url, { params = {}, headers = this.DefaultType }) {
-    return await apis.get(`${url}`, { params, headers });
+  async get(url, data, headers) {
+    return await apis.get(`${url}`, this.params(data, headers));
   }
-  /**
-   * @param url : 서버 api url
-   * @param {params, headers}: 전달할 데이터, 헤더 정보
-   **/
-  async post(url, { params = {}, headers = this.DefaultType }) {
-    return await apis.post(`${url}`, { params, headers });
+
+  async post(url, data, headers) {
+    return await apis.post(`${url}`, this.params(data, headers));
   }
-  /**
-   * @param url : 서버 api url
-   *  @param {params, headers}: 전달할 데이터, 헤더 정보
-   **/
-  async put(url, { params = {}, headers = this.DefaultType }) {
-    return await apis.put(`${url}`, { params, headers });
+
+  async put(url, data, headers) {
+    return await apis.put(`${url}`, this.params(data, headers));
   }
-  /**
-   * @param url : 서버 api url
-   *  @param {params, headers}: 전달할 데이터, 헤더 정보
-   **/
-  async delete(url, { params = {}, headers = this.DefaultType }) {
-    return await apis.delete(`${url}`, { params, headers });
+
+  async delete(url, data, headers) {
+    return await apis.delete(`${url}`, this.params(data, headers));
   }
 }
 const client = new api();
