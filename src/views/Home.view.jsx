@@ -1,13 +1,19 @@
 import React, {useState, useEffect}  from "react";
 import styled from 'styled-components';
 import PageTemplate from "../components/PageTemplate";
-import SearchBar from "../components/searchbar/searchbar";
 import useGeoLocation from "../hooks/useGeoLocation";
 import { Map, MapMarker, CustomOverlayMap  } from "react-kakao-maps-sdk";
 import { useQuery } from '@tanstack/react-query'
 import contactQuery from "../api/getUserPost";
+import { useRecoilValue } from "recoil";
+import queryAtom from "../store/queryAtom";
+import ListBox from "../components/searchbar/ListBox";
 
 const HomePage = () => {
+  //전역에 저장한 검색어 꺼내오기
+  const query = useRecoilValue(queryAtom);
+  const list = [];
+
   const { location } = useGeoLocation();
   //사용자 위치 정보를 찾을 수 없을 때의 기본값이 필요합니다.
   const { latitude, longitude } = location ?? {latitude:33, longitude: 130};
@@ -18,30 +24,31 @@ const HomePage = () => {
   const [posts, setPosts] = useState([]);
 
   useEffect(()=>{
-    setPosts(data?.data.post);
+    setPosts(data?.data.post ?? []);
   }, [!isLoading])
 
   return(
     <PageTemplate>
-      <SearchBar placeholder={"지하철역을 검색해주세요!"}/>
-      {posts && 
-      <Map 
-        center={{ lat: latitude, lng: longitude }}   
-        style={{ width: '100%', height: '600px' }} 
-        level={3}                                  
-      >
-       
-      {posts.map((post, index) => {
-          // const content = JSON.parse(post.content.split("'").join('"'));
-          // 계정마다 쓰인 content가 달라서 위의 경우는 문제가 생깁니다.
-          return (
-            <CustomOverlayMap key={index} position={{ lat:post?.latitude ?? latitude+index+5, lng: post?.longitude ?? longitude+index+5}}>
-              <StyledMarker>{post.content}</StyledMarker>
-            </CustomOverlayMap>
-          )
-      })}
-      <MapMarker position={{lat: latitude, lng: longitude}}></MapMarker>
-      </Map>
+        {query === "" ? (
+          <Map 
+            center={{ lat: latitude, lng: longitude }}   
+            style={{ width: '100%', height: '600px' }} 
+            level={3}                                  
+          >
+          {posts.map((post, index) => {
+              // const content = JSON.parse(post.content.split("'").join('"'));
+              // 계정마다 쓰인 content가 달라서 위의 경우는 문제가 생깁니다.
+              return (
+                <CustomOverlayMap key={index} position={{ lat:post?.latitude ?? latitude+index+5, lng: post?.longitude ?? longitude+index+5}}>
+                  <StyledMarker>{post.content}</StyledMarker>
+                </CustomOverlayMap>
+              )
+          })}
+          <MapMarker position={{lat: latitude, lng: longitude}}></MapMarker>
+          </Map>
+        )
+        :
+        <ListBox list={list} /> 
       }
     </PageTemplate>
   )

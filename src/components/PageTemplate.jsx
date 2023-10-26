@@ -1,6 +1,7 @@
 import styled from "styled-components";
+import Header from "./layout/Header";
 
-const PageTemplate = styled.main`
+const Wrap = styled.main`
     max-width: 360px;
     height: 100vh;
     margin: 0 auto;
@@ -8,5 +9,14 @@ const PageTemplate = styled.main`
     border-left: 1px solid #ccc;
     border-right: 1px solid #ccc;
 `;
+
+const PageTemplate = ({children}) => {
+    return (
+        <Wrap>
+            <Header/>
+            {children}
+        </Wrap>
+    )
+}
 
 export default PageTemplate;
