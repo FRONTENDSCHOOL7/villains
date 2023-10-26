@@ -21,7 +21,7 @@ const SplashPage = () => {
   }, []);
 
   const moveToLogin = () => {
-    // navigate(pageUrlConfig.loginPage);
+    navigate(pageUrlConfig.signInPage);
   };
 
   const moveToSingUp = () => {
