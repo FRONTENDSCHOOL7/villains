@@ -3,6 +3,7 @@ import styled from 'styled-components';
 import write from '../../assets/write.svg';
 import { useNavigate } from 'react-router-dom';
 import pageUlrConfig from '../../config/pageUrlConfig';
+import FloatingButton from '../FloatingButton.style';
 
 const Feed = ({ posts }) => {
   const navigate = useNavigate();
@@ -37,16 +38,4 @@ const Header = styled.header`
 const PostList = styled.ul`
   width: 100%;
   padding: 20px 20px 0 20px;
-`;
-
-const FloatingButton = styled.button`
-  width: 50px;
-  height: 50px;
-  border-radius: 50%;
-  background: #3c58c1 url(${(props) => props.img}) no-repeat center;
-  filter: drop-shadow(2px 2px 4px rgba(0, 0, 0, 0.25));
-
-  position: fixed;
-  bottom: 66px;
-  right: calc(50% - 195px + 16px);
 `;

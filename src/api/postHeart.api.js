@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import client from '../config/api.config';
 
-const useHeartPost = () => {
+const postHeart = () => {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
 
@@ -30,4 +30,4 @@ const useHeartPost = () => {
   return { toggleHeartStatus, loading, error };
 };
 
-export default useHeartPost;
+export default postHeart;

@@ -4,7 +4,7 @@ import heartFilled from '../../assets/heart-filled.svg';
 import comment from '../../assets/message-circle.svg';
 import { useNavigate } from 'react-router-dom';
 import pageUlrConfig from '../../config/pageUrlConfig';
-import useHeartPost from '../../hooks/useHeartPost';
+import postHeart from '../../api/postHeart.api';
 import { useState } from 'react';
 
 const formatDate = (stringDate) => {
@@ -19,7 +19,7 @@ const formatDate = (stringDate) => {
 
 const PostCard = ({ post }) => {
   const navigate = useNavigate();
-  const { toggleHeartStatus, loading, error } = useHeartPost();
+  const { toggleHeartStatus, loading, error } = postHeart();
   const [isHearted, setIsHearted] = useState(false);
   const [heartCount, setHeartCount] = useState(post.heartCount);
 
