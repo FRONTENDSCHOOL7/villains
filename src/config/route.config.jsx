@@ -14,10 +14,10 @@ import GoodsWritePage from '../views/GoodsWrite.view';
  *  **/
 const routeConfig = [
   { path: `/`, element: <SplashPage /> },
-  { path: `/main`, element: <HomePage />},
+  { path: `/main`, element: <HomePage /> },
   { path: `/main/:stationId`, element: <ResultPage /> },
-  { path: `/signIn`, element: <SignInPage />},
-  { path: `/signUp`, element: <SignUpPage />},
+  { path: `/signIn`, element: <SignInPage /> },
+  { path: `/signUp`, element: <SignUpPage /> },
   { path: `/feed`, element: <FeedPage /> },
   { path: `/feed/write`, element: <FeedWritePage /> },
   { path: `/feed/:postId`, element: <FeedDetailPage /> },
