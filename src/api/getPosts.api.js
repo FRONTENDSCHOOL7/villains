@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import client from '../config/api.config';
 
-const usePosts = () => {
+const getPosts = () => {
   const [posts, setPosts] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
@@ -10,11 +10,11 @@ const usePosts = () => {
     // const token = localStorage.getItem('token');
     const token = import.meta.env.VITE_ADMIN_KEY;
 
-    const headers = client.AuthType(token);
+    const headers = client.BothType(token);
 
     const fetchPosts = async () => {
       try {
-        const response = await client.get('/post', { ...headers });
+        const response = await client.get('/post', {},{ ...headers });
 
         // const filteredData = response.data.posts.filter((item) => {
         //   let parsedContent;
@@ -49,4 +49,4 @@ const usePosts = () => {
   return { posts, loading, error };
 };
 
-export default usePosts;
+export default getPosts;

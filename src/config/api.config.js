@@ -49,7 +49,7 @@ class api {
   }
 
   async post(url, data, headers) {
-    return await apis.post(`${url}`, this.params(data, headers));
+    return await apis.post(`${url}`, data, { headers: headers });
   }
 
   async put(url, data, headers) {

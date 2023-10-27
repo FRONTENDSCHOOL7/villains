@@ -1,8 +1,11 @@
 import styled from 'styled-components';
 import heart from '../../assets/heart.svg';
+import heartFilled from '../../assets/heart-filled.svg';
 import comment from '../../assets/message-circle.svg';
 import { useNavigate } from 'react-router-dom';
 import pageUlrConfig from '../../config/pageUrlConfig';
+import useHeartPost from '../../hooks/useHeartPost';
+import { useState } from 'react';
 
 const formatDate = (stringDate) => {
   const date = new Date(stringDate);
@@ -16,12 +19,27 @@ const formatDate = (stringDate) => {
 
 const PostCard = ({ post }) => {
   const navigate = useNavigate();
+  const { toggleHeartStatus, loading, error } = useHeartPost();
+  const [isHearted, setIsHearted] = useState(false);
+  const [heartCount, setHeartCount] = useState(post.heartCount);
+
+  const handleHeartClick = async (event) => {
+    event.stopPropagation();
+    const action = isHearted ? 'unheart' : 'heart';
+    const isSuccess = await toggleHeartStatus(post._id, action);
+    if (isSuccess) {
+      setIsHearted(!isHearted);
+      setHeartCount((prevCount) => (isHearted ? prevCount - 1 : prevCount + 1));
+    }
+  };
 
 
   return (
-    <Card onClick={() => {
-      navigate(pageUlrConfig.feedDetailPage);
-    }}>
+    <Card
+      onClick={() => {
+        navigate(pageUlrConfig.feedDetailPage);
+      }}
+    >
       {post.image && <CardImage src={post.image} alt="" />}
       <CardContent>
         <h2>{post.content.postId}</h2>
@@ -31,9 +49,9 @@ const PostCard = ({ post }) => {
         <Author>@ {post.author.accountname}</Author>
         <Time>{formatDate(post.author.createdAt)}</Time>
         <IconsContainer>
-          <CardBtn onClick={(e) => e.stopPropagation()}>
-            <img src={heart} alt="" />
-            <span>{post.heartCount}</span>
+          <CardBtn onClick={handleHeartClick} disabled={loading}>
+            <img src={isHearted ? heartFilled : heart} alt="" />
+            <span>{heartCount}</span>
           </CardBtn>
           <CardBtn>
             <img src={comment} alt="" />
