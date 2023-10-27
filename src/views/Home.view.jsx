@@ -14,6 +14,11 @@ const HomePage = () => {
   const query = useRecoilValue(queryAtom);
   const list = [];
 
+  useEffect(()=>{
+    // const {data, isError, isLoading, isFetching} = useQuery()
+    list.push(Math.random())
+  }, [query]);
+
   const { location } = useGeoLocation();
   //사용자 위치 정보를 찾을 수 없을 때의 기본값이 필요합니다.
   const { latitude, longitude } = location ?? {latitude:33, longitude: 130};
@@ -24,12 +29,14 @@ const HomePage = () => {
   const [posts, setPosts] = useState([]);
 
   useEffect(()=>{
-    setPosts(data?.data.post ?? []);
-  }, [!isLoading])
+    if(data)    setPosts(data.data.post);
+  }, [!isLoading && data]);
 
   return(
     <PageTemplate>
-        {query === "" ? (
+        {query ?
+        <ListBox list={list} />
+        : (
           <Map 
             center={{ lat: latitude, lng: longitude }}   
             style={{ width: '100%', height: '600px' }} 
@@ -39,7 +46,7 @@ const HomePage = () => {
               // const content = JSON.parse(post.content.split("'").join('"'));
               // 계정마다 쓰인 content가 달라서 위의 경우는 문제가 생깁니다.
               return (
-                <CustomOverlayMap key={index} position={{ lat:post?.latitude ?? latitude+index+5, lng: post?.longitude ?? longitude+index+5}}>
+                <CustomOverlayMap key={post.id} position={{ lat:post?.latitude ?? latitude+index+5, lng: post?.longitude ?? longitude+index+5}}>
                   <StyledMarker>{post.content}</StyledMarker>
                 </CustomOverlayMap>
               )
@@ -47,8 +54,7 @@ const HomePage = () => {
           <MapMarker position={{lat: latitude, lng: longitude}}></MapMarker>
           </Map>
         )
-        :
-        <ListBox list={list} /> 
+        
       }
     </PageTemplate>
   )
