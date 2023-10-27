@@ -6,13 +6,8 @@ const apis = axios.create({
   baseURL: BASE_URL,
 });
 
-// apis.defaults.headers.common['Authorization'] = AUTH_TOKEN;
-const maps = axios.create({
-  baseURL: `//dapi.kakao.com/v2/maps/sdk.js?appkey=${import.meta.VITE_MAP_KEY}`,
-});
 class api {
   params(data, headers = this.DefaultType) {
-    console.log(headers);
     return {
       headers: headers,
       ...data,
@@ -49,11 +44,11 @@ class api {
   }
 
   async post(url, data, headers) {
-    return await apis.post(`${url}`, this.params(data, headers));
+    return await apis.post(`${url}`, data, { headers: headers });
   }
 
   async put(url, data, headers) {
-    return await apis.put(`${url}`, this.params(data, headers));
+    return await apis.put(`${url}`, data, { headers: headers });
   }
 
   async delete(url, data, headers) {
@@ -61,7 +56,5 @@ class api {
   }
 }
 const client = new api();
-
-export { maps };
 
 export default client;
