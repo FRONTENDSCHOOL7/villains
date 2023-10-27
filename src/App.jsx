@@ -2,6 +2,7 @@ import React from 'react';
 import routeConfig from './config/route.config';
 import { createHashRouter, createBrowserRouter, useRoutes } from 'react-router-dom';
 import { QueryClient, QueryCache, QueryClientProvider } from '@tanstack/react-query';
+import { RouterProvider } from 'react-router-dom';
 import { RecoilRoot } from 'recoil';
 import { RouterProvider } from 'react-router-dom';
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
