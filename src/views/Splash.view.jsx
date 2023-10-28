@@ -9,7 +9,7 @@ import Email from '../assets/img/email.svg';
 import styled from 'styled-components';
 import pageUrlConfig from '../config/pageUrlConfig';
 import PageTemplate from '../components/PageTemplate';
-import { SnsBtn } from '../components/Buttons';
+import { IconBtn } from '../components/Buttons';
 
 const SplashPage = () => {
   const navigate = useNavigate();
@@ -36,46 +36,18 @@ const SplashPage = () => {
       ) : (
         <SplashField logo={Logo2} color={'#3c58c1'}>
           <SnsWrap>
-            <SnsBtn
-              border={'#3C58C1'}
-              img={Email}
-              color={'#767676'}
-              onClick={moveToLogin}
-              text={'이메일로 로그인'}
-              disabled={false}
-            >
+            <IconBtn img={Email} onClick={moveToLogin} text={'이메일로 로그인'} disabled={false}>
               이메일로 로그인
-            </SnsBtn>
-            <SnsBtn
-              border={'#767676'}
-              img={Kakao}
-              color={'#767676'}
-              disabled={true}
-              cursor={'default'}
-              text={'카카오톡 계정으로 로그인'}
-            >
+            </IconBtn>
+            <IconBtn img={Kakao} disabled={true} text={'카카오톡 계정으로 로그인'}>
               카카오톡 계정으로 로그인
-            </SnsBtn>
-            <SnsBtn
-              border={'#767676'}
-              img={Google}
-              color={'#767676'}
-              disabled={true}
-              cursor={'default'}
-              text={'구글 계정으로 로그인'}
-            >
+            </IconBtn>
+            <IconBtn img={Google} disabled={true} text={'구글 계정으로 로그인'}>
               구글 계정으로 로그인
-            </SnsBtn>
-            <SnsBtn
-              border={'#767676'}
-              img={Facebook}
-              color={'#767676'}
-              disabled={true}
-              cursor={'default'}
-              text={'페이스북 계정으로 로그인'}
-            >
+            </IconBtn>
+            <IconBtn img={Facebook} disabled={true} text={'페이스북 계정으로 로그인'}>
               페이스북 계정으로 로그인
-            </SnsBtn>
+            </IconBtn>
             <ButtonWrap>
               <BottomBtn>아이디/비밀번호 찾기</BottomBtn>
               <Line>|</Line>

@@ -5,7 +5,7 @@ import pageUrlConfig from '../config/pageUrlConfig';
 import client from '../config/api.config';
 import { useForm } from 'react-hook-form';
 import PageTemplate from '../components/PageTemplate';
-import { CommonBtn, SmallBtn } from '../components/Buttons';
+import { BlueLongBtn, BlueSmallBtn } from '../components/Buttons';
 
 const SignUpPage = () => {
   // react-hook-form
@@ -93,7 +93,7 @@ const SignUpPage = () => {
   };
 
   return (
-    <Main>
+    <PageTemplate>
       <Title>회원가입</Title>
       <FormField
         onSubmit={handleSubmit(async (data) => {
@@ -119,17 +119,9 @@ const SignUpPage = () => {
               })}
             />
             {userAccountId ? (
-              <SmallBtn onClick={checkID} background={'#3C58C1'} color={'white'} text={'중복확인'}></SmallBtn>
+              <BlueSmallBtn onClick={checkID} text={'중복확인'}></BlueSmallBtn>
             ) : (
-              <SmallBtn
-                onClick={checkID}
-                disabled={true}
-                background={'#B1BCE6'}
-                color={'white'}
-                border={'white'}
-                cursor={'default'}
-                text={'중복확인'}
-              ></SmallBtn>
+              <BlueSmallBtn onClick={checkID} disabled={true} text={'중복확인'}></BlueSmallBtn>
             )}
           </InputWrap>
           {errors.accountId ? (
@@ -154,22 +146,9 @@ const SignUpPage = () => {
               })}
             />
             {userEmail ? (
-              <SmallBtn
-                onClick={checkEmail}
-                background={'#3C58C1'}
-                color={'white'}
-                text={'중복확인'}
-              ></SmallBtn>
+              <BlueSmallBtn onClick={checkEmail} text={'중복확인'}></BlueSmallBtn>
             ) : (
-              <SmallBtn
-                onClick={checkEmail}
-                disabled={true}
-                background={'#B1BCE6'}
-                color={'white'}
-                border={'white'}
-                cursor={'default'}
-                text={'중복확인'}
-              ></SmallBtn>
+              <BlueSmallBtn onClick={checkEmail} disabled={true} text={'중복확인'}></BlueSmallBtn>
             )}
           </InputWrap>
           {errors.email ? (
@@ -232,28 +211,13 @@ const SignUpPage = () => {
           userAccountId === '' ||
           userEmail === '' ||
           userPwd === '' ? (
-            <CommonBtn
-              onClick={signUpFunc}
-              type="submit"
-              background={'#B1BCE6'}
-              disabled={true}
-              color={'white'}
-              border={'white'}
-              cursor={'default'}
-              text={'시작하기'}
-            ></CommonBtn>
+            <BlueLongBtn onClick={signUpFunc} disabled={true} text={'시작하기'}></BlueLongBtn>
           ) : (
-            <CommonBtn
-              onClick={signUpFunc}
-              type="submit"
-              background={'#3C58C1'}
-              color={'white'}
-              text={'시작하기'}
-            ></CommonBtn>
+            <BlueLongBtn onClick={signUpFunc} text={'시작하기'}></BlueLongBtn>
           )}
         </FormFieldBottom>
       </FormField>
-    </Main>
+    </PageTemplate>
   );
 };
 

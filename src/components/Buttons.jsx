@@ -2,104 +2,97 @@ import React from 'react';
 import styled from 'styled-components';
 import Email from '../assets/img/email.svg';
 
-const CommonBtn = ({ background, color, cursor, border, text, onClick, disabled }) => {
+const BlueLongBtn = ({ text, onClick, disabled }) => {
   return (
     <>
       {disabled ? (
-        <Button
-          onClick={onClick}
-          background={background}
-          color={color}
-          cursor={cursor}
-          border={border}
-          disabled
-        >
+        <BlueLongButton onClick={onClick} disabled>
           {text}
-        </Button>
+        </BlueLongButton>
       ) : (
-        <Button onClick={onClick} background={background} color={color} cursor={cursor} border={border}>
+        <BlueLongButton onClick={onClick}>{text}</BlueLongButton>
+      )}
+    </>
+  );
+};
+const WhiteLongBtn = ({ text, onClick, disabled }) => {
+  return (
+    <>
+      {disabled ? (
+        <WhiteLongButton onClick={onClick} disabled>
           {text}
-        </Button>
+        </WhiteLongButton>
+      ) : (
+        <WhiteLongButton onClick={onClick}>{text}</WhiteLongButton>
       )}
     </>
   );
 };
 
-const SnsBtn = ({ background, color, cursor, border, img, text, onClick, disabled }) => {
+const IconBtn = ({ img, text, onClick, disabled }) => {
   return (
     <>
       {disabled ? (
-        <SnsButton
-          onClick={onClick}
-          background={background}
-          color={color}
-          cursor={cursor}
-          border={border}
-          img={img}
-          disabled
-        >
+        <IconButton onClick={onClick} img={img} disabled>
           {text}
-        </SnsButton>
+        </IconButton>
       ) : (
-        <SnsButton
-          onClick={onClick}
-          background={background}
-          color={color}
-          cursor={cursor}
-          border={border}
-          img={img}
-        >
+        <IconButton onClick={onClick} img={img}>
           {text}
-        </SnsButton>
+        </IconButton>
       )}
     </>
   );
 };
 
-const SmallBtn = ({ background, color, cursor, border, text, onClick, disabled }) => {
+const BlueSmallBtn = ({ text, onClick, disabled }) => {
   return (
     <>
       {disabled ? (
-        <SmallButton
-          onClick={onClick}
-          background={background}
-          color={color}
-          cursor={cursor}
-          border={border}
-          disabled
-        >
+        <SmallButton onClick={onClick} disabled>
           {text}
         </SmallButton>
       ) : (
-        <SmallButton onClick={onClick} background={background} color={color} cursor={cursor} border={border}>
-          {text}
-        </SmallButton>
+        <SmallButton onClick={onClick}>{text}</SmallButton>
       )}
     </>
   );
 };
 
-const Button = styled.button`
+const BlueLongButton = styled.button`
   padding: 13px 0 13px 0;
-  background-color: ${(props) => props.background};
+  background-color: #3c58c1;
   font-size: 14px;
-  color: ${(props) => props.color};
+  color: white;
   border-radius: 9999px;
   border: 1px solid #3c58c1;
-  border-color: ${(props) => props.border};
-  cursor: ${(props) => props.cursor};
+  &:disabled {
+    border-color: white;
+    background-color: #b1bce6;
+    cursor: default;
+  }
 `;
 
-const SnsButton = styled(Button)`
+const WhiteLongButton = styled(BlueLongButton)`
+  background-color: white;
+  color: #3c58c1;
+`;
+
+const IconButton = styled(BlueLongBtn)`
+  color: #767676;
   background-image: url(${(props) => props.img});
   background-repeat: no-repeat;
   background-position: ${(props) => (props.img === Email ? '17.5px 51%' : '14px 51%')};
+  &:disabled {
+    border-color: #767676;
+    cursor: default;
+  }
 `;
 
-const SmallButton = styled(Button)`
+const SmallButton = styled(BlueLongButton)`
   padding: 8px 20px 8px 20px;
   border-radius: 32px;
   flex-grow: 1;
 `;
 
-export { CommonBtn, SnsBtn, SmallBtn };
+export { BlueLongBtn, WhiteLongBtn, IconBtn, BlueSmallBtn };
