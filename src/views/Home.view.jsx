@@ -4,21 +4,30 @@ import PageTemplate from "../components/PageTemplate";
 import useGeoLocation from "../hooks/useGeoLocation";
 import { Map, MapMarker, CustomOverlayMap  } from "react-kakao-maps-sdk";
 import { useQuery } from '@tanstack/react-query'
-import contactQuery from "../api/getUserPost";
-import { useRecoilValue } from "recoil";
-import queryAtom from "../store/queryAtom";
+import contactQuery from "../api/getUserPost.api";
+import { useRecoilState, useRecoilValue } from "recoil";
+import queryAtom from "../atoms/queryAtom";
 import ListBox from "../components/searchbar/ListBox";
+import subOneAtom from "../atoms/subOneAtom";
+import getSubOneInfo from "../api/getSubOneInfo";
 
 const HomePage = () => {
+  const [subOneInfo, setSubOneInfo] = useRecoilState(subOneAtom);
+
   //전역에 저장한 검색어 꺼내오기
   const query = useRecoilValue(queryAtom);
-  const list = [];
-
+  
   useEffect(()=>{
-    // const {data, isError, isLoading, isFetching} = useQuery()
-    list.push(Math.random())
-  }, [query]);
-
+    //도시철도 1호선 지하철역 정보 불러오기
+    getSubOneInfo().then((response)=>{
+      return response;
+    }).then((data)=>{
+      setSubOneInfo(data);
+    });
+  }, []);
+  const list = useRecoilValue(subOneAtom);
+  console.log(list.data);
+  
   const { location } = useGeoLocation();
   //사용자 위치 정보를 찾을 수 없을 때의 기본값이 필요합니다.
   const { latitude, longitude } = location ?? {latitude:33, longitude: 130};
@@ -35,7 +44,7 @@ const HomePage = () => {
   return(
     <PageTemplate>
         {query ?
-        <ListBox list={list} />
+        <ListBox list={list.data} />
         : (
           <Map 
             center={{ lat: latitude, lng: longitude }}   

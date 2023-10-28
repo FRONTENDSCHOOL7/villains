@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import SearchBar from "../searchbar/searchbar";
 import { useLocation } from "react-router";
-import queryAtom from "../../store/queryAtom";
+import queryAtom from "../../atoms/queryAtom";
 import { useRecoilState } from "recoil";
 import pageUrlConfig from "../../config/pageUrlConfig";
 
