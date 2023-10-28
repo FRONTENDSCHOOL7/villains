@@ -10,11 +10,16 @@ const Wrap = styled.main`
     border-right: 1px solid #ccc;
 `;
 
+const Main = styled.main`
+    width: 100%;
+    height: 100%;
+`;
+
 const PageTemplate = ({children}) => {
     return (
         <Wrap>
             <Header/>
-            {children}
+            <Main children={children} />
         </Wrap>
     )
 }
