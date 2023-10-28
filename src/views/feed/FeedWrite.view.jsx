@@ -1,8 +1,8 @@
-import PageTemplate from '../components/PageTemplate';
+import PageTemplate from '../../components/PageTemplate';
 import styled from 'styled-components';
 import { useRef, useState } from 'react';
 import imageBigIcon from '../assets/image-big-icon.svg';
-import FloatingButton from '../components/FloatingButton.style';
+import FloatingButton from '../../components/FloatingButton.style';
 import imageIcon from '../assets/image-icon.svg';
 
 const FeedWritePage = () => {
