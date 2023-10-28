@@ -10,6 +10,7 @@ const GlobalStyles = createGlobalStyle`
     }
     *{
         box-sizing: border-box;
+        font-family: 'SUIT' !important;
     }
     input, textarea { 
       -moz-user-select: auto;
