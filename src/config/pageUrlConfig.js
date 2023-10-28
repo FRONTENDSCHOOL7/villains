@@ -1,7 +1,8 @@
 class pageUlrConfig {
   homePage = `/main`;
   splashPage = `/`;
-  loginPage = '/signIn';
+  signInPage = '/signIn';
+  signUpPage = '/signUp'
 
   addParams(url, params) {
     let querystring = [];
