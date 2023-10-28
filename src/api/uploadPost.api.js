@@ -1,6 +1,6 @@
 import client from '../config/api.config';
 
-const uploadPost = async (content, imageUrls, location) => {
+const uploadPost = async (content, urls, location) => {
   const postData = {
     post: {
       content: JSON.stringify({
@@ -11,8 +11,7 @@ const uploadPost = async (content, imageUrls, location) => {
           longitude: location ? location.longitude : 130,
         },
       }),
-      // 이미지 URL들을 ','로 구분하여 문자열로 변환
-      image: imageUrls,
+      image: urls,
     },
   };
 

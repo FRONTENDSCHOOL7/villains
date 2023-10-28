@@ -1,19 +1,20 @@
 import PageTemplate from '../components/PageTemplate';
 import styled from 'styled-components';
 import { useRef, useState } from 'react';
-import imageBigIcon from '../assets/image-big-icon.svg';
 import FloatingButton from '../components/FloatingButton.style';
 import imageIcon from '../assets/image-icon.svg';
 import useGeoLocation from '../hooks/useGeoLocation';
 import uploadPost from '../api/uploadPost.api';
 import postImages from '../api/postImages.api';
+import ImagePreview from '../components/feed/ImagePreview';
 
 const FeedWritePage = () => {
   const textarea = useRef();
   const fileInputRef = useRef();
 
   const [content, setContent] = useState('');
-  const [imageUrls, setImageUrls] = useState([]);
+  const [imageUrls, setImageUrls] = useState([]); // 이미지 프리뷰
+  const [imageFiles, setImageFiles] = useState([]); // 이미지 원본
   const { location } = useGeoLocation();
 
   const handleContentChange = (event) => {
@@ -21,11 +22,27 @@ const FeedWritePage = () => {
     handleResizeHeight();
   };
 
-  const handleImageChange = async (event) => {
-    // FileList를 배열로 변환
+  const handleImageChange = (event) => {
     const files = Array.from(event.target.files);
-    const urls = await postImages(files);
-    setImageUrls(urls);
+
+    if (imageUrls.length + files.length > 3) {
+      alert('최대 3개의 이미지만 업로드할 수 있습니다.');
+      return;
+    }
+
+    // 이미지 미리보기를 위해 FileReader API로 파일 읽기
+    const fileReaders = files.map((file) => {
+      return new Promise((resolve) => {
+        const reader = new FileReader();
+        reader.onloadend = () => resolve(reader.result);
+        reader.readAsDataURL(file);
+      });
+    });
+
+    Promise.all(fileReaders).then((urls) => {
+      setImageUrls((prevUrls) => [...prevUrls, ...urls]);
+      setImageFiles((prevFiles) => [...prevFiles, ...files]);
+    });
   };
 
   const handleResizeHeight = () => {
@@ -37,8 +54,9 @@ const FeedWritePage = () => {
     fileInputRef.current.click();
   };
 
-  const handleSubmitPost = async () => {
-    const result = await uploadPost(content, imageUrls, location);
+  const handleSubmitPost = async (event) => {
+    const urls = await postImages(imageFiles);
+    const result = await uploadPost(content, urls, location);
 
     if (result) {
       // uploadPost의 리턴값이 true일 때, 해당 게시글의 상세 페이지로 이동하는 로직 추가
@@ -54,13 +72,7 @@ const FeedWritePage = () => {
       </Header>
       <FeedWriteForm>
         <form>
-          <ImagePreview bg={imageBigIcon}>
-            <PreviewSpan>
-              오른쪽 하단 버튼을 눌러
-              <br />
-              이미지를 추가해보세요.
-            </PreviewSpan>
-          </ImagePreview>
+          <ImagePreview imageUrls={imageUrls} />
           <Textarea
             ref={textarea}
             rows="1"
@@ -125,25 +137,6 @@ const InsertImageBtn = styled.label`
   width: 50px;
   height: 50px;
   z-index: 10;
-`;
-
-const ImagePreview = styled.div`
-  width: 100%;
-  height: 204px;
-  border-radius: 10px;
-  border: 0.5px solid #dbdbdb;
-  background: #f4f4f4 url(${(props) => props.bg}) no-repeat center 50px;
-  margin-bottom: 30px;
-
-  color: #c4c4c4;
-  text-align: center;
-  font-size: 12px;
-  line-height: 15px;
-`;
-
-const PreviewSpan = styled.span`
-  position: relative;
-  top: 124px;
 `;
 
 const Textarea = styled.textarea`

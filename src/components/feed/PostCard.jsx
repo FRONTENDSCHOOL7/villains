@@ -46,7 +46,6 @@ const PostCard = ({ post }) => {
       <CardContent>
         <h2>{post.content.postId}</h2>
         <p>{post.content.contents}</p>
-        {/* <Title>{post.content.contents}</Title> */}
         <Title>{post.content}</Title>
         <Author>@ {post.author.accountname}</Author>
         <Time>{formatDate(post.author.createdAt)}</Time>
@@ -81,6 +80,7 @@ const CardImage = styled.img`
   height: 162px;
   object-fit: cover;
   border-radius: 10px 10px 0 0;
+  border-bottom: 1px solid #dbdbdb;
 `;
 
 const CardContent = styled.div`
