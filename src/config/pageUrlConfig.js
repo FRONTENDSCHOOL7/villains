@@ -3,6 +3,9 @@ class pageUlrConfig {
   splashPage = `/`;
   signInPage = '/signIn';
   signUpPage = '/signUp'
+  feedPage = `/feed`;
+  feedWritePage = '/feed/write';
+  feedDetailPage = '/feed/detail';
 
   addParams(url, params) {
     let querystring = [];
