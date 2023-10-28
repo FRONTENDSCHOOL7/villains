@@ -10,23 +10,38 @@ import queryAtom from "../atoms/queryAtom";
 import ListBox from "../components/searchbar/ListBox";
 import subOneAtom from "../atoms/subOneAtom";
 import getSubOneInfo from "../api/getSubOneInfo";
+import queryFocusAtom from "../atoms/queryFocusAtom";
 
 const HomePage = () => {
   const [subOneInfo, setSubOneInfo] = useRecoilState(subOneAtom);
-
+  const [list, setList] = useState([]);
+  
   //전역에 저장한 검색어 꺼내오기
   const query = useRecoilValue(queryAtom);
   
+  const focus = useRecoilValue(queryFocusAtom);
+
   useEffect(()=>{
     //도시철도 1호선 지하철역 정보 불러오기
-    getSubOneInfo().then((response)=>{
-      return response;
-    }).then((data)=>{
-      setSubOneInfo(data);
+    getSubOneInfo().then((data)=>{
+      const dataList = data.data.body;
+      setSubOneInfo([...dataList].filter(elem => elem.routNm === "1호선"));
     });
   }, []);
-  const list = useRecoilValue(subOneAtom);
-  console.log(list.data);
+  
+  useEffect(()=>{
+    const allList = subOneInfo;
+    allList.map((data, index)=>{
+      if(data.stinNm.includes(query) && !list.includes(data)){
+        setList([...list, data]);
+      }
+    })
+    if(query === "") setList([]);
+  }, [query, focus])
+
+  useEffect(()=>{
+    if(focus === false) setList([]);
+  },[focus])
   
   const { location } = useGeoLocation();
   //사용자 위치 정보를 찾을 수 없을 때의 기본값이 필요합니다.
@@ -43,12 +58,12 @@ const HomePage = () => {
 
   return(
     <PageTemplate>
-        {query ?
-        <ListBox list={list.data} />
+        {focus ?
+        <ListBox list={list} />
         : (
           <Map 
             center={{ lat: latitude, lng: longitude }}   
-            style={{ width: '100%', height: '600px' }} 
+            style={{ width: '100%', height: '100%' }} 
             level={3}                                  
           >
           {posts.map((post, index) => {

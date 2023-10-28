@@ -5,20 +5,15 @@ import styled from "styled-components";
 
 /**@param list: 필터링된 데이터를 추가하기 */
 const ListBox = ({ list }) => {
-    const data = [];
-
-    useEffect(()=>{
-        data.push(list);
-    }, [data.length]);
 
     return(
         <StyledBox>
             {
-                data.map((d, index)=>{
+                list.map((d, index)=>{
                     return(
-                        <Link to={pageUrlConfig[d?.dataset.link] ?? "/"}>
-                            <div key={`list_box_${index}`}>
-                                {data}
+                        <Link  key={`list_box_${index}`} to={pageUrlConfig[d?.dataset?.link] ?? "/"}>
+                            <div>
+                                {d.stinNm}
                             </div>
                         </Link>
                     )
