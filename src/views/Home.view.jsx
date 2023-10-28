@@ -18,7 +18,6 @@ const HomePage = () => {
   
   //전역에 저장한 검색어 꺼내오기
   const query = useRecoilValue(queryAtom);
-  
   const focus = useRecoilValue(queryFocusAtom);
 
   useEffect(()=>{
@@ -29,11 +28,12 @@ const HomePage = () => {
     });
   }, []);
   
+  const allList = subOneInfo;
   useEffect(()=>{
-    const allList = subOneInfo;
     allList.map((data, index)=>{
-      if(data.stinNm.includes(query) && !list.includes(data)){
-        setList([...list, data]);
+      if(data.stinNm.includes(query) && !list.find(elem => elem[0].includes(data.stinNm))){
+        setList([...list, [data.stinNm, data.stinCd.padStart(4, '0')]]);
+        console.log(list);
       }
     })
     if(query === "") setList([]);

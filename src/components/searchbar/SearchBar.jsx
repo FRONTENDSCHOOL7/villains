@@ -10,10 +10,16 @@ const SearchBar = ({placeholder, onChange, value}) => {
         setFocus(false);
     }
 
+    const handleClickButton = (event) => {
+        event.preventDefault();
+        setFocus(false);
+    }
+
     return(
         <StyledForm>
+            {focus && <button onClick={handleClickButton}>뒤로가기</button>}
             <input placeholder={placeholder} value={value} onChange={onChange} onFocus={()=>{setFocus(true)}} onBlur={handleBlur}/>
-            <button>검색</button>
+            {!focus && <button onClick={handleClickButton}>검색</button>}
         </StyledForm>
     )
 }

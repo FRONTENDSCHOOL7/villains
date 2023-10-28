@@ -2,6 +2,7 @@ import FeedPage from '../views/Feed.view';
 import FeedDetailPage from '../views/FeedDetail.view';
 import FeedWritePage from '../views/FeedWrite.view';
 import HomePage from '../views/Home.view';
+import ResultPage from '../views/Result.view';
 import SplashPage from '../views/Splash.view';
 import SignInPage from '../views/SignIn.view';
 import SignUpPage from '../views/SignUp.view';
@@ -13,11 +14,12 @@ import SignUpPage from '../views/SignUp.view';
 const routeConfig = [
   { path: `/main`, element: <HomePage /> },
   { path: `/`, element: <SplashPage /> },
-        { path: `/signIn`, element: <SignInPage />},
-        { path: `/signUp`, element: <SignUpPage />},
+  { path: `/signIn`, element: <SignInPage />},
+  { path: `/signUp`, element: <SignUpPage />},
   { path: `/feed`, element: <FeedPage /> },
   { path: `/feed/write`, element: <FeedWritePage /> },
   { path: `/feed/detail`, element: <FeedDetailPage /> },
+  { path: `/search`, element: <ResultPage /> },
 ];
 
 export default routeConfig;
