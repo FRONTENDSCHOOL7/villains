@@ -1,12 +1,14 @@
 import PageTemplate from '../components/PageTemplate';
 import styled from 'styled-components';
 import { useRef, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import FloatingButton from '../components/FloatingButton.style';
 import imageIcon from '../assets/img/image-icon.svg';
 import useGeoLocation from '../hooks/useGeoLocation';
 import uploadPost from '../api/uploadPost.api';
 import postImages from '../api/postImages.api';
 import ImagePreview from '../components/feed/ImagePreview';
+import arrowIcon from '../assets/img/icon-arrow-left.svg';
 
 const FeedWritePage = () => {
   const textarea = useRef();
@@ -18,6 +20,7 @@ const FeedWritePage = () => {
     files: [],
   });
   const { location } = useGeoLocation();
+  const navigate = useNavigate();
 
   const handleContentChange = (event) => {
     setContent(event.target.value);
@@ -82,12 +85,26 @@ const FeedWritePage = () => {
     }
   };
 
+  const handleBack = () => {
+    if (content) {
+      // 모달창 띄워야함
+      if (!confirm('입력 중인 내용을 취소하고 뒤로가시겠습니까?')) {
+        return;
+      }
+    }
+    navigate(-1);
+  };
+
   return (
     <PageTemplate>
       {/* 임시 헤더입니다. */}
       <Header>
-        뒤로가기
-        <UploadBtn onClick={handleSubmitPost}>업로드</UploadBtn>
+        <button type="button" onClick={handleBack}>
+          <img src={arrowIcon} alt="뒤로가기 버튼" />
+        </button>
+        <UploadBtn onClick={handleSubmitPost} disabled={!content}>
+          업로드
+        </UploadBtn>
       </Header>
       <FeedWriteForm>
         <form>
@@ -136,6 +153,7 @@ const UploadBtn = styled.button`
 
   &:disabled {
     background-color: #b1bce6;
+    cursor: default;
   }
 
   &:enabled {
