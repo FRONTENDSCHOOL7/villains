@@ -2,8 +2,8 @@ import styled from "styled-components";
 import Header from "./layout/Header";
 
 const Wrap = styled.div`
-    max-width: 360px;
-    height: 100vh;
+    max-width: 412px;
+    min-height: 100vh;
     margin: 0 auto;
     background-color: #ccc;
     border-left: 1px solid #ccc;
