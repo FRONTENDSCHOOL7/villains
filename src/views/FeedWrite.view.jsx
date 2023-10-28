@@ -1,15 +1,24 @@
 import PageTemplate from '../components/PageTemplate';
 import styled from 'styled-components';
-import { useRef } from 'react';
+import { useRef, useState } from 'react';
 import imageBigIcon from '../assets/image-big-icon.svg';
 import FloatingButton from '../components/FloatingButton.style';
+import imageIcon from '../assets/image-icon.svg';
 
 const FeedWritePage = () => {
   const textarea = useRef();
+  const file = useRef();
+
+  const [content, setContent] = useState('');
+  const [image, setImage] = useState(null);
 
   const handleResizeHeight = () => {
     textarea.current.style.height = 'auto';
     textarea.current.style.height = textarea.current.scrollHeight + 'px';
+  };
+
+  const triggerFileInput = () => {
+    file.current.click();
   };
 
   return (
@@ -17,7 +26,7 @@ const FeedWritePage = () => {
       {/* 임시 헤더입니다. */}
       <Header>
         뒤로가기
-        <button>업로드</button>
+        <UploadBtn>업로드</UploadBtn>
       </Header>
       <FeedWriteForm>
         <form>
@@ -35,9 +44,10 @@ const FeedWritePage = () => {
             onChange={handleResizeHeight}
           ></Textarea>
 
-          <FloatingButton>
-            <input type="file" name="" id="" />
-          </FloatingButton>
+          <InsertImageBtn htmlFor="file">
+            <FloatingButton img={imageIcon} type="button" onClick={triggerFileInput} />
+          </InsertImageBtn>
+          <InputFile ref={file} type="file" id="file" accept="image/*" />
         </form>
       </FeedWriteForm>
     </PageTemplate>
@@ -48,12 +58,42 @@ export default FeedWritePage;
 const Header = styled.header`
   width: 100%;
   height: 48px;
+  padding: 0 16px;
   background-color: #dbdbdb;
+
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+`;
+
+const UploadBtn = styled.button`
+  width: 90px;
+  height: 32px;
+  border-radius: 32px;
+  color: #fff;
+
+  &:disabled {
+    background-color: #b1bce6;
+  }
+
+  &:enabled {
+    background-color: #3c58c1;
+  }
 `;
 
 const FeedWriteForm = styled.section`
   width: 100%;
   padding: 30px 32px;
+`;
+
+const InputFile = styled.input`
+  display: none;
+`;
+
+const InsertImageBtn = styled.label`
+  width: 50px;
+  height: 50px;
+  z-index: 10;
 `;
 
 const ImagePreview = styled.div`
@@ -90,5 +130,3 @@ const Textarea = styled.textarea`
     display: none;
   }
 `;
-
-const ImageInsertBtn = styled.input;
