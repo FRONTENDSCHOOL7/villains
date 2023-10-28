@@ -1,13 +1,25 @@
 import React from "react";
-import { useState } from "react";
+import { useRecoilState } from "recoil";
 import styled from 'styled-components'
+import queryFocusAtom from "../../atoms/queryFocusAtom";
 
-const SearchBar = ({placeholder}) => {
-    const [query, setQuery] = useState("");
+const SearchBar = ({placeholder, onChange, value}) => {
+    const [focus, setFocus] = useRecoilState(queryFocusAtom);
+
+    const handleBlur = () => {
+        setFocus(false);
+    }
+
+    const handleClickButton = (event) => {
+        event.preventDefault();
+        setFocus(false);
+    }
+
     return(
         <StyledForm>
-            <input placeholder={placeholder} value={query} onChange={(event)=>setQuery(event.target.value)}/>
-            <button>검색</button>
+            {focus && <button onClick={handleClickButton}>뒤로가기</button>}
+            <input placeholder={placeholder} value={value} onChange={onChange} onFocus={()=>{setFocus(true)}} onBlur={handleBlur}/>
+            {!focus && <button onClick={handleClickButton}>검색</button>}
         </StyledForm>
     )
 }
