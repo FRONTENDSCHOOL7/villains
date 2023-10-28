@@ -1,7 +1,7 @@
 import styled from 'styled-components';
-import heart from '../../assets/heart.svg';
-import heartFilled from '../../assets/heart-filled.svg';
-import comment from '../../assets/message-circle.svg';
+import heart from '../../assets/img/heart.svg';
+import heartFilled from '../../assets/img/heart-filled.svg';
+import comment from '../../assets/img/message-circle.svg';
 import { useNavigate } from 'react-router-dom';
 import pageUlrConfig from '../../config/pageUrlConfig';
 import postHeart from '../../api/postHeart.api';

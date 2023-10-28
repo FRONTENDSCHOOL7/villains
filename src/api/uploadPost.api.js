@@ -22,7 +22,6 @@ const uploadPost = async (content, urls, location) => {
   try {
     const response = await client.post('/post', postData, { ...headers });
 
-    // response.data가 있을 경우 true를 반환합니다.
     if (response.data) {
       return true;
     } else {

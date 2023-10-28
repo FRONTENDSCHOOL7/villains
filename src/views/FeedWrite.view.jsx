@@ -2,7 +2,7 @@ import PageTemplate from '../components/PageTemplate';
 import styled from 'styled-components';
 import { useRef, useState } from 'react';
 import FloatingButton from '../components/FloatingButton.style';
-import imageIcon from '../assets/image-icon.svg';
+import imageIcon from '../assets/img/image-icon.svg';
 import useGeoLocation from '../hooks/useGeoLocation';
 import uploadPost from '../api/uploadPost.api';
 import postImages from '../api/postImages.api';
@@ -13,8 +13,10 @@ const FeedWritePage = () => {
   const fileInputRef = useRef();
 
   const [content, setContent] = useState('');
-  const [imageUrls, setImageUrls] = useState([]); // 이미지 프리뷰
-  const [imageFiles, setImageFiles] = useState([]); // 이미지 원본
+  const [imagesData, setImagesData] = useState({
+    urls: [],
+    files: [],
+  });
   const { location } = useGeoLocation();
 
   const handleContentChange = (event) => {
@@ -25,7 +27,7 @@ const FeedWritePage = () => {
   const handleImageChange = (event) => {
     const files = Array.from(event.target.files);
 
-    if (imageUrls.length + files.length > 3) {
+    if (imagesData.urls.length + files.length > 3) {
       alert('최대 3개의 이미지만 업로드할 수 있습니다.');
       return;
     }
@@ -40,8 +42,10 @@ const FeedWritePage = () => {
     });
 
     Promise.all(fileReaders).then((urls) => {
-      setImageUrls((prevUrls) => [...prevUrls, ...urls]);
-      setImageFiles((prevFiles) => [...prevFiles, ...files]);
+      setImagesData((prevData) => ({
+        urls: [...prevData.urls, ...urls],
+        files: [...prevData.files, ...files],
+      }));
     });
   };
 
@@ -54,8 +58,23 @@ const FeedWritePage = () => {
     fileInputRef.current.click();
   };
 
+  const handleDeleteImage = (index) => {
+    setImagesData((prevData) => {
+      const newUrls = [...prevData.urls];
+      const newFiles = [...prevData.files];
+
+      newUrls.splice(index, 1);
+      newFiles.splice(index, 1);
+
+      return {
+        urls: newUrls,
+        files: newFiles,
+      };
+    });
+  };
+
   const handleSubmitPost = async (event) => {
-    const urls = await postImages(imageFiles);
+    const urls = await postImages(imagesData.files);
     const result = await uploadPost(content, urls, location);
 
     if (result) {
@@ -72,7 +91,7 @@ const FeedWritePage = () => {
       </Header>
       <FeedWriteForm>
         <form>
-          <ImagePreview imageUrls={imageUrls} />
+          <ImagePreview imageUrls={imagesData.urls} onDeleteImage={handleDeleteImage} />
           <Textarea
             ref={textarea}
             rows="1"
