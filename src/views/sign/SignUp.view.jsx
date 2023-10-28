@@ -1,12 +1,11 @@
 import { React, useState, useEffect } from 'react';
 import styled from 'styled-components';
 import { useNavigate } from 'react-router';
-import pageUrlConfig from '../config/pageUrlConfig';
-import client from '../config/api.config';
+import pageUrlConfig from '../../config/pageUrlConfig';
+import client from '../../config/api.config';
 import { useForm } from 'react-hook-form';
-import PageTemplate from '../components/PageTemplate';
-import { BlueLongBtn, BlueSmallBtn } from '../components/Buttons';
-import CheckBox from '../components/CheckBox';
+import PageTemplate from '../../components/PageTemplate';
+import { CommonBtn, SmallBtn } from '../../components/Buttons';
 
 const SignUpPage = () => {
   // react-hook-form
@@ -30,34 +29,6 @@ const SignUpPage = () => {
   useEffect(() => {
     setCheckEmailMessage('');
   }, [userEmail]);
-  // 체크박스 전체 동의 기능
-  const [allAgreed, setAllAgreed] = useState(false);
-  const [checkBoxs, setCheckBoxs] = useState({
-    accept_info: false,
-    accept_loca: false,
-    accept_age: false,
-  });
-  // 전체 동의 제외 체크박스 핸들링 함수
-  const handleCheckBoxChanged = (e) => {
-    const { name, checked } = e.target;
-    setCheckBoxs((prevCheckBox) => ({ ...prevCheckBox, [name]: checked }));
-    const allChecked = Object.values({ ...checkBoxs, [name]: checked }).every((value) => value === true);
-    setAllAgreed(allChecked);
-  };
-  // 전체동의 체크박스 핸들링 함수
-  const handleAllCheckBoxChanged = (e) => {
-    const { checked } = e.target;
-    setCheckBoxs((prevCheckBox) =>
-      Object.keys(prevCheckBox).reduce(
-        (a, b) => ({
-          ...a,
-          [b]: checked,
-        }),
-        {},
-      ),
-    );
-    setAllAgreed(checked);
-  };
   // navigate
   const navigate = useNavigate();
   // 계정 id 중복방지 함수
@@ -122,7 +93,7 @@ const SignUpPage = () => {
   };
 
   return (
-    <PageTemplate>
+    <Main>
       <Title>회원가입</Title>
       <FormField
         onSubmit={handleSubmit(async (data) => {
@@ -148,9 +119,17 @@ const SignUpPage = () => {
               })}
             />
             {userAccountId ? (
-              <BlueSmallBtn onClick={checkID} text={'중복확인'}></BlueSmallBtn>
+              <SmallBtn onClick={checkID} background={'#3C58C1'} color={'white'} text={'중복확인'}></SmallBtn>
             ) : (
-              <BlueSmallBtn onClick={checkID} disabled={true} text={'중복확인'}></BlueSmallBtn>
+              <SmallBtn
+                onClick={checkID}
+                disabled={true}
+                background={'#B1BCE6'}
+                color={'white'}
+                border={'white'}
+                cursor={'default'}
+                text={'중복확인'}
+              ></SmallBtn>
             )}
           </InputWrap>
           {errors.accountId ? (
@@ -175,9 +154,22 @@ const SignUpPage = () => {
               })}
             />
             {userEmail ? (
-              <BlueSmallBtn onClick={checkEmail} text={'중복확인'}></BlueSmallBtn>
+              <SmallBtn
+                onClick={checkEmail}
+                background={'#3C58C1'}
+                color={'white'}
+                text={'중복확인'}
+              ></SmallBtn>
             ) : (
-              <BlueSmallBtn onClick={checkEmail} disabled={true} text={'중복확인'}></BlueSmallBtn>
+              <SmallBtn
+                onClick={checkEmail}
+                disabled={true}
+                background={'#B1BCE6'}
+                color={'white'}
+                border={'white'}
+                cursor={'default'}
+                text={'중복확인'}
+              ></SmallBtn>
             )}
           </InputWrap>
           {errors.email ? (
@@ -205,41 +197,32 @@ const SignUpPage = () => {
           ) : (
             signInError && <Warn color={'#EB5757'}>*{signInError}</Warn>
           )}
-          <ChildCheckBoxList>
-            <CheckBox text={'전체동의'} id={'accept_all'} name={'accept_all'} checked={allAgreed} onChange={handleAllCheckBoxChanged}></CheckBox>
-          </ChildCheckBoxList>
-          <ChildCheckBoxList>
-            <CheckBoxWrap>
-              <CheckBox
-                text={'개인 정보 약관 동의'}
-                id={'accept_info'}
-                name={'accept_info'}
-                checked={checkBoxs.accept_info}
-                onChange={handleCheckBoxChanged}
-              ></CheckBox>
-              <Span>(필수)</Span>
-            </CheckBoxWrap>
-            <CheckBoxWrap>
-              <CheckBox
-                text={'위치 정보 동의'}
-                id={'accept_loca'}
-                name={'accept_loca'}
-                checked={checkBoxs.accept_loca}
-                onChange={handleCheckBoxChanged}
-              ></CheckBox>
-              <Span>(필수)</Span>
-            </CheckBoxWrap>
-            <CheckBoxWrap>
-              <CheckBox
-                text={'14세 이상 '}
-                id={'accept_age'}
-                name={'accept_age'}
-                checked={checkBoxs.accept_age}
-                onChange={handleCheckBoxChanged}
-              ></CheckBox>
-              <Span> (필수)</Span>
-            </CheckBoxWrap>
-          </ChildCheckBoxList>
+          <CheckBoxField>
+            <CheckBox>
+              <input id="all" type="checkbox" />
+              <label htmlFor="all">전체동의</label>
+            </CheckBox>
+            <CheckBoxList>
+              <CheckBox>
+                <input id="info" type="checkbox" />
+                <label htmlFor="info">
+                  개인 정보 약관 동의<span>(필수)</span>
+                </label>
+              </CheckBox>
+              <CheckBox>
+                <input id="location" type="checkbox" />
+                <label htmlFor="location">
+                  위치 정보 동의<span>(필수)</span>
+                </label>
+              </CheckBox>
+              <CheckBox>
+                <input id="age14" type="checkbox" />
+                <label htmlFor="age14">
+                  14세 이상<span>(필수)</span>
+                </label>
+              </CheckBox>
+            </CheckBoxList>
+          </CheckBoxField>
         </FormFieldTop>
         <FormFieldBottom>
           {isSubmitting ||
@@ -249,13 +232,28 @@ const SignUpPage = () => {
           userAccountId === '' ||
           userEmail === '' ||
           userPwd === '' ? (
-            <BlueLongBtn onClick={signUpFunc} disabled={true} text={'시작하기'}></BlueLongBtn>
+            <CommonBtn
+              onClick={signUpFunc}
+              type="submit"
+              background={'#B1BCE6'}
+              disabled={true}
+              color={'white'}
+              border={'white'}
+              cursor={'default'}
+              text={'시작하기'}
+            ></CommonBtn>
           ) : (
-            <BlueLongBtn onClick={signUpFunc} text={'시작하기'}></BlueLongBtn>
+            <CommonBtn
+              onClick={signUpFunc}
+              type="submit"
+              background={'#3C58C1'}
+              color={'white'}
+              text={'시작하기'}
+            ></CommonBtn>
           )}
         </FormFieldBottom>
       </FormField>
-    </PageTemplate>
+    </Main>
   );
 };
 
@@ -305,19 +303,13 @@ const Warn = styled.strong`
   color: ${(props) => props.color};
   font-size: 12px;
 `;
-const ChildCheckBoxList = styled.div`
+const CheckBoxField = styled.div`
+  margin-top: 10px;
+`;
+const CheckBox = styled.div`
+  margin-top: 10px;
+`;
+const CheckBoxList = styled.div`
   display: flex;
   flex-direction: column;
-  gap: 8px;
-  margin-top: 20px;
-`;
-const CheckBoxWrap = styled.div`
-  display: flex;
-  gap: 3px;
-`;
-const Span = styled.span`
-  color: #eb5757;
-  font-size: 12px;
-  display: flex;
-  align-items: center;
 `;

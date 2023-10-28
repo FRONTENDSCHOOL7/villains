@@ -33,7 +33,6 @@ const HomePage = () => {
     allList.map((data, index)=>{
       if(data.stinNm.includes(query) && !list.find(elem => elem[0].includes(data.stinNm))){
         setList([...list, [data.stinNm, data.stinCd.padStart(4, '0')]]);
-        console.log(list);
       }
     })
     if(query === "") setList([]);
@@ -53,7 +52,7 @@ const HomePage = () => {
   const [posts, setPosts] = useState([]);
 
   useEffect(()=>{
-    if(data)    setPosts(data.data.post);
+    if(data)  setPosts(data.data.post);
   }, [!isLoading && data]);
 
   return(
