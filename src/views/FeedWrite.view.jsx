@@ -4,13 +4,29 @@ import { useRef, useState } from 'react';
 import imageBigIcon from '../assets/image-big-icon.svg';
 import FloatingButton from '../components/FloatingButton.style';
 import imageIcon from '../assets/image-icon.svg';
+import useGeoLocation from '../hooks/useGeoLocation';
+import uploadPost from '../api/uploadPost.api';
+import postImages from '../api/postImages.api';
 
 const FeedWritePage = () => {
   const textarea = useRef();
-  const file = useRef();
+  const fileInputRef = useRef();
 
-  // const [content, setContent] = useState('');
-  // const [image, setImage] = useState(null);
+  const [content, setContent] = useState('');
+  const [imageUrls, setImageUrls] = useState([]);
+  const { location } = useGeoLocation();
+
+  const handleContentChange = (event) => {
+    setContent(event.target.value);
+    handleResizeHeight();
+  };
+
+  const handleImageChange = async (event) => {
+    // FileList를 배열로 변환
+    const files = Array.from(event.target.files);
+    const urls = await postImages(files);
+    setImageUrls(urls);
+  };
 
   const handleResizeHeight = () => {
     textarea.current.style.height = 'auto';
@@ -18,7 +34,15 @@ const FeedWritePage = () => {
   };
 
   const triggerFileInput = () => {
-    file.current.click();
+    fileInputRef.current.click();
+  };
+
+  const handleSubmitPost = async () => {
+    const result = await uploadPost(content, imageUrls, location);
+
+    if (result) {
+      // uploadPost의 리턴값이 true일 때, 해당 게시글의 상세 페이지로 이동하는 로직 추가
+    }
   };
 
   return (
@@ -26,7 +50,7 @@ const FeedWritePage = () => {
       {/* 임시 헤더입니다. */}
       <Header>
         뒤로가기
-        <UploadBtn>업로드</UploadBtn>
+        <UploadBtn onClick={handleSubmitPost}>업로드</UploadBtn>
       </Header>
       <FeedWriteForm>
         <form>
@@ -41,13 +65,20 @@ const FeedWritePage = () => {
             ref={textarea}
             rows="1"
             placeholder="게시글 입력하기..."
-            onChange={handleResizeHeight}
+            onChange={handleContentChange}
           ></Textarea>
 
           <InsertImageBtn htmlFor="file">
             <FloatingButton img={imageIcon} type="button" onClick={triggerFileInput} />
           </InsertImageBtn>
-          <InputFile ref={file} type="file" id="file" accept="image/*" />
+          <InputFile
+            ref={fileInputRef}
+            type="file"
+            id="file"
+            accept="image/*"
+            multiple
+            onChange={handleImageChange}
+          />
         </form>
       </FeedWriteForm>
     </PageTemplate>
@@ -97,7 +128,7 @@ const InsertImageBtn = styled.label`
 `;
 
 const ImagePreview = styled.div`
-  width: 326px;
+  width: 100%;
   height: 204px;
   border-radius: 10px;
   border: 0.5px solid #dbdbdb;

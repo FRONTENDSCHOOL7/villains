@@ -33,6 +33,8 @@ const PostCard = ({ post }) => {
     }
   };
 
+  // post.image 값을 ',' 기준으로 분리하고 첫 번째 이미지 URL 선택
+  const firstImageUrl = post.image ? post.image.split(',')[0] : null;
 
   return (
     <Card
@@ -40,7 +42,7 @@ const PostCard = ({ post }) => {
         navigate(pageUlrConfig.feedDetailPage);
       }}
     >
-      {post.image && <CardImage src={post.image} alt="" />}
+      {firstImageUrl && <CardImage src={firstImageUrl} alt="" />}
       <CardContent>
         <h2>{post.content.postId}</h2>
         <p>{post.content.contents}</p>
@@ -66,7 +68,7 @@ const PostCard = ({ post }) => {
 export default PostCard;
 
 const Card = styled.li`
-  width: 350px;
+  width: 100%;
   margin-bottom: 20px;
   border-radius: 10px;
   border: 1px solid #dbdbdb;

@@ -7,7 +7,7 @@ const getPosts = () => {
   const [error, setError] = useState(null);
 
   useEffect(() => {
-    // const token = localStorage.getItem('token');
+    // const token = localStorage.getItem('user').token;
     const token = import.meta.env.VITE_ADMIN_KEY;
 
     const headers = client.BothType(token);
