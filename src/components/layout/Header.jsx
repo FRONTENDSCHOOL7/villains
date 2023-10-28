@@ -15,7 +15,7 @@ const Header = () => {
     
     const handleChangeQuery = (event) => {
         setQuery(event.target.value)
-        setQueries(query);
+        setQueries(event.target.value);
     }
 
     //메인의 상태를 모르기 때문에 url을 사용하여 placeholder를 바꿔줌
