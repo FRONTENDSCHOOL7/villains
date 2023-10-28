@@ -9,8 +9,8 @@ const FeedWritePage = () => {
   const textarea = useRef();
   const file = useRef();
 
-  const [content, setContent] = useState('');
-  const [image, setImage] = useState(null);
+  // const [content, setContent] = useState('');
+  // const [image, setImage] = useState(null);
 
   const handleResizeHeight = () => {
     textarea.current.style.height = 'auto';
