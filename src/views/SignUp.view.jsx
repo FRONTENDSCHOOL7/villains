@@ -4,6 +4,8 @@ import { useNavigate } from 'react-router';
 import pageUrlConfig from '../config/pageUrlConfig';
 import client from '../config/api.config';
 import { useForm } from 'react-hook-form';
+import PageTemplate from '../components/PageTemplate';
+import { CommonBtn, SmallBtn } from '../components/Buttons';
 
 const SignUpPage = () => {
   // react-hook-form
@@ -117,20 +119,17 @@ const SignUpPage = () => {
               })}
             />
             {userAccountId ? (
-              <Button2 onClick={checkID} background={'#3C58C1'} color={'white'}>
-                중복확인
-              </Button2>
+              <SmallBtn onClick={checkID} background={'#3C58C1'} color={'white'} text={'중복확인'}></SmallBtn>
             ) : (
-              <Button2
+              <SmallBtn
                 onClick={checkID}
-                disabled
+                disabled={true}
                 background={'#B1BCE6'}
                 color={'white'}
                 border={'white'}
                 cursor={'default'}
-              >
-                중복확인
-              </Button2>
+                text={'중복확인'}
+              ></SmallBtn>
             )}
           </InputWrap>
           {errors.accountId ? (
@@ -155,20 +154,22 @@ const SignUpPage = () => {
               })}
             />
             {userEmail ? (
-              <Button2 onClick={checkEmail} background={'#3C58C1'} color={'white'}>
-                중복확인
-              </Button2>
-            ) : (
-              <Button2
+              <SmallBtn
                 onClick={checkEmail}
-                disabled
+                background={'#3C58C1'}
+                color={'white'}
+                text={'중복확인'}
+              ></SmallBtn>
+            ) : (
+              <SmallBtn
+                onClick={checkEmail}
+                disabled={true}
                 background={'#B1BCE6'}
                 color={'white'}
                 border={'white'}
                 cursor={'default'}
-              >
-                중복확인
-              </Button2>
+                text={'중복확인'}
+              ></SmallBtn>
             )}
           </InputWrap>
           {errors.email ? (
@@ -231,21 +232,24 @@ const SignUpPage = () => {
           userAccountId === '' ||
           userEmail === '' ||
           userPwd === '' ? (
-            <Button
+            <CommonBtn
               onClick={signUpFunc}
               type="submit"
               background={'#B1BCE6'}
-              disabled
+              disabled={true}
               color={'white'}
               border={'white'}
               cursor={'default'}
-            >
-              시작하기
-            </Button>
+              text={'시작하기'}
+            ></CommonBtn>
           ) : (
-            <Button onClick={signUpFunc} type="submit" background={'#3C58C1'} color={'white'}>
-              시작하기
-            </Button>
+            <CommonBtn
+              onClick={signUpFunc}
+              type="submit"
+              background={'#3C58C1'}
+              color={'white'}
+              text={'시작하기'}
+            ></CommonBtn>
           )}
         </FormFieldBottom>
       </FormField>
@@ -255,13 +259,8 @@ const SignUpPage = () => {
 
 export default SignUpPage;
 
-const Main = styled.div`
+const Main = styled(PageTemplate)`
   background: white;
-  max-width: 412px;
-  height: 100vh;
-  margin: 0 auto;
-  border-left: 1px solid #ccc;
-  border-right: 1px solid #ccc;
 `;
 const Title = styled.h1`
   text-align: center;
@@ -313,19 +312,4 @@ const CheckBox = styled.div`
 const CheckBoxList = styled.div`
   display: flex;
   flex-direction: column;
-`;
-const Button = styled.button`
-  padding: 13px 0 13px 0;
-  background-color: ${(props) => props.background};
-  font-size: 14px;
-  color: ${(props) => props.color};
-  border-radius: 44px;
-  border: 1px solid #3c58c1;
-  border-color: ${(props) => props.border};
-  cursor: ${(props) => props.cursor};
-`;
-const Button2 = styled(Button)`
-  padding: 8px 20px 8px 20px;
-  border-radius: 32px;
-  flex-grow: 1;
 `;

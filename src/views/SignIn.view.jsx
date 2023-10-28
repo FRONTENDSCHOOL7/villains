@@ -4,6 +4,8 @@ import { useNavigate } from 'react-router';
 import pageUrlConfig from '../config/pageUrlConfig';
 import client from '../config/api.config';
 import { useForm } from 'react-hook-form';
+import PageTemplate from '../components/PageTemplate';
+import { CommonBtn } from '../components/Buttons';
 
 const SignInPage = () => {
   // react-hook-form
@@ -96,25 +98,32 @@ const SignInPage = () => {
         </FormFieldTop>
         <FormFieldBottom>
           {isSubmitting || errors.accountId || errors.password ? (
-            <Button
+            <CommonBtn
               onClick={signInFunc}
               type="submit"
               background={'#B1BCE6'}
-              disabled
+              disabled={true}
               color={'white'}
               border={'white'}
               cursor={'default'}
-            >
-              시작하기
-            </Button>
+              text={'시작하기'}
+            ></CommonBtn>
           ) : (
-            <Button onClick={signInFunc} type="submit" background={'#3C58C1'} color={'white'}>
-              시작하기
-            </Button>
+            <CommonBtn
+              onClick={signInFunc}
+              type="submit"
+              background={'#3C58C1'}
+              color={'white'}
+              text={'시작하기'}
+            ></CommonBtn>
           )}
-          <Button onClick={goToSignUp} type="submit" background={'white'} color={'#3C58C1'}>
-            회원가입
-          </Button>
+          <CommonBtn
+            onClick={goToSignUp}
+            type="submit"
+            background={'white'}
+            color={'#3C58C1'}
+            text={'회원가입'}
+          ></CommonBtn>
         </FormFieldBottom>
       </FormField>
     </Main>
@@ -123,19 +132,16 @@ const SignInPage = () => {
 
 export default SignInPage;
 
-const Main = styled.div`
+const Main = styled(PageTemplate)`
   background: white;
-  max-width: 412px;
-  height: 100vh;
-  margin: 0 auto;
-  border-left: 1px solid #ccc;
-  border-right: 1px solid #ccc;
 `;
 const Title = styled.h1`
   text-align: center;
   font-size: 24px;
   font-weight: bold;
   padding: 30px;
+  font-family: 'SUIT';
+  font-weight: 400;
 `;
 const Label = styled.label`
   margin-top: 20px;
@@ -170,14 +176,4 @@ const Warn = styled.strong`
 `;
 const CheckBox = styled.div`
   margin-top: 10px;
-`;
-const Button = styled.button`
-  padding: 13px 0 13px 0;
-  background-color: ${(props) => props.background};
-  font-size: 14px;
-  color: ${(props) => props.color};
-  border-radius: 44px;
-  border: 1px solid #3c58c1;
-  border-color: ${(props) => props.border};
-  cursor: ${(props) => props.cursor};
 `;

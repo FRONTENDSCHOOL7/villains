@@ -2,13 +2,14 @@ import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Logo1 from '/img/Logo1.svg';
 import Logo2 from '/img/Logo2.svg';
-import Kakao from '../assets/kakao.svg';
-import Google from '../assets/google.svg';
-import Facebook from '../assets/facebook.svg';
-import Email from '../assets/email.svg';
+import Kakao from '../assets/img/kakao.svg';
+import Google from '../assets/img/google.svg';
+import Facebook from '../assets/img/facebook.svg';
+import Email from '../assets/img/email.svg';
 import styled from 'styled-components';
 import pageUrlConfig from '../config/pageUrlConfig';
 import PageTemplate from '../components/PageTemplate';
+import { SnsBtn } from '../components/Buttons';
 
 const SplashPage = () => {
   const navigate = useNavigate();
@@ -35,21 +36,49 @@ const SplashPage = () => {
       ) : (
         <SplashField logo={Logo2} color={'#3c58c1'}>
           <SnsWrap>
-            <SnsButton border={'#3C58C1'} img={Email} onClick={moveToLogin}>
+            <SnsBtn
+              border={'#3C58C1'}
+              img={Email}
+              color={'#767676'}
+              onClick={moveToLogin}
+              text={'이메일로 로그인'}
+              disabled={false}
+            >
               이메일로 로그인
-            </SnsButton>
-            <DisabledBtn border={'#F2C94C'} img={Kakao} disabled>
+            </SnsBtn>
+            <SnsBtn
+              border={'#767676'}
+              img={Kakao}
+              color={'#767676'}
+              disabled={true}
+              cursor={'default'}
+              text={'카카오톡 계정으로 로그인'}
+            >
               카카오톡 계정으로 로그인
-            </DisabledBtn>
-            <DisabledBtn border={'#767676'} img={Google}>
+            </SnsBtn>
+            <SnsBtn
+              border={'#767676'}
+              img={Google}
+              color={'#767676'}
+              disabled={true}
+              cursor={'default'}
+              text={'구글 계정으로 로그인'}
+            >
               구글 계정으로 로그인
-            </DisabledBtn>
-            <DisabledBtn border={'#2D9CDB'} img={Facebook}>
+            </SnsBtn>
+            <SnsBtn
+              border={'#767676'}
+              img={Facebook}
+              color={'#767676'}
+              disabled={true}
+              cursor={'default'}
+              text={'페이스북 계정으로 로그인'}
+            >
               페이스북 계정으로 로그인
-            </DisabledBtn>
+            </SnsBtn>
             <ButtonWrap>
               <BottomBtn>아이디/비밀번호 찾기</BottomBtn>
-              <span>|</span>
+              <Line>|</Line>
               <BottomBtn onClick={moveToSingUp}>회원가입</BottomBtn>
             </ButtonWrap>
           </SnsWrap>
@@ -76,23 +105,6 @@ const SnsWrap = styled.div`
   background: white;
   border-radius: 20px 20px 0 0;
 `;
-const SnsButton = styled.button`
-  color: #767676;
-  padding: 11px 0 11px 0;
-  border-radius: 9999px;
-  border-width: 1px;
-  border-style: solid;
-  border-color: ${(props) => props.border};
-  background-image: url(${(props) => props.img});
-  background-repeat: no-repeat;
-  background-position: 14px 51%;
-`;
-const DisabledBtn = styled(SnsButton)`
-  cursor: default;
-  border-color: #767676;
-  color: #767676;
-  fill: #767676;
-`;
 const ButtonWrap = styled.div`
   margin-top: 20px;
   font-size: 12px;
@@ -104,5 +116,10 @@ const ButtonWrap = styled.div`
 const BottomBtn = styled.button`
   font-size: 12px;
   color: #767676;
+`;
+const Line = styled.span`
+  display: flex;
+  justify-content: center;
+  align-items: center;
 `;
 export default SplashPage;
