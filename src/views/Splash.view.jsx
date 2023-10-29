@@ -36,18 +36,10 @@ const SplashPage = () => {
       ) : (
         <SplashField logo={Logo2} color={'#3c58c1'}>
           <SnsWrap>
-            <IconBtn img={Email} onClick={moveToLogin} text={'이메일로 로그인'} disabled={false}>
-              이메일로 로그인
-            </IconBtn>
-            <IconBtn img={Kakao} disabled={true} text={'카카오톡 계정으로 로그인'}>
-              카카오톡 계정으로 로그인
-            </IconBtn>
-            <IconBtn img={Google} disabled={true} text={'구글 계정으로 로그인'}>
-              구글 계정으로 로그인
-            </IconBtn>
-            <IconBtn img={Facebook} disabled={true} text={'페이스북 계정으로 로그인'}>
-              페이스북 계정으로 로그인
-            </IconBtn>
+            <IconBtn img={Email} onClick={moveToLogin} text={'이메일로 로그인'} disabled={false}></IconBtn>
+            <IconBtn img={Kakao} disabled={true} text={'카카오톡 계정으로 로그인'}></IconBtn>
+            <IconBtn img={Google} disabled={true} text={'구글 계정으로 로그인'}></IconBtn>
+            <IconBtn img={Facebook} disabled={true} text={'페이스북 계정으로 로그인'}></IconBtn>
             <ButtonWrap>
               <BottomBtn>아이디/비밀번호 찾기</BottomBtn>
               <Line>|</Line>

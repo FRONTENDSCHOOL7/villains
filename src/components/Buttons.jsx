@@ -78,12 +78,14 @@ const WhiteLongButton = styled(BlueLongButton)`
   color: #3c58c1;
 `;
 
-const IconButton = styled(BlueLongBtn)`
+const IconButton = styled(BlueLongButton)`
   color: #767676;
+  background-color: white;
   background-image: url(${(props) => props.img});
   background-repeat: no-repeat;
   background-position: ${(props) => (props.img === Email ? '17.5px 51%' : '14px 51%')};
   &:disabled {
+    background-color: white;
     border-color: #767676;
     cursor: default;
   }
