@@ -44,11 +44,9 @@ const PostCard = ({ post }) => {
     >
       {firstImageUrl && <CardImage src={firstImageUrl} alt="" />}
       <CardContent>
-        {/* <h2>{post.content.postId}</h2> */}
-        {/* <p>{post.content.contents}</p> */}
-        <Title>{post.content}</Title>
+        <Title>{post.content.contents}</Title>
         <Author>@ {post.author.accountname}</Author>
-        <Time>{formatDate(post.author.createdAt)}</Time>
+        <Time>{formatDate(post.createdAt)}</Time>
         <IconsContainer>
           <CardBtn onClick={handleHeartClick} disabled={loading}>
             <img src={isHearted ? heartFilled : heart} alt="" />

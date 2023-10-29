@@ -15,8 +15,7 @@ const uploadPost = async (content, urls, location) => {
     },
   };
 
-  // const token = localStorage.getItem('user').token;
-  const token = import.meta.env.VITE_ADMIN_KEY;
+  const token = JSON.parse(localStorage.getItem('user')).token;
   const headers = client.BothType(token);
 
   try {
