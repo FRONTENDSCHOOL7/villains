@@ -5,7 +5,8 @@ import pageUrlConfig from '../config/pageUrlConfig';
 import client from '../config/api.config';
 import { useForm } from 'react-hook-form';
 import PageTemplate from '../components/PageTemplate';
-import { CommonBtn } from '../components/Buttons';
+import { BlueLongBtn, WhiteLongBtn } from '../components/Buttons';
+import CheckBox from '../components/CheckBox';
 
 const SignInPage = () => {
   // react-hook-form
@@ -19,10 +20,33 @@ const SignInPage = () => {
   const userPwd = watch('password');
   // 에러 메시지 저장 useState
   const [signInError, setSignInError] = useState('');
+  // 에러 메시지 이후 사용자가 이메일 칸을 재 작성시 에러 메시지 삭제
+  useEffect(() => {
+    setSignInError('');
+  }, [userEmail]);
   // navigate
   const navigate = useNavigate();
+  // 뒤로가기 막기
+  useEffect(() => {
+    const preventGoBack = () => {
+      // change start
+      history.pushState(null, '', location.href);
+      // change end
+      if (window.confirm('사이트를 나가시겠습니까?')) {
+        navigate(pageUrlConfig.splashPage);
+      } else {
+      }
+    };
+
+    history.pushState(null, '', location.href);
+    window.addEventListener('popstate', preventGoBack);
+
+    return () => window.removeEventListener('popstate', preventGoBack);
+  }, []);
+
   // 로그인 함수
   const signInFunc = async (e) => {
+    localStorage.clear();
     e.preventDefault();
     try {
       const response = await client.post('/user/login', {
@@ -33,14 +57,19 @@ const SignInPage = () => {
       });
       console.log(response);
       // 성공시 localstorage 저장 후 /main 이동
-      if (response.data.status === 200) {
-        console.log(response.data);
-        localStorage.setItem('accountname', response.data.user.accountname);
-        localStorage.setItem('token', response.data.user.token);
+      if (response.status === 200 && response.data.status !== 422) {
+        const userInfo = {
+          accountname: response.data.user.accountname,
+          token: response.data.user.token,
+        };
+        localStorage.setItem('user', JSON.stringify(userInfo));
         navigate(pageUrlConfig.homePage);
       }
-      // 실패시 실패 메시지 띄워주기
-      if (response.data.status === 422) setSignInError(response.data.message);
+      // 실패시 에러 메시지 보여주기
+      if (response.status === 200 && response.data.status === 422) {
+        console.log(response.data.status);
+        setSignInError(response.data.message);
+      }
     } catch (error) {
       console.log(error);
     }
@@ -51,7 +80,7 @@ const SignInPage = () => {
   };
 
   return (
-    <Main>
+    <PageTemplate>
       <Title>로그인</Title>
       <FormField
         onSubmit={handleSubmit(async (data) => {
@@ -89,52 +118,30 @@ const SignInPage = () => {
               },
             })}
           />
-          {errors.password && <Warn>{errors.password.message}</Warn>}
-          {signInError && <Warn>*{signInError}</Warn>}
-          <CheckBox>
-            <input id="auto_login" type="checkbox" />
-            <label htmlFor="auto_login">자동 로그인</label>
-          </CheckBox>
+          {errors.password ? (
+            <Warn>{errors.password.message}</Warn>
+          ) : (
+            signInError && <Warn>*{signInError}</Warn>
+          )}
+          <CheckBoxWrap>
+            <CheckBox text={'자동 로그인'} id={'auto_login'}></CheckBox>
+          </CheckBoxWrap>
         </FormFieldTop>
         <FormFieldBottom>
-          {isSubmitting || errors.accountId || errors.password ? (
-            <CommonBtn
-              onClick={signInFunc}
-              type="submit"
-              background={'#B1BCE6'}
-              disabled={true}
-              color={'white'}
-              border={'white'}
-              cursor={'default'}
-              text={'시작하기'}
-            ></CommonBtn>
+          {isSubmitting || errors.email || errors.password ? (
+            <BlueLongBtn onClick={signInFunc} disabled={true} text={'시작하기'}></BlueLongBtn>
           ) : (
-            <CommonBtn
-              onClick={signInFunc}
-              type="submit"
-              background={'#3C58C1'}
-              color={'white'}
-              text={'시작하기'}
-            ></CommonBtn>
+            <BlueLongBtn onClick={signInFunc} text={'시작하기'}></BlueLongBtn>
           )}
-          <CommonBtn
-            onClick={goToSignUp}
-            type="submit"
-            background={'white'}
-            color={'#3C58C1'}
-            text={'회원가입'}
-          ></CommonBtn>
+          <WhiteLongBtn onClick={goToSignUp} text={'회원가입'}></WhiteLongBtn>
         </FormFieldBottom>
       </FormField>
-    </Main>
+    </PageTemplate>
   );
 };
 
 export default SignInPage;
 
-const Main = styled(PageTemplate)`
-  background: white;
-`;
 const Title = styled.h1`
   text-align: center;
   font-size: 24px;
@@ -174,6 +181,6 @@ const Warn = styled.strong`
   color: #eb5757;
   font-size: 12px;
 `;
-const CheckBox = styled.div`
-  margin-top: 10px;
+const CheckBoxWrap = styled.div`
+  margin-top: 20px;
 `;
