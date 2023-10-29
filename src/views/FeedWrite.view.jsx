@@ -9,6 +9,8 @@ import uploadPost from '../api/uploadPost.api';
 import postImages from '../api/postImages.api';
 import ImagePreview from '../components/feed/ImagePreview';
 import arrowIcon from '../assets/img/icon-arrow-left.svg';
+import useBlockToBack from '../hooks/useBlockToBack';
+import pageUrlConfig from '../config/pageUrlConfig';
 
 const FeedWritePage = () => {
   const textarea = useRef();
@@ -61,6 +63,7 @@ const FeedWritePage = () => {
     fileInputRef.current.click();
   };
 
+  // 프리뷰에 있는 이미지 삭제
   const handleDeleteImage = (index) => {
     setImagesData((prevData) => {
       const newUrls = [...prevData.urls];
@@ -85,15 +88,8 @@ const FeedWritePage = () => {
     }
   };
 
-  const handleBack = () => {
-    if (content) {
-      // 모달창 띄워야함
-      if (!confirm('입력 중인 내용을 취소하고 뒤로가시겠습니까?')) {
-        return;
-      }
-    }
-    navigate(-1);
-  };
+  // 입력내용이 있을 시 뒤로가기 제한
+  const handleBack = useBlockToBack(content, navigate, pageUrlConfig.feedPage);
 
   return (
     <PageTemplate>

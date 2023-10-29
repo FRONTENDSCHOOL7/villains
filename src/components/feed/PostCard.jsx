@@ -44,8 +44,8 @@ const PostCard = ({ post }) => {
     >
       {firstImageUrl && <CardImage src={firstImageUrl} alt="" />}
       <CardContent>
-        <h2>{post.content.postId}</h2>
-        <p>{post.content.contents}</p>
+        {/* <h2>{post.content.postId}</h2> */}
+        {/* <p>{post.content.contents}</p> */}
         <Title>{post.content}</Title>
         <Author>@ {post.author.accountname}</Author>
         <Time>{formatDate(post.author.createdAt)}</Time>
