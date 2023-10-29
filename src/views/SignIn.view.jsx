@@ -6,6 +6,7 @@ import client from '../config/api.config';
 import { useForm } from 'react-hook-form';
 import PageTemplate from '../components/PageTemplate';
 import { BlueLongBtn, WhiteLongBtn } from '../components/Buttons';
+import CheckBox from '../components/CheckBox';
 
 const SignInPage = () => {
   // react-hook-form
@@ -25,6 +26,24 @@ const SignInPage = () => {
   }, [userEmail]);
   // navigate
   const navigate = useNavigate();
+  // 뒤로가기 막기
+  useEffect(() => {
+    const preventGoBack = () => {
+      // change start
+      history.pushState(null, '', location.href);
+      // change end
+      if (window.confirm('사이트를 나가시겠습니까?')) {
+        navigate(pageUrlConfig.splashPage);
+      } else {
+      }
+    };
+
+    history.pushState(null, '', location.href);
+    window.addEventListener('popstate', preventGoBack);
+
+    return () => window.removeEventListener('popstate', preventGoBack);
+  }, []);
+
   // 로그인 함수
   const signInFunc = async (e) => {
     localStorage.clear();
@@ -104,10 +123,9 @@ const SignInPage = () => {
           ) : (
             signInError && <Warn>*{signInError}</Warn>
           )}
-          <CheckBox>
-            <input id="auto_login" type="checkbox" />
-            <label htmlFor="auto_login">자동 로그인</label>
-          </CheckBox>
+          <CheckBoxWrap>
+            <CheckBox text={'자동 로그인'} id={'auto_login'}></CheckBox>
+          </CheckBoxWrap>
         </FormFieldTop>
         <FormFieldBottom>
           {isSubmitting || errors.email || errors.password ? (
@@ -163,6 +181,6 @@ const Warn = styled.strong`
   color: #eb5757;
   font-size: 12px;
 `;
-const CheckBox = styled.div`
-  margin-top: 10px;
+const CheckBoxWrap = styled.div`
+  margin-top: 20px;
 `;
