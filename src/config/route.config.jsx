@@ -12,8 +12,8 @@ import SignUpPage from '../views/SignUp.view';
  * 2. pageUrlConfig에 해당 path로 변수만들어서 link 이동 시 사용하기
  *  **/
 const routeConfig = [
-  { path: `/main`, element: <HomePage /> },
   { path: `/`, element: <SplashPage /> },
+  { path: `/main`, element: <HomePage /> },
   { path: `/signIn`, element: <SignInPage />},
   { path: `/signUp`, element: <SignUpPage />},
   { path: `/feed`, element: <FeedPage /> },
