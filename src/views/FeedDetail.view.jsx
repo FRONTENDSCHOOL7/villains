@@ -3,12 +3,13 @@ import getPost from '../api/getPost.api';
 import { useEffect, useState } from 'react';
 import PageTemplate from '../components/PageTemplate';
 import styled from 'styled-components';
+import FeedDetail from '../components/feed/FeedDetail';
 
 const FeedDetailPage = () => {
   const { postId } = useParams();
   const { fetchPost, loading, error } = getPost();
 
-  const [post, setPost] = useState({});
+  const [post, setPost] = useState(null);
 
   useEffect(() => {
     console.log(postId);
@@ -21,9 +22,8 @@ const FeedDetailPage = () => {
 
   return (
     <PageTemplate>
-      <Header>피드(임시 헤더)</Header>
-      <div>{postId}게시글 상세페이지</div>
-      {post && <p>{post.content}</p>}
+      <Header>{postId} 상세페이지 (임시 헤더)</Header>
+      {post && <FeedDetail post={post} />}
     </PageTemplate>
   );
 };

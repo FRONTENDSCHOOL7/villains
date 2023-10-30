@@ -14,7 +14,7 @@ const postHeart = () => {
       if (status === 'heart') {
         await client.post(`/post/${postId}/heart`, {}, client.BothType(token));
       } else if (status === 'unheart') {
-        await client.post(`/post/${postId}/unheart`, {}, client.BothType(token));
+        await client.delete(`/post/${postId}/unheart`, {}, client.BothType(token));
       }
 
       setLoading(false);

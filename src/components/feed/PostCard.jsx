@@ -6,16 +6,8 @@ import { useNavigate } from 'react-router-dom';
 import pageUlrConfig from '../../config/pageUrlConfig';
 import postHeart from '../../api/postHeart.api';
 import { useState } from 'react';
-
-const formatDate = (stringDate) => {
-  const date = new Date(stringDate);
-
-  const year = date.getFullYear();
-  const month = date.getMonth() + 1;
-  const day = date.getDate();
-
-  return `${year}년 ${month}월 ${day}일`;
-};
+import useFormatDate from '../../hooks/useFormatDate';
+import IconActionButton from './IconActionButton';
 
 const PostCard = ({ post }) => {
   const navigate = useNavigate();
@@ -41,22 +33,23 @@ const PostCard = ({ post }) => {
     navigate(feedDetailUrl);
   };
 
+  const createdDate = useFormatDate(post.createdAt);
+
   return (
     <Card onClick={handleCardClick}>
       {firstImageUrl && <CardImage src={firstImageUrl} alt="" />}
       <CardContent>
         <Title>{post.content.contents}</Title>
         <Author>@ {post.author.accountname}</Author>
-        <Time>{formatDate(post.createdAt)}</Time>
+        <Time>{createdDate}</Time>
         <IconsContainer>
-          <CardBtn onClick={handleHeartClick} disabled={loading}>
-            <img src={isHearted ? heartFilled : heart} alt="" />
-            <span>{heartCount}</span>
-          </CardBtn>
-          <CardBtn>
-            <img src={comment} alt="" />
-            <span>{post.comments.length}</span>
-          </CardBtn>
+          <IconActionButton
+            icon={isHearted ? heartFilled : heart}
+            count={heartCount}
+            onClick={handleHeartClick}
+            disabled={loading}
+          />
+          <IconActionButton icon={comment} count={post.comments.length} />
         </IconsContainer>
       </CardContent>
     </Card>
@@ -112,13 +105,4 @@ const IconsContainer = styled.div`
   right: 16px;
   display: flex;
   gap: 8px;
-`;
-
-const CardBtn = styled.button`
-  display: flex;
-  gap: 4px;
-
-  color: #767676;
-  font-size: 12px;
-  line-height: 20px;
 `;
