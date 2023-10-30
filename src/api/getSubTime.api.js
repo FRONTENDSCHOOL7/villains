@@ -8,7 +8,7 @@ import axios from 'axios';
  * @param INPUT_TAG: 상행/내선: 1, 하행/외선: 2
  *
  */
-const getSubTime = async ({ START_INDEX, END_INDEX, STATION_CD, WEEK_TAG, INPUT_TAG }) => {
+const getSubTime = async (START_INDEX, END_INDEX, STATION_CD, WEEK_TAG, INPUT_TAG) => {
   return await axios.get(
     `http://openAPI.seoul.go.kr:8088/${
       import.meta.env.VITE_SEOUL_KEY
