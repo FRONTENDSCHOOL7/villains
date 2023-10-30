@@ -4,7 +4,6 @@ import { useLocation } from "react-router";
 import queryAtom from "../../atoms/queryAtom";
 import { useRecoilState } from "recoil";
 import pageUrlConfig from "../../config/pageUrlConfig";
-import { styled } from 'styled-components';
 
 const Header = () => {
     const [query, setQuery] = useState("");
@@ -15,7 +14,7 @@ const Header = () => {
     let IsShowSearchBar = true;
     
     const handleChangeQuery = (event) => {
-        setQuery(event.target.value);
+        setQuery(event.target.value)
         setQueries(event.target.value);
     }
 
@@ -27,7 +26,7 @@ const Header = () => {
         case `${pageUrlConfig.homePage}`:
             placeholder = `지하철역을 검색해주세요!`;
             break;
-        case `${pageUrlConfig.feedPage}`:
+        case `feed`:
             placeholder = `유저를 검색해주세요`;
             break;
         default:
@@ -35,21 +34,10 @@ const Header = () => {
     }
 
     return (
-        <StyledHeader>
+        <header>
         {IsShowSearchBar && <SearchBar placeholder={placeholder} onChange={handleChangeQuery} value={query}/>}
-        </StyledHeader>
+        </header>
     )
 }
-
-const StyledHeader = styled.header`
-    position: fixed;
-    top: 0;
-    right: 0;
-    left: 0;
-    margin: 0 auto;
-    max-width: 412px;
-    z-index: 10;
-`;
-
 
 export default Header;

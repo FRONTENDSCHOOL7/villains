@@ -1,7 +1,7 @@
-import PageTemplate from '../../components/PageTemplate';
-import Feed from '../../components/feed/Feed';
-import getPosts from '../../api/getPosts.api';
-import ErrorPage from '../Error.view';
+import PageTemplate from '../components/PageTemplate';
+import Feed from '../components/feed/Feed';
+import getPosts from '../api/getPosts.api';
+import ErrorPage from './Error.view';
 
 
 const FeedPage = () => {
