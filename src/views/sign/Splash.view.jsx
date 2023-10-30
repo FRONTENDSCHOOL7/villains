@@ -7,9 +7,9 @@ import Google from '../../assets/img/google.svg';
 import Facebook from '../../assets/img/facebook.svg';
 import Email from '../../assets/img/email.svg';
 import styled from 'styled-components';
-import pageUrlConfig from '../config/pageUrlConfig';
-import PageTemplate from '../components/PageTemplate';
-import { IconBtn } from '../components/Buttons';
+import pageUrlConfig from '../../config/pageUrlConfig';
+import PageTemplate from '../../components/PageTemplate';
+import { IconBtn } from '../../components/Buttons';
 
 const SplashPage = () => {
   const navigate = useNavigate();
