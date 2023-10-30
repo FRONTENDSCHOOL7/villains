@@ -30,25 +30,24 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v3
-        
+
       - name: Set up Node
         uses: actions/setup-node@v3
         with:
           node-version: 18
           cache: 'npm'
-          
+
       - name: Generate Environment Variables File
         run:
-          echo "VITE_BASE_URL=${{ secrets.VITE_BASE_URL }}" >> .env
-          echo "VITE_TRAIN_KEY=${{ secrets.VITE_TRAIN_KEY }}" >> .env
-          echo "VITE_SEOUL_KEY=${{ secrets.VITE_SEOUL_KEY }}" >> .env
-          echo "VITE_MAP_KEY=${{ secrets.VITE_MAP_KEY }}" >> .env
+          echo "VITE_BASE_URL=${{ secrets.VITE_BASE_URL }}" >> .env.production echo "VITE_TRAIN_KEY=${{
+          secrets.VITE_TRAIN_KEY }}" >> .env.production echo "VITE_SEOUL_KEY=${{ secrets.VITE_SEOUL_KEY }}" >>
+          .env.production echo "VITE_MAP_KEY=${{ secrets.VITE_MAP_KEY }}" >> .env.production
         env:
           VITE_BASE_URL: ${{ secrets.VITE_BASE_URL }}
           VITE_TRAIN_KEY: ${{ secrets.VITE_TRAIN_KEY }}
           VITE_SEOUL_KEY: ${{ secrets.VITE_SEOUL_KEY }}
           VITE_MAP_KEY: ${{ secrets.VITE_MAP_KEY }}
-          
+
       - name: Install dependencies
         run: npm install
       - name: Build
