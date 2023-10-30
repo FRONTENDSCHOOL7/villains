@@ -11,5 +11,5 @@ export default defineConfig({
       { find: '@components', replacement: './components' },
     ],
   },
-  base: process.env.NODE_ENV === 'development' ? '/' : '/VILLAINS/',
+  base: process.env.NODE_ENV === 'production' ? '/VILLAINS/' : '/',
 });
