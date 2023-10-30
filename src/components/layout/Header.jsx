@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import SearchBar from "../searchbar/searchbar";
+import SearchBar from "../searchbar/searchbar.jsx";
 import { useLocation } from "react-router";
 import queryAtom from "../../atoms/queryAtom";
 import { useRecoilState } from "recoil";
