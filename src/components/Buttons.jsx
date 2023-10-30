@@ -98,7 +98,6 @@ const IconButton = styled(BlueLongButton)`
 const SmallButton = styled(BlueLongButton)`
   padding: 8px 20px 8px 20px;
   border-radius: 32px;
-  flex-grow: 1;
 `;
 
 const IconLabelButton = styled.button`
