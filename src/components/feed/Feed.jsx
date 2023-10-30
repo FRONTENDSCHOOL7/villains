@@ -17,12 +17,7 @@ const Feed = ({ posts }) => {
           <PostCard post={post} key={post._id} />
         ))}
       </PostList>
-      <FloatingButton
-        img={write}
-        onClick={() => {
-          navigate(pageUlrConfig.feedWritePage);
-        }}
-      />
+      <FloatingButton img={write} onClick={() => navigate(pageUlrConfig.feedWritePage)} />
     </div>
   );
 };

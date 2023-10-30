@@ -36,12 +36,13 @@ const PostCard = ({ post }) => {
   // post.image 값을 ',' 기준으로 분리하고 첫 번째 이미지 URL 선택
   const firstImageUrl = post.image ? post.image.split(',')[0] : null;
 
+  const handleCardClick = () => {
+    const feedDetailUrl = `${pageUlrConfig.feedDetailPage}/${post._id}`;
+    navigate(feedDetailUrl);
+  };
+
   return (
-    <Card
-      onClick={() => {
-        navigate(pageUlrConfig.feedDetailPage);
-      }}
-    >
+    <Card onClick={handleCardClick}>
       {firstImageUrl && <CardImage src={firstImageUrl} alt="" />}
       <CardContent>
         <Title>{post.content.contents}</Title>
