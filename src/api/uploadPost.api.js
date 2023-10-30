@@ -22,7 +22,7 @@ const uploadPost = async (content, urls, location) => {
     const response = await client.post('/post', postData, { ...headers });
 
     if (response.data) {
-      return true;
+      return response.data.post;
     } else {
       return false;
     }

@@ -84,7 +84,10 @@ const FeedWritePage = () => {
     const result = await uploadPost(content, urls, location);
 
     if (result) {
-      // uploadPost의 리턴값이 true일 때, 해당 게시글의 상세 페이지로 이동하는 로직 추가
+      // 게시글 업로드가 성공하면, 해당 게시글의 상세 페이지로 이동
+      console.log(result)
+      const feedDetailUrl = `${pageUrlConfig.feedDetailPage}/${result.id}`;
+      navigate(feedDetailUrl);
     }
   };
 

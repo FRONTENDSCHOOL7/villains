@@ -7,12 +7,19 @@ import profileImage from '../../assets/img/basic-profile.svg';
 import heart from '../../assets/img/heart.svg';
 import heartFilled from '../../assets/img/heart-filled.svg';
 import comment from '../../assets/img/message-circle.svg';
+import { Swiper, SwiperSlide } from 'swiper/react';
+import { Pagination, Navigation } from 'swiper/modules';
+import 'swiper/css';
+import 'swiper/css/pagination';
+import 'swiper/css/navigation';
 
 const FeedDetail = ({ post }) => {
   const createdDate = useFormatDate(post.createdAt);
   const { toggleHeartStatus, loading, error } = postHeart();
   const [isHearted, setIsHearted] = useState(post.hearted);
   const [heartCount, setHeartCount] = useState(post.heartCount);
+  const postImage = post.image.split(',');
+  console.log(postImage);
 
   const handleHeartClick = async (event) => {
     event.stopPropagation();
@@ -40,10 +47,22 @@ const FeedDetail = ({ post }) => {
           </UserInfo>
           <DateText>{createdDate}</DateText>
         </UserHeader>
-        {post.image && (
-          <ImageContainer>
-            <Image src={post.imageUrl} alt="post" />
-          </ImageContainer>
+        {postImage && (
+          <SwiperWrapper>
+            <Swiper
+              navigation={true}
+              spaceBetween={10}
+              slidesPerView={1}
+              pagination={{ clickable: true, dynamicBullets: true }}
+              modules={[Pagination, Navigation]}
+            >
+              {postImage.map((imgUrl, index) => (
+                <SwiperSlide key={index}>
+                  <Image src={imgUrl} alt="" />
+                </SwiperSlide>
+              ))}
+            </Swiper>
+          </SwiperWrapper>
         )}
         <ContentText>{JSON.parse(post.content).contents}</ContentText>
         <IconsContainer>
@@ -64,7 +83,7 @@ export default FeedDetail;
 
 const PostWrapper = styled.div`
   width: 100%; // 필요에 따라 수정 가능합니다.
-  padding: 20px 20px;
+  padding: 20px 0;
   border-bottom: 1px solid #ccc;
 `;
 
@@ -75,6 +94,7 @@ const PostContainer = styled.div`
 
 const UserHeader = styled.div`
   width: 100%;
+  padding: 0 20px;
   display: flex;
   flex-wrap: nowrap;
   align-items: center;
@@ -111,20 +131,15 @@ const DateText = styled(Accountname)`
   align-self: flex-end;
 `;
 
-const ImageContainer = styled.div`
-  width: 100%;
-  margin-top: 20px;
-  margin-bottom: 15px;
-`;
-
 const Image = styled.img`
-  width: 100%;
+  width: calc(100% - 48px);
+  height: 260px;
   border-radius: 10px;
 `;
 
 const ContentText = styled.p`
   width: 100%;
-  padding: 0 16px;
+  padding: 0 36px;
   margin-bottom: 15px;
   font-size: 14px;
   line-height: 20px;
@@ -133,7 +148,49 @@ const ContentText = styled.p`
 `;
 
 const IconsContainer = styled.div`
-  padding: 0 16px;
+  padding: 0 36px;
   display: flex;
   gap: 8px;
+`;
+
+const SwiperWrapper = styled.div`
+  width: 100%;
+  padding: 0 12px;
+  margin-bottom: 20px;
+  overflow: visible;
+  position: relative;
+  text-align: center;
+
+  .swiper-button-prev,
+  .swiper-button-next {
+    width: 30px;
+    height: 30px;
+    color: #000;
+    background-color: #fff;
+    border-radius: 50%;
+    filter: drop-shadow(0px 2px 4px rgba(0, 0, 0, 0.25));
+    opacity: 0;
+    transition: opacity 0.3s;
+  }
+
+  .swiper-button-prev::after,
+  .swiper-button-next::after {
+    font-size: 14px;
+  }
+
+  // hover 상태에서는 화살표를 보이게 합니다.
+  &:hover {
+    .swiper-button-prev,
+    .swiper-button-next {
+      opacity: 1;
+    }
+
+    .swiper-button-disabled {
+      opacity: 0.4;
+    }
+  }
+
+  .swiper-pagination-bullet-active {
+    background: #3c58c1;
+  }
 `;
