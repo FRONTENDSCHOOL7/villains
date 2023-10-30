@@ -15,6 +15,13 @@ import queryFocusAtom from "../atoms/queryFocusAtom";
 const HomePage = () => {
   const [subOneInfo, setSubOneInfo] = useRecoilState(subOneAtom);
   const [list, setList] = useState([]);
+  const [count, setCount] = useState(0);
+  console.log('start', count);
+
+  useEffect(()=>{
+    setCount(count+1);
+    console.log(count);
+  },[])
   
   //전역에 저장한 검색어 꺼내오기
   const query = useRecoilValue(queryAtom);
@@ -27,13 +34,13 @@ const HomePage = () => {
       setSubOneInfo([...dataList].filter(elem => elem.routNm === "1호선"));
     });
   }, []);
+
   
   const allList = subOneInfo;
   useEffect(()=>{
     allList.map((data, index)=>{
       if(data.stinNm.includes(query) && !list.find(elem => elem[0].includes(data.stinNm))){
         setList([...list, [data.stinNm, data.stinCd.padStart(4, '0')]]);
-        console.log(list);
       }
     })
     if(query === "") setList([]);
@@ -48,12 +55,12 @@ const HomePage = () => {
   const { latitude, longitude } = location ?? {latitude:33, longitude: 130};
   
   //로컬 스토리지의 사용자를 관리자로 해놓았습니다. 이 부분 나중에 교체 필요!!
-  const user = JSON.parse(localStorage.getItem('admin'));
+  const user = JSON.parse(localStorage.getItem('user'));
   const {data, isError, isLoading, isFetching} = useQuery(contactQuery(user));
   const [posts, setPosts] = useState([]);
 
   useEffect(()=>{
-    if(data)    setPosts(data.data.post);
+    if(data)  setPosts(data.data.post);
   }, [!isLoading && data]);
 
   return(
@@ -63,12 +70,13 @@ const HomePage = () => {
         : (
           <Map 
             center={{ lat: latitude, lng: longitude }}   
-            style={{ width: '100%', height: '100%' }} 
+            style={{ width: '100%', height: '100vh' }} 
             level={3}                                  
           >
           {posts.map((post, index) => {
               // const content = JSON.parse(post.content.split("'").join('"'));
               // 계정마다 쓰인 content가 달라서 위의 경우는 문제가 생깁니다.
+              console.log("here")
               return (
                 <CustomOverlayMap key={post.id} position={{ lat:post?.latitude ?? latitude+index+5, lng: post?.longitude ?? longitude+index+5}}>
                   <StyledMarker>{post.content}</StyledMarker>

@@ -1,8 +1,10 @@
 import { React, useState, useEffect } from 'react';
 import styled from 'styled-components';
 import { useNavigate } from 'react-router';
-import pageUrlConfig from '../config/pageUrlConfig';
-import client from '../config/api.config';
+import pageUrlConfig from '../../config/pageUrlConfig';
+import client from '../../config/api.config';
+import pageUrlConfig from '../../config/pageUrlConfig';
+import client from '../../config/api.config';
 import { useForm } from 'react-hook-form';
 import PageTemplate from '../components/PageTemplate';
 import { BlueLongBtn, WhiteLongBtn } from '../components/Buttons';
@@ -55,7 +57,6 @@ const SignInPage = () => {
           password: userPwd,
         },
       });
-      console.log(response);
       // 성공시 localstorage 저장 후 /main 이동
       if (response.status === 200 && response.data.status !== 422) {
         const userInfo = {
@@ -75,6 +76,9 @@ const SignInPage = () => {
     }
   };
 
+  const handleClickLoginToMain = () =>{
+    navigate(pageUrlConfig.homePage);
+  };
   const goToSignUp = () => {
     navigate(pageUrlConfig.signUpPage);
   };
