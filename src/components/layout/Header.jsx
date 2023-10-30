@@ -15,7 +15,7 @@ const Header = () => {
     let IsShowSearchBar = true;
     
     const handleChangeQuery = (event) => {
-        setQuery(event.target.value)
+        setQuery(event.target.value);
         setQueries(event.target.value);
     }
 
@@ -43,10 +43,12 @@ const Header = () => {
 
 const StyledHeader = styled.header`
     position: fixed;
-    inset: 0;
-    margin: auto;
-    margin-top: 0;
+    top: 0;
+    right: 0;
+    left: 0;
+    margin: 0 auto;
     max-width: 412px;
+    z-index: 10;
 `;
 
 
