@@ -8,6 +8,11 @@ import FloatingButton from '../FloatingButton.style';
 const Feed = ({ posts }) => {
   const navigate = useNavigate();
 
+
+  const handleFeedWriteNav= () => {
+    navigate(pageUlrConfig.feedWritePage);
+  };
+
   return (
     <div>
       <Header>피드(임시 헤더)</Header>
@@ -17,7 +22,7 @@ const Feed = ({ posts }) => {
           <PostCard post={post} key={post._id} />
         ))}
       </PostList>
-      <FloatingButton img={write} onClick={() => navigate(pageUlrConfig.feedWritePage)} />
+      <FloatingButton img={write} onClick={handleFeedWriteNav} />
     </div>
   );
 };

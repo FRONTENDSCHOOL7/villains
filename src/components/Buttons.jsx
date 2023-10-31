@@ -54,6 +54,15 @@ const BlueSmallBtn = ({ text, onClick, disabled }) => {
   );
 };
 
+const IconLabelBtn = ({ icon, count, onClick, disabled, alt }) => {
+  return (
+    <IconLabelButton onClick={onClick} disabled={disabled}>
+      <img src={icon} alt={alt} />
+      <span>{count}</span>
+    </IconLabelButton>
+  );
+};
+
 const BlueLongButton = styled.button`
   padding: 13px 0 13px 0;
   background-color: #3c58c1;
@@ -92,4 +101,12 @@ const SmallButton = styled(BlueLongButton)`
   flex-grow: 1;
 `;
 
-export { BlueLongBtn, WhiteLongBtn, IconBtn, BlueSmallBtn };
+const IconLabelButton = styled.button`
+  display: flex;
+  gap: 4px;
+  color: #767676;
+  font-size: 12px;
+  line-height: 20px;
+`;
+
+export { BlueLongBtn, WhiteLongBtn, IconBtn, BlueSmallBtn, IconLabelBtn };
