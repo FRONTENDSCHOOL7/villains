@@ -1,6 +1,6 @@
 import { useNavigate, useParams } from 'react-router';
 import getPostDetail from '../api/getPostDetail.api';
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import styled from 'styled-components';
 import postHeart from '../api/postHeart.api';
 import useFormatDate from '../hooks/useFormatDate';
@@ -17,18 +17,26 @@ import swiperStyles from '../style/swiperStyle';
 import PageTemplate from '../components/PageTemplate';
 import pageUrlConfig from '../config/pageUrlConfig';
 import { IconLabelBtn } from '../components/Buttons';
+import getComments from '../api/getComments.api';
+import postComments from '../api/postComments.api';
+import Comment from '../components/feed/Comment';
 
 const FeedDetailPage = () => {
   const { postId } = useParams();
   const { fetchPost, loading, error } = getPostDetail();
+  const { fetchComments } = getComments();
+  const { uploadComment } = postComments();
   const navigate = useNavigate();
 
   const [post, setPost] = useState(null);
+  const [commentsList, setCommentsList] = useState([]);
   const createdDate = useFormatDate(post?.createdAt);
   const { toggleHeartStatus } = postHeart();
   const [isHearted, setIsHearted] = useState(post?.hearted);
   const [heartCount, setHeartCount] = useState(post?.heartCount);
   const postImage = post?.image.split(',');
+
+  const inputComment = useRef();
 
   useEffect(() => {
     const fetchData = async () => {
@@ -37,6 +45,13 @@ const FeedDetailPage = () => {
         return navigate(pageUrlConfig.feedPage);
       } else {
         setPost(result);
+
+        // post 요청이 성공하면 코멘트리스트 요청
+        const resultComment = await fetchComments(postId);
+        if (resultComment) {
+          setCommentsList(resultComment);
+          console.log(resultComment);
+        }
       }
     };
     fetchData();
@@ -56,6 +71,18 @@ const FeedDetailPage = () => {
     if (isSuccess) {
       setIsHearted(!isHearted);
       setHeartCount((prevCount) => (isHearted ? prevCount - 1 : prevCount + 1));
+    }
+  };
+
+  const handlePostCommnets = async () => {
+    const commentContent = inputComment.current.value;
+    const newComment = await uploadComment(postId, commentContent);
+
+    if (newComment) {
+      // 새 댓글을 포함하도록 commentsList 상태를 업데이트
+      setCommentsList((prevCommentsList) => [...prevCommentsList, newComment]);
+
+      inputComment.current.value = '';
     }
   };
 
@@ -108,6 +135,25 @@ const FeedDetailPage = () => {
             </IconsContainer>
           </PostContainer>
         </PostWrapper>
+      )}
+
+      {commentsList && (
+        <CommentContaier>
+          <ul>
+            {commentsList.map((comment, idx) => (
+              <Comment key={idx} comment={comment} />
+            ))}
+          </ul>
+        </CommentContaier>
+      )}
+
+      {post && (
+        <form>
+          <input type="text" ref={inputComment} />
+          <button type="button" onClick={handlePostCommnets}>
+            게시
+          </button>
+        </form>
       )}
     </PageTemplate>
   );
@@ -201,4 +247,8 @@ const SwiperWrapper = styled.div`
   overflow: visible;
   position: relative;
   text-align: center;
+`;
+
+const CommentContaier = styled.section`
+  padding: 20px 16px 60px;
 `;
