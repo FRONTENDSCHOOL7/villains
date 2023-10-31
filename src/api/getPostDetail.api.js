@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import client from '../config/api.config';
 
-const getPost = () => {
+const getPostDetail = () => {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
 
@@ -23,4 +23,4 @@ const getPost = () => {
   return { fetchPost, loading, error };
 };
 
-export default getPost;
+export default getPostDetail;

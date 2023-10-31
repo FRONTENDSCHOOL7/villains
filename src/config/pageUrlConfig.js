@@ -6,7 +6,6 @@ class pageUlrConfig {
   resultPage = `/main`;
   feedPage = `/feed`;
   feedWritePage = '/feed/write';
-  feedDetailPage = '/feed/detail';
 
   addParams(url, params) {
     let querystring = [];

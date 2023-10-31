@@ -28,15 +28,15 @@ const PostCard = ({ post }) => {
   // post.image 값을 ',' 기준으로 분리하고 첫 번째 이미지 URL 선택
   const firstImageUrl = post.image ? post.image.split(',')[0] : null;
 
-  const handleCardClick = () => {
-    const feedDetailUrl = `${pageUlrConfig.feedDetailPage}/${post._id}`;
+  const handleFeedDetailNav = () => {
+    const feedDetailUrl = `${pageUlrConfig.feedPage}/${post._id}`;
     navigate(feedDetailUrl);
   };
 
   const createdDate = useFormatDate(post.createdAt);
 
   return (
-    <Card onClick={handleCardClick}>
+    <Card onClick={handleFeedDetailNav}>
       {firstImageUrl && <CardImage src={firstImageUrl} alt="" />}
       <CardContent>
         <Title>{post.content.contents}</Title>

@@ -6,10 +6,8 @@ const uploadPost = async (content, urls, location) => {
       content: JSON.stringify({
         postId: 'villains',
         contents: content,
-        location: {
-          latitude: location ? location.latitude : 33,
-          longitude: location ? location.longitude : 130,
-        },
+        latitude: location ? location.latitude : 0,
+        longitude: location ? location.longitude : 0,
       }),
       image: urls,
     },
