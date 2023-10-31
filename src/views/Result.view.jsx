@@ -58,6 +58,10 @@ const ResultPage = () => {
 
 export default ResultPage;
 
+const StyledList = styled.li`
+    
+`
+
 const StyledTag = styled.span`
     background-color: #3C58C1;
     color: white;
