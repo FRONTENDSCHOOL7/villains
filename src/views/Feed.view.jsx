@@ -3,7 +3,6 @@ import Feed from '../components/feed/Feed';
 import getPosts from '../api/getPosts.api';
 import ErrorPage from './Error.view';
 
-
 const FeedPage = () => {
   const { posts, loading, error } = getPosts();
 

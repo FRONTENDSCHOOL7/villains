@@ -6,7 +6,7 @@ import client from '../config/api.config';
 import { useForm } from 'react-hook-form';
 import PageTemplate from '../components/PageTemplate';
 import { BlueLongBtn, BlueSmallBtn } from '../components/Buttons';
-import CheckBox from '../components/CheckBox';
+import CheckBox from './CheckBox';
 
 const SignUpPage = () => {
   // react-hook-form
@@ -206,7 +206,13 @@ const SignUpPage = () => {
             signInError && <Warn color={'#EB5757'}>*{signInError}</Warn>
           )}
           <ChildCheckBoxList>
-            <CheckBox text={'전체동의'} id={'accept_all'} name={'accept_all'} checked={allAgreed} onChange={handleAllCheckBoxChanged}></CheckBox>
+            <CheckBox
+              text={'전체동의'}
+              id={'accept_all'}
+              name={'accept_all'}
+              checked={allAgreed}
+              onChange={handleAllCheckBoxChanged}
+            ></CheckBox>
           </ChildCheckBoxList>
           <ChildCheckBoxList>
             <CheckBoxWrap>

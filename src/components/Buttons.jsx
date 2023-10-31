@@ -32,11 +32,11 @@ const WhiteLongBtn = ({ text, onClick, disabled }) => {
 const IconBtn = ({ children, onClick, disabled }) => {
   const handleClick = (event) => {
     event.preventDefault();
-  }
+  };
   return (
-        <IconButton onClick={onClick ?? handleClick} disabled={disabled ?? false}>
-          {...children}
-        </IconButton>
+    <IconButton onClick={onClick ?? handleClick} disabled={disabled ?? false}>
+      {...children}
+    </IconButton>
   );
 };
 
@@ -95,6 +95,24 @@ const IconButton = styled(BlueLongButton)`
   }
 `;
 
+const NavButton = styled(IconButton)`
+  border-color: white;
+  background-color: #ccc;
+  color: #767676;
+  border-radius: 8px;
+  width: 100%;
+  position: relative;
+  &:hover::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    margin: auto;
+    margin-top: 0;
+    width: 50%;
+    border-top: 2px solid #3c58c1;
+  }
+`;
+
 const SmallButton = styled(BlueLongButton)`
   padding: 8px 20px 8px 20px;
   border-radius: 32px;
@@ -108,4 +126,4 @@ const IconLabelButton = styled.button`
   line-height: 20px;
 `;
 
-export { BlueLongBtn, WhiteLongBtn, IconBtn, BlueSmallBtn, IconLabelBtn };
+export { BlueLongBtn, WhiteLongBtn, IconBtn, NavButton, BlueSmallBtn, IconLabelBtn };
