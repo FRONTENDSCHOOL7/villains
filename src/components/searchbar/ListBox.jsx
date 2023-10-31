@@ -1,23 +1,19 @@
-import React, { useEffect } from "react";
-import { Link } from "react-router-dom";
-import pageUrlConfig from "../../config/pageUrlConfig";
+import React from "react";
 import styled from "styled-components";
 import queryAtom from "../../atoms/queryAtom";
 import { useRecoilValue } from "recoil";
+import queryFocusAtom from "../../atoms/queryFocusAtom";
 
 /**@param list: 필터링된 데이터를 추가하기 */
-const ListBox = ({ list }) => {
-    const query = useRecoilValue(queryAtom);
+const ListBox = ({ list, onClick }) => {
     return(
         <StyledBox>
             {
                 list.map((d, index)=>{
                     return(
-                        <Link  key={`list_box_${index}`} to={`${pageUrlConfig.resultPage}/${query}`}>
-                            <StyledLinkBox>
-                                {d[0]}
-                            </StyledLinkBox>
-                        </Link>
+                        <StyledLinkBtn key={`list_${index}`} onClick={onClick} data-etc={d[1]}>
+                            {d[0]}
+                        </StyledLinkBtn>
                     )
                 })
             }
@@ -33,7 +29,8 @@ const StyledBox = styled.div`
 `;
 
 
-const StyledLinkBox = styled.div`
+const StyledLinkBtn = styled.button`
+    width: 100%;
     height: 60px;
     border-bottom: 1px solid #DBDBDB;
     padding: 20px;

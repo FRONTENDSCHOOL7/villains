@@ -29,19 +29,14 @@ const WhiteLongBtn = ({ text, onClick, disabled }) => {
   );
 };
 
-const IconBtn = ({ img, text, onClick, disabled }) => {
+const IconBtn = ({ children, onClick, disabled }) => {
+  const handleClick = (event) => {
+    event.preventDefault();
+  }
   return (
-    <>
-      {disabled ? (
-        <IconButton onClick={onClick} img={img} disabled>
-          {text}
+        <IconButton onClick={onClick ?? handleClick} disabled={disabled ?? false}>
+          {...children}
         </IconButton>
-      ) : (
-        <IconButton onClick={onClick} img={img}>
-          {text}
-        </IconButton>
-      )}
-    </>
   );
 };
 

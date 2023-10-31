@@ -2,9 +2,9 @@ import axios from 'axios';
 
 const getSubOneInfo = async () => {
   const response = await axios.get(
-    `https://openapi.kric.go.kr/openapi/trainUseInfo/subwayRouteInfo?serviceKey=${
-      import.meta.env.VITE_TRAIN_KEY
-    }&format=json&mreaWideCd=01&lnCd=1`,
+    `http://openAPI.seoul.go.kr:8088/${
+      import.meta.env.VITE_SEOUL_KEY
+    }/json/SearchInfoBySubwayNameService/1/777/`,
   );
   return response;
 };
