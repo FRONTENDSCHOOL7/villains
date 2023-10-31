@@ -19,7 +19,7 @@ const routeConfig = [
   { path: `/feed`, element: <FeedPage /> },
   { path: `/feed/write`, element: <FeedWritePage /> },
   { path: `/feed/detail/:postId`, element: <FeedDetailPage /> },
-  { path: `/search`, element: <ResultPage /> },
+  { path: `/station/:stationId`, element: <ResultPage /> },
 ];
 
 export default routeConfig;

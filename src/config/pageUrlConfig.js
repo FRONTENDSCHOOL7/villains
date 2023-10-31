@@ -3,7 +3,7 @@ class pageUlrConfig {
   splashPage = `/`;
   signInPage = '/signIn';
   signUpPage = '/signUp';
-  resultPage = `/search`;
+  resultPage = `/station`;
   feedPage = `/feed`;
   feedWritePage = '/feed/write';
   feedDetailPage = '/feed/detail';
