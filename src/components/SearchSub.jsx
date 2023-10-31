@@ -9,6 +9,7 @@ import getSubOneInfo from '../api/getSubOneInfo';
 import subOneAtom from '../atoms/subOneAtom';
 import { Input, Label } from '../components/Input.style';
 import DropDown from './DropDown';
+import IconSearch from '../assets/img/icon-search.svg';
 
 const SearchSub = ({ which, labelText, placeholder }) => {
   const [subOneInfo, setSubOneInfo] = useRecoilState(subOneAtom);
@@ -44,9 +45,9 @@ const SearchSub = ({ which, labelText, placeholder }) => {
     setQuery(e.target.value);
   };
 
-  const handleBlur = () => {
-    setFocus(false);
-  };
+  // const handleBlur = () => {
+  //   setFocus(false);
+  // };
 
   const handleFocus = () => {
     setFocus(true);
@@ -59,15 +60,15 @@ const SearchSub = ({ which, labelText, placeholder }) => {
   return (
     <StyledForm>
       <Label htmlFor="input">{labelText}</Label>
-      <Input
+      <InputField
         id="input"
         placeholder={placeholder}
         onChange={handleQueryChange}
         onFocus={handleFocus}
-        onBlur={handleBlur}
+        // onBlur={handleBlur}
         value={query}
       />
-      <DropDown list={list} setQuery={setQuery} />
+      <DropDown list={list} setQuery={setQuery} setFocus={setFocus} />
     </StyledForm>
   );
 };
@@ -76,6 +77,11 @@ const StyledForm = styled.form`
   display: flex;
   flex-direction: column;
   font-size: 14px;
+`;
+const InputField = styled(Input)`
+  background-image: url(${IconSearch});
+  background-repeat: no-repeat;
+  background-position: 98% 50%;
 `;
 
 export default SearchSub;

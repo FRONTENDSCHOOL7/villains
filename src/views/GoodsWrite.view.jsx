@@ -1,4 +1,4 @@
-import { React, useState, useEffect } from 'react';
+import { React, useState, useEffect, useRef } from 'react';
 import PageTemplate from '../components/PageTemplate';
 import styled from 'styled-components';
 import SearchSub from '../components/SearchSub';
@@ -6,41 +6,125 @@ import { Input, Label } from '../components/Input.style';
 import BackArrow from '../assets/img/icon-arrow-left.svg';
 import { BlueSmallBtn } from '../components/Buttons';
 import { useForm } from 'react-hook-form';
+import { useRecoilValue } from 'recoil';
+import goodsQueryStartAtom from '../atoms/goodsQueryStartAtom';
+import goodsQueryEndAtom from '../atoms/goodsQueryEndAtom';
+import FloatingButton from '../components/FloatingButton.style';
+import ImageIcon from '../assets/img/image-icon.svg';
+import ImageBigIcon from '../assets/img/image-big-icon.svg';
+import postImage from '../api/postImage';
+import client from '../config/api.config';
 
 const GoodsWritePage = () => {
+  //IsShowSearchBar는 첫 렌더 시에만 필요한 값이며, useState를 쓰면 안됩니다.
+  //useState로 사용할 경우 상태가 변경되어 다시 렌더가 되면 또 값이 바뀌고 리렌더링 시키는 무한 렌더링 상태가 됩니다.
+  let IsShowSearchBar = true;
+
   // react-hook-form
   const {
     register,
     watch,
     formState: { isSubmitted, errors },
   } = useForm({ mode: 'onChange' });
-  const startSubway = watch('startSubway');
-  const endSubway = watch('endSubway');
+  const startSubway = useRecoilValue(goodsQueryStartAtom);
+  const endSubway = useRecoilValue(goodsQueryEndAtom);
   const price = watch('price');
   const info = watch('info');
-  //IsShowSearchBar는 첫 렌더 시에만 필요한 값이며, useState를 쓰면 안됩니다.
-  //useState로 사용할 경우 상태가 변경되어 다시 렌더가 되면 또 값이 바뀌고 리렌더링 시키는 무한 렌더링 상태가 됩니다.
-  let IsShowSearchBar = true;
 
-  const handleSaveBtn = async () => {
-    // try {
-    //   const response = await client.post('/product', {
-    //   })
-    // }
-    console.log(info);
-    console.log(startSubway);
-    console.log(endSubway);
-    console.log(price);
+  const [image, setImage] = useState({
+    file: '',
+    url: '',
+  });
+
+  let inputRef;
+
+  const handleSaveImage = (e) => {
+    e.preventDefault();
+    const fileReader = new FileReader();
+    console.log(e);
+    if (e.target.files[0]) {
+      fileReader.readAsDataURL(e.target.files[0]);
+    }
+    fileReader.onload = () => {
+      setImage({
+        file: e.target.files[0],
+        url: fileReader.result,
+      });
+      console.log(image);
+    };
+  };
+
+  const handleFloatBtn = (e) => {
+    e.preventDefault();
+    inputRef.click();
+  };
+
+  const handleSubmitSaveBtn = async () => {
+    const urls = await postImage(image.file);
+    const user = JSON.parse(localStorage.getItem('user'));
+    const adminToken = JSON.parse(localStorage.getItem('admin')).token;
+    const linkData = JSON.stringify({
+      accountname: user.accountname,
+      itemInfo: info,
+      state: '요청 중',
+    });
+    try {
+      const response = await client.post(
+        '/product',
+        {
+          product: {
+            itemName: startSubway + '~' + endSubway,
+            price: parseInt(price),
+            link: linkData,
+            itemImage: urls,
+          },
+        },
+        client.BothType(adminToken),
+      );
+      console.log(response);
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   return (
     <PageTemplate>
       <Header>
         <img src={BackArrow} alt="" />
-        <BlueSmallBtn text={'저장하기'} onClick={handleSaveBtn}></BlueSmallBtn>
+        {errors.price ||
+        startSubway === '' ||
+        info === '' ||
+        endSubway === '' ||
+        price === '' ||
+        image.url === '' ? (
+          <BlueSmallBtn text={'저장하기'} onClick={handleSubmitSaveBtn} disabled={true}></BlueSmallBtn>
+        ) : (
+          <BlueSmallBtn text={'저장하기'} onClick={handleSubmitSaveBtn}></BlueSmallBtn>
+        )}
       </Header>
       <Form>
-        <input type="file" />
+        <PreviewArea>
+          {image.url !== '' ? (
+            <Previewimg src={image.url} alt="이미지" />
+          ) : (
+            <>
+              <img src={ImageBigIcon} alt="큰 아이콘" />
+              <p>
+                오른쪽 하단 버튼을 눌러
+                <br />
+                이미지를 추가해주세요.
+              </p>
+            </>
+          )}
+          <CustomFloatingBtn img={ImageIcon} onClick={handleFloatBtn}></CustomFloatingBtn>
+        </PreviewArea>
+        <ImgInput
+          type="file"
+          accept="image/*"
+          onChange={handleSaveImage}
+          onClick={(e) => (e.target.value = null)}
+          ref={(refParam) => (inputRef = refParam)}
+        />
         <SearchInput>
           {IsShowSearchBar && (
             <SearchSub
@@ -65,19 +149,26 @@ const GoodsWritePage = () => {
         <Input
           name="price"
           id="price"
-          type="number"
+          type="text"
           placeholder="숫자만 입력 가능합니다."
           aria-invalid={isSubmitted ? (errors.price ? 'true' : 'false') : undefined}
           {...register('price', {
             pattern: {
               value: /^\d+$/, // 정수만 허용
-              message: '*1 이상의 값을 입력하세요.',
+              message: '*정수만 입력하세요.',
             },
           })}
         />
-        {errors.price && <span>{errors.price.message}</span>}
+        {errors.price && <Warn>{errors.price.message}</Warn>}
         <Label htmlFor="info">택배 정보</Label>
-        <InfoArea name="info" id="info" type="text" placeholder="택배 정보를 입력해주세요." />
+        <InfoArea
+          name="info"
+          id="info"
+          type="text"
+          placeholder="택배 정보를 입력해주세요."
+          aria-invalid={isSubmitted ? (info ? 'false' : 'true') : undefined}
+          {...register('info')}
+        />
       </Form>
     </PageTemplate>
   );
@@ -95,6 +186,7 @@ const Form = styled.form`
 `;
 const SearchInput = styled.div``;
 const InfoArea = styled.textarea`
+  margin-top: 10px;
   height: 64px;
   border-radius: 5px;
   border: 1px solid #dbdbdb;
@@ -106,4 +198,37 @@ const InfoArea = styled.textarea`
     outline: 1px solid #3c58c1;
   }
 `;
+const ImgInput = styled.input`
+  display: none;
+`;
+const PreviewArea = styled.span`
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  color: #c4c4c4;
+  font-size: 12px;
+  line-height: normal;
+  margin: 50px 0 20px 0;
+  width: 100%;
+  height: 204px;
+  border-radius: 10px;
+  border: 0.5px solid #dbdbdb;
+  background-color: #f2f2f2;
+  position: relative;
+`;
+const Previewimg = styled.img`
+  width: 100%;
+  height: 100%;
+`;
+const CustomFloatingBtn = styled(FloatingButton)`
+  position: absolute;
+  bottom: 15px;
+  right: 15px;
+`;
+const Warn = styled.strong`
+  color: #eb5757;
+  font-size: 12px;
+`;
+
 export default GoodsWritePage;
