@@ -6,6 +6,7 @@ import { useRecoilState } from "recoil";
 import pageUrlConfig from "../../config/pageUrlConfig";
 import styled from "styled-components";
 
+
 const Header = () => {
     const [query, setQuery] = useState("");
     const [queries, setQueries] = useRecoilState(queryAtom);
@@ -27,17 +28,20 @@ const Header = () => {
         case `${pageUrlConfig.homePage}`:
             placeholder = `지하철역을 검색해주세요!`;
             break;
-        case `feed`:
+        case `${pageUrlConfig.feedPage}`:
             placeholder = `유저를 검색해주세요`;
             break;
         default:
-            IsShowSearchBar = false;
+            // IsShowSearchBar = false;
     }
 
     return (
+        <>
         <StyledHeader>
         {IsShowSearchBar && <SearchBar placeholder={placeholder} onChange={handleChangeQuery} value={query}/>}
         </StyledHeader>
+        <BackGround></BackGround>
+        </>
     )
 }
 
@@ -49,6 +53,12 @@ const StyledHeader = styled.header`
     right: 0;
     left: 0;
     margin: 0 auto;
+    padding: 8px;
     max-width: 412px;
+    height:  48px;
     z-index: 10;
 `;
+
+const BackGround = styled.div`
+    height:  48px;
+`
