@@ -4,6 +4,7 @@ import { useLocation } from "react-router";
 import queryAtom from "../../atoms/queryAtom";
 import { useRecoilState } from "recoil";
 import pageUrlConfig from "../../config/pageUrlConfig";
+import styled from "styled-components";
 
 const Header = () => {
     const [query, setQuery] = useState("");
@@ -34,10 +35,20 @@ const Header = () => {
     }
 
     return (
-        <header>
+        <StyledHeader>
         {IsShowSearchBar && <SearchBar placeholder={placeholder} onChange={handleChangeQuery} value={query}/>}
-        </header>
+        </StyledHeader>
     )
 }
 
 export default Header;
+
+const StyledHeader = styled.header`
+    position: fixed;
+    top: 0;
+    right: 0;
+    left: 0;
+    margin: 0 auto;
+    max-width: 412px;
+    z-index: 10;
+`;
