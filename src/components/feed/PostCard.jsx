@@ -7,7 +7,7 @@ import pageUlrConfig from '../../config/pageUrlConfig';
 import postHeart from '../../api/postHeart.api';
 import { useState } from 'react';
 import useFormatDate from '../../hooks/useFormatDate';
-import IconActionButton from './IconActionButton';
+import { IconLabelBtn } from '../Buttons';
 
 const PostCard = ({ post }) => {
   const navigate = useNavigate();
@@ -28,28 +28,30 @@ const PostCard = ({ post }) => {
   // post.image 값을 ',' 기준으로 분리하고 첫 번째 이미지 URL 선택
   const firstImageUrl = post.image ? post.image.split(',')[0] : null;
 
-  const handleCardClick = () => {
-    const feedDetailUrl = `${pageUlrConfig.feedDetailPage}/${post._id}`;
+  const handleFeedDetailNav = () => {
+    const feedDetailUrl = `${pageUlrConfig.feedPage}/${post._id}`;
     navigate(feedDetailUrl);
   };
 
   const createdDate = useFormatDate(post.createdAt);
 
+  console.log(post)
+
   return (
-    <Card onClick={handleCardClick}>
+    <Card onClick={handleFeedDetailNav}>
       {firstImageUrl && <CardImage src={firstImageUrl} alt="" />}
       <CardContent>
         <Title>{post.content.contents}</Title>
         <Author>@ {post.author.accountname}</Author>
         <Time>{createdDate}</Time>
         <IconsContainer>
-          <IconActionButton
+          <IconLabelBtn
             icon={isHearted ? heartFilled : heart}
             count={heartCount}
             onClick={handleHeartClick}
             disabled={loading}
           />
-          <IconActionButton icon={comment} count={post.comments.length} />
+          <IconLabelBtn icon={comment} count={post.comments.length} />
         </IconsContainer>
       </CardContent>
     </Card>
