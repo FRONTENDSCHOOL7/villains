@@ -47,7 +47,7 @@ const FeedDetail = ({ post }) => {
           </UserInfo>
           <DateText>{createdDate}</DateText>
         </UserHeader>
-        {postImage && (
+        {postImage[0] && (
           <SwiperWrapper>
             <Swiper
               navigation={true}
