@@ -1,6 +1,6 @@
 import PostCard from './PostCard';
 import styled from 'styled-components';
-import write from '../../assets/write.svg';
+import write from '../../assets/img/write.svg';
 import { useNavigate } from 'react-router-dom';
 import pageUlrConfig from '../../config/pageUrlConfig';
 import FloatingButton from '../FloatingButton.style';
@@ -17,12 +17,7 @@ const Feed = ({ posts }) => {
           <PostCard post={post} key={post._id} />
         ))}
       </PostList>
-      <FloatingButton
-        img={write}
-        onClick={() => {
-          navigate(pageUlrConfig.feedWritePage);
-        }}
-      />
+      <FloatingButton img={write} onClick={() => navigate(pageUlrConfig.feedWritePage)} />
     </div>
   );
 };

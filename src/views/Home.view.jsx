@@ -63,7 +63,7 @@ const HomePage = () => {
         : (
           <Map 
             center={{ lat: latitude, lng: longitude }}   
-            style={{ width: '100%', height: '100%' }} 
+            style={{ width: '100%', height: '100vh' }} 
             level={3}                                  
           >
           {posts.map((post, index) => {
