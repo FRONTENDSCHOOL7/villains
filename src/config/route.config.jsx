@@ -6,6 +6,7 @@ import ResultPage from '../views/Result.view';
 import SplashPage from '../views/Splash.view';
 import SignInPage from '../views/SignIn.view';
 import SignUpPage from '../views/SignUp.view';
+import GoodsWritePage from '../views/GoodsWrite.view';
 
 /** 라우트 등록하기
  * 1. routeConfig의 children에 객체를 이용해서 path와 element 입력하기
@@ -20,6 +21,7 @@ const routeConfig = [
   { path: `/feed`, element: <FeedPage /> },
   { path: `/feed/write`, element: <FeedWritePage /> },
   { path: `/feed/:postId`, element: <FeedDetailPage /> },
+  { path: `/goods/write`, element: <GoodsWritePage /> },
 ];
 
 export default routeConfig;
