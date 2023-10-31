@@ -1,12 +1,21 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
 
 /**@param list: 필터링된 데이터를 추가하기 */
-const DropDown = ({ list }) => {
+const DropDown = ({ list, setQuery, setFocus }) => {
+  const handleOnClick = (e) => {
+    console.log(e.target.textContent);
+    setQuery(e.target.textContent);
+    setFocus(false);
+  }
   return (
     <StyledBox>
       {list.map((d, index) => {
-        return <StyledLinkBox>{d[0]}</StyledLinkBox>;
+        return (
+          <StyledLinkBox key={`list_${index}`} onClick={handleOnClick} data-etc={d[1]}>
+            {d[0]}
+          </StyledLinkBox>
+        );
       })}
     </StyledBox>
   );
