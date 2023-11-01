@@ -40,7 +40,7 @@ const HomePage = () => {
 
   return (
     <PageTemplate>
-      <Map center={{ lat: latitude, lng: longitude }} style={{ width: '100%', height: '100vh' }} level={3}>
+      <Map center={{ lat: latitude, lng: longitude }} style={{ width: '100%', height: '90vh' }} level={3}>
         {posts.map((post, index) => {
           // const content = JSON.parse(post.content?.split("'").join('"'));
           // 계정마다 쓰인 content가 달라서 위의 경우는 문제가 생깁니다.
