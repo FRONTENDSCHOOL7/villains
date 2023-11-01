@@ -65,10 +65,7 @@ const BlueSmallBtn = ({ text, onClick, disabled }) => {
   );
 };
 
-const DefaultBtn = () => {
 
-  return <SmallButton></SmallButton>
-}
 
 const IconLabelBtn = ({ icon, count, onClick, disabled, alt }) => {
   return (
@@ -79,29 +76,10 @@ const IconLabelBtn = ({ icon, count, onClick, disabled, alt }) => {
   );
 };
 
-const PrimaryStyle = css`
-  background-color: ${theme.color.primary};
-  color: ${theme.color.white};
-`;
-
-const SecondaryStyle = css`
-  background-color: ${theme.color.secondary};
-  color: ${theme.color.black};
-`;
-
-const BasicStyle = css`
-  background-color: ${theme.color.white};
-  color: ${theme.color.primary};
-`
-
-const StyledButton = styled.button`
-  ${(props)=>{props.variant}}
-
-`;
 
 const BlueLongButton = styled.button`
-  ${SelectedButton}
-  padding: 13px 0 13px 0;
+  ${PrimaryStyle}
+  padding: 13px 0;
   font-size: 14px;
   border-radius: 9999px;
   border: 1px solid #3c58c1;
@@ -149,7 +127,7 @@ const NavButton = styled(IconButton)`
 `;
 
 const SmallButton = styled(BlueLongButton)`
-  padding: 8px 20px 8px 20px;
+  padding: 8px 20px;
   border-radius: 32px;
 `;
 
