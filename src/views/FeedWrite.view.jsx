@@ -11,9 +11,9 @@ import ImagePreview from '../components/feed/ImagePreview';
 import arrowIcon from '../assets/img/icon-arrow-left.svg';
 import useBlockToBack from '../hooks/useBlockToBack';
 import pageUrlConfig from '../config/pageUrlConfig';
+import ResizingTextarea from '../components/feed/ResizingTextarea';
 
 const FeedWritePage = () => {
-  const textarea = useRef();
   const fileInputRef = useRef();
 
   const [content, setContent] = useState('');
@@ -26,7 +26,6 @@ const FeedWritePage = () => {
 
   const handleContentChange = (event) => {
     setContent(event.target.value);
-    handleResizeHeight();
   };
 
   const handleImageChange = (event) => {
@@ -52,11 +51,6 @@ const FeedWritePage = () => {
         files: [...prevData.files, ...files],
       }));
     });
-  };
-
-  const handleResizeHeight = () => {
-    textarea.current.style.height = 'auto';
-    textarea.current.style.height = textarea.current.scrollHeight + 'px';
   };
 
   const triggerFileInput = () => {
@@ -108,12 +102,12 @@ const FeedWritePage = () => {
       <FeedWriteForm>
         <form>
           <ImagePreview imageUrls={imagesData.urls} onDeleteImage={handleDeleteImage} />
-          <Textarea
-            ref={textarea}
+          <ResizingTextarea
             rows="1"
             placeholder="게시글 입력하기..."
             onChange={handleContentChange}
-          ></Textarea>
+            value={content}
+          />
 
           <InsertImageBtn htmlFor="file">
             <FloatingButton img={imageIcon} type="button" onClick={triggerFileInput} />
@@ -173,20 +167,4 @@ const InsertImageBtn = styled.label`
   width: 50px;
   height: 50px;
   z-index: 10;
-`;
-
-const Textarea = styled.textarea`
-  width: 100%;
-  padding: 10px;
-  font-size: 14px;
-  border: none;
-  resize: none;
-
-  &::placeholder {
-    color: #c4c4c4;
-  }
-
-  &::-webkit-scrollbar {
-    display: none;
-  }
 `;

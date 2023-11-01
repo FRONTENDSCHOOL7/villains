@@ -1,9 +1,10 @@
 import styled from 'styled-components';
 import profileImage from '../../assets/img/basic-profile.svg';
+import verticalIcon from '../../assets/img/icon-more-vertical.svg';
 import useFormatDate from '../../hooks/useFormatDate';
 
 const Comment = ({ comment }) => {
-  console.log(comment);
+  const time = useFormatDate(comment.createdAt, 'comment')
 
   return (
     <CommentLi>
@@ -15,11 +16,11 @@ const Comment = ({ comment }) => {
       <CommentContent>
         <CommnetHeader>
           <Author>{comment.author.username}</Author>
-          <Time>· 5분 전</Time>
+          <Time>· {time}</Time>
         </CommnetHeader>
-        <p>{comment.content}</p>
+        <CommentText>{comment.content}</CommentText>
       </CommentContent>
-      <button>버튼</button>
+      <CommentMoreBtn aria-label="댓글 삭제/신고 버튼" />
     </CommentLi>
   );
 };
@@ -74,4 +75,18 @@ const Time = styled.span`
   color: #767676;
   font-size: 10px;
   margin-top: 2px;
+`;
+
+const CommentText = styled.p`
+  white-space: pre-wrap;
+  word-wrap: break-word;
+
+  line-height: 20px;
+`;
+
+const CommentMoreBtn = styled.button`
+  width: 40px;
+  height: 20px;
+  background: url(${verticalIcon}) no-repeat center right;
+  background-size: 18px 18px;
 `;

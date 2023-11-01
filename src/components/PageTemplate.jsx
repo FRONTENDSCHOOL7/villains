@@ -18,6 +18,8 @@ const Wrap = styled.div`
   /* background-color: #ccc; */
   border-left: 1px solid #ccc;
   border-right: 1px solid #ccc;
+
+  position: relative;
 `;
 
 const Main = styled.main`
