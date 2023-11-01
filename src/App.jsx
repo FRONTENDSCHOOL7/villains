@@ -4,7 +4,6 @@ import { createHashRouter, createBrowserRouter, useRoutes } from 'react-router-d
 import { QueryClient, QueryCache, QueryClientProvider } from '@tanstack/react-query';
 import { RouterProvider } from 'react-router-dom';
 import { RecoilRoot } from 'recoil';
-import { RouterProvider } from 'react-router-dom';
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
 import './assets/fonts/SUIT.css';
 
