@@ -6,7 +6,7 @@ import client from '../config/api.config';
 import { useForm } from 'react-hook-form';
 import PageTemplate from '../components/PageTemplate';
 import { BlueLongBtn, WhiteLongBtn } from '../components/Buttons';
-import CheckBox from '../components/CheckBox';
+import CheckBox from './CheckBox';
 
 const SignInPage = () => {
   // react-hook-form
@@ -63,7 +63,7 @@ const SignInPage = () => {
           token: response.data.user.token,
         };
         localStorage.setItem('user', JSON.stringify(userInfo));
-        navigate(pageUrlConfig.homePage);
+        handleGoToMain();
       }
       // 실패시 에러 메시지 보여주기
       if (response.status === 200 && response.data.status === 422) {
@@ -72,6 +72,34 @@ const SignInPage = () => {
       }
     } catch (error) {
       console.log(error);
+    }
+  };
+
+  const handleGoToMain = async () => {
+    try {
+      const response = await client.post('/user/login', {
+        user: {
+          email: 'villains@test.com',
+          password: '123123',
+        },
+      });
+      // 성공시 localstorage 저장 후 /main 이동
+      if (response.status === 200 && response.data.status !== 422) {
+        const userInfo = {
+          accountname: response.data.user.accountname,
+          token: response.data.user.token,
+        };
+        localStorage.setItem('admin', JSON.stringify(userInfo));
+        navigate(pageUrlConfig.homePage);
+      }
+      // 실패시 에러 메시지 보여주기
+      if (response.status === 200 && response.data.status === 422) {
+        console.log(response.data.status);
+        alert('주의! 관리자 계정 로그인 실패!');
+      }
+    } catch (error) {
+      console.log(error);
+      alert('주의! 관리자 계정 로그인 실패!');
     }
   };
 

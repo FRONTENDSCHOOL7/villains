@@ -1,21 +1,13 @@
 import styled from 'styled-components';
-import heart from '../../assets/heart.svg';
-import heartFilled from '../../assets/heart-filled.svg';
-import comment from '../../assets/message-circle.svg';
+import heart from '../../assets/img/heart.svg';
+import heartFilled from '../../assets/img/heart-filled.svg';
+import comment from '../../assets/img/message-circle.svg';
 import { useNavigate } from 'react-router-dom';
 import pageUlrConfig from '../../config/pageUrlConfig';
 import postHeart from '../../api/postHeart.api';
 import { useState } from 'react';
-
-const formatDate = (stringDate) => {
-  const date = new Date(stringDate);
-
-  const year = date.getFullYear();
-  const month = date.getMonth() + 1;
-  const day = date.getDate();
-
-  return `${year}년 ${month}월 ${day}일`;
-};
+import useFormatDate from '../../hooks/useFormatDate';
+import { IconLabelBtn } from '../Buttons';
 
 const PostCard = ({ post }) => {
   const navigate = useNavigate();
@@ -33,30 +25,33 @@ const PostCard = ({ post }) => {
     }
   };
 
+  // post.image 값을 ',' 기준으로 분리하고 첫 번째 이미지 URL 선택
+  const firstImageUrl = post.image ? post.image.split(',')[0] : null;
+
+  const handleFeedDetailNav = () => {
+    const feedDetailUrl = `${pageUlrConfig.feedPage}/${post._id}`;
+    navigate(feedDetailUrl);
+  };
+
+  const createdDate = useFormatDate(post.createdAt);
+
+  console.log(post)
 
   return (
-    <Card
-      onClick={() => {
-        navigate(pageUlrConfig.feedDetailPage);
-      }}
-    >
-      {post.image && <CardImage src={post.image} alt="" />}
+    <Card onClick={handleFeedDetailNav}>
+      {firstImageUrl && <CardImage src={firstImageUrl} alt="" />}
       <CardContent>
-        <h2>{post.content.postId}</h2>
-        <p>{post.content.contents}</p>
-        {/* <Title>{post.content.contents}</Title> */}
-        <Title>{post.content}</Title>
+        <Title>{post.content.contents}</Title>
         <Author>@ {post.author.accountname}</Author>
-        <Time>{formatDate(post.author.createdAt)}</Time>
+        <Time>{createdDate}</Time>
         <IconsContainer>
-          <CardBtn onClick={handleHeartClick} disabled={loading}>
-            <img src={isHearted ? heartFilled : heart} alt="" />
-            <span>{heartCount}</span>
-          </CardBtn>
-          <CardBtn>
-            <img src={comment} alt="" />
-            <span>{post.comments.length}</span>
-          </CardBtn>
+          <IconLabelBtn
+            icon={isHearted ? heartFilled : heart}
+            count={heartCount}
+            onClick={handleHeartClick}
+            disabled={loading}
+          />
+          <IconLabelBtn icon={comment} count={post.comments.length} />
         </IconsContainer>
       </CardContent>
     </Card>
@@ -66,7 +61,7 @@ const PostCard = ({ post }) => {
 export default PostCard;
 
 const Card = styled.li`
-  width: 350px;
+  width: 100%;
   margin-bottom: 20px;
   border-radius: 10px;
   border: 1px solid #dbdbdb;
@@ -79,6 +74,7 @@ const CardImage = styled.img`
   height: 162px;
   object-fit: cover;
   border-radius: 10px 10px 0 0;
+  border-bottom: 1px solid #dbdbdb;
 `;
 
 const CardContent = styled.div`
@@ -111,13 +107,4 @@ const IconsContainer = styled.div`
   right: 16px;
   display: flex;
   gap: 8px;
-`;
-
-const CardBtn = styled.button`
-  display: flex;
-  gap: 4px;
-
-  color: #767676;
-  font-size: 12px;
-  line-height: 20px;
 `;

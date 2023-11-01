@@ -29,21 +29,26 @@ const WhiteLongBtn = ({ text, onClick, disabled }) => {
   );
 };
 
-const IconBtn = ({ img, text, onClick, disabled }) => {
+const IconBtn = ({ text, onClick, disabled, img}) => {
+  const handleClick = (event) => {
+    event.preventDefault();
+  };
   return (
-    <>
-      {disabled ? (
-        <IconButton onClick={onClick} img={img} disabled>
-          {text}
-        </IconButton>
-      ) : (
-        <IconButton onClick={onClick} img={img}>
-          {text}
-        </IconButton>
-      )}
-    </>
+    <IconButton onClick={onClick ?? handleClick} disabled={disabled ?? false} img={img}>
+      {text}
+    </IconButton>
   );
 };
+// const IconBtn = ({ children, onClick, disabled, img}) => {
+//   const handleClick = (event) => {
+//     event.preventDefault();
+//   };
+//   return (
+//     <IconButton onClick={onClick ?? handleClick} disabled={disabled ?? false}>
+//       {children}
+//     </IconButton>
+//   );
+// };
 
 const BlueSmallBtn = ({ text, onClick, disabled }) => {
   return (
@@ -56,6 +61,15 @@ const BlueSmallBtn = ({ text, onClick, disabled }) => {
         <SmallButton onClick={onClick}>{text}</SmallButton>
       )}
     </>
+  );
+};
+
+const IconLabelBtn = ({ icon, count, onClick, disabled, alt }) => {
+  return (
+    <IconLabelButton onClick={onClick} disabled={disabled}>
+      <img src={icon} alt={alt} />
+      <span>{count}</span>
+    </IconLabelButton>
   );
 };
 
@@ -91,10 +105,35 @@ const IconButton = styled(BlueLongButton)`
   }
 `;
 
+const NavButton = styled(IconButton)`
+  border-color: white;
+  background-color: #ccc;
+  color: #767676;
+  border-radius: 8px;
+  width: 100%;
+  position: relative;
+  &:hover::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    margin: auto;
+    margin-top: 0;
+    width: 50%;
+    border-top: 2px solid #3c58c1;
+  }
+`;
+
 const SmallButton = styled(BlueLongButton)`
   padding: 8px 20px 8px 20px;
   border-radius: 32px;
-  flex-grow: 1;
 `;
 
-export { BlueLongBtn, WhiteLongBtn, IconBtn, BlueSmallBtn };
+const IconLabelButton = styled.button`
+  display: flex;
+  gap: 4px;
+  color: #767676;
+  font-size: 12px;
+  line-height: 20px;
+`;
+
+export { BlueLongBtn, WhiteLongBtn, IconBtn, NavButton, BlueSmallBtn, IconLabelBtn };
