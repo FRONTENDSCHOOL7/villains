@@ -75,8 +75,8 @@ const PageTemplate = ({ children }) => {
   return (
     <Wrap>
       <Header />
-      <NavMenu/>
       {showListBox ? <ListBox list={list} onClick={handleClickInfo} /> : <Main children={children} />}
+      <NavMenu/>
     </Wrap>
   );
 };
