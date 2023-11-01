@@ -10,20 +10,28 @@ import theme from '../../style/theme';
 //import styled from 'styled-components';
 
 const NavMenu = () => {
-  const {pathname} = useLocation();
-  const navContents = [[`feed`, `피드`],[`goods`, `택배`], [`main`, `홈`], [`chat`, `채팅`], [`user`, `프로필`]];
+  const { pathname } = useLocation();
+  const navContents = [
+    [`feed`, `피드`],
+    [`goods`, `택배`],
+    [`main`, `홈`],
+    [`chat`, `채팅`],
+    [`user`, `프로필`],
+  ];
   return (
     <>
       <Nav>
-  
-        {navContents.map((content, index)=>{
+        {navContents.map((content, index) => {
           const click = pathname.includes(content[0]);
           const src = click ? `nav-${content[0]}-click.svg` : `nav-${content[0]}.svg`;
           return (
             <Link to={`/${content[0]}`} key={index}>
-              <NavButton state={click}><img src={`${import.meta.env.BASE_URL}nav/${src}`} alt={content[1]}/><span>{content[1]}</span></NavButton>
+              <NavButton state={click}>
+                <img src={`${import.meta.env.BASE_URL}nav/${src}`} alt={content[1]} />
+                <span>{content[1]}</span>
+              </NavButton>
             </Link>
-            )
+          );
         })}
         {/* <Link to="/feed">
           <NavButton>피드 메뉴 버튼</NavButton>
@@ -69,13 +77,13 @@ const Nav = styled.nav`
 `;
 
 const BorderStyle = css`
-    content: '';
-    position: absolute;
-    inset: 0;
-    margin: auto;
-    margin-top: 0;
-    width: 50%;
-    border-top: 3px solid ${theme.color.primary};
+  content: '';
+  position: absolute;
+  inset: 0;
+  margin: auto;
+  margin-top: 0;
+  width: 50%;
+  border-top: 3px solid ${theme.color.primary};
 `;
 
 const NavButton = styled.div`
@@ -87,13 +95,15 @@ const NavButton = styled.div`
   padding: 16px;
   position: relative;
 
-  &::before{
-    ${(props)=>{
-      return props.state ?  BorderStyle : ''
+  &::before {
+    ${(props) => {
+      return props.state ? BorderStyle : '';
     }}
   }
 
-  &:hover::before{${BorderStyle}}
+  &:hover::before {
+    ${BorderStyle}
+  }
 
   display: flex;
   flex-direction: column;
@@ -104,5 +114,5 @@ const NavButton = styled.div`
 `;
 
 const BackGround = styled.div`
-height: 77px;
+  height: 77px;
 `;

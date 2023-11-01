@@ -13,7 +13,6 @@ import pageUrlConfig from '../config/pageUrlConfig';
 import FloatingButton from './FloatingButton.style';
 import BottomSheet from './BottomSheet';
 
-
 const PageTemplate = ({ children, showNavMenu = true }) => {
   const [list, setList] = useState([]);
   const [isClickInfo, setIsClickInfo] = useState(false);

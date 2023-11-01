@@ -4,15 +4,17 @@ import styled from 'styled-components';
 import { Link, useNavigate } from 'react-router-dom';
 import pageUrlConfig from '../config/pageUrlConfig';
 import PageTemplate from '../components/PageTemplate';
+import PostCard from '../components/feed/PostCard';
 
 const ProfilePage = () => {
   const navigator = useNavigate();
   const handleClickEdit = () => {
     navigator(pageUrlConfig.profileEdit);
   };
+
   return (
     <PageTemplate>
-      <Title>프로필 페이지</Title>
+      <Header>프로필 페이지 임시 헤더</Header>
 
       <UpperSection>
         {/* 임시 헤더 입니다.  */}
@@ -37,12 +39,12 @@ const ProfilePage = () => {
           </Follow>
         </ProfileHeader>
 
-        <ProfileContent>
-          <UserName>나야나</UserName>
-          <ProfileEmail>@villain_no1</ProfileEmail>
-          <ProfileDsc>1호선 빌런 꿈나무</ProfileDsc>
-          {/* <Link to="/user/edit">프로필 수정</Link>  */}
-          {/* <SmallBtn
+        {/* <ProfileContent> */}
+        <UserName>나야나</UserName>
+        <ProfileEmail>@villain_no1</ProfileEmail>
+        <ProfileDsc>1호선 빌런 꿈나무</ProfileDsc>
+        {/* <Link to="/user/edit">프로필 수정</Link>  */}
+        {/* <SmallBtn
             background={'red'}
             color={'black'}
             cursor={'pointer'}
@@ -53,8 +55,8 @@ const ProfilePage = () => {
           >
             프로필 수정
           </SmallBtn> */}
-          <EditBtn>프로필 수정</EditBtn>
-        </ProfileContent>
+        <EditBtn>프로필 수정</EditBtn>
+        {/* </ProfileContent> */}
       </UpperSection>
 
       {/*  게시글 */}
@@ -64,17 +66,19 @@ const ProfilePage = () => {
           <CardTab>택배 목록</CardTab>
         </Tab>
 
-        <FeedCard>
-          <CardImg>Img</CardImg>
-          <CardContent>
-            <p>Lorem ipsum dolor sit, amet consectetur adipisicing elit. </p>
-            {/* <ProfileEmail>@villain_no1</ProfileEmail>
+        <PostCard>
+          <FeedCard>
+            <CardImg>Img</CardImg>
+            <CardContent>
+              <p>Lorem ipsum dolor sit, amet consectetur adipisicing elit. </p>
+              {/* <ProfileEmail>@villain_no1</ProfileEmail>
             <Date>2020년 10월 21일</Date>
             <IconBtn>
               <img src="/" alt="좋아요 버튼" />
             </IconBtn> */}
-          </CardContent>
-        </FeedCard>
+            </CardContent>
+          </FeedCard>
+        </PostCard>
       </DownSection>
     </PageTemplate>
   );
@@ -87,6 +91,13 @@ const Title = styled.h1`
   font-weight: bold;
   padding: 30px;
 `;
+
+const Header = styled.header`
+  width: 100%;
+  height: 48px;
+  background-color: #dbdbdb;
+`;
+
 // 뒤로가기 버튼이 있는 Nav
 // const TopBasicNav = styled.div`
 //   box-shadow: inset 0 0 10px grey;
