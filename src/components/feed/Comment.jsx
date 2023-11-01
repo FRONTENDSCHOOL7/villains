@@ -2,26 +2,49 @@ import styled from 'styled-components';
 import profileImage from '../../assets/img/basic-profile.svg';
 import verticalIcon from '../../assets/img/icon-more-vertical.svg';
 import useFormatDate from '../../hooks/useFormatDate';
+import { useSetRecoilState, useRecoilValue } from 'recoil';
+import { bottomSheetStateAtom, bottomSheetOptions } from '../../atoms/bottomSheetStateAtom';
 
 const Comment = ({ comment }) => {
-  const time = useFormatDate(comment.createdAt, 'comment')
+  const time = useFormatDate(comment.createdAt, 'comment');
+
+  const setIsVisible = useSetRecoilState(bottomSheetStateAtom);
+  const setOptions = useSetRecoilState(bottomSheetOptions);
+
+  const value = useRecoilValue(bottomSheetStateAtom);
+  const opt = useRecoilValue(bottomSheetOptions);
+
+
+  const handleBottomSheetShow = () => {
+    setOptions([
+      { label: '삭제', callback: () => console.log('삭제 clicked') },
+      { label: '신고', callback: () => console.log('신고 clicked') },
+    ]);
+
+    setIsVisible((prev) => !prev);
+
+    console.log(value);
+    console.log(opt);
+  };
 
   return (
-    <CommentLi>
-      <CommentProfileImage>
-        {/* 프로필 기본이미지 수정 필요 */}
-        {/* <img src={comment.author.image} alt={comment.author.username} /> */}
-        <img src={profileImage} alt={comment.author.username} />
-      </CommentProfileImage>
-      <CommentContent>
-        <CommnetHeader>
-          <Author>{comment.author.username}</Author>
-          <Time>· {time}</Time>
-        </CommnetHeader>
-        <CommentText>{comment.content}</CommentText>
-      </CommentContent>
-      <CommentMoreBtn aria-label="댓글 삭제/신고 버튼" />
-    </CommentLi>
+    <>
+      <CommentLi>
+        <CommentProfileImage>
+          {/* 프로필 기본이미지 수정 필요 */}
+          {/* <img src={comment.author.image} alt={comment.author.username} /> */}
+          <img src={profileImage} alt={comment.author.username} />
+        </CommentProfileImage>
+        <CommentContent>
+          <CommnetHeader>
+            <Author>{comment.author.username}</Author>
+            <Time>· {time}</Time>
+          </CommnetHeader>
+          <CommentText>{comment.content}</CommentText>
+        </CommentContent>
+        <CommentMoreBtn aria-label="댓글 삭제/신고 버튼" onClick={handleBottomSheetShow} />
+      </CommentLi>
+    </>
   );
 };
 

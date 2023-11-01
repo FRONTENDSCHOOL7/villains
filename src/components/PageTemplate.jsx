@@ -11,6 +11,7 @@ import queryFocusAtom from '../atoms/queryFocusAtom';
 import queryAtom from '../atoms/queryAtom';
 import pageUrlConfig from '../config/pageUrlConfig';
 import FloatingButton from './FloatingButton.style';
+import BottomSheet from './BottomSheet';
 
 const Wrap = styled.div`
   max-width: 412px;
@@ -28,7 +29,7 @@ const Main = styled.main`
   height: 100%;
 `;
 
-const PageTemplate = ({ children }) => {
+const PageTemplate = ({ children, showNavMenu = true }) => {
   const [list, setList] = useState([]);
   const [isClickInfo, setIsClickInfo] = useState(false);
   const [params, setParams] = useState('');
@@ -46,14 +47,16 @@ const PageTemplate = ({ children }) => {
   }
 
   useEffect(() => {
-    if(dataList){if (query === '') setList([]);
-    else {
-      dataList.map((data, index) => {
-        if (data.Query.includes(query) && !list.find((elem) => elem[0].includes(data.Query))) {
-          setList([...list, [data.Query, data.Id]]);
-        }
-      });
-    }}
+    if (dataList) {
+      if (query === '') setList([]);
+      else {
+        dataList.map((data, index) => {
+          if (data.Query.includes(query) && !list.find((elem) => elem[0].includes(data.Query))) {
+            setList([...list, [data.Query, data.Id]]);
+          }
+        });
+      }
+    }
   }, [query]);
 
   useEffect(() => {
@@ -76,9 +79,8 @@ const PageTemplate = ({ children }) => {
     setIsClickInfo(true);
   };
 
-
   const handleClickWrite = () => {
-    if(pathname.includes(pageUrlConfig.goodsPage)){
+    if (pathname.includes(pageUrlConfig.goodsPage)) {
       navigate(pageUrlConfig.goodsWritePage);
     }
     navigate(pageUrlConfig.feedWritePage);
@@ -88,8 +90,9 @@ const PageTemplate = ({ children }) => {
     <Wrap>
       <Header />
       {showListBox ? <ListBox list={list} onClick={handleClickInfo} /> : <Main children={children} />}
-      <NavMenu/>
-      <FloatingButton onClick={handleClickWrite}/>
+      {showNavMenu && <NavMenu />}
+      {/* <FloatingButton onClick={handleClickWrite}/> */}
+      <BottomSheet />
     </Wrap>
   );
 };

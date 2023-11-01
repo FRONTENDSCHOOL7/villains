@@ -21,6 +21,8 @@ import getComments from '../api/getComments.api';
 import postComments from '../api/postComments.api';
 import Comment from '../components/feed/Comment';
 import ResizingTextarea from '../components/feed/ResizingTextarea';
+import BottomSheet from '../components/BottomSheet';
+import verticalIcon from '../assets/img/icon-more-vertical.svg';
 
 const FeedDetailPage = () => {
   const { postId } = useParams();
@@ -29,6 +31,7 @@ const FeedDetailPage = () => {
   const [isHearted, setIsHearted] = useState(post?.hearted);
   const [inputComment, setInputComment] = useState('');
   const [heartCount, setHeartCount] = useState(post?.heartCount);
+  const [showBottomSheet, setShowBottomSheet] = useState(false);
 
   const { fetchPost, loading, error } = getPostDetail();
   const { fetchComments } = getComments();
@@ -74,7 +77,7 @@ const FeedDetailPage = () => {
     }
   };
 
-  const handlePostCommnets = async (event) => {
+  const handlePostComments = async (event) => {
     event.preventDefault();
 
     const newComment = await uploadComment(postId, inputComment);
@@ -91,8 +94,10 @@ const FeedDetailPage = () => {
     setInputComment(event.target.value);
   };
 
+  const handleBottomSheetShow = () => {};
+
   return (
-    <PageTemplate>
+    <PageTemplate showNavMenu={false}>
       {post && (
         <PostWrapper>
           <PostContainer>
@@ -108,6 +113,7 @@ const FeedDetailPage = () => {
               </UserInfo>
               <DateText>{createdDate}</DateText>
             </UserHeader>
+            {/* <PostMoreBtn aria-label="댓글 삭제/신고 버튼" onClick={handleBottomSheetShow} /> */}
             {postImage[0] && (
               <SwiperWrapper>
                 <Swiper
@@ -152,7 +158,7 @@ const FeedDetailPage = () => {
 
       {/* 댓글 작성 */}
       {post && (
-        <CommentForm onSubmit={handlePostCommnets}>
+        <CommentForm onSubmit={handlePostComments}>
           {/* 프로필 기본이미지 수정 필요 */}
           <CommentImage src={profileImage} alt="" />
           <ResizingTextarea
@@ -289,3 +295,17 @@ const CommentBtn = styled.button`
     color: #3c58c1;
   }
 `;
+
+// // 수정 필요
+// const PostMoreBtn = styled.button`
+//   position: absolute;
+//   top: 14px;
+//   right: 0;
+
+//   width: 40px;
+//   height: 20px;
+//   background: url(${verticalIcon}) no-repeat center right;
+//   background-size: 18px 18px;
+
+//   z-index: 100;
+// `;
