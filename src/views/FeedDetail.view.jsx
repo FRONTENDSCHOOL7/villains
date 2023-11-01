@@ -1,13 +1,13 @@
 import { useNavigate, useParams } from 'react-router';
 import getPostDetail from '../api/getPostDetail.api';
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useState } from 'react';
 import styled from 'styled-components';
 import postHeart from '../api/postHeart.api';
 import useFormatDate from '../hooks/useFormatDate';
 import profileImage from '../assets/img/basic-profile.svg';
 import heart from '../assets/img/heart.svg';
 import heartFilled from '../assets/img/heart-filled.svg';
-import comment from '../assets/img/message-circle.svg';
+import commentIcon from '../assets/img/message-circle.svg';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { Pagination, Navigation } from 'swiper/modules';
 import 'swiper/css';
@@ -20,23 +20,24 @@ import { IconLabelBtn } from '../components/Buttons';
 import getComments from '../api/getComments.api';
 import postComments from '../api/postComments.api';
 import Comment from '../components/feed/Comment';
+import ResizingTextarea from '../components/feed/ResizingTextarea';
 
 const FeedDetailPage = () => {
   const { postId } = useParams();
+  const [post, setPost] = useState(null);
+  const [commentsList, setCommentsList] = useState([]);
+  const [isHearted, setIsHearted] = useState(post?.hearted);
+  const [inputComment, setInputComment] = useState('');
+  const [heartCount, setHeartCount] = useState(post?.heartCount);
+
   const { fetchPost, loading, error } = getPostDetail();
   const { fetchComments } = getComments();
   const { uploadComment } = postComments();
-  const navigate = useNavigate();
-
-  const [post, setPost] = useState(null);
-  const [commentsList, setCommentsList] = useState([]);
-  const createdDate = useFormatDate(post?.createdAt);
   const { toggleHeartStatus } = postHeart();
-  const [isHearted, setIsHearted] = useState(post?.hearted);
-  const [heartCount, setHeartCount] = useState(post?.heartCount);
-  const postImage = post?.image.split(',');
+  const navigate = useNavigate();
+  const createdDate = useFormatDate(post?.createdAt);
 
-  const inputComment = useRef();
+  const postImage = post?.image.split(',');
 
   useEffect(() => {
     const fetchData = async () => {
@@ -49,8 +50,7 @@ const FeedDetailPage = () => {
         // post 요청이 성공하면 코멘트리스트 요청
         const resultComment = await fetchComments(postId);
         if (resultComment) {
-          setCommentsList(resultComment);
-          console.log(resultComment);
+          setCommentsList(resultComment.reverse());
         }
       }
     };
@@ -74,23 +74,25 @@ const FeedDetailPage = () => {
     }
   };
 
-  const handlePostCommnets = async () => {
-    const commentContent = inputComment.current.value;
-    const newComment = await uploadComment(postId, commentContent);
+  const handlePostCommnets = async (event) => {
+    event.preventDefault();
+
+    const newComment = await uploadComment(postId, inputComment);
 
     if (newComment) {
       // 새 댓글을 포함하도록 commentsList 상태를 업데이트
       setCommentsList((prevCommentsList) => [...prevCommentsList, newComment]);
 
-      inputComment.current.value = '';
+      setInputComment('');
     }
   };
 
-  console.log(post);
+  const handleCommentChange = (event) => {
+    setInputComment(event.target.value);
+  };
 
   return (
     <PageTemplate>
-      <Header>{postId} 상세페이지 (임시 헤더)</Header>
       {post && (
         <PostWrapper>
           <PostContainer>
@@ -131,12 +133,13 @@ const FeedDetailPage = () => {
                 onClick={handleHeartClick}
                 alt="좋아요 버튼"
               />
-              <IconLabelBtn icon={comment} count={post.commentCount} alt="코멘트 버튼" />
+              <IconLabelBtn icon={commentIcon} count={post.commentCount} alt="코멘트 버튼" />
             </IconsContainer>
           </PostContainer>
         </PostWrapper>
       )}
 
+      {/* 댓글 리스트 */}
       {commentsList && (
         <CommentContaier>
           <ul>
@@ -147,25 +150,25 @@ const FeedDetailPage = () => {
         </CommentContaier>
       )}
 
+      {/* 댓글 작성 */}
       {post && (
-        <form>
-          <input type="text" ref={inputComment} />
-          <button type="button" onClick={handlePostCommnets}>
-            게시
-          </button>
-        </form>
+        <CommentForm onSubmit={handlePostCommnets}>
+          {/* 프로필 기본이미지 수정 필요 */}
+          <CommentImage src={profileImage} alt="" />
+          <ResizingTextarea
+            rows="1"
+            placeholder="댓글 입력하기..."
+            onChange={handleCommentChange}
+            value={inputComment}
+          />
+          <CommentBtn disabled={!inputComment}>게시</CommentBtn>
+        </CommentForm>
       )}
     </PageTemplate>
   );
 };
 
 export default FeedDetailPage;
-
-const Header = styled.header`
-  width: 100%;
-  height: 48px;
-  background-color: #dbdbdb;
-`;
 
 const PostWrapper = styled.div`
   width: 100%;
@@ -251,4 +254,38 @@ const SwiperWrapper = styled.div`
 
 const CommentContaier = styled.section`
   padding: 20px 16px 60px;
+`;
+
+const CommentForm = styled.form`
+  width: 410px;
+  padding: 12px 20px 12px 16px;
+  position: fixed;
+  bottom: 0;
+  border-top: 0.5px solid #dbdbdb;
+  background-color: #fff;
+
+  display: flex;
+  gap: 16px;
+  align-items: flex-start;
+`;
+
+const CommentImage = styled.img`
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  border: 0.5px solid #dbdbdb;
+`;
+
+const CommentBtn = styled.button`
+  font-size: 14px;
+  margin-top: 8px;
+
+  &:disabled {
+    color: #c4c4c4;
+    cursor: default;
+  }
+
+  &:enabled {
+    color: #3c58c1;
+  }
 `;
