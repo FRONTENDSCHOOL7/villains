@@ -1,6 +1,7 @@
 import React from 'react';
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
 import Email from '../assets/img/email.svg';
+import theme from '../style/theme';
 
 const BlueLongBtn = ({ text, onClick, disabled }) => {
   return (
@@ -64,6 +65,11 @@ const BlueSmallBtn = ({ text, onClick, disabled }) => {
   );
 };
 
+const DefaultBtn = () => {
+
+  return <SmallButton></SmallButton>
+}
+
 const IconLabelBtn = ({ icon, count, onClick, disabled, alt }) => {
   return (
     <IconLabelButton onClick={onClick} disabled={disabled}>
@@ -73,11 +79,30 @@ const IconLabelBtn = ({ icon, count, onClick, disabled, alt }) => {
   );
 };
 
+const PrimaryStyle = css`
+  background-color: ${theme.color.primary};
+  color: ${theme.color.white};
+`;
+
+const SecondaryStyle = css`
+  background-color: ${theme.color.secondary};
+  color: ${theme.color.black};
+`;
+
+const BasicStyle = css`
+  background-color: ${theme.color.white};
+  color: ${theme.color.primary};
+`
+
+const StyledButton = styled.button`
+  ${(props)=>{props.variant}}
+
+`;
+
 const BlueLongButton = styled.button`
+  ${SelectedButton}
   padding: 13px 0 13px 0;
-  background-color: #3c58c1;
   font-size: 14px;
-  color: white;
   border-radius: 9999px;
   border: 1px solid #3c58c1;
   &:disabled {

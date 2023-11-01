@@ -6,23 +6,16 @@ import { useEffect, useState } from "react";
 import styled from "styled-components";
 
 import holiday from '../database/2023-2024-holiday.json';
-import { useRecoilValue } from "recoil";
+import { useRecoilState, useRecoilValue } from "recoil";
 import queryAtom from "../atoms/queryAtom";
 import queryFocusAtom from "../atoms/queryFocusAtom";
 import pageUrlConfig from "../config/pageUrlConfig";
 
 const ResultPage = () => {
     const {stationId} = useParams();
-    const query = useRecoilValue(queryAtom);
+    const [query, setQuery] = useRecoilState(queryAtom);
     const title = query;
     const focus = useRecoilValue(queryFocusAtom);
-    
-    // const navigate = useNavigate();
-    // useEffect(()=>{
-    //     if(focus) navigate(`${pageUrlConfig.homePage}`);
-    // }, [focus])
-
-
 
     const [rowInfo, setRowInfo] = useState([]);
     const [reqCount, setReqCount] = useState(0);
@@ -34,7 +27,7 @@ const ResultPage = () => {
         setCount(0);
     },[stationId])
     
-    //TODO: 사용자 위치 정보 가져와서 시간에 맞게 시간표 조회하기
+    //TODO: 사용자 위치, 시간에 맞게 시간표 조회하기
     useEffect(()=>{
         const userDate = new Date();
         const today = userDate.getDay();// 0: 일요일 ~ 6: 토요일
@@ -61,7 +54,7 @@ const ResultPage = () => {
     
 
     
-    //TODO(보류): 이미 검색한 기록이 있다면 리코일을 사용하여 불러오기
+    //TODO(보류): 이미 검색한 기록이 있다면 리액트 쿼리를 사용하여 불러오기
     const index = 5;
     useEffect(()=>{
         rowInfo.sort();
@@ -86,6 +79,7 @@ const ResultPage = () => {
     return(
         <PageTemplate>
             <StyledLinkBtn>{title}</StyledLinkBtn>
+            <ButtonWrap></ButtonWrap>
             <ul>
             {
                 rowInfo.map((info, index)=>{
@@ -114,6 +108,10 @@ const StyledLinkBtn = styled.button`
         background-color: #B1BCE6;
     }
 `;
+
+const ButtonWrap = styled.div`
+    padding: 16px;
+`
 
 const StyledList = styled.li`
     display: flex;
