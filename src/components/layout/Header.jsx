@@ -19,6 +19,8 @@ const Header = () => {
     setQueries(event.target.value);
   };
 
+  const { pathname } = useLocation();
+
   let placeholder;
   switch (pathname) {
     case `${pageUrlConfig.homePage}`:
@@ -43,6 +45,8 @@ const Header = () => {
   );
 };
 
+
+export default Header;
 const StyledHeader = styled.header`
   position: fixed;
   top: 0;

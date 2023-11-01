@@ -29,16 +29,26 @@ const WhiteLongBtn = ({ text, onClick, disabled }) => {
   );
 };
 
-const IconBtn = ({ children, onClick, disabled }) => {
+const IconBtn = ({ text, onClick, disabled, img}) => {
   const handleClick = (event) => {
     event.preventDefault();
   };
   return (
-    <IconButton onClick={onClick ?? handleClick} disabled={disabled ?? false}>
-      {...children}
+    <IconButton onClick={onClick ?? handleClick} disabled={disabled ?? false} img={img}>
+      {text}
     </IconButton>
   );
 };
+// const IconBtn = ({ children, onClick, disabled, img}) => {
+//   const handleClick = (event) => {
+//     event.preventDefault();
+//   };
+//   return (
+//     <IconButton onClick={onClick ?? handleClick} disabled={disabled ?? false}>
+//       {children}
+//     </IconButton>
+//   );
+// };
 
 const BlueSmallBtn = ({ text, onClick, disabled }) => {
   return (
