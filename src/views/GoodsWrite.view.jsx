@@ -14,12 +14,14 @@ import ImageIcon from '../assets/img/image-icon.svg';
 import ImageBigIcon from '../assets/img/image-big-icon.svg';
 import postImage from '../api/postImage';
 import client from '../config/api.config';
+import { useNavigate } from 'react-router';
+import pageUrlConfig from '../config/pageUrlConfig';
 
 const GoodsWritePage = () => {
+  const navigate = useNavigate();
   //IsShowSearchBar는 첫 렌더 시에만 필요한 값이며, useState를 쓰면 안됩니다.
   //useState로 사용할 경우 상태가 변경되어 다시 렌더가 되면 또 값이 바뀌고 리렌더링 시키는 무한 렌더링 상태가 됩니다.
   let IsShowSearchBar = true;
-
   // react-hook-form
   const {
     register,
@@ -66,7 +68,7 @@ const GoodsWritePage = () => {
     const linkData = JSON.stringify({
       accountname: user.accountname,
       itemInfo: info,
-      state: '요청 중',
+      state: '요청중',
     });
     try {
       const response = await client.post(
@@ -82,15 +84,20 @@ const GoodsWritePage = () => {
         client.BothType(adminToken),
       );
       console.log(response);
+      navigate(pageUrlConfig.goodsPage);
     } catch (error) {
       console.log(error);
     }
   };
 
+  const handleGoBackBtn = () => {
+    navigate(pageUrlConfig.goodsPage);
+  };
+
   return (
     <PageTemplate>
       <Header>
-        <img src={BackArrow} alt="" />
+        <BackIcon src={BackArrow} onClick={handleGoBackBtn} alt="" />
         {errors.price ||
         startSubway === '' ||
         info === '' ||
@@ -230,5 +237,7 @@ const Warn = styled.strong`
   color: #eb5757;
   font-size: 12px;
 `;
-
+const BackIcon = styled.img`
+  cursor: pointer;
+`;
 export default GoodsWritePage;
