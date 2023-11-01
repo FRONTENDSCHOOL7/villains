@@ -1,28 +1,20 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import PageTemplate from '../components/PageTemplate';
 //import pageUrlConfig from '../config/pageUrlConfig';
 import styled from 'styled-components';
+import getProducts from '../api/getProducts.api';
+import Goods from '../components/Goods';
 
-const Goods = () => {
+const GoodsPage = () => {
+  const { products, loading, error } = getProducts();
+
+  if (loading) return <div>Loading...</div>;
+  if (error) return <div>Error loading posts: {error.message}</div>;
   return (
     <PageTemplate>
-      <Title>상품 페이지</Title>
-      <Header>임시 헤더입니다.</Header>
+      {!loading &&  <Goods products={products} />}
     </PageTemplate>
   );
 };
 
-export default Goods;
-
-const Header = styled.header`
-  width: 100%;
-  height: 48px;
-  background-color: #dbdbdb;
-`;
-
-const Title = styled.h1`
-  text-align: center;
-  font-size: 24px;
-  font-weight: bold;
-  padding: 30px;
-`;
+export default GoodsPage;
