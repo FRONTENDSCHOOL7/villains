@@ -2,8 +2,8 @@ import styled, { css } from "styled-components";
 import theme from "../style/theme";
 
 /**@param variant: "primary" | "secondary" | "basic" */
-const DefaultBtn = ({children, variant, disabled}) => {
-    return <StyledButton variant={variant ?? "primary"} disabled={disabled ?? false}>{children}</StyledButton>
+const DefaultBtn = ({children, variant, disabled, id}) => {
+    return <StyledButton variant={variant ?? "primary"} disabled={disabled ?? false} id={id ?? ""}>{children}</StyledButton>
 }
 
 const PrimaryStyle = css`
@@ -46,6 +46,7 @@ const StyledButton = styled.button`
         color: ${theme.color.white};
         cursor: default;
     }
+
 `;
 export {PrimaryStyle, SecondaryStyle, BasicStyle};
 export default DefaultBtn;
