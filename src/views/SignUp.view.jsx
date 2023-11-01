@@ -6,7 +6,7 @@ import client from '../config/api.config';
 import { useForm } from 'react-hook-form';
 import PageTemplate from '../components/PageTemplate';
 import { BlueLongBtn, BlueSmallBtn } from '../components/Buttons';
-import CheckBox from './CheckBox';
+import CheckBox from '../components/CheckBox';
 
 const SignUpPage = () => {
   // react-hook-form
