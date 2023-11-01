@@ -22,7 +22,7 @@ const NavMenu = () => {
         const src = click ? `nav-${content[0]}-click.svg` : `nav-${content[0]}.svg`;
         return (
           <Link to={`/${content[0]}`} key={index}>
-            <NavButton state={click}><img src={`src/assets/img/${src}`} alt={content[1]}/><span>{content[1]}</span></NavButton>
+            <NavButton state={click}><img src={`${import.meta.env.BASE_URL}nav/${src}`} alt={content[1]}/><span>{content[1]}</span></NavButton>
           </Link>
           )
       })}
@@ -58,7 +58,8 @@ const Nav = styled.nav`
   right: 0;
   left: 0;
   margin: auto;
-
+  margin-bottom: 0;
+  background-color: ${theme.color.white};
   border-top: 1px solid ${theme.color.light};
   display: flex;
   & > * {
@@ -81,6 +82,7 @@ const NavButton = styled.div`
   color: ${theme.color.grey};
   border-radius: 8px;
   width: 100%;
+  height: 100%;
   padding: 16px;
   position: relative;
 

@@ -5,6 +5,7 @@ import queryAtom from '../../atoms/queryAtom';
 import { useRecoilState } from 'recoil';
 import pageUrlConfig from '../../config/pageUrlConfig';
 import styled from 'styled-components';
+import theme from '../../style/theme.js';
 
 const Header = () => {
   const [query, setQuery] = useRecoilState(queryAtom);
@@ -60,6 +61,7 @@ const StyledHeader = styled.header`
   max-width: 412px;
   height: 48px;
   z-index: 10;
+  background-color: ${theme.color.white};
 `;
 
 const BackGround = styled.div`

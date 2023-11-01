@@ -45,14 +45,14 @@ const PageTemplate = ({ children }) => {
   }
 
   useEffect(() => {
-    if (query === '') setList([]);
+    if(dataList){if (query === '') setList([]);
     else {
       dataList.map((data, index) => {
         if (data.Query.includes(query) && !list.find((elem) => elem[0].includes(data.Query))) {
           setList([...list, [data.Query, data.Id]]);
         }
       });
-    }
+    }}
   }, [query]);
 
   useEffect(() => {
