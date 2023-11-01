@@ -10,6 +10,7 @@ import subOneAtom from '../atoms/subOneAtom';
 import queryFocusAtom from '../atoms/queryFocusAtom';
 import queryAtom from '../atoms/queryAtom';
 import pageUrlConfig from '../config/pageUrlConfig';
+import FloatingButton from './FloatingButton.style';
 
 const Wrap = styled.div`
   max-width: 412px;
@@ -74,11 +75,21 @@ const PageTemplate = ({ children }) => {
     setParams(event.currentTarget.dataset.etc);
     setIsClickInfo(true);
   };
+
+
+  const handleClickWrite = () => {
+    if(pathname.includes(pageUrlConfig.goodsPage)){
+      navigate(pageUrlConfig.goodsWritePage);
+    }
+    navigate(pageUrlConfig.feedWritePage);
+  };
+
   return (
     <Wrap>
       <Header />
       {showListBox ? <ListBox list={list} onClick={handleClickInfo} /> : <Main children={children} />}
       <NavMenu/>
+      <FloatingButton onClick={handleClickWrite}/>
     </Wrap>
   );
 };
