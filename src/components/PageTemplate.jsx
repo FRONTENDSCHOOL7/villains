@@ -1,5 +1,6 @@
 import Header from './layout/Header';
 import ListBox from './searchbar/ListBox';
+import NavMenu from './layout/NavMenu';
 import styled from 'styled-components';
 
 import { useRecoilState, useRecoilValue } from 'recoil';
@@ -74,6 +75,7 @@ const PageTemplate = ({ children }) => {
   return (
     <Wrap>
       <Header />
+      <NavMenu/>
       {showListBox ? <ListBox list={list} onClick={handleClickInfo} /> : <Main children={children} />}
     </Wrap>
   );
