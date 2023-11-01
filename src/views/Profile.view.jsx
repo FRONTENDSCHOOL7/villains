@@ -6,11 +6,6 @@ import getPosts from '../api/getPosts.api';
 import pageUrlConfig from '../config/pageUrlConfig';
 import PageTemplate from '../components/PageTemplate';
 import PostCard from '../components/feed/PostCard';
-import basicProfile from '../../src/assets/img/basic-profile.svg';
-import ErrorPage from './Error.view';
-import theme from '../style/theme';
-import { useRecoilValue } from 'recoil';
-// import Profile from '../components/profile/profile';
 
 const ProfilePage = () => {
   const navigate = useNavigate();
@@ -46,30 +41,10 @@ const ProfilePage = () => {
     navigate(pageUrlConfig.profileEdit);
   };
 
-  useEffect(() => {
-    if (accountname === user.accountname) {
-    }
-  });
-
-  const handleChange = () => {
-    // color === 'skyblue' ? setColor('white') : setColor('skyblue');
-    setColor(skyblue);
-    console.log('clicked');
-  };
-
-  const handleAlignment = (event, newAlignment) => {
-    if (newAlignment !== null) {
-      setAlignment(newAlignment);
-    }
-  };
-
-  // const { post, loading, error } = getPosts();
-  // if (loading) return <div>Loading...</div>;
-  // if (error) return <div>Error loading posts: {error.message}</div>;
-
   return (
     <PageTemplate>
-      {/* <Profile /> */}
+      <Header>프로필 페이지 임시 헤더</Header>
+
       <UpperSection>
         {/* 유저 정보 */}
         <ProfileHeader>
@@ -85,14 +60,24 @@ const ProfilePage = () => {
           </Follow>
         </ProfileHeader>
 
-        <ProfileContent>
-          <UserName>나야나</UserName>
-          <ProfileEmail>@villain_no1</ProfileEmail>
-          <ProfileDsc>1호선 빌런 꿈나무</ProfileDsc>
-          <Link to="/user/edit">
-            <EditBtn>프로필 수정</EditBtn>
-          </Link>
-        </ProfileContent>
+        {/* <ProfileContent> */}
+        <UserName>나야나</UserName>
+        <ProfileEmail>@villain_no1</ProfileEmail>
+        <ProfileDsc>1호선 빌런 꿈나무</ProfileDsc>
+        {/* <Link to="/user/edit">프로필 수정</Link>  */}
+        {/* <SmallBtn
+            background={'red'}
+            color={'black'}
+            cursor={'pointer'}
+            border={'black'}
+            text={'프로필 수정'}
+            onClick={handleClickEdit}
+            disabled={false}
+          >
+            프로필 수정
+          </SmallBtn> */}
+        <EditBtn>프로필 수정</EditBtn>
+        {/* </ProfileContent> */}
       </UpperSection>
 
       {/*  게시글 */}
@@ -102,10 +87,7 @@ const ProfilePage = () => {
           <Tab>택배 목록</Tab>
         </TabGroup>
 
-        <PostList>
-          {/* {post.map((post) => (
-            <PostCard post={post} key={post._id} />
-          ))} */}
+        <PostCard>
           <FeedCard>
             <CardImg>Img</CardImg>
             <CardContent>
@@ -117,12 +99,40 @@ const ProfilePage = () => {
             </IconBtn> */}
             </CardContent>
           </FeedCard>
-        </PostList>
+        </PostCard>
       </DownSection>
     </PageTemplate>
   );
 };
 export default ProfilePage;
+
+const Title = styled.h1`
+  text-align: center;
+  font-size: 24px;
+  font-weight: bold;
+  padding: 30px;
+`;
+
+const Header = styled.header`
+  width: 100%;
+  height: 48px;
+  background-color: #dbdbdb;
+`;
+
+// 뒤로가기 버튼이 있는 Nav
+// const TopBasicNav = styled.div`
+//   box-shadow: inset 0 0 10px grey;
+//   max-width: 390px;
+//   height: 40px;
+// `;
+
+// const BackButton = styled.button`
+//   border: 1px solid #000;
+// `;
+
+// const Kebab = styled.button`
+//   border: 1px solid #000;
+// `;
 
 // 프로필 카드 상단부
 const UpperSection = styled.div`
