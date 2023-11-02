@@ -35,20 +35,16 @@ const GoodsDetailPage = () => {
     const fetchAuthorData = async () => {
       const result = await fetchUser(link.accountname);
       if (!result) {
-        //return navigate(pageUrlConfig.goodsPage);
+        return navigate(pageUrlConfig.goodsPage);
       } else {
         setAuthor(result);
       }
     };
     if (link !== '') {
       fetchAuthorData();
-      console.log(link);
     }
   }, [link]);
 
-  useEffect(() => {
-    console.log(author);
-  }, [author]);
 
   return (
     <PageTemplate>
@@ -136,4 +132,5 @@ const InfoArea = styled.div`
   padding: 30px 32px;
 `;
 const Info = styled.div``;
+
 export default GoodsDetailPage;
