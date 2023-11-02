@@ -1,27 +1,26 @@
 import { useNavigate, useParams } from 'react-router';
-import getPostDetail from '../api/getPostDetail.api';
 import { useEffect, useState } from 'react';
 import styled from 'styled-components';
+import getPostDetail from '../api/getPostDetail.api';
 import postHeart from '../api/postHeart.api';
+import getComments from '../api/getComments.api';
+import postComments from '../api/postComments.api';
 import useFormatDate from '../hooks/useFormatDate';
-import profileImage from '../assets/img/basic-profile.svg';
-import heart from '../assets/img/heart.svg';
-import heartFilled from '../assets/img/heart-filled.svg';
-import commentIcon from '../assets/img/message-circle.svg';
+import PageTemplate from '../components/PageTemplate';
+import pageUrlConfig from '../config/pageUrlConfig';
+import Comment from '../components/feed/Comment';
+import CommentForm from '../components/feed/CommentForm';
+import { IconLabelBtn } from '../components/Buttons';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { Pagination, Navigation } from 'swiper/modules';
 import 'swiper/css';
 import 'swiper/css/pagination';
 import 'swiper/css/navigation';
 import swiperStyles from '../style/swiperStyle';
-import PageTemplate from '../components/PageTemplate';
-import pageUrlConfig from '../config/pageUrlConfig';
-import { IconLabelBtn } from '../components/Buttons';
-import getComments from '../api/getComments.api';
-import postComments from '../api/postComments.api';
-import Comment from '../components/feed/Comment';
-import ResizingTextarea from '../components/feed/ResizingTextarea';
-import BottomSheet from '../components/BottomSheet';
+import profileImage from '../assets/img/basic-profile.svg';
+import heart from '../assets/img/heart.svg';
+import heartFilled from '../assets/img/heart-filled.svg';
+import commentIcon from '../assets/img/message-circle.svg';
 import verticalIcon from '../assets/img/icon-more-vertical.svg';
 
 const FeedDetailPage = () => {
@@ -29,9 +28,7 @@ const FeedDetailPage = () => {
   const [post, setPost] = useState(null);
   const [commentsList, setCommentsList] = useState([]);
   const [isHearted, setIsHearted] = useState(post?.hearted);
-  const [inputComment, setInputComment] = useState('');
   const [heartCount, setHeartCount] = useState(post?.heartCount);
-  const [showBottomSheet, setShowBottomSheet] = useState(false);
 
   const { fetchPost, loading, error } = getPostDetail();
   const { fetchComments } = getComments();
@@ -77,27 +74,11 @@ const FeedDetailPage = () => {
     }
   };
 
-  const handlePostComments = async (event) => {
-    event.preventDefault();
-
-    const newComment = await uploadComment(postId, inputComment);
-
-    if (newComment) {
-      // 새 댓글을 포함하도록 commentsList 상태를 업데이트
-      setCommentsList((prevCommentsList) => [...prevCommentsList, newComment]);
-
-      setInputComment('');
-    }
-  };
-
-  const handleCommentChange = (event) => {
-    setInputComment(event.target.value);
-  };
-
-  console.log(commentsList)
   const removeCommentFromList = (commentId) => {
     setCommentsList((currentList) => currentList.filter((comment) => comment.id !== commentId));
   };
+
+  console.log(commentsList);
 
   return (
     <PageTemplate showNavMenu={false}>
@@ -166,17 +147,12 @@ const FeedDetailPage = () => {
 
       {/* 댓글 작성 */}
       {post && (
-        <CommentForm onSubmit={handlePostComments}>
-          {/* 프로필 기본이미지 수정 필요 */}
-          <CommentImage src={profileImage} alt="" />
-          <ResizingTextarea
-            rows="1"
-            placeholder="댓글 입력하기..."
-            onChange={handleCommentChange}
-            value={inputComment}
-          />
-          <CommentBtn disabled={!inputComment}>게시</CommentBtn>
-        </CommentForm>
+        <CommentForm
+          postId={postId}
+          uploadComment={uploadComment}
+          setCommentsList={setCommentsList}
+          profileImage={profileImage}
+        />
       )}
     </PageTemplate>
   );
@@ -268,40 +244,6 @@ const SwiperWrapper = styled.div`
 
 const CommentContaier = styled.section`
   padding: 20px 16px 60px;
-`;
-
-const CommentForm = styled.form`
-  width: 410px;
-  padding: 12px 20px 12px 16px;
-  position: fixed;
-  bottom: 0;
-  border-top: 0.5px solid #dbdbdb;
-  background-color: #fff;
-
-  display: flex;
-  gap: 16px;
-  align-items: flex-start;
-`;
-
-const CommentImage = styled.img`
-  width: 36px;
-  height: 36px;
-  border-radius: 50%;
-  border: 0.5px solid #dbdbdb;
-`;
-
-const CommentBtn = styled.button`
-  font-size: 14px;
-  margin-top: 8px;
-
-  &:disabled {
-    color: #c4c4c4;
-    cursor: default;
-  }
-
-  &:enabled {
-    color: #3c58c1;
-  }
 `;
 
 // // 수정 필요
