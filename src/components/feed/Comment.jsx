@@ -5,45 +5,63 @@ import useFormatDate from '../../hooks/useFormatDate';
 import { useSetRecoilState } from 'recoil';
 import { bottomSheetStateAtom, bottomSheetOptions } from '../../atoms/bottomSheetStateAtom';
 import deleteCommentsQuery from '../../api/deleteComments.api';
+import postCommentsReportQuery from '../../api/postCommentsReport.api';
 import { useMutation } from '@tanstack/react-query';
 
-const Comment = ({ comment, postId, removeCommentFromList }) => {
-  const { isSuccess, error, mutate } = useMutation(deleteCommentsQuery(postId, comment.id));
+const useCommentActions = (postId, commentId, removeCommentFromList) => {
+  const deleteMutation = useMutation(deleteCommentsQuery(postId, commentId));
+  const reportMutation = useMutation(postCommentsReportQuery(postId, commentId));
 
-  const time = useFormatDate(comment.createdAt, 'comment');
-
-  const setIsVisible = useSetRecoilState(bottomSheetStateAtom);
-  const setOptions = useSetRecoilState(bottomSheetOptions);
-
-  const currentAccountname = JSON.parse(localStorage.getItem('user')).accountname;
-
-  const handleBottomSheetShow = () => {
-    if (currentAccountname === comment.author.accountname) {
-      setOptions([{ label: '삭제', callback: handleCommentDelete }]);
-    } else {
-      setOptions([{ label: '신고', callback: () => console.log('신고 clicked') }]);
-    }
-
-    setIsVisible((prev) => !prev);
+  const handleDelete = () => {
+    deleteMutation.mutate(
+      { postId, commentId },
+      {
+        onSuccess: () => removeCommentFromList(commentId),
+        onError: () => alert('댓글 삭제에 실패했습니다'),
+      },
+    );
   };
 
-  const handleCommentDelete = () => {
-    if (confirm('댓글을 삭제할까요?')) {
-      mutate(
-        { postId, commentId: comment.id },
-        {
-          onSuccess: () => {
-            // 요청이 성공하면 댓글 목록에서 제거
-            removeCommentFromList(comment.id);
-          },
-          onError: () => {
-            alert(`댓글 삭제에 실패했습니다`);
-          },
-        },
-      );
-    }
+  const handleReport = () => {
+    reportMutation.mutate(
+      { postId, commentId },
+      {
+        onSuccess: () => removeCommentFromList(commentId),
+        onError: () => alert('댓글 신고에 실패했습니다'),
+      },
+    );
+  };
 
-    setIsVisible((prev) => !prev);
+  return { handleDelete, handleReport };
+};
+
+
+const Comment = ({ comment, postId, removeCommentFromList }) => {
+  const setIsVisible = useSetRecoilState(bottomSheetStateAtom);
+  const setOptions = useSetRecoilState(bottomSheetOptions);
+  const time = useFormatDate(comment.createdAt, 'comment');
+
+  const { handleDelete, handleReport } = useCommentActions(postId, comment.id, removeCommentFromList);
+
+  const currentAccountname = JSON.parse(localStorage.getItem('user')).accountname;
+  
+  const toggleBottomSheetShow = () => setIsVisible((prev) => !prev);
+
+  const handleBottomSheetShow = () => {
+    const options =
+      currentAccountname === comment.author.accountname
+        ? [{ label: '댓글 삭제', callback: () => confirmAction('댓글을 삭제할까요?', handleDelete) }]
+        : [{ label: '댓글 신고', callback: () => confirmAction('댓글을 신고할까요?', handleReport) }];
+    setOptions(options);
+    toggleBottomSheetShow();
+  };
+
+  // TODO : 확인창 모달로 수정 필요
+  const confirmAction = (message, action) => {
+    if (confirm(message)) {
+      action();
+    }
+    toggleBottomSheetShow();
   };
 
   return (
