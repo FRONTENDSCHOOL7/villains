@@ -6,6 +6,7 @@ class pageUlrConfig {
   resultPage = `/main/:id`;
   feedPage = `/feed`;
   feedWritePage = '/feed/write';
+  feedDetailPage = `/feed/:id`;
   profilePage = `/user`;
   profileEdit = `/user/edit`;
   goodsPage = `/goods`;
