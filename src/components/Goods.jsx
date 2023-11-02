@@ -1,17 +1,20 @@
 import React from 'react';
 import styled from 'styled-components';
 import pageUrlConfig from '../config/pageUrlConfig';
+import { useNavigate } from 'react-router';
 
 const Goods = ({ products }) => {
+  const navigate = useNavigate();
   console.log(products);
 
-  const handleClickProductCard = () => {
-    const productDetailUrl = `${pageUrlConfig.goodsPage}/${products.id}`
+  const handleClickProductCard = (product) => {
+    const productDetailUrl = `${pageUrlConfig.goodsPage}/${product.id}`
+    navigate(productDetailUrl);
   }
   return (
     <div>
       {products.map((product) => (
-        <ProductCard key={product.id} onClick={handleClickProductCard}>
+        <ProductCard key={product.id} onClick={() => handleClickProductCard(product)}>
           <ProductImg src={product.itemImage} alt=""></ProductImg>
           <ProductInfoArea>
             <ProductTitle>{product.itemName}</ProductTitle>
