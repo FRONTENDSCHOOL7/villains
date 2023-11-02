@@ -1,20 +1,19 @@
-import Header from './layout/SearchHeader';
-import ListBox from './searchbar/ListBox';
-import NavMenu from './layout/NavMenu';
-import { Wrap, Main } from './PageTemplate.style';
+import SearchHeader from './SearchHeader';
+import ListBox from '../searchbar/ListBox';
+import NavMenu from './NavMenu';
+import { Wrap, Main } from '../PageTemplate.style';
 
 import { useRecoilState, useRecoilValue } from 'recoil';
-import { useLocation, useNavigate } from 'react-router';
+import { Outlet, useLocation, useNavigate } from 'react-router';
 import { useEffect, useState } from 'react';
-import subOneAtom from '../atoms/subOneAtom';
-import queryFocusAtom from '../atoms/queryFocusAtom';
-import queryAtom from '../atoms/queryAtom';
-import pageUrlConfig from '../config/pageUrlConfig';
-import FloatingButton from './FloatingButton.style';
-import BottomSheet from './BottomSheet';
+import subOneAtom from '../../atoms/subOneAtom';
+import queryFocusAtom from '../../atoms/queryFocusAtom';
+import queryAtom from '../../atoms/queryAtom';
+import pageUrlConfig from '../../config/pageUrlConfig';
+import FloatingButton from '../FloatingButton.style';
 
 
-const PageTemplate = ({ children, showNavMenu = true }) => {
+const SearchLayout = ({ children }) => {
   const [list, setList] = useState([]);
   const [isClickInfo, setIsClickInfo] = useState(false);
   const [params, setParams] = useState('');
@@ -32,16 +31,14 @@ const PageTemplate = ({ children, showNavMenu = true }) => {
   }
 
   useEffect(() => {
-    if (dataList) {
-      if (query === '') setList([]);
-      else {
-        dataList.map((data, index) => {
-          if (data.Query.includes(query) && !list.find((elem) => elem[0].includes(data.Query))) {
-            setList([...list, [data.Query, data.Id]]);
-          }
-        });
-      }
-    }
+    if(dataList){if (query === '') setList([]);
+    else {
+      dataList.map((data, index) => {
+        if (data.Query.includes(query) && !list.find((elem) => elem[0].includes(data.Query))) {
+          setList([...list, [data.Query, data.Id]]);
+        }
+      });
+    }}
   }, [query]);
 
   useEffect(() => {
@@ -64,19 +61,24 @@ const PageTemplate = ({ children, showNavMenu = true }) => {
     setIsClickInfo(true);
   };
 
+
   const handleClickWrite = () => {
-    if (pathname.includes(pageUrlConfig.goodsPage)) {
+    if(pathname.includes(pageUrlConfig.goodsPage)){
       navigate(pageUrlConfig.goodsWritePage);
     }
     navigate(pageUrlConfig.feedWritePage);
   };
 
+  const handleClickBack = () => {
+      const mainPath = pathname.split('/')[1];
+      navigate(`/${mainPath}`);
+  }
   return (
     <>
-      <Main children={children} />
-      <BottomSheet />
+      <SearchHeader onClick={handleClickBack}/>
+      {showListBox ? <ListBox list={list} onClick={handleClickInfo} /> : <Outlet/>}
     </>
   );
 };
 
-export default PageTemplate;
+export default SearchLayout;

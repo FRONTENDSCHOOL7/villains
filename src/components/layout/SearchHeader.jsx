@@ -1,14 +1,16 @@
 import React, { useState } from 'react';
 import SearchBar from '../searchbar/SearchBar.jsx';
 import { useLocation, useNavigate } from 'react-router';
-import queryAtom from '../../atoms/queryAtom';
-import { useRecoilState } from 'recoil';
-import pageUrlConfig from '../../config/pageUrlConfig';
-import styled from 'styled-components';
-import theme from '../../style/theme.js';
+import queryAtom from '../../atoms/queryAtom.js';
+import { useRecoilState, useRecoilValue } from 'recoil';
+import pageUrlConfig from '../../config/pageUrlConfig.js';
+import BackHeader from './BackHeader.jsx';
+import queryFocusAtom from '../../atoms/queryFocusAtom.js';
 
-const Header = () => {
+const SearchHeader = ({onClick}) => {
   const [query, setQuery] = useRecoilState(queryAtom);
+  const focus = useRecoilValue(queryFocusAtom);
+  
 
   //IsShowSearchBar는 첫 렌더 시에만 필요한 값이며, useState를 쓰면 안됩니다.
   //useState로 사용할 경우 상태가 변경되어 다시 렌더가 되면 또 값이 바뀌고 리렌더링 시키는 무한 렌더링 상태가 됩니다.
@@ -32,40 +34,17 @@ const Header = () => {
       IsShowSearchBar = false;
   }
 
-  const backPath = pathname.split('/')[1];
-
   return (
-    <>
-      <StyledHeader>
+    <BackHeader onClick={onClick} focus={focus}>
         {IsShowSearchBar && (
           <SearchBar
             placeholder={placeholder}
             onChange={handleChangeQuery}
             value={query}
-            backPath={backPath}
           />
         )}
-      </StyledHeader>
-      <BackGround></BackGround>
-    </>
+    </BackHeader>
   );
 };
 
-export default Header;
-const StyledHeader = styled.header`
-  position: fixed;
-  top: 0;
-  right: 0;
-  left: 0;
-  margin: 0 auto;
-  padding: 8px;
-  max-width: 410px;
-  height: 48px;
-  z-index: 10;
-  background-color: ${theme.color.white};
-  border-bottom: 1px solid #dbdbdb;
-`;
-
-const BackGround = styled.div`
-  height: 48px;
-`;
+export default SearchHeader;

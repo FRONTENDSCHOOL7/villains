@@ -7,11 +7,15 @@ import { useQuery } from '@tanstack/react-query';
 import contactQuery from '../api/getUserPost.api';
 import getSubOneInfo from '../api/getSubOneInfo';
 import subOneAtom from '../atoms/subOneAtom';
-import { useRecoilState } from 'recoil';
+import { useRecoilState, useRecoilValue } from 'recoil';
+import pageUrlConfig from '../config/pageUrlConfig';
+import { useNavigate } from 'react-router';
+import userAtom from '../atoms/userAtom';
 
 const HomePage = () => {
   const [subOneInfo, setSubOneInfo] = useRecoilState(subOneAtom);
-
+  const user = useRecoilValue(userAtom);
+  const navigate = useNavigate();
   useMemo(() => {
     //도시철도 1호선 지하철역 정보 불러오기
     getSubOneInfo().then((data) => {
@@ -21,7 +25,6 @@ const HomePage = () => {
         return (info = { Query: info.STATION_NM, Id: info.STATION_CD });
       });
       setSubOneInfo(newInfo);
-      console.log(newInfo);
     });
   }, []);
 
@@ -30,8 +33,9 @@ const HomePage = () => {
   const { latitude, longitude } = location ?? { latitude: 33, longitude: 130 };
 
   //로컬 스토리지의 사용자를 관리자로 해놓았습니다. 이 부분 나중에 교체 필요!!
-  const user = JSON.parse(localStorage.getItem('user'));
-  const { data, isError, isLoading, isFetching } = useQuery(contactQuery(user));
+  const { data, isError, isLoading, isFetching } = useQuery(
+    contactQuery(user)
+  );
   const [posts, setPosts] = useState([]);
 
   useEffect(() => {
@@ -40,7 +44,7 @@ const HomePage = () => {
 
   return (
     <PageTemplate>
-      <Map center={{ lat: latitude, lng: longitude }} style={{ width: '100%', height: '90vh' }} level={3}>
+      <Map center={{ lat: latitude, lng: longitude }} style={{ width: '100%', height: '100%' }} level={3}>
         {posts.map((post, index) => {
           // const content = JSON.parse(post.content?.split("'").join('"'));
           // 계정마다 쓰인 content가 달라서 위의 경우는 문제가 생깁니다.

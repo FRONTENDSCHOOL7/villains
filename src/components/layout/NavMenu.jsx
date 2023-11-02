@@ -11,41 +11,42 @@ import theme from '../../style/theme';
 
 const NavMenu = () => {
   const {pathname} = useLocation();
-
-
   const navContents = [[`feed`, `피드`],[`goods`, `택배`], [`main`, `홈`], [`chat`, `채팅`], [`user`, `프로필`]];
   return (
-    <Nav>
-
-      {navContents.map((content, index)=>{
-        const click = pathname.includes(content[0]);
-        const src = click ? `nav-${content[0]}-click.svg` : `nav-${content[0]}.svg`;
-        return (
-          <Link to={`/${content[0]}`} key={index}>
-            <NavButton state={click}><img src={`${import.meta.env.BASE_URL}nav/${src}`} alt={content[1]}/><span>{content[1]}</span></NavButton>
-          </Link>
-          )
-      })}
-      {/* <Link to="/feed">
-        <NavButton>피드 메뉴 버튼</NavButton>
-      </Link>
-
-      <Link to="/goods">
-        <NavButton>택배 버튼</NavButton>
-      </Link>
-
-      <Link to="/main">
-        <NavButton>홈 버튼</NavButton>
-      </Link>
-
-      <Link to="/chat">
-        <NavButton>메세지 버튼</NavButton>
-      </Link>
-
-      <Link to="/user">
-        <NavButton>프로필 버튼</NavButton>
-      </Link> */}
-    </Nav>
+    <>
+      <Nav>
+  
+        {navContents.map((content, index)=>{
+          const click = pathname.includes(content[0]);
+          const src = click ? `nav-${content[0]}-click.svg` : `nav-${content[0]}.svg`;
+          return (
+            <Link to={`/${content[0]}`} key={index}>
+              <NavButton state={click}><img src={`${import.meta.env.BASE_URL}nav/${src}`} alt={content[1]}/><span>{content[1]}</span></NavButton>
+            </Link>
+            )
+        })}
+        {/* <Link to="/feed">
+          <NavButton>피드 메뉴 버튼</NavButton>
+        </Link>
+  
+        <Link to="/goods">
+          <NavButton>택배 버튼</NavButton>
+        </Link>
+  
+        <Link to="/main">
+          <NavButton>홈 버튼</NavButton>
+        </Link>
+  
+        <Link to="/chat">
+          <NavButton>메세지 버튼</NavButton>
+        </Link>
+  
+        <Link to="/user">
+          <NavButton>프로필 버튼</NavButton>
+        </Link> */}
+      </Nav>
+      <BackGround />
+    </>
   );
 };
 export default NavMenu;
@@ -100,4 +101,8 @@ const NavButton = styled.div`
   justify-content: center;
   align-items: center;
   gap: 5px;
+`;
+
+const BackGround = styled.div`
+height: 77px;
 `;
