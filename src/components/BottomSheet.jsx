@@ -9,24 +9,27 @@ const BottomSheet = () => {
 
   const wrapperRef = useRef(null);
 
-  // TODO : 바텀 시트가 아닌 다른 곳을 누르면 바텀시트가 사라지도록 수정
-  // const handleOutsideClick = (e) => {
-  //   if (wrapperRef.current && !wrapperRef.current.contains(e.target)) {
-  //     setIsVisible(false);
-  //   }
-  // };
+  // 바텀 시트가 아닌 다른 곳을 누르면 보이지 않도록 처리
+  const handleOutsideClick = (e) => {
+    if (wrapperRef.current && !wrapperRef.current.contains(e.target)) {
+      handleBottomSheetClose();
+    }
+  };
 
-  // useEffect(() => {
-  //   document.addEventListener('mousedown', handleOutsideClick);
-  //   return () => {
-  //     document.removeEventListener('mousedown', handleOutsideClick);
-  //   };
-  // }, []);
+  useEffect(() => {
+    document.addEventListener('click', handleOutsideClick);
+    return () => {
+      document.removeEventListener('click', handleOutsideClick);
+    };
+  }, []);
 
+  const handleBottomSheetClose = () => {
+    setIsVisible(false);
+  };
 
   return isVisible ? (
-    <BottomSheetWrapper>
-      <CloseButton onClick={() => setIsVisible(false)} />
+    <BottomSheetWrapper ref={wrapperRef}>
+      <CloseButton onClick={handleBottomSheetClose} />
       {options.map((option, index) => (
         <Option key={index} onClick={option.callback}>
           {option.label}
@@ -54,7 +57,7 @@ const BottomSheetWrapper = styled.div`
 
 const Option = styled.div`
   font-size: 14px;
-  padding: 16px 26px;
+  padding: 20px 26px;
   cursor: pointer;
 
   &:hover {

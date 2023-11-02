@@ -2,17 +2,19 @@ import styled from 'styled-components';
 import profileImage from '../../assets/img/basic-profile.svg';
 import verticalIcon from '../../assets/img/icon-more-vertical.svg';
 import useFormatDate from '../../hooks/useFormatDate';
-import { useSetRecoilState } from 'recoil';
+import { useRecoilValue, useSetRecoilState } from 'recoil';
 import { bottomSheetStateAtom, bottomSheetOptions } from '../../atoms/bottomSheetStateAtom';
 import deleteCommentsQuery from '../../api/deleteComments.api';
 import postCommentsReportQuery from '../../api/postCommentsReport.api';
 import { useMutation } from '@tanstack/react-query';
+import userAtom from '../../atoms/userAtom';
+import useBottomSheetOptions from '../../hooks/useBottomSheetOptions';
 
 const useCommentActions = (id, commentId, removeCommentFromList) => {
   const deleteMutation = useMutation(deleteCommentsQuery(id, commentId));
   const reportMutation = useMutation(postCommentsReportQuery(id, commentId));
 
-  const handleDelete = () => {
+  const commentDelete = () => {
     deleteMutation.mutate(
       { id, commentId },
       {
@@ -22,7 +24,7 @@ const useCommentActions = (id, commentId, removeCommentFromList) => {
     );
   };
 
-  const handleReport = () => {
+  const commentReport = () => {
     reportMutation.mutate(
       { id, commentId },
       {
@@ -32,26 +34,31 @@ const useCommentActions = (id, commentId, removeCommentFromList) => {
     );
   };
 
-  return { handleDelete, handleReport };
+  return { commentDelete, commentReport };
 };
-
 
 const Comment = ({ comment, id, removeCommentFromList }) => {
   const setIsVisible = useSetRecoilState(bottomSheetStateAtom);
   const setOptions = useSetRecoilState(bottomSheetOptions);
   const time = useFormatDate(comment.createdAt, 'comment');
 
-  const { handleDelete, handleReport } = useCommentActions(id, comment.id, removeCommentFromList);
+  const { commentDelete, commentReport } = useCommentActions(id, comment.id, removeCommentFromList);
 
-  const currentAccountname = JSON.parse(localStorage.getItem('user')).accountname;
-  
   const toggleBottomSheetShow = () => setIsVisible((prev) => !prev);
 
-  const handleBottomSheetShow = () => {
-    const options =
-      currentAccountname === comment.author.accountname
-        ? [{ label: '댓글 삭제', callback: () => confirmAction('댓글을 삭제할까요?', handleDelete) }]
-        : [{ label: '댓글 신고', callback: () => confirmAction('댓글을 신고할까요?', handleReport) }];
+  const currentAccountname = useRecoilValue(userAtom).accountname;
+  const authorAccountname = comment.author.accountname;
+
+  const options = useBottomSheetOptions({
+    currentAccountname,
+    authorAccountname,
+    commentDelete: () => confirmAction('댓글을 삭제할까요?', commentDelete),
+    commentReport: () => confirmAction('댓글을 신고할까요?', commentReport),
+    type: 'comment',
+  });
+
+  const handleBottomSheetShow = (event) => {
+    event.stopPropagation();
     setOptions(options);
     toggleBottomSheetShow();
   };
