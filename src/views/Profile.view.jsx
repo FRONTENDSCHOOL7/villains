@@ -5,7 +5,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import pageUrlConfig from '../config/pageUrlConfig';
 import PageTemplate from '../components/PageTemplate';
 
-const ProfilPage = () => {
+const ProfilePage = () => {
   const navigator = useNavigate();
   const handleClickEdit = () => {
     navigator(pageUrlConfig.profileEdit);
@@ -79,7 +79,7 @@ const ProfilPage = () => {
     </PageTemplate>
   );
 };
-export default ProfilPage;
+export default ProfilePage;
 
 const Title = styled.h1`
   text-align: center;

@@ -11,8 +11,6 @@ import theme from '../../style/theme';
 
 const NavMenu = () => {
   const {pathname} = useLocation();
-
-
   const navContents = [[`feed`, `피드`],[`goods`, `택배`], [`main`, `홈`], [`chat`, `채팅`], [`user`, `프로필`]];
   return (
     <Nav>

@@ -1,7 +1,7 @@
 import Header from './layout/Header';
 import ListBox from './searchbar/ListBox';
 import NavMenu from './layout/NavMenu';
-import styled from 'styled-components';
+import { Wrap, Main } from './PageTemplate.style';
 
 import { useRecoilState, useRecoilValue } from 'recoil';
 import { useLocation, useNavigate } from 'react-router';
@@ -13,21 +13,6 @@ import pageUrlConfig from '../config/pageUrlConfig';
 import FloatingButton from './FloatingButton.style';
 import BottomSheet from './BottomSheet';
 
-const Wrap = styled.div`
-  max-width: 412px;
-  min-height: 100vh;
-  margin: 0 auto;
-  /* background-color: #ccc; */
-  border-left: 1px solid #ccc;
-  border-right: 1px solid #ccc;
-
-  position: relative;
-`;
-
-const Main = styled.main`
-  width: 100%;
-  height: 100%;
-`;
 
 const PageTemplate = ({ children, showNavMenu = true }) => {
   const [list, setList] = useState([]);

@@ -4,7 +4,7 @@ const getUerPostList = (accountname, token) => {
   return client.get(`/post/${accountname}/userpost`, {}, client.AuthType(token));
 };
 
-const contactQuery = (info) => ({
+const contactQuery = (info = { accountname: '', token: '' }) => ({
   queryKey: ['get', 'userPost', info.accountname],
   queryFn: async () => getUerPostList(info.accountname, info.token),
 });

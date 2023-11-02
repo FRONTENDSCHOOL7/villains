@@ -12,7 +12,7 @@ import queryFocusAtom from "../atoms/queryFocusAtom";
 import DefaultBtn, { PrimaryStyle } from "../components/GlobalButton";
 
 const ResultPage = () => {
-    const {stationId} = useParams();
+    const {id} = useParams();
     const [query, setQuery] = useRecoilState(queryAtom);
     const title = query;
     const focus = useRecoilValue(queryFocusAtom);
@@ -28,7 +28,7 @@ const ResultPage = () => {
     useEffect(()=>{
         setRowInfo([]);
         setCount(0);
-    },[stationId])
+    },[id])
     
     //TODO: 사용자 위치, 시간에 맞게 시간표 조회하기
     useEffect(()=>{
@@ -78,7 +78,7 @@ const ResultPage = () => {
     const index = 5;
     useEffect(()=>{
         rowInfo.sort();
-        getSubTime(index*count, index*(count+1)-1, stationId, day, direct)
+        getSubTime(index*count, index*(count+1)-1, id, day, direct)
         .then((res)=>{
             const access = res.data.SearchSTNTimeTableByIDService;
             const status = access.RESULT.CODE;
@@ -94,7 +94,7 @@ const ResultPage = () => {
     }).catch((error)=>{
         console.error(error);
     });
-    }, [count, stationId, refresh])
+    }, [count, id, refresh])
 
     return(
         <PageTemplate>
