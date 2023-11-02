@@ -89,7 +89,7 @@ const FeedWritePage = () => {
   const handleBack = useBlockToBack(content, navigate, pageUrlConfig.feedPage);
 
   return (
-    <PageTemplate>
+    <PageTemplate showNavMenu={false}>
       {/* 임시 헤더입니다. */}
       <Header>
         <button type="button" onClick={handleBack}>

@@ -94,7 +94,10 @@ const FeedDetailPage = () => {
     setInputComment(event.target.value);
   };
 
-  const handleBottomSheetShow = () => {};
+  console.log(commentsList)
+  const removeCommentFromList = (commentId) => {
+    setCommentsList((currentList) => currentList.filter((comment) => comment.id !== commentId));
+  };
 
   return (
     <PageTemplate showNavMenu={false}>
@@ -139,7 +142,7 @@ const FeedDetailPage = () => {
                 onClick={handleHeartClick}
                 alt="좋아요 버튼"
               />
-              <IconLabelBtn icon={commentIcon} count={post.commentCount} alt="코멘트 버튼" />
+              <IconLabelBtn icon={commentIcon} count={commentsList.length} alt="코멘트 버튼" />
             </IconsContainer>
           </PostContainer>
         </PostWrapper>
@@ -150,7 +153,12 @@ const FeedDetailPage = () => {
         <CommentContaier>
           <ul>
             {commentsList.map((comment, idx) => (
-              <Comment key={idx} comment={comment} />
+              <Comment
+                key={idx}
+                comment={comment}
+                postId={postId}
+                removeCommentFromList={removeCommentFromList}
+              />
             ))}
           </ul>
         </CommentContaier>

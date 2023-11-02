@@ -2,29 +2,48 @@ import styled from 'styled-components';
 import profileImage from '../../assets/img/basic-profile.svg';
 import verticalIcon from '../../assets/img/icon-more-vertical.svg';
 import useFormatDate from '../../hooks/useFormatDate';
-import { useSetRecoilState, useRecoilValue } from 'recoil';
+import { useSetRecoilState } from 'recoil';
 import { bottomSheetStateAtom, bottomSheetOptions } from '../../atoms/bottomSheetStateAtom';
+import deleteCommentsQuery from '../../api/deleteComments.api';
+import { useMutation } from '@tanstack/react-query';
 
-const Comment = ({ comment }) => {
+const Comment = ({ comment, postId, removeCommentFromList }) => {
+  const { isSuccess, error, mutate } = useMutation(deleteCommentsQuery(postId, comment.id));
+
   const time = useFormatDate(comment.createdAt, 'comment');
 
   const setIsVisible = useSetRecoilState(bottomSheetStateAtom);
   const setOptions = useSetRecoilState(bottomSheetOptions);
 
-  const value = useRecoilValue(bottomSheetStateAtom);
-  const opt = useRecoilValue(bottomSheetOptions);
-
+  const currentAccountname = JSON.parse(localStorage.getItem('user')).accountname;
 
   const handleBottomSheetShow = () => {
-    setOptions([
-      { label: '삭제', callback: () => console.log('삭제 clicked') },
-      { label: '신고', callback: () => console.log('신고 clicked') },
-    ]);
+    if (currentAccountname === comment.author.accountname) {
+      setOptions([{ label: '삭제', callback: handleCommentDelete }]);
+    } else {
+      setOptions([{ label: '신고', callback: () => console.log('신고 clicked') }]);
+    }
 
     setIsVisible((prev) => !prev);
+  };
 
-    console.log(value);
-    console.log(opt);
+  const handleCommentDelete = () => {
+    if (confirm('댓글을 삭제할까요?')) {
+      mutate(
+        { postId, commentId: comment.id },
+        {
+          onSuccess: () => {
+            // 요청이 성공하면 댓글 목록에서 제거
+            removeCommentFromList(comment.id);
+          },
+          onError: () => {
+            alert(`댓글 삭제에 실패했습니다`);
+          },
+        },
+      );
+    }
+
+    setIsVisible((prev) => !prev);
   };
 
   return (

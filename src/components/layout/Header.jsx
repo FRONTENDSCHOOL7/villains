@@ -20,7 +20,6 @@ const Header = () => {
 
   const { pathname } = useLocation();
 
-
   let placeholder;
   switch (pathname) {
     case `${pageUrlConfig.homePage}`:
@@ -30,25 +29,27 @@ const Header = () => {
       placeholder = `유저를 검색해주세요`;
       break;
     default:
-    // IsShowSearchBar = false;
+      IsShowSearchBar = false;
   }
 
   const backPath = pathname.split('/')[1];
-
-  
 
   return (
     <>
       <StyledHeader>
         {IsShowSearchBar && (
-          <SearchBar placeholder={placeholder} onChange={handleChangeQuery} value={query} backPath={backPath}/>
+          <SearchBar
+            placeholder={placeholder}
+            onChange={handleChangeQuery}
+            value={query}
+            backPath={backPath}
+          />
         )}
       </StyledHeader>
       <BackGround></BackGround>
     </>
   );
 };
-
 
 export default Header;
 const StyledHeader = styled.header`
@@ -58,10 +59,11 @@ const StyledHeader = styled.header`
   left: 0;
   margin: 0 auto;
   padding: 8px;
-  max-width: 412px;
+  max-width: 410px;
   height: 48px;
   z-index: 10;
   background-color: ${theme.color.white};
+  border-bottom: 1px solid #dbdbdb;
 `;
 
 const BackGround = styled.div`
