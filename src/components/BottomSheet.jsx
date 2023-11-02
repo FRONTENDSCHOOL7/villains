@@ -23,7 +23,6 @@ const BottomSheet = () => {
   //   };
   // }, []);
 
-  console.log('recoil visible : ', isVisible);
 
   return isVisible ? (
     <BottomSheetWrapper>

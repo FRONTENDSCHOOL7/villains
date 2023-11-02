@@ -24,7 +24,7 @@ import commentIcon from '../assets/img/message-circle.svg';
 import verticalIcon from '../assets/img/icon-more-vertical.svg';
 
 const FeedDetailPage = () => {
-  const { postId } = useParams();
+  const { id } = useParams();
   const [post, setPost] = useState(null);
   const [commentsList, setCommentsList] = useState([]);
   const [isHearted, setIsHearted] = useState(post?.hearted);
@@ -41,21 +41,20 @@ const FeedDetailPage = () => {
 
   useEffect(() => {
     const fetchData = async () => {
-      const result = await fetchPost(postId);
+      const result = await fetchPost(id);
       if (!result) {
-        return navigate(pageUrlConfig.feedPage);
+        return navigate(pageUrlConfig.feedPage, { replace: true });
       } else {
         setPost(result);
-
         // post 요청이 성공하면 코멘트리스트 요청
-        const resultComment = await fetchComments(postId);
+        const resultComment = await fetchComments(id);
         if (resultComment) {
           setCommentsList(resultComment.reverse());
         }
       }
     };
     fetchData();
-  }, [postId]);
+  }, [id, navigate]);
 
   useEffect(() => {
     if (post) {
@@ -78,82 +77,76 @@ const FeedDetailPage = () => {
     setCommentsList((currentList) => currentList.filter((comment) => comment.id !== commentId));
   };
 
-  console.log(commentsList);
+  if (!post) {
+    // TODO : 스켈레톤 ui로 대체
+    return null;
+  }
 
   return (
     <PageTemplate showNavMenu={false}>
-      {post && (
-        <PostWrapper>
-          <PostContainer>
-            <UserHeader>
-              <ProfileImage>
-                {/* 프로필 기본이미지 수정 필요 */}
-                {/* <img src={post.author.image} alt="" /> */}
-                <img src={profileImage} alt="" />
-              </ProfileImage>
-              <UserInfo>
-                <UserName>{post.author.username}</UserName>
-                <Accountname>@ {post.author.accountname}</Accountname>
-              </UserInfo>
-              <DateText>{createdDate}</DateText>
-            </UserHeader>
-            {/* <PostMoreBtn aria-label="댓글 삭제/신고 버튼" onClick={handleBottomSheetShow} /> */}
-            {postImage[0] && (
-              <SwiperWrapper>
-                <Swiper
-                  navigation={true}
-                  spaceBetween={10}
-                  slidesPerView={1}
-                  pagination={{ clickable: true, dynamicBullets: true }}
-                  modules={[Pagination, Navigation]}
-                >
-                  {postImage.map((imgUrl, index) => (
-                    <SwiperSlide key={index}>
-                      <Image src={imgUrl} alt="" />
-                    </SwiperSlide>
-                  ))}
-                </Swiper>
-              </SwiperWrapper>
-            )}
-            <ContentText>{JSON.parse(post.content).contents}</ContentText>
-            <IconsContainer>
-              <IconLabelBtn
-                icon={isHearted ? heartFilled : heart}
-                count={heartCount}
-                onClick={handleHeartClick}
-                alt="좋아요 버튼"
-              />
-              <IconLabelBtn icon={commentIcon} count={commentsList.length} alt="코멘트 버튼" />
-            </IconsContainer>
-          </PostContainer>
-        </PostWrapper>
-      )}
+      <PostWrapper>
+        <PostContainer>
+          <UserHeader>
+            <ProfileImage>
+              {/* 프로필 기본이미지 수정 필요 */}
+              {/* <img src={post.author.image} alt="" /> */}
+              <img src={profileImage} alt="" />
+            </ProfileImage>
+            <UserInfo>
+              <UserName>{post.author.username}</UserName>
+              <Accountname>@ {post.author.accountname}</Accountname>
+            </UserInfo>
+            <DateText>{createdDate}</DateText>
+          </UserHeader>
+          {/* <PostMoreBtn aria-label="댓글 삭제/신고 버튼" onClick={handleBottomSheetShow} /> */}
+          {postImage[0] && (
+            <SwiperWrapper>
+              <Swiper
+                navigation={true}
+                spaceBetween={10}
+                slidesPerView={1}
+                pagination={{ clickable: true, dynamicBullets: true }}
+                modules={[Pagination, Navigation]}
+              >
+                {postImage.map((imgUrl, index) => (
+                  <SwiperSlide key={index}>
+                    <Image src={imgUrl} alt="" />
+                  </SwiperSlide>
+                ))}
+              </Swiper>
+            </SwiperWrapper>
+          )}
+          <ContentText>{JSON.parse(post.content).contents}</ContentText>
+          <IconsContainer>
+            <IconLabelBtn
+              icon={isHearted ? heartFilled : heart}
+              count={heartCount}
+              onClick={handleHeartClick}
+              alt="좋아요 버튼"
+            />
+            <IconLabelBtn icon={commentIcon} count={commentsList.length} alt="코멘트 버튼" />
+          </IconsContainer>
+        </PostContainer>
+      </PostWrapper>
 
       {/* 댓글 리스트 */}
       {commentsList && (
         <CommentContaier>
           <ul>
             {commentsList.map((comment, idx) => (
-              <Comment
-                key={idx}
-                comment={comment}
-                postId={postId}
-                removeCommentFromList={removeCommentFromList}
-              />
+              <Comment key={idx} comment={comment} id={id} removeCommentFromList={removeCommentFromList} />
             ))}
           </ul>
         </CommentContaier>
       )}
 
-      {/* 댓글 작성 */}
-      {post && (
-        <CommentForm
-          postId={postId}
-          uploadComment={uploadComment}
-          setCommentsList={setCommentsList}
-          profileImage={profileImage}
-        />
-      )}
+      {/* 댓글 작성 폼 */}
+      <CommentForm
+        id={id}
+        uploadComment={uploadComment}
+        setCommentsList={setCommentsList}
+        profileImage={profileImage}
+      />
     </PageTemplate>
   );
 };

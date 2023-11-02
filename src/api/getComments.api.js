@@ -5,13 +5,13 @@ const getComments = () => {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
 
-  const fetchComments = async (postId) => {
+  const fetchComments = async (id) => {
     setLoading(true);
 
     const token = JSON.parse(localStorage.getItem('user')).token;
 
     try {
-      const response = await client.get(`/post/${postId}/comments`, {}, client.BothType(token));
+      const response = await client.get(`/post/${id}/comments`, {}, client.BothType(token));
 
       setLoading(false);
       return response.data.comments;

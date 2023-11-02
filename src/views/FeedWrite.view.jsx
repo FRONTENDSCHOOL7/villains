@@ -79,7 +79,6 @@ const FeedWritePage = () => {
 
     if (result) {
       // 게시글 업로드가 성공하면, 해당 게시글의 상세 페이지로 이동
-      console.log(result);
       const feedDetailUrl = `${pageUrlConfig.feedPage}/${result.id}`;
       navigate(feedDetailUrl);
     }

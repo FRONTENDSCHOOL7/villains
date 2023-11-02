@@ -2,13 +2,13 @@ import { useState } from 'react';
 import styled from 'styled-components';
 import ResizingTextarea from './ResizingTextarea';
 
-const CommentForm = ({ postId, uploadComment, profileImage, setCommentsList }) => {
+const CommentForm = ({ id, uploadComment, profileImage, setCommentsList }) => {
   const [inputComment, setInputComment] = useState('');
 
   const handlePostComments = async (event) => {
     event.preventDefault();
 
-    const newComment = await uploadComment(postId, inputComment);
+    const newComment = await uploadComment(id, inputComment);
 
     if (newComment) {
       // 새 댓글을 포함하도록 commentsList 상태를 업데이트

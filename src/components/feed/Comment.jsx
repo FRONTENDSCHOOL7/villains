@@ -8,13 +8,13 @@ import deleteCommentsQuery from '../../api/deleteComments.api';
 import postCommentsReportQuery from '../../api/postCommentsReport.api';
 import { useMutation } from '@tanstack/react-query';
 
-const useCommentActions = (postId, commentId, removeCommentFromList) => {
-  const deleteMutation = useMutation(deleteCommentsQuery(postId, commentId));
-  const reportMutation = useMutation(postCommentsReportQuery(postId, commentId));
+const useCommentActions = (id, commentId, removeCommentFromList) => {
+  const deleteMutation = useMutation(deleteCommentsQuery(id, commentId));
+  const reportMutation = useMutation(postCommentsReportQuery(id, commentId));
 
   const handleDelete = () => {
     deleteMutation.mutate(
-      { postId, commentId },
+      { id, commentId },
       {
         onSuccess: () => removeCommentFromList(commentId),
         onError: () => alert('댓글 삭제에 실패했습니다'),
@@ -24,7 +24,7 @@ const useCommentActions = (postId, commentId, removeCommentFromList) => {
 
   const handleReport = () => {
     reportMutation.mutate(
-      { postId, commentId },
+      { id, commentId },
       {
         onSuccess: () => removeCommentFromList(commentId),
         onError: () => alert('댓글 신고에 실패했습니다'),
@@ -36,12 +36,12 @@ const useCommentActions = (postId, commentId, removeCommentFromList) => {
 };
 
 
-const Comment = ({ comment, postId, removeCommentFromList }) => {
+const Comment = ({ comment, id, removeCommentFromList }) => {
   const setIsVisible = useSetRecoilState(bottomSheetStateAtom);
   const setOptions = useSetRecoilState(bottomSheetOptions);
   const time = useFormatDate(comment.createdAt, 'comment');
 
-  const { handleDelete, handleReport } = useCommentActions(postId, comment.id, removeCommentFromList);
+  const { handleDelete, handleReport } = useCommentActions(id, comment.id, removeCommentFromList);
 
   const currentAccountname = JSON.parse(localStorage.getItem('user')).accountname;
   
