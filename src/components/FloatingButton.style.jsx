@@ -9,7 +9,7 @@ const FloatingButton = styled.button`
 
   position: fixed;
   bottom: 100px;
-  right: calc(50% - 195px + 16px);
+  right: calc(50% - 206px + 16px);
   z-index: 10;
 `;
 
