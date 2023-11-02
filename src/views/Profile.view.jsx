@@ -10,7 +10,6 @@ import basicProfile from '../../src/assets/img/basic-profile.svg';
 import ErrorPage from './Error.view';
 import Profile from '../components/profile/profile';
 
-<<<<<<< HEAD
 const ProfilePage = () => {
   const navigate = useNavigate();
   //현재 프로필 페이지의 계정
@@ -113,16 +112,6 @@ const ProfilePage = () => {
   );
 };
 export default ProfilePage;
-<<<<<<< HEAD
-
-const Title = styled.h1`
-  text-align: center;
-  font-size: 24px;
-  font-weight: bold;
-  padding: 30px;
-`;
-=======
->>>>>>> a3bf4d0 ([MODIFY] NavMenu.jsx, profile.jsx 수정)
 
 const Header = styled.header`
   width: 100%;
