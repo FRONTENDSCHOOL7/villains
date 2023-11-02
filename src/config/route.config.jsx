@@ -14,7 +14,6 @@ import GoodsDetailPage from '../views/GoodsDetail.view';
 import ChatPage from '../views/Chat.view';
 import DefaultLayout from '../components/layout/DefautlLayout';
 import PrivateLayout from '../components/layout/PrivateLayout';
-import { json, redirect, redirectDocument } from 'react-router';
 import ErrorPage from '../views/Error.view';
 import SearchLayout from '../components/layout/SearchLayout';
 import pageUrlConfig from './pageUrlConfig';
@@ -40,10 +39,9 @@ const routeConfig = [
       ] },
       { path: pageUrlConfig.feedWritePage, element: <FeedWritePage /> },
       { path: pageUrlConfig.feedDetailPage, element: <FeedDetailPage /> },
-      { path: pageUrlConfig.profilePage, element: <ProfilePage />, children:[
-        { path: pageUrlConfig.profileEdit, element: <ProfileEditPage /> },
-      ] },
-      { path: pageUrlConfig.goodsPage, element: <GoodsPage />},
+      { path: pageUrlConfig.profilePage, element: <ProfilePage />},
+      { path: pageUrlConfig.profileEdit, element: <ProfileEditPage /> },
+      { path: pageUrlConfig.goodsPage, element: <GoodsPage /> },
       { path: pageUrlConfig.goodsWritePage, element: <GoodsWritePage /> },
       { path: pageUrlConfig.goodsDetailPage, element: <GoodsDetailPage /> },
       { path: pageUrlConfig.chatPage, element: <ChatPage /> },
