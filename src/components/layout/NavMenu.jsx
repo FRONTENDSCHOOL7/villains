@@ -7,8 +7,6 @@ import { useLocation } from 'react-router-dom';
 import { BasicStyle } from '../GlobalButton';
 import theme from '../../style/theme';
 
-//import styled from 'styled-components';
-
 const NavMenu = () => {
   const { pathname } = useLocation();
   const navContents = [
