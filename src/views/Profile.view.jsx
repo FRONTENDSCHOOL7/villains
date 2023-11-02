@@ -6,7 +6,11 @@ import getPosts from '../api/getPosts.api';
 import pageUrlConfig from '../config/pageUrlConfig';
 import PageTemplate from '../components/PageTemplate';
 import PostCard from '../components/feed/PostCard';
+import basicProfile from '../../src/assets/img/basic-profile.svg';
+import ErrorPage from './Error.view';
+import Profile from '../components/profile/profile';
 
+<<<<<<< HEAD
 const ProfilePage = () => {
   const navigate = useNavigate();
   //현재 프로필 페이지의 계정
@@ -40,6 +44,10 @@ const ProfilePage = () => {
   const handleClickEdit = () => {
     navigate(pageUrlConfig.profileEdit);
   };
+
+  const { post, loading, error } = getPosts();
+  if (loading) return <div>Loading...</div>;
+  if (error) return <div>Error loading posts: {error.message}</div>;
 
   return (
     <PageTemplate>
@@ -99,12 +107,13 @@ const ProfilePage = () => {
             </IconBtn> */}
             </CardContent>
           </FeedCard>
-        </PostCard>
+        </PostList>
       </DownSection>
     </PageTemplate>
   );
 };
 export default ProfilePage;
+<<<<<<< HEAD
 
 const Title = styled.h1`
   text-align: center;
@@ -112,6 +121,8 @@ const Title = styled.h1`
   font-weight: bold;
   padding: 30px;
 `;
+=======
+>>>>>>> a3bf4d0 ([MODIFY] NavMenu.jsx, profile.jsx 수정)
 
 const Header = styled.header`
   width: 100%;
