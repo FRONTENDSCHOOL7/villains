@@ -2,7 +2,6 @@ import PostCard from './PostCard';
 import styled from 'styled-components';
 
 const Feed = ({ posts }) => {
-
   return (
     <div>
       <PostList>
@@ -18,5 +17,5 @@ export default Feed;
 
 const PostList = styled.ul`
   width: 100%;
-  padding: 20px 20px 0 20px;
+  padding: 20px 20px 78px 20px;
 `;

@@ -35,8 +35,6 @@ const PostCard = ({ post }) => {
 
   const createdDate = useFormatDate(post.createdAt);
 
-  console.log(post)
-
   return (
     <Card onClick={handleFeedDetailNav}>
       {firstImageUrl && <CardImage src={firstImageUrl} alt="" />}

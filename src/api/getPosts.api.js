@@ -56,7 +56,6 @@ const getPosts = () => {
     });
 
     setPosts((prevPosts) => [...prevPosts, ...transformedPosts]);
-    console.log(posts);
     setLoading(false);
     setSkip(currentSkip);
   }, [skip]);

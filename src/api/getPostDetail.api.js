@@ -5,12 +5,12 @@ const getPostDetail = () => {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
 
-  const fetchPost = async (postId) => {
+  const fetchPost = async (id) => {
     setLoading(true);
     const token = JSON.parse(localStorage.getItem('user')).token;
 
     try {
-      const response = await client.get(`/post/${postId}`, {}, client.BothType(token));
+      const response = await client.get(`/post/${id}`, {}, client.BothType(token));
       return response.data.post;
     } catch (error) {
       console.error(error);

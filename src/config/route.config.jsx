@@ -24,7 +24,7 @@ const routeConfig = [
   { path: `/signUp`, element: <SignUpPage /> },
   { path: `/feed`, element: <FeedPage /> },
   { path: `/feed/write`, element: <FeedWritePage /> },
-  { path: `/feed/:postId`, element: <FeedDetailPage /> },
+  { path: `/feed/:id`, element: <FeedDetailPage /> },
   { path: `/goods/write`, element: <GoodsWritePage /> },
   { path: `/user`, element: <ProfilPage /> },
   { path: `/user/edit`, element: <ProfileEditPage /> },
