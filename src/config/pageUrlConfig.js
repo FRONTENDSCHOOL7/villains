@@ -12,6 +12,7 @@ class pageUlrConfig {
   goodsPage = `/goods`;
   chatPage = `/chat`;
   goodsWritePage = '/goods/write';
+  goodsDetailPage = '/goods/:id';
 
   addParams(url, params) {
     let querystring = [];

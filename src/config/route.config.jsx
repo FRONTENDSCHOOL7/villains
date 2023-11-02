@@ -10,6 +10,7 @@ import ProfilePage from '../views/Profile.view';
 import ProfileEditPage from '../views/ProfileEdit.view';
 import GoodsPage from '../views/Goods.view';
 import GoodsWritePage from '../views/GoodsWrite.view';
+import GoodsDetailPage from '../views/GoodsDetail.view';
 import ChatPage from '../views/Chat.view';
 import DefaultLayout from '../components/layout/DefautlLayout';
 import PrivateLayout from '../components/layout/PrivateLayout';
@@ -42,9 +43,9 @@ const routeConfig = [
       { path: pageUrlConfig.profilePage, element: <ProfilePage />, children:[
         { path: pageUrlConfig.profileEdit, element: <ProfileEditPage /> },
       ] },
-      { path: pageUrlConfig.goodsPage, element: <GoodsPage />, children:[
-        { path: pageUrlConfig.goodsWritePage, element: <GoodsWritePage /> },
-      ] },
+      { path: pageUrlConfig.goodsPage, element: <GoodsPage />},
+      { path: pageUrlConfig.goodsWritePage, element: <GoodsWritePage /> },
+      { path: pageUrlConfig.goodsDetailPage, element: <GoodsDetailPage /> },
       { path: pageUrlConfig.chatPage, element: <ChatPage /> },
   ]},
 ];
