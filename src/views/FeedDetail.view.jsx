@@ -28,21 +28,33 @@ import useBottomSheetOptions from '../hooks/useBottomSheetOptions';
 import userAtom from '../atoms/userAtom';
 import { useMutation } from '@tanstack/react-query';
 import deletePostQuery from '../api/deletePost.api';
+import postReportQuery from '../api/postReport.api';
 
 const usePostActions = (id, token, navigate) => {
   const deleteMutation = useMutation(deletePostQuery(id, token));
+  const reportMutation = useMutation(postReportQuery(id, token));
 
   const postDelete = () => {
     deleteMutation.mutate(
-      { id },
+      { id, token },
       {
         onSuccess: () => navigate(pageUrlConfig.feedPage),
-        onError: () => alert('게시글 삭제에 실패했습니다'),
+        onError: () => alert('게시글 삭제에 실패했습니다.'),
       },
     );
   };
 
-  return { postDelete };
+  const postReport = () => {
+    reportMutation.mutate(
+      { id, token },
+      {
+        onSuccess: () => navigate(pageUrlConfig.feedPage),
+        onError: () => alert('게시글 신고에 실패했습니다.'),
+      },
+    );
+  };
+
+  return { postDelete, postReport };
 };
 
 const FeedDetailPage = () => {
@@ -66,7 +78,7 @@ const FeedDetailPage = () => {
 
   const user = useRecoilValue(userAtom);
 
-  const { postDelete } = usePostActions(id, user.token, navigate);
+  const { postDelete, postReport } = usePostActions(id, user.token, navigate);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -129,10 +141,6 @@ const FeedDetailPage = () => {
 
   const postEdit = () => {
     console.log('postEdit !');
-  };
-
-  const postReport = () => {
-    console.log('postReport !');
   };
 
   // TODO : 확인창 모달로 수정 필요
