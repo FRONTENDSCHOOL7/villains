@@ -1,4 +1,4 @@
-import Header from './layout/Header';
+import Header from './layout/SearchHeader';
 import ListBox from './searchbar/ListBox';
 import NavMenu from './layout/NavMenu';
 import { Wrap, Main } from './PageTemplate.style';
@@ -72,13 +72,10 @@ const PageTemplate = ({ children, showNavMenu = true }) => {
   };
 
   return (
-    <Wrap>
-      <Header />
-      {showListBox ? <ListBox list={list} onClick={handleClickInfo} /> : <Main children={children} />}
-      {showNavMenu && <NavMenu />}
-      {/* <FloatingButton onClick={handleClickWrite}/> */}
+    <>
+      <Main children={children} />
       <BottomSheet />
-    </Wrap>
+    </>
   );
 };
 
