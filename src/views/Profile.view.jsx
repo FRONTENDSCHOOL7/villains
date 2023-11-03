@@ -8,7 +8,10 @@ import PageTemplate from '../components/PageTemplate';
 import PostCard from '../components/feed/PostCard';
 import basicProfile from '../../src/assets/img/basic-profile.svg';
 import ErrorPage from './Error.view';
-import Profile from '../components/profile/profile';
+import theme from '../style/theme';
+import { useRecoilValue } from 'recoil';
+import userAtom from '../atoms/userAtom';
+// import Profile from '../components/profile/profile';
 
 const ProfilePage = () => {
   const navigate = useNavigate();
@@ -44,9 +47,26 @@ const ProfilePage = () => {
     navigate(pageUrlConfig.profileEdit);
   };
 
-  const { post, loading, error } = getPosts();
-  if (loading) return <div>Loading...</div>;
-  if (error) return <div>Error loading posts: {error.message}</div>;
+  // useEffect(() => {
+  //   if (accountname === user.accountname) {
+  //   }
+  // });
+
+  const handleChange = () => {
+    // color === 'skyblue' ? setColor('white') : setColor('skyblue');
+    setColor(skyblue);
+    console.log('clicked');
+  };
+
+  const handleAlignment = (event, newAlignment) => {
+    if (newAlignment !== null) {
+      setAlignment(newAlignment);
+    }
+  };
+
+  // const { post, loading, error } = getPosts();
+  // if (loading) return <div>Loading...</div>;
+  // if (error) return <div>Error loading posts: {error.message}</div>;
 
   return (
     <PageTemplate>
