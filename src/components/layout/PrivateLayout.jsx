@@ -26,6 +26,7 @@ const PrivateLayout = () => {
         const mainPath = pathname.split('/')[1];
         navigate(`/${mainPath}`);
     }
+    
     return (
     <Wrap>
         <BackHeader onClick={handleClickBack}/>

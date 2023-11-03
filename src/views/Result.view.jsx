@@ -1,5 +1,6 @@
 import { useLocation, useNavigate, useParams } from "react-router";
 import getSubTime from "../api/getSubTime.api";
+import { KakaoMapContext, Map, MapMarker } from "react-kakao-maps-sdk";
 
 import PageTemplate from "../components/PageTemplate"
 import { useEffect, useState } from "react";
@@ -10,10 +11,15 @@ import { useRecoilState, useRecoilValue } from "recoil";
 import queryAtom from "../atoms/queryAtom";
 import queryFocusAtom from "../atoms/queryFocusAtom";
 import DefaultBtn, { PrimaryStyle } from "../components/GlobalButton";
+import pageUrlConfig from "../config/pageUrlConfig";
+
+// window.kakao 객체를 가져옴
+const { kakao } = window;
 
 const ResultPage = () => {
     const {id} = useParams();
     const [query, setQuery] = useRecoilState(queryAtom);
+    const navigate = useNavigate();
     const title = query;
     const focus = useRecoilValue(queryFocusAtom);
 
@@ -24,6 +30,10 @@ const ResultPage = () => {
 
     const [refresh, setRefresh] = useState(false);
     const [direct, setDirect] = useState('1');
+
+    const [station, setStation] = useState({});
+
+    const [showTime, setShowTime] = useState(false);
     
     useEffect(()=>{
         setRowInfo([]);
@@ -96,9 +106,16 @@ const ResultPage = () => {
     });
     }, [count, id, refresh])
 
+    //TODO: title을 클릭하면 해당 지하철역을 보여주는 지도 페이지로 이동
+
+
+    const handleClickStation = () => {
+        navigate(`${pageUrlConfig.homePage}/${id}/${title}`);
+    }
+
     return(
         <PageTemplate>
-            <StyledLinkBtn>{title}</StyledLinkBtn>
+            <StyledLinkBtn onClick={handleClickStation}>{title}</StyledLinkBtn>
             <ButtonWrap>
                 <DayButton onClick={handleClickDay}>
                     <DefaultBtn variant={day === "1" ? "primary" :"basic"} id='1'>평일</DefaultBtn>
@@ -109,12 +126,11 @@ const ResultPage = () => {
                     <DefaultBtn variant={"secondary"} onClick={handleClickRefresh}>초기화</DefaultBtn>
                     <DefaultBtn variant={direct === "1" ? "primary" :"basic"} id='1'>상행</DefaultBtn>
                     <DefaultBtn variant={direct === '2' ? "primary" :"basic"} id='2'>하행</DefaultBtn>
-                    <DefaultBtn variant={"basic"} disabled>급행</DefaultBtn>                
+                    <DefaultBtn variant={"basic"} onClick={()=>setShowTime(!showTime)}>급행</DefaultBtn>                
                 </DirectButton>
             </ButtonWrap>
             <ul>
-            {
-                rowInfo.map((info, index)=>{
+                {rowInfo.map((info, index)=>{
                     return (
                     <StyledList key={index}>
                         <Time>{info[0]}</Time>
@@ -122,8 +138,7 @@ const ResultPage = () => {
                         <StyledTag aria-label="지하철 번호">{info[1]}</StyledTag>
                     </StyledList>
                     )
-                })
-            }
+                })}
             </ul>
         </PageTemplate>
     )

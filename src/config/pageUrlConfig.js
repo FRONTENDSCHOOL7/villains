@@ -1,10 +1,11 @@
 const baseUrl = import.meta.env.BASE_URL;
 class pageUlrConfig {
-  homePage = `${baseUrl}main`;
   splashPage = `${baseUrl}`;
   signInPage = `${baseUrl}signIn`;
   signUpPage = `${baseUrl}signUp`;
+  homePage = `${baseUrl}main`;
   resultPage = `${baseUrl}main/:id`;
+  trainPage = `${baseUrl}main/:id/:stationname`;
   feedPage = `${baseUrl}feed`;
   feedWritePage = `${baseUrl}feed/write`;
   feedEditPage = `${baseUrl}feed/edit/:id`;
