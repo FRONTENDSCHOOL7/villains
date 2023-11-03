@@ -1,18 +1,19 @@
 class pageUlrConfig {
-  homePage = `main`;
-  splashPage = `welcome`;
-  signInPage = 'welcome/signIn';
-  signUpPage = 'welcome/signUp';
-  resultPage = `main/:id`;
-  feedPage = `feed`;
-  feedWritePage = 'feed/write';
-  feedDetailPage = `feed/:id`;
-  profilePage = `user`;
-  profileEdit = `user/edit`;
-  goodsPage = `goods`;
-  chatPage = `chat`;
-  goodsWritePage = 'goods/write';
-  goodsDetailPage = 'goods/:id';
+  baseUrl = import.meta.env.BASE_URL;
+  homePage = `${this.baseUrl}main`;
+  splashPage = `${this.baseUrl}welcome`;
+  signInPage = `${this.baseUrl}welcome/signIn`;
+  signUpPage = `${this.baseUrl}welcome/signUp`;
+  resultPage = `${this.baseUrl}main/:id`;
+  feedPage = `${this.baseUrl}feed`;
+  feedWritePage = `${this.baseUrl}feed/write`;
+  feedDetailPage = `${this.baseUrl}feed/:id`;
+  profilePage = `${this.baseUrl}user`;
+  profileEdit = `${this.baseUrl}user/edit`;
+  goodsPage = `${this.baseUrl}goods`;
+  chatPage = `${this.baseUrl}chat`;
+  goodsWritePage = `${this.baseUrl}goods/write`;
+  goodsDetailPage = `${this.baseUrl}goods/:id`;
 
   addParams(url, params) {
     let querystring = [];
