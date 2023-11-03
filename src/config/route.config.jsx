@@ -36,9 +36,9 @@ const routeConfig = [
     errorElement: <ErrorPage />, 
     children:[
       { path: `${baseUrl}`,    element: <SearchLayout />, children:[
-        {path: pageUrlConfig.feedPage, element: <FeedPage />},
-        { path: pageUrlConfig.homePage, element: <HomePage />},
-        { path: pageUrlConfig.resultPage, element: <ResultPage /> },
+        {path: `${baseUrl}`+ ageUrlConfig.feedPage, element: <FeedPage />},
+        { path: `${baseUrl}`+pageUrlConfig.homePage, element: <HomePage />},
+        { path: `${baseUrl}`+pageUrlConfig.resultPage, element: <ResultPage /> },
       ] },
       { path: `${baseUrl}`+ pageUrlConfig.feedWritePage, element: <FeedWritePage /> },
       { path: `${baseUrl}`+ pageUrlConfig.feedDetailPage, element: <FeedDetailPage /> },
