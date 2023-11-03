@@ -1,18 +1,7 @@
 import client from '../config/api.config';
 
-const uploadPost = async (content, urls, location) => {
-  const postData = {
-    post: {
-      content: JSON.stringify({
-        postId: 'villains',
-        contents: content,
-        latitude: location ? location.latitude : 0,
-        longitude: location ? location.longitude : 0,
-      }),
-      image: urls,
-    },
-  };
-
+const uploadPost = async (postData) => {
+  
   const token = JSON.parse(localStorage.getItem('user')).token;
   const headers = client.BothType(token);
 

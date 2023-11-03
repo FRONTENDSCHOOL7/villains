@@ -7,6 +7,7 @@ class pageUlrConfig {
   resultPage = `${baseUrl}main/:id`;
   feedPage = `${baseUrl}feed`;
   feedWritePage = `${baseUrl}feed/write`;
+  feedWriteEditPage = `${baseUrl}feed/write/:id`;
   feedDetailPage = `${baseUrl}feed/:id`;
   profilePage = `${baseUrl}user`;
   profileEdit = `${baseUrl}user/edit`;

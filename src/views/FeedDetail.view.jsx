@@ -34,6 +34,10 @@ const usePostActions = (id, token, navigate) => {
   const deleteMutation = useMutation(deletePostQuery(id, token));
   const reportMutation = useMutation(postReportQuery(id, token));
 
+  const postEdit = () => {
+    navigate(`/feed/write/${id}`);
+  };
+
   const postDelete = () => {
     deleteMutation.mutate(
       { id, token },
@@ -54,7 +58,7 @@ const usePostActions = (id, token, navigate) => {
     );
   };
 
-  return { postDelete, postReport };
+  return { postEdit, postDelete, postReport };
 };
 
 const FeedDetailPage = () => {
@@ -78,7 +82,7 @@ const FeedDetailPage = () => {
 
   const user = useRecoilValue(userAtom);
 
-  const { postDelete, postReport } = usePostActions(id, user.token, navigate);
+  const { postEdit, postDelete, postReport } = usePostActions(id, user.token, navigate);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -137,10 +141,6 @@ const FeedDetailPage = () => {
     event.stopPropagation();
     setOptions(options);
     toggleBottomSheetShow();
-  };
-
-  const postEdit = () => {
-    console.log('postEdit !');
   };
 
   // TODO : 확인창 모달로 수정 필요
