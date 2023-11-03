@@ -32,17 +32,19 @@ const GoodsDetailPage = () => {
 
   // product 상세 정보 가져오기
   useEffect(() => {
-    const fetchProductData = async () => {
-      const result = await fetchProduct(id);
-      if (!result) {
-        return navigate(pageUrlConfig.goodsPage);
-      } else {
-        setProduct(result);
-        setLink(JSON.parse(result.link));
-      }
-    };
     fetchProductData();
-  }, [id, product]);
+  }, [id]);
+
+  const fetchProductData = async () => {
+    const result = await fetchProduct(id);
+    if (!result) {
+      return navigate(pageUrlConfig.goodsPage);
+    } else {
+      setProduct(result);
+      setLink(JSON.parse(result.link));
+    }
+  };
+
 
   // 택배 작성자 찾기
   useEffect(() => {
@@ -96,8 +98,8 @@ const GoodsDetailPage = () => {
     });
     const result = await updateProduct(product.itemName, product.price, newLink, product.itemImage, id);
     if (result) {
-      const goodsDetailUrl = `${pageUrlConfig.goodsPage}/${result.id}`;
-      navigate(goodsDetailUrl);
+      // 택배 상태 버튼 업데이트를 위해 한번 더 api 호출 -> 리액트 쿼리로 바꾸면 한번만 불러도?..
+      fetchProductData();
     }
     setIsDropdownVisible(false);
   };
