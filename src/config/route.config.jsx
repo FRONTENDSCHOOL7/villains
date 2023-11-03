@@ -24,7 +24,6 @@ import pageUrlConfig from './pageUrlConfig';
  *  **/
 
 const baseUrl = import.meta.env.BASE_URL;
-console.log(baseUrl);
 const routeConfig = [
   { path: `${baseUrl}${pageUrlConfig.splashPage}`, element: <DefaultLayout />, children:[
     { index: true, element: <SplashPage /> },
@@ -35,19 +34,19 @@ const routeConfig = [
     element: <PrivateLayout/>,
     errorElement: <ErrorPage />, 
     children:[
-      { path: `${baseUrl}`,    element: <SearchLayout />, children:[
-        {path: `${baseUrl}`+pageUrlConfig.feedPage, element: <FeedPage />},
-        { path: `${baseUrl}`+pageUrlConfig.homePage, element: <HomePage />},
-        { path: `${baseUrl}`+pageUrlConfig.resultPage, element: <ResultPage /> },
+      { path: `${baseUrl}`,  element: <SearchLayout />, children:[
+        { path: `${baseUrl}${pageUrlConfig.feedPage}`, element: <FeedPage />},
+        { path: `${baseUrl}${pageUrlConfig.homePage}`, element: <HomePage />},
+        { path: `${baseUrl}${pageUrlConfig.resultPage}`, element: <ResultPage /> },
       ] },
-      { path: `${baseUrl}`+ pageUrlConfig.feedWritePage, element: <FeedWritePage /> },
-      { path: `${baseUrl}`+ pageUrlConfig.feedDetailPage, element: <FeedDetailPage /> },
-      { path: `${baseUrl}`+ pageUrlConfig.profilePage, element: <ProfilePage />},
-      { path: `${baseUrl}`+ pageUrlConfig.profileEdit, element: <ProfileEditPage /> },
-      { path: `${baseUrl}`+ pageUrlConfig.goodsPage, element: <GoodsPage /> },
-      { path: `${baseUrl}`+ pageUrlConfig.goodsWritePage, element: <GoodsWritePage /> },
-      { path: `${baseUrl}`+ pageUrlConfig.goodsDetailPage, element: <GoodsDetailPage /> },
-      { path: `${baseUrl}`+ pageUrlConfig.chatPage, element: <ChatPage /> },
+      { path: `${baseUrl}${pageUrlConfig.feedWritePage}`, element: <FeedWritePage /> },
+      { path: `${baseUrl}${pageUrlConfig.feedDetailPage}`, element: <FeedDetailPage /> },
+      { path: `${baseUrl}${pageUrlConfig.profilePage}`, element: <ProfilePage />},
+      { path: `${baseUrl}${pageUrlConfig.profileEdit}`, element: <ProfileEditPage /> },
+      { path: `${baseUrl}${pageUrlConfig.goodsPage}`, element: <GoodsPage /> },
+      { path: `${baseUrl}${pageUrlConfig.goodsWritePage}`, element: <GoodsWritePage /> },
+      { path: `${baseUrl}${pageUrlConfig.goodsDetailPage}`, element: <GoodsDetailPage /> },
+      { path: `${baseUrl}${pageUrlConfig.chatPage}`, element: <ChatPage /> },
   ]},
 ];
 
