@@ -17,6 +17,7 @@ import PrivateLayout from '../components/layout/PrivateLayout';
 import ErrorPage from '../views/Error.view';
 import SearchLayout from '../components/layout/SearchLayout';
 import pageUrlConfig from './pageUrlConfig';
+import HomeTrainPage from '../views/Train.view';
 
 /** 라우트 등록하기
  * 1. routeConfig의 children에 객체를 이용해서 path와 element 입력하기
