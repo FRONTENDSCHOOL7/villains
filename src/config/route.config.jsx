@@ -48,7 +48,7 @@ const routeConfig = [
           { path: pageUrlConfig.feedWritePage, element: <FeedWritePage /> },
           { path: pageUrlConfig.feedDetailPage, element: <FeedDetailPage /> },
           { path: pageUrlConfig.feedEditPage, element: <FeedWritePage /> },
-          { path: pageUrlConfig.profilePage, element: <ProfilePage /> },
+          { path: `${pageUrlConfig.profilePage}/:accountname`, element: <ProfilePage /> },
           { path: pageUrlConfig.profileEdit, element: <ProfileEditPage /> },
           { path: pageUrlConfig.goodsPage, element: <GoodsPage /> },
           { path: pageUrlConfig.goodsWritePage, element: <GoodsWritePage /> },
