@@ -7,7 +7,7 @@ export default defineConfig(({ command, mode }) => {
   return {
     // Vite 설정
     // base: '/villains/',
-    base: env.VITE_MODE === 'production' ? '/villains/' : '/',
+    base: env.NODE_ENV === 'production' ? '/villains/' : '/',
     plugins: [react()],
     define: {
       __APP_ENV__: JSON.stringify(env.APP_ENV),
