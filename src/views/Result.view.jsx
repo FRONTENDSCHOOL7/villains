@@ -20,7 +20,7 @@ const ResultPage = () => {
     const [rowInfo, setRowInfo] = useState([]);
     const [reqCount, setReqCount] = useState(0);
     const [count, setCount] = useState(0);
-    const [day, setDay] = useState(1);
+    const [day, setDay] = useState(`1`);
 
     const [refresh, setRefresh] = useState(false);
     const [direct, setDirect] = useState('1');

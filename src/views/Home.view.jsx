@@ -34,7 +34,7 @@ const HomePage = () => {
 
   //로컬 스토리지의 사용자를 관리자로 해놓았습니다. 이 부분 나중에 교체 필요!!
   const { data, isError, isLoading, isFetching } = useQuery(
-    contactQuery(user)
+    contactQuery(user?.accountname)
   );
   const [posts, setPosts] = useState([]);
 
