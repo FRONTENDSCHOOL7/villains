@@ -6,10 +6,12 @@ export default defineConfig(({ command, mode }) => {
   const env = loadEnv(mode, process.cwd(), '');
   return {
     // Vite 설정
+    // base: '/villains/',
+    base: env.VITE_MODE === 'production' ? '/villains/' : '/',
+    plugins: [react()],
     define: {
       __APP_ENV__: JSON.stringify(env.APP_ENV),
     },
-    plugins: [react()],
     resolve: {
       alias: [
         { find: '@lib', replacement: './lib' },
@@ -17,6 +19,13 @@ export default defineConfig(({ command, mode }) => {
         { find: '@components', replacement: './components' },
       ],
     },
-    base: process.env.NODE_ENV === 'production' ? '/VILLAINS/' : '/',
+    build: {
+      rollupOptions: {
+        output: {
+          entryFileNames: '[name].js',
+          assetFileNames: '[name].[ext]',
+        },
+      },
+    },
   };
 });

@@ -38,11 +38,16 @@ jobs:
           cache: 'npm'
 
       - name: Generate Environment Variables File
-        run:
-          echo "VITE_BASE_URL=${{ secrets.VITE_BASE_URL }}" >> $GITHUB_ENV 
-          echo "VITE_TRAIN_KEY=${{secrets.VITE_TRAIN_KEY }}" >> $GITHUB_ENV 
-          echo "VITE_SEOUL_KEY=${{secrets.VITE_SEOUL_KEY }}" >> $GITHUB_ENV
-          echo "VITE_MAP_KEY=${{ secrets.VITE_MAP_KEY }}" >> $GITHUB_ENV
+        env:
+          VITE_BASE_URL: ${{ secrets.VITE_BASE_URL }}
+          VITE_TRAIN_KEY: ${{secrets.VITE_TRAIN_KEY }}
+          VITE_SEOUL_KEY: ${{secrets.VITE_SEOUL_KEY }}
+          VITE_MAP_KEY: ${{secrets.VITE_MAP_KEY }}
+        run: |
+          echo "VITE_BASE_URL=${{ secrets.VITE_BASE_URL }}" >> .env.production
+          echo "VITE_TRAIN_KEY=${{secrets.VITE_TRAIN_KEY }}" >> .env.production
+          echo "VITE_SEOUL_KEY=${{secrets.VITE_SEOUL_KEY }}" >> .env.production
+          echo "VITE_MAP_KEY=${{secrets.VITE_MAP_KEY }}" >> .env.production
 
       - name: Install dependencies
         run: npm install
