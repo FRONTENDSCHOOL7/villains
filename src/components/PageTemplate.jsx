@@ -1,6 +1,7 @@
-import Header from './layout/Header';
+import Header from './layout/SearchHeader';
 import ListBox from './searchbar/ListBox';
-import styled from 'styled-components';
+import NavMenu from './layout/NavMenu';
+import { Wrap, Main } from './PageTemplate.style';
 
 import { useRecoilState, useRecoilValue } from 'recoil';
 import { useLocation, useNavigate } from 'react-router';
@@ -9,22 +10,11 @@ import subOneAtom from '../atoms/subOneAtom';
 import queryFocusAtom from '../atoms/queryFocusAtom';
 import queryAtom from '../atoms/queryAtom';
 import pageUrlConfig from '../config/pageUrlConfig';
+import FloatingButton from './FloatingButton.style';
+import BottomSheet from './BottomSheet';
 
-const Wrap = styled.div`
-  max-width: 412px;
-  min-height: 100vh;
-  margin: 0 auto;
-  /* background-color: #ccc; */
-  border-left: 1px solid #ccc;
-  border-right: 1px solid #ccc;
-`;
 
-const Main = styled.main`
-  width: 100%;
-  height: 100%;
-`;
-
-const PageTemplate = ({ children }) => {
+const PageTemplate = ({ children, showNavMenu = true }) => {
   const [list, setList] = useState([]);
   const [isClickInfo, setIsClickInfo] = useState(false);
   const [params, setParams] = useState('');
@@ -42,13 +32,15 @@ const PageTemplate = ({ children }) => {
   }
 
   useEffect(() => {
-    if (query === '') setList([]);
-    else {
-      dataList.map((data, index) => {
-        if (data.Query.includes(query) && !list.find((elem) => elem[0].includes(data.Query))) {
-          setList([...list, [data.Query, data.Id]]);
-        }
-      });
+    if (dataList) {
+      if (query === '') setList([]);
+      else {
+        dataList.map((data, index) => {
+          if (data.Query.includes(query) && !list.find((elem) => elem[0].includes(data.Query))) {
+            setList([...list, [data.Query, data.Id]]);
+          }
+        });
+      }
     }
   }, [query]);
 
@@ -71,11 +63,19 @@ const PageTemplate = ({ children }) => {
     setParams(event.currentTarget.dataset.etc);
     setIsClickInfo(true);
   };
+
+  const handleClickWrite = () => {
+    if (pathname.includes(pageUrlConfig.goodsPage)) {
+      navigate(pageUrlConfig.goodsWritePage);
+    }
+    navigate(pageUrlConfig.feedWritePage);
+  };
+
   return (
-    <Wrap>
-      <Header />
-      {showListBox ? <ListBox list={list} onClick={handleClickInfo} /> : <Main children={children} />}
-    </Wrap>
+    <>
+      <Main children={children} />
+      <BottomSheet />
+    </>
   );
 };
 

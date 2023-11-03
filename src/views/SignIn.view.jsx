@@ -6,7 +6,7 @@ import client from '../config/api.config';
 import { useForm } from 'react-hook-form';
 import PageTemplate from '../components/PageTemplate';
 import { BlueLongBtn, WhiteLongBtn } from '../components/Buttons';
-import CheckBox from './CheckBox';
+import CheckBox from '../components/CheckBox';
 
 const SignInPage = () => {
   // react-hook-form

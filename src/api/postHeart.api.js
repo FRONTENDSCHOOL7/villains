@@ -5,16 +5,16 @@ const postHeart = () => {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
 
-  const toggleHeartStatus = async (postId, status) => {
+  const toggleHeartStatus = async (id, status) => {
     setLoading(true);
 
     try {
       const token = JSON.parse(localStorage.getItem('user')).token;
 
       if (status === 'heart') {
-        await client.post(`/post/${postId}/heart`, {}, client.BothType(token));
+        await client.post(`/post/${id}/heart`, {}, client.BothType(token));
       } else if (status === 'unheart') {
-        await client.delete(`/post/${postId}/unheart`, {}, client.BothType(token));
+        await client.delete(`/post/${id}/unheart`, {}, client.BothType(token));
       }
 
       setLoading(false);

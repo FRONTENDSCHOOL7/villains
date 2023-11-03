@@ -5,7 +5,7 @@ const postComments = () => {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
 
-  const uploadComment = async (postId, content) => {
+  const uploadComment = async (id, content) => {
     setLoading(true);
 
     const comment = {
@@ -17,10 +17,10 @@ const postComments = () => {
     try {
       const token = JSON.parse(localStorage.getItem('user')).token;
 
-      await client.post(`/post/${postId}/comments`, comment, client.BothType(token));
+      const response = await client.post(`/post/${id}/comments`, comment, client.BothType(token));
 
       setLoading(false);
-      return true;
+      return response.data.comment;
     } catch (error) {
       console.error(error);
       setError(error);

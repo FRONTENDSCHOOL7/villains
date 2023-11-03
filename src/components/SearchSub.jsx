@@ -1,5 +1,5 @@
-import React, { useState, useEffect } from 'react';
-import { useRecoilState, useRecoilValue } from 'recoil';
+import React, { useState, useEffect, useMemo } from 'react';
+import { useRecoilState } from 'recoil';
 import styled from 'styled-components';
 import goodsFocusStartAtom from '../atoms/goodsFocusStartAtom';
 import goodsFocusEndAtom from '../atoms/goodsFocusEndAtom';
@@ -17,25 +17,29 @@ const SearchSub = ({ which, labelText, placeholder }) => {
   const [query, setQuery] = useRecoilState(which === 'start' ? goodsQueryStartAtom : goodsQueryEndAtom);
   const [focus, setFocus] = useRecoilState(which === 'start' ? goodsFocusStartAtom : goodsFocusEndAtom);
 
-  useEffect(() => {
+  useMemo(()=>{
     //도시철도 1호선 지하철역 정보 불러오기
-    getSubOneInfo().then((data) => {
-      const dataList = data.data.body;
-      setSubOneInfo([...dataList].filter((elem) => elem.routNm === '1호선'));
+    getSubOneInfo().then((data)=>{
+      const dataList = data.data.SearchInfoBySubwayNameService.row;
+      const rowInfo = [...dataList].filter(elem => elem.LINE_NUM === "01호선");
+      const newInfo = rowInfo.map((info, index)=>{
+        return info = {Query: info.STATION_NM, Id: info.STATION_CD};
+      })
+      setSubOneInfo(newInfo);
+      console.log(newInfo);
     });
   }, []);
 
-  const allList = subOneInfo;
-  useEffect(() => {
-    allList.map((data, index) => {
-      if (data.stinNm.includes(query) && !list.find((elem) => elem[0].includes(data.stinNm))) {
-        setList([...list, [data.stinNm, data.stinCd.padStart(4, '0')]]);
-        console.log(list);
-      }
-    });
-    if (query === '') setList([]);
-    console.log(query);
-  }, [query, focus]);
+  const dataList = subOneInfo;
+  useEffect(()=>{
+    if(query === "") setList([]);
+    else{
+        dataList.map((data, index)=>{
+        if(data.Query.includes(query) && !list.find(elem => elem[0].includes(data.Query))){
+          setList([...list, [data.Query, data.Id]]);
+        }
+      })}
+  }, [query]);
 
   useEffect(() => {
     if (focus === false) setList([]);
@@ -81,6 +85,7 @@ const StyledForm = styled.form`
 const InputField = styled(Input)`
   background-image: url(${IconSearch});
   background-repeat: no-repeat;
+
   background-position: 98% 50%;
 `;
 
