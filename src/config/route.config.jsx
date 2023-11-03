@@ -23,32 +23,41 @@ import pageUrlConfig from './pageUrlConfig';
  * 2. pageUrlConfig에 해당 path로 변수만들어서 link 이동 시 사용하기
  *  **/
 
-
 const routeConfig = [
-  { path: ``,  element: <DefaultLayout />, children:[
-    { path: pageUrlConfig.splashPage, element: <SplashPage /> },
-    { path: pageUrlConfig.signInPage, element: <SignInPage /> },
-    { path: pageUrlConfig.signUpPage, element: <SignUpPage /> },
-    {  path: ``, 
-      element: <PrivateLayout/>,
-      errorElement: <ErrorPage />, 
-      children:[
-        { path: ``,  element: <SearchLayout />, children:[
-          { path: pageUrlConfig.feedPage, element: <FeedPage />},
-          { path: pageUrlConfig.homePage, element: <HomePage />},
-          { path: pageUrlConfig.resultPage, element: <ResultPage /> },
-        ] },
-        { path: pageUrlConfig.feedWritePage, element: <FeedWritePage /> },
-        { path: pageUrlConfig.feedDetailPage, element: <FeedDetailPage /> },
-        { path: pageUrlConfig.feedWriteEditPage, element: <FeedWritePage /> },
-        { path: pageUrlConfig.profilePage, element: <ProfilePage />},
-        { path: pageUrlConfig.profileEdit, element: <ProfileEditPage /> },
-        { path: pageUrlConfig.goodsPage, element: <GoodsPage /> },
-        { path: pageUrlConfig.goodsWritePage, element: <GoodsWritePage /> },
-        { path: pageUrlConfig.goodsDetailPage, element: <GoodsDetailPage /> },
-        { path: pageUrlConfig.chatPage, element: <ChatPage /> },
-    ]},
-  ]},
+  {
+    path: ``,
+    element: <DefaultLayout />,
+    children: [
+      { path: pageUrlConfig.splashPage, element: <SplashPage /> },
+      { path: pageUrlConfig.signInPage, element: <SignInPage /> },
+      { path: pageUrlConfig.signUpPage, element: <SignUpPage /> },
+      {
+        path: ``,
+        element: <PrivateLayout />,
+        errorElement: <ErrorPage />,
+        children: [
+          {
+            path: ``,
+            element: <SearchLayout />,
+            children: [
+              { path: pageUrlConfig.feedPage, element: <FeedPage /> },
+              { path: pageUrlConfig.homePage, element: <HomePage /> },
+              { path: pageUrlConfig.resultPage, element: <ResultPage /> },
+            ],
+          },
+          { path: pageUrlConfig.feedWritePage, element: <FeedWritePage /> },
+          { path: pageUrlConfig.feedDetailPage, element: <FeedDetailPage /> },
+          { path: pageUrlConfig.feedEditPage, element: <FeedWritePage /> },
+          { path: pageUrlConfig.profilePage, element: <ProfilePage /> },
+          { path: pageUrlConfig.profileEdit, element: <ProfileEditPage /> },
+          { path: pageUrlConfig.goodsPage, element: <GoodsPage /> },
+          { path: pageUrlConfig.goodsWritePage, element: <GoodsWritePage /> },
+          { path: pageUrlConfig.goodsDetailPage, element: <GoodsDetailPage /> },
+          { path: pageUrlConfig.chatPage, element: <ChatPage /> },
+        ],
+      },
+    ],
+  },
 ];
 
 export default routeConfig;

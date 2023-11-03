@@ -35,7 +35,7 @@ const usePostActions = (id, token, navigate) => {
   const reportMutation = useMutation(postReportQuery(id, token));
 
   const postEdit = () => {
-    navigate(`/feed/write/${id}`);
+    navigate(`/feed/edit/${id}`);
   };
 
   const postDelete = () => {
@@ -144,9 +144,9 @@ const FeedDetailPage = () => {
   };
 
   // TODO : 확인창 모달로 수정 필요
-  const confirmAction = (message, action) => {
+  const confirmAction = (message, callback) => {
     if (confirm(message)) {
-      action();
+      callback();
     }
     toggleBottomSheetShow();
   };
