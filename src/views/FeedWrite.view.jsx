@@ -1,7 +1,7 @@
 import PageTemplate from '../components/PageTemplate';
 import styled from 'styled-components';
-import { useRef, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useEffect, useRef, useState } from 'react';
+import { useNavigate, useParams } from 'react-router-dom';
 import FloatingButton from '../components/FloatingButton.style';
 import imageIcon from '../assets/img/image-icon.svg';
 import useGeoLocation from '../hooks/useGeoLocation';
@@ -12,45 +12,61 @@ import arrowIcon from '../assets/img/icon-arrow-left.svg';
 import useBlockToBack from '../hooks/useBlockToBack';
 import pageUrlConfig from '../config/pageUrlConfig';
 import ResizingTextarea from '../components/feed/ResizingTextarea';
+import getPostDetail from '../api/getPostDetail.api';
+import { useRecoilValue } from 'recoil';
+import userAtom from '../atoms/userAtom';
+import putPostEdit from '../api/putPostEdit.api';
 
 const FeedWritePage = () => {
+  const [isEditMode, setIsEditMode] = useState(false);
+  const { id } = useParams();
+
   const fileInputRef = useRef();
 
   const [content, setContent] = useState('');
-  const [imagesData, setImagesData] = useState({
-    urls: [],
-    files: [],
-  });
+  const [imagesData, setImagesData] = useState([]);
   const { location } = useGeoLocation();
   const navigate = useNavigate();
+  const token = useRecoilValue(userAtom).token;
+
+  const { fetchPost, loading, error } = getPostDetail();
+
+  // params가 있다면 수정 모드로 변경
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const result = await fetchPost(id);
+        setContent(JSON.parse(result.content).contents);
+        setImagesData(result?.image ? result.image.split(',') : []);
+      } catch (error) {
+        console.error(error);
+      }
+    };
+
+    if (id) {
+      setIsEditMode(true);
+      fetchData();
+    }
+  }, [id]);
 
   const handleContentChange = (event) => {
     setContent(event.target.value);
   };
 
-  const handleImageChange = (event) => {
+  const handleImageChange = async (event) => {
     const files = Array.from(event.target.files);
 
-    if (imagesData.urls.length + files.length > 3) {
+    if (imagesData.length + files.length > 3) {
       alert('최대 3개의 이미지만 업로드할 수 있습니다.');
       return;
     }
 
-    // 이미지 미리보기를 위해 FileReader API로 파일 읽기
-    const fileReaders = files.map((file) => {
-      return new Promise((resolve) => {
-        const reader = new FileReader();
-        reader.onloadend = () => resolve(reader.result);
-        reader.readAsDataURL(file);
-      });
-    });
-
-    Promise.all(fileReaders).then((urls) => {
-      setImagesData((prevData) => ({
-        urls: [...prevData.urls, ...urls],
-        files: [...prevData.files, ...files],
-      }));
-    });
+    try {
+      const uploadedImageUrls = await postImages(files);
+      setImagesData((prevData) => [...prevData, ...uploadedImageUrls]);
+    } catch (error) {
+      console.error('이미지 업로드에 실패했습니다:', error);
+    }
   };
 
   const triggerFileInput = () => {
@@ -60,27 +76,42 @@ const FeedWritePage = () => {
   // 프리뷰에 있는 이미지 삭제
   const handleDeleteImage = (index) => {
     setImagesData((prevData) => {
-      const newUrls = [...prevData.urls];
-      const newFiles = [...prevData.files];
-
-      newUrls.splice(index, 1);
-      newFiles.splice(index, 1);
-
-      return {
-        urls: newUrls,
-        files: newFiles,
-      };
+      return prevData.filter((_, idx) => idx !== index);
     });
   };
 
   const handleSubmitPost = async (event) => {
-    const urls = await postImages(imagesData.files);
-    const result = await uploadPost(content, urls, location);
+    event.preventDefault();
 
-    if (result) {
-      // 게시글 업로드가 성공하면, 해당 게시글의 상세 페이지로 이동
-      const feedDetailUrl = `${pageUrlConfig.feedPage}/${result.id}`;
-      navigate(feedDetailUrl);
+    const postData = {
+      post: {
+        content: JSON.stringify({
+          postId: 'villains',
+          contents: content,
+          latitude: location ? location.latitude : 0,
+          longitude: location ? location.longitude : 0,
+        }),
+        image: imagesData.join(','),
+      },
+    };
+
+    if (isEditMode) {
+      // 수정 API 요청
+      // TODO : 리액트 쿼리로 변경
+      const updateResult = await putPostEdit(id, postData, token);
+      if (updateResult) {
+        navigate(`${pageUrlConfig.feedPage}/${updateResult.id}`);
+      } else {
+        console.error('게시글 수정에 실패했습니다.');
+      }
+    } else {
+      // 작성 API 요청
+      const uploadResult = await uploadPost(postData);
+      if (uploadResult) {
+        navigate(`${pageUrlConfig.feedPage}/${uploadResult.id}`);
+      } else {
+        console.error('게시글 업로드에 실패했습니다.');
+      }
     }
   };
 
@@ -100,7 +131,7 @@ const FeedWritePage = () => {
       </Header>
       <FeedWriteForm>
         <form>
-          <ImagePreview imageUrls={imagesData.urls} onDeleteImage={handleDeleteImage} />
+          <ImagePreview imageUrls={imagesData} onDeleteImage={handleDeleteImage} />
           <ResizingTextarea
             rows="1"
             placeholder="게시글 입력하기..."

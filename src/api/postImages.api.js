@@ -21,9 +21,8 @@ const postImages = async (files) => {
       throw new Error('이미지 업로드에 실패했습니다.');
     }
 
-    // 파일 이름들만 추출하여 ','로 구분하여 문자열로 변환
     const BASE_URL = import.meta.env.VITE_BASE_URL;
-    return response.data.map((file) => BASE_URL + file.filename).join(',');
+    return response.data.map((file) => BASE_URL + file.filename);
   } catch (error) {
     throw error;
   }

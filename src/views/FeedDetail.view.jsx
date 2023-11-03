@@ -22,6 +22,44 @@ import heart from '../assets/img/heart.svg';
 import heartFilled from '../assets/img/heart-filled.svg';
 import commentIcon from '../assets/img/message-circle.svg';
 import verticalIcon from '../assets/img/icon-more-vertical.svg';
+import { useRecoilValue, useSetRecoilState } from 'recoil';
+import { bottomSheetOptions, bottomSheetStateAtom } from '../atoms/bottomSheetStateAtom';
+import useBottomSheetOptions from '../hooks/useBottomSheetOptions';
+import userAtom from '../atoms/userAtom';
+import { useMutation } from '@tanstack/react-query';
+import deletePostQuery from '../api/deletePost.api';
+import postReportQuery from '../api/postReport.api';
+
+const usePostActions = (id, token, navigate) => {
+  const deleteMutation = useMutation(deletePostQuery(id, token));
+  const reportMutation = useMutation(postReportQuery(id, token));
+
+  const postEdit = () => {
+    navigate(`/feed/edit/${id}`);
+  };
+
+  const postDelete = () => {
+    deleteMutation.mutate(
+      { id, token },
+      {
+        onSuccess: () => navigate(pageUrlConfig.feedPage),
+        onError: () => alert('게시글 삭제에 실패했습니다.'),
+      },
+    );
+  };
+
+  const postReport = () => {
+    reportMutation.mutate(
+      { id, token },
+      {
+        onSuccess: () => navigate(pageUrlConfig.feedPage),
+        onError: () => alert('게시글 신고에 실패했습니다.'),
+      },
+    );
+  };
+
+  return { postEdit, postDelete, postReport };
+};
 
 const FeedDetailPage = () => {
   const { id } = useParams();
@@ -35,9 +73,16 @@ const FeedDetailPage = () => {
   const { uploadComment } = postComments();
   const { toggleHeartStatus } = postHeart();
   const navigate = useNavigate();
-  const createdDate = useFormatDate(post?.createdAt);
 
+  const setIsVisible = useSetRecoilState(bottomSheetStateAtom);
+  const setOptions = useSetRecoilState(bottomSheetOptions);
+
+  const createdDate = useFormatDate(post?.createdAt);
   const postImage = post?.image.split(',');
+
+  const user = useRecoilValue(userAtom);
+
+  const { postEdit, postDelete, postReport } = usePostActions(id, user.token, navigate);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -77,6 +122,35 @@ const FeedDetailPage = () => {
     setCommentsList((currentList) => currentList.filter((comment) => comment.id !== commentId));
   };
 
+  const toggleBottomSheetShow = () => setIsVisible((prev) => !prev);
+
+  const currentAccountname = user.accountname;
+  const authorAccountname = post?.author.accountname;
+
+  // 바텀시트 옵션 생성
+  const options = useBottomSheetOptions({
+    currentAccountname,
+    authorAccountname,
+    postEdit: () => confirmAction('게시글을 수정할까요?', postEdit),
+    postDelete: () => confirmAction('게시글을 삭제할까요?', postDelete),
+    postReport: () => confirmAction('게시글을 신고할까요?', postReport),
+    type: 'post',
+  });
+
+  const handleBottomSheetShow = (event) => {
+    event.stopPropagation();
+    setOptions(options);
+    toggleBottomSheetShow();
+  };
+
+  // TODO : 확인창 모달로 수정 필요
+  const confirmAction = (message, callback) => {
+    if (confirm(message)) {
+      callback();
+    }
+    toggleBottomSheetShow();
+  };
+
   if (!post) {
     // TODO : 스켈레톤 ui로 대체
     return null;
@@ -86,6 +160,7 @@ const FeedDetailPage = () => {
     <PageTemplate showNavMenu={false}>
       <PostWrapper>
         <PostContainer>
+          <PostMoreBtn aria-label="댓글 삭제/신고 버튼" onClick={handleBottomSheetShow} />
           <UserHeader>
             <ProfileImage>
               {/* 프로필 기본이미지 수정 필요 */}
@@ -98,7 +173,6 @@ const FeedDetailPage = () => {
             </UserInfo>
             <DateText>{createdDate}</DateText>
           </UserHeader>
-          {/* <PostMoreBtn aria-label="댓글 삭제/신고 버튼" onClick={handleBottomSheetShow} /> */}
           {postImage[0] && (
             <SwiperWrapper>
               <Swiper
@@ -239,16 +313,17 @@ const CommentContaier = styled.section`
   padding: 20px 16px 60px;
 `;
 
-// // 수정 필요
-// const PostMoreBtn = styled.button`
-//   position: absolute;
-//   top: 14px;
-//   right: 0;
+// TODO : header에 들어가도록 수정 필요
+// 현재 위치 고정 안됨
+const PostMoreBtn = styled.button`
+  position: absolute;
+  top: 12px;
+  right: 12px;
 
-//   width: 40px;
-//   height: 20px;
-//   background: url(${verticalIcon}) no-repeat center right;
-//   background-size: 18px 18px;
+  width: 40px;
+  height: 24px;
+  background: url(${verticalIcon}) no-repeat center right;
+  background-size: 20px 20px;
 
-//   z-index: 100;
-// `;
+  z-index: 100;
+`;
