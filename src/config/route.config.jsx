@@ -28,8 +28,8 @@ console.log(baseUrl);
 const routeConfig = [
   { path: `${baseUrl}${pageUrlConfig.splashPage}`, element: <DefaultLayout />, children:[
     { index: true, element: <SplashPage /> },
-    { path: pageUrlConfig.signInPage, element: <SignInPage /> },
-    { path: pageUrlConfig.signUpPage, element: <SignUpPage /> },
+    { path: `${baseUrl}`+pageUrlConfig.signInPage, element: <SignInPage /> },
+    { path: `${baseUrl}`+pageUrlConfig.signUpPage, element: <SignUpPage /> },
   ]},
   { path: `${baseUrl}`, 
     element: <PrivateLayout/>,
