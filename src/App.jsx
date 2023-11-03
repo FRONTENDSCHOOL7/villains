@@ -41,13 +41,3 @@ const App = () => {
 };
 
 export default App;
-
-// function App() {
-//   return (
-//     <div className="App">
-//       <UserProfileCard />
-//     </div>
-//   );
-// }
-
-// export default App;
