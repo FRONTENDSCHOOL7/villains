@@ -1,18 +1,18 @@
 class pageUlrConfig {
-  homePage = `/main`;
-  splashPage = `/welcome`;
-  signInPage = '/welcome/signIn';
-  signUpPage = '/welcome/signUp';
-  resultPage = `/main/:id`;
-  feedPage = `/feed`;
-  feedWritePage = '/feed/write';
-  feedDetailPage = `/feed/:id`;
-  profilePage = `/user`;
-  profileEdit = `/user/edit`;
-  goodsPage = `/goods`;
-  chatPage = `/chat`;
-  goodsWritePage = '/goods/write';
-  goodsDetailPage = '/goods/:id';
+  homePage = `main`;
+  splashPage = `welcome`;
+  signInPage = 'welcome/signIn';
+  signUpPage = 'welcome/signUp';
+  resultPage = `main/:id`;
+  feedPage = `feed`;
+  feedWritePage = 'feed/write';
+  feedDetailPage = `feed/:id`;
+  profilePage = `user`;
+  profileEdit = `user/edit`;
+  goodsPage = `goods`;
+  chatPage = `chat`;
+  goodsWritePage = 'goods/write';
+  goodsDetailPage = 'goods/:id';
 
   addParams(url, params) {
     let querystring = [];

@@ -36,7 +36,7 @@ const routeConfig = [
     errorElement: <ErrorPage />, 
     children:[
       { path: `${baseUrl}`,    element: <SearchLayout />, children:[
-        {path: `${baseUrl}`+ ageUrlConfig.feedPage, element: <FeedPage />},
+        {path: `${baseUrl}`+pageUrlConfig.feedPage, element: <FeedPage />},
         { path: `${baseUrl}`+pageUrlConfig.homePage, element: <HomePage />},
         { path: `${baseUrl}`+pageUrlConfig.resultPage, element: <ResultPage /> },
       ] },
