@@ -22,9 +22,6 @@ const getProducts = () => {
         {},
         { ...headers },
       );
-      //const responseData = response.data.posts;
-      console.log(response.data.product);
-      //setProducts(response.data.product);
       fetchedProducts = response.data.product;  
       currentSkip += PRODUCTS_REQUEST;
     } catch (error) {

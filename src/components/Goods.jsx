@@ -5,7 +5,6 @@ import { useNavigate } from 'react-router';
 
 const Goods = ({ products }) => {
   const navigate = useNavigate();
-  console.log(products);
 
   const handleClickProductCard = (product) => {
     const productDetailUrl = `${pageUrlConfig.goodsPage}/${product.id}`
