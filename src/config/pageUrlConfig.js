@@ -15,6 +15,7 @@ class pageUlrConfig {
   chatPage = `${baseUrl}chat`;
   goodsWritePage = `${baseUrl}goods/write`;
   goodsDetailPage = `${baseUrl}goods/:id`;
+  goodsEditPage = `${baseUrl}goods/edit/:id`;
 
   addParams(url, params) {
     let querystring = [];

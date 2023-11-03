@@ -53,6 +53,7 @@ const routeConfig = [
           { path: pageUrlConfig.goodsPage, element: <GoodsPage /> },
           { path: pageUrlConfig.goodsWritePage, element: <GoodsWritePage /> },
           { path: pageUrlConfig.goodsDetailPage, element: <GoodsDetailPage /> },
+          { path: pageUrlConfig.goodsEditPage, element: <GoodsWritePage /> },
           { path: pageUrlConfig.chatPage, element: <ChatPage /> },
         ],
       },
