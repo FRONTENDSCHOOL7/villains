@@ -1,19 +1,19 @@
+const baseUrl = import.meta.env.BASE_URL;
 class pageUlrConfig {
-  baseUrl = import.meta.env.BASE_URL;
-  homePage = `${this.baseUrl}main`;
-  splashPage = `${this.baseUrl}welcome`;
-  signInPage = `${this.baseUrl}welcome/signIn`;
-  signUpPage = `${this.baseUrl}welcome/signUp`;
-  resultPage = `${this.baseUrl}main/:id`;
-  feedPage = `${this.baseUrl}feed`;
-  feedWritePage = `${this.baseUrl}feed/write`;
-  feedDetailPage = `${this.baseUrl}feed/:id`;
-  profilePage = `${this.baseUrl}user`;
-  profileEdit = `${this.baseUrl}user/edit`;
-  goodsPage = `${this.baseUrl}goods`;
-  chatPage = `${this.baseUrl}chat`;
-  goodsWritePage = `${this.baseUrl}goods/write`;
-  goodsDetailPage = `${this.baseUrl}goods/:id`;
+  homePage = `${baseUrl}main`;
+  splashPage = `${baseUrl}`;
+  signInPage = `${baseUrl}signIn`;
+  signUpPage = `${baseUrl}signUp`;
+  resultPage = `${baseUrl}main/:id`;
+  feedPage = `${baseUrl}feed`;
+  feedWritePage = `${baseUrl}feed/write`;
+  feedDetailPage = `${baseUrl}feed/:id`;
+  profilePage = `${baseUrl}user`;
+  profileEdit = `${baseUrl}user/edit`;
+  goodsPage = `${baseUrl}goods`;
+  chatPage = `${baseUrl}chat`;
+  goodsWritePage = `${baseUrl}goods/write`;
+  goodsDetailPage = `${baseUrl}goods/:id`;
 
   addParams(url, params) {
     let querystring = [];

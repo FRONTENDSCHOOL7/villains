@@ -25,15 +25,15 @@ import pageUrlConfig from './pageUrlConfig';
 
 
 const routeConfig = [
-  { path: `/`,  element: <DefaultLayout />, children:[
+  { path: ``,  element: <DefaultLayout />, children:[
     { path: pageUrlConfig.splashPage, element: <SplashPage /> },
     { path: pageUrlConfig.signInPage, element: <SignInPage /> },
     { path: pageUrlConfig.signUpPage, element: <SignUpPage /> },
-    {  path: `/`, 
+    {  path: ``, 
       element: <PrivateLayout/>,
       errorElement: <ErrorPage />, 
       children:[
-        { path: `/`,  element: <SearchLayout />, children:[
+        { path: ``,  element: <SearchLayout />, children:[
           { path: pageUrlConfig.feedPage, element: <FeedPage />},
           { path: pageUrlConfig.homePage, element: <HomePage />},
           { path: pageUrlConfig.resultPage, element: <ResultPage /> },
