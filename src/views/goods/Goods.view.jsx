@@ -1,7 +1,5 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import PageTemplate from '../../components/PageTemplate';
-//import pageUrlConfig from '../config/pageUrlConfig';
-import styled from 'styled-components';
 import getProducts from '../../api/getProducts.api';
 import Goods from '../../components/Goods';
 

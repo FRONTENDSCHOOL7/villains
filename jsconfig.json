@@ -3,7 +3,9 @@
       "jsx": "react",
       "baseUrl": ".",
       "paths": {
-        "@lib/*": ["src/lib/*"],
+        "@lib/*": ["../lib/*"],
+        "@src/*": ["../*"],
+        "@assets/*": ["../../assets/*"]
          },
       "module": "ESNext",
       "moduleResolution": "node"

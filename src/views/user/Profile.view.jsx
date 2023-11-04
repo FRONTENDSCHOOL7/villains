@@ -1,9 +1,10 @@
+import { useNavigate } from 'react-router-dom';
 import React from 'react';
-import basicProfile from '../../src/assets/img/basic-profile.svg';
 import styled from 'styled-components';
-import { Link, useNavigate } from 'react-router-dom';
+
 import pageUrlConfig from '../../config/pageUrlConfig';
 import PageTemplate from '../../components/PageTemplate';
+import basicProfile from '../../assets/img/basic-profile.svg';
 
 const ProfilePage = () => {
   const navigator = useNavigate();

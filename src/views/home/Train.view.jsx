@@ -1,7 +1,8 @@
-import React, { useEffect, useState } from "react";
-import PageTemplate from "../../components/PageTemplate";
 import { useParams } from "react-router";
+import React, { useEffect, useState } from "react";
 import { Map, MapMarker } from "react-kakao-maps-sdk";
+
+import PageTemplate from "../../components/PageTemplate";
 
 const HomeTrainPage = () => {
     const { stationname } = useParams();

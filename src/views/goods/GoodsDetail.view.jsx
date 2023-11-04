@@ -4,7 +4,7 @@ import styled from 'styled-components';
 import getProductDetail from '../../api/getProductDetail.api';
 import { useNavigate, useParams } from 'react-router';
 import pageUrlConfig from '../../config/pageUrlConfig';
-import profileImage from '../assets/img/basic-profile.svg';
+import profileImage from '../../assets/img/basic-profile.svg';
 import getUserDetail from '../../api/getUserDetail.api';
 
 const GoodsDetailPage = () => {

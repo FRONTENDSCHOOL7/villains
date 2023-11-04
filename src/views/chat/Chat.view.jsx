@@ -1,5 +1,5 @@
 import React from 'react';
-import basicProfile from '../../src/assets/img/basic-profile.svg';
+import basicProfile from '../../assets/img/basic-profile.svg';
 import styled from 'styled-components';
 import pageUrlConfig from '../../config/pageUrlConfig';
 import PageTemplate from '../../components/PageTemplate';
