@@ -3,7 +3,7 @@ import { Outlet, useLocation, useNavigate } from "react-router";
 import SearchHeader from "../../components/layout/SearchHeader";
 import pageUrlConfig from "../../config/pageUrlConfig";
 
-const IndexPage = ( ) => {
+const HomeIndexPage = ( ) => {
     const { pathname } = useLocation();
     const [showListBox, setShowListBox] = useState(false);
     const [isClickInfo, setIsClickInfo] = useState(false);
@@ -34,4 +34,4 @@ const IndexPage = ( ) => {
     </>
 }
 
-export default IndexPage;
+export default HomeIndexPage;

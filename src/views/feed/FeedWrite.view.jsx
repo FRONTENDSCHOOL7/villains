@@ -1,21 +1,21 @@
-import PageTemplate from '../components/PageTemplate';
+import PageTemplate from '../../components/PageTemplate';
 import styled from 'styled-components';
 import { useEffect, useRef, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
-import FloatingButton from '../components/FloatingButton.style';
+import FloatingButton from '../../components/FloatingButton.style';
 import imageIcon from '../assets/img/image-icon.svg';
-import useGeoLocation from '../hooks/useGeoLocation';
-import uploadPost from '../api/uploadPost.api';
-import postImages from '../api/postImages.api';
-import ImagePreview from '../components/feed/ImagePreview';
+import useGeoLocation from '../../hooks/useGeoLocation';
+import uploadPost from '../../api/uploadPost.api';
+import postImages from '../../api/postImages.api';
+import ImagePreview from '../../components/feed/ImagePreview';
 import arrowIcon from '../assets/img/icon-arrow-left.svg';
-import useBlockToBack from '../hooks/useBlockToBack';
-import pageUrlConfig from '../config/pageUrlConfig';
-import ResizingTextarea from '../components/feed/ResizingTextarea';
-import getPostDetail from '../api/getPostDetail.api';
+import useBlockToBack from '../../hooks/useBlockToBack';
+import pageUrlConfig from '../../config/pageUrlConfig';
+import ResizingTextarea from '../../components/feed/ResizingTextarea';
+import getPostDetail from '../../api/getPostDetail.api';
 import { useRecoilValue } from 'recoil';
-import userAtom from '../atoms/userAtom';
-import putPostEdit from '../api/putPostEdit.api';
+import userAtom from '../../atoms/userAtom';
+import putPostEdit from '../../api/putPostEdit.api';
 
 const FeedWritePage = () => {
   const [isEditMode, setIsEditMode] = useState(false);
