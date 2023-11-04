@@ -60,8 +60,8 @@ const routeConfig = [
             { path: pageUrlConfig.feedPage, element: <FeedIndexPage />, children:[
               { index: true, element: <FeedPage />},
               { path: pageUrlConfig.feedWritePage, element: <FeedWritePage /> },
-              { path: pageUrlConfig.feedDetailPage, element: <FeedDetailPage /> },
               { path: pageUrlConfig.feedEditPage, element: <FeedWritePage /> },
+              { path: pageUrlConfig.feedDetailPage, element: <FeedDetailPage /> },
             ]},
             { path: pageUrlConfig.profilePage, element: <ProfileIndexPage />, children:[
               { index: true, element: <ProfilePage />},
@@ -73,8 +73,8 @@ const routeConfig = [
           { path: pageUrlConfig.goodsPage, element: <GoodsIndexPage />, children:[
             {  index: true, element: <GoodsPage /> },
             { path: pageUrlConfig.goodsWritePage, element: <GoodsWritePage /> },
+            { path: pageUrlConfig.goodsEditPage, element: <GoodsWritePage /> },
             { path: pageUrlConfig.goodsDetailPage, element: <GoodsDetailPage /> },
-
           ]},
           { path: pageUrlConfig.chatPage, element: <ChatIndexPage />, children:[
             { index: true, element: <ChatPage /> },

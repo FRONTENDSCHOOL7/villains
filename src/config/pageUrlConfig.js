@@ -4,13 +4,13 @@ class pageUlrConfig {
   signInPage = `${baseUrl}signIn`;
   signUpPage = `${baseUrl}signUp`;
   homePage = `${baseUrl}main`;
+  profilePage = `${baseUrl}user`;
   feedPage = `${baseUrl}feed`;
   feedWritePage = `${baseUrl}feed/write`;
   feedEditPage = `${baseUrl}feed/edit/:id`;
   feedDetailPage = `${baseUrl}feed/:id`;
-  profilePage = `${baseUrl}user`;
-  goodsPage = `${baseUrl}goods`;
   chatPage = `${baseUrl}chat`;
+  goodsPage = `${baseUrl}goods`;
   goodsWritePage = `${baseUrl}goods/write`;
   goodsDetailPage = `${baseUrl}goods/:id`;
   goodsEditPage = `${baseUrl}goods/edit/:id`;
