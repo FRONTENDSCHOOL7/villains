@@ -1,36 +1,38 @@
-import { useNavigate } from 'react-router-dom';
-import React from 'react';
+import { useNavigate, useParams } from 'react-router-dom';
+import React, { useState } from 'react';
 import styled from 'styled-components';
 
 import pageUrlConfig from '../../config/pageUrlConfig';
 import PageTemplate from '../../components/PageTemplate';
 import basicProfile from '../../assets/img/basic-profile.svg';
+import { useRecoilValue } from 'recoil';
+import userAtom from '../../atoms/userAtom';
 
 const ProfilePage = () => {
   const navigate = useNavigate();
   //현재 프로필 페이지의 계정
   // /user/:accountname /user/villains /user
-  // const user = useRecoilValue(userAtom);
+  const user = useRecoilValue(userAtom);
   const { accountname } = useParams();
   // const [읽기 전용 변수, 변수 수정용 함수] = useState(읽기 전용 변수의 값);
   // let currentAccount = accountname;
   const [currentAccount, setCurrentAccount] = useState(accountname);
-  if (!accountname) {
-    //url에 accountname이 없는 경우 === 자기의 프로필로 들어왔을 경우 === 내 accountname일 경우
-    //현재 프로필 페이지의 계정을 자신의 것으로 설정한다.
-    //currentAcount = user.accountname;
-    if (!user) {
-      try {
-        const userItem = localStorage.getItem('user');
-        setCurrentAccount(JSON.parse(userItem).accountname);
-      } catch (error) {
-        console.error(error);
-        navigate(pageUrlconfig.signInPage);
-      }
-    } else {
-      setCurrentAccount(user.accountname);
-    }
-  }
+  // if (!accountname) {
+  //   //url에 accountname이 없는 경우 === 자기의 프로필로 들어왔을 경우 === 내 accountname일 경우
+  //   //현재 프로필 페이지의 계정을 자신의 것으로 설정한다.
+  //   //currentAcount = user.accountname;
+  //   if (!user) {
+  //     try {
+  //       const userItem = localStorage.getItem('user');
+  //       setCurrentAccount(JSON.parse(userItem).accountname);
+  //     } catch (error) {
+  //       console.error(error);
+  //       navigate(pageUrlConfig.signInPage);
+  //     }
+  //   } else {
+  //     setCurrentAccount(user.accountname);
+  //   }
+  // }
   console.log(currentAccount);
 
   const [color, setColor] = useState(false);
@@ -106,20 +108,6 @@ const ProfilePage = () => {
           <Tab value={'게시글'}>게시글</Tab>
           <Tab>택배 목록</Tab>
         </TabGroup>
-
-        <PostCard>
-          <FeedCard>
-            <CardImg>Img</CardImg>
-            <CardContent>
-              <p>Lorem ipsum dolor sit, amet consectetur adipisicing elit. </p>
-              {/* <ProfileEmail>@villain_no1</ProfileEmail>
-            <Date>2020년 10월 21일</Date>
-            <IconBtn>
-              <img src="/" alt="좋아요 버튼" />
-            </IconBtn> */}
-            </CardContent>
-          </FeedCard>
-        </PostCard>
       </DownSection>
     </PageTemplate>
   );

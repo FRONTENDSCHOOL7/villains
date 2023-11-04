@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
-import PageTemplate from '../components/PageTemplate';
-import basicProfile from '../../src/assets/img/basic-profile.svg';
+import PageTemplate from '../../components/PageTemplate';
+import basicProfile from '../../assets/img/basic-profile.svg';
 // import imgIcon from `../assets/img/image-icon.svg`
 
 const ProfileEditPage = () => {

@@ -1,6 +1,5 @@
 import DefaultLayout from '../components/layout/DefautlLayout';
 import PrivateLayout from '../components/layout/PrivateLayout';
-import ErrorPage from '../views/Error.view';
 import pageUrlConfig from './pageUrlConfig';
 
 import AuthIndexPage from '../views/auth/index.view';
@@ -50,7 +49,7 @@ const routeConfig = [
       ]},
       {
         path: `/`,
-        element: <SearchLayout />,
+        element: <PrivateLayout />,
         children: [
           
             { path: pageUrlConfig.homePage, element: <HomeIndexPage />, children:[
@@ -82,19 +81,6 @@ const routeConfig = [
           ] },
         ],
       },
-      { path: pageUrlConfig.feedWritePage, element: <FeedWritePage /> },
-      { path: pageUrlConfig.feedDetailPage, element: <FeedDetailPage /> },
-      {
-        path: pageUrlConfig.profilePage,
-        element: <ProfilePage />,
-        children: [{ path: pageUrlConfig.profileEdit, element: <ProfileEditPage /> }],
-      },
-      {
-        path: pageUrlConfig.goodsPage,
-        element: <GoodsPage />,
-        children: [{ path: pageUrlConfig.goodsWritePage, element: <GoodsWritePage /> }],
-      },
-      { path: pageUrlConfig.chatPage, element: <ChatPage /> },
     ],
   },
 ];
