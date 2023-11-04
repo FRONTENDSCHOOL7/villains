@@ -11,7 +11,7 @@ import { Input, Label } from '../components/Input.style';
 import DropDown from './DropDown';
 import IconSearch from '../assets/img/icon-search.svg';
 
-const SearchSub = ({ which, labelText, placeholder }) => {
+const SearchSub = ({ which, labelText, placeholder, value }) => {
   const [subOneInfo, setSubOneInfo] = useRecoilState(subOneAtom);
   const [list, setList] = useState([]);
   const [query, setQuery] = useRecoilState(which === 'start' ? goodsQueryStartAtom : goodsQueryEndAtom);
@@ -27,6 +27,14 @@ const SearchSub = ({ which, labelText, placeholder }) => {
       });
       setSubOneInfo(newInfo);
     });
+  }, []);
+
+  useEffect(() => {
+    if (value) {
+      setQuery(value);
+    } else {
+      setQuery("");
+    }
   }, []);
 
   const dataList = subOneInfo;
@@ -93,6 +101,6 @@ const InputField = styled(Input)`
 `;
 const Wrap = styled.div`
   position: relative;
-`
+`;
 
 export default SearchSub;

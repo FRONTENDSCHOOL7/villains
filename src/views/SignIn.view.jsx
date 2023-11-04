@@ -28,6 +28,7 @@ const SignInPage = () => {
   const navigate = useNavigate();
   // 뒤로가기 막기
   useEffect(() => {
+    localStorage.clear();
     const preventGoBack = () => {
       // change start
       history.pushState(null, '', location.href);
@@ -46,7 +47,6 @@ const SignInPage = () => {
 
   // 로그인 함수
   const signInFunc = async (e) => {
-    localStorage.clear();
     e.preventDefault();
     try {
       const response = await client.post('/user/login', {
