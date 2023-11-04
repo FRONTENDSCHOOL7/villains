@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import client from '../config/api.config';
+import client from '../../config/api.config';
 
 const getUserDetail = () => {
   const [loading, setLoading] = useState(false);

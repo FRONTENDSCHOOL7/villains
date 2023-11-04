@@ -5,7 +5,7 @@ import goodsFocusStartAtom from '../atoms/goodsFocusStartAtom';
 import goodsFocusEndAtom from '../atoms/goodsFocusEndAtom';
 import goodsQueryStartAtom from '../atoms/goodsQueryStartAtom';
 import goodsQueryEndAtom from '../atoms/goodsQueryEndAtom';
-import getSubOneInfo from '../api/getSubOneInfo';
+import getSubOneInfo from '../api/get/getSubOneInfo.api';
 import subOneAtom from '../atoms/subOneAtom';
 import { Input, Label } from '../components/Input.style';
 import DropDown from './DropDown';

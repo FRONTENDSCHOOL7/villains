@@ -3,6 +3,7 @@ import PrivateLayout from '../components/layout/PrivateLayout';
 import ErrorPage from '../views/Error.view';
 import pageUrlConfig from './pageUrlConfig';
 
+import AuthIndexPage from '../views/auth/index.view';
 import SplashPage from '../views/auth/Splash.view';
 import SignInPage from '../views/auth/SignIn.view';
 import SignUpPage from '../views/auth/SignUp.view';
@@ -42,16 +43,11 @@ const routeConfig = [
     path: pageUrlConfig.splashPage,
     element: <DefaultLayout />,
     children: [
-      { index: true, element: <SplashPage /> },
-      { path: pageUrlConfig.signInPage, element: <SignInPage /> },
-      { path: pageUrlConfig.signUpPage, element: <SignUpPage /> },
-    ],
-  },
-  {
-    path: `/`,
-    element: <PrivateLayout />,
-    errorElement: <ErrorPage />,
-    children: [
+      { path: pageUrlConfig.splashPage, element: <AuthIndexPage />, children:[
+        { index: true, element: <SplashPage /> },
+        { path: pageUrlConfig.signInPage, element: <SignInPage /> },
+        { path: pageUrlConfig.signUpPage, element: <SignUpPage /> },
+      ]},
       {
         path: `/`,
         element: <SearchLayout />,

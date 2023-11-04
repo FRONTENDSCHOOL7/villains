@@ -1,4 +1,4 @@
-import client from '../config/api.config';
+import client from '../../config/api.config';
 
 const postReport = async (id, token) => {
   return await client.post(`/post/${id}/report`, {}, client.BothType(token));

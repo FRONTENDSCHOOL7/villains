@@ -1,6 +1,6 @@
 import { useRecoilValue } from 'recoil';
-import client from '../config/api.config';
-import userAtom from '../atoms/userAtom';
+import client from '../../config/api.config';
+import userAtom from '../../atoms/userAtom';
 
 const getUerPostList = (accountname) => {
   const user = useRecoilValue(userAtom);

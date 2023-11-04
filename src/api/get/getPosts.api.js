@@ -1,6 +1,6 @@
 import { useCallback, useEffect, useState } from 'react';
-import client from '../config/api.config';
-import useInfiniteScroll from '../hooks/useInfiniteScroll';
+import client from '../../config/api.config';
+import useInfiniteScroll from '../../hooks/useInfiniteScroll';
 
 const getPosts = () => {
   const [posts, setPosts] = useState([]); // 현재 로드된 게시글

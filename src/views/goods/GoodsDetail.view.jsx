@@ -1,11 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import PageTemplate from '../../components/PageTemplate';
 import styled from 'styled-components';
-import getProductDetail from '../../api/getProductDetail.api';
+import getProductDetail from '../../api/get/getProductDetail.api';
 import { useNavigate, useParams } from 'react-router';
 import pageUrlConfig from '../../config/pageUrlConfig';
 import profileImage from '../../assets/img/basic-profile.svg';
-import getUserDetail from '../../api/getUserDetail.api';
+import getUserDetail from '../../api/get/getUserDetail.api';
 
 const GoodsDetailPage = () => {
   const navigate = useNavigate();

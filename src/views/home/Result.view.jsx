@@ -4,7 +4,7 @@ import styled from "styled-components";
 import { useRecoilState, useRecoilValue } from "recoil";
 
 import pageUrlConfig from "../../config/pageUrlConfig";
-import getSubTime from "../../api/getSubTime.api";
+import getSubTime from "../../api/get/getSubTime.api";
 
 import PageTemplate from "../../components/PageTemplate"
 import DefaultBtn, { PrimaryStyle } from "../../components/GlobalButton";

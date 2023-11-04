@@ -1,6 +1,6 @@
 import { useRecoilValue } from 'recoil';
-import client from '../config/api.config';
-import userAtom from '../atoms/userAtom';
+import client from '../../config/api.config';
+import userAtom from '../../atoms/userAtom';
 
 /**
  * 프로필 수정 완료 시 보내는 요청입니다.
