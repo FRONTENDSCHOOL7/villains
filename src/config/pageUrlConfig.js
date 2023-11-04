@@ -1,18 +1,16 @@
 const baseUrl = import.meta.env.BASE_URL;
 class pageUlrConfig {
-  homePage = `${baseUrl}main`;
   splashPage = `${baseUrl}`;
   signInPage = `${baseUrl}signIn`;
   signUpPage = `${baseUrl}signUp`;
-  resultPage = `${baseUrl}main/:id`;
+  homePage = `${baseUrl}main`;
+  profilePage = `${baseUrl}user`;
   feedPage = `${baseUrl}feed`;
   feedWritePage = `${baseUrl}feed/write`;
   feedEditPage = `${baseUrl}feed/edit/:id`;
   feedDetailPage = `${baseUrl}feed/:id`;
-  profilePage = `${baseUrl}user`;
-  profileEdit = `${baseUrl}user/edit`;
-  goodsPage = `${baseUrl}goods`;
   chatPage = `${baseUrl}chat`;
+  goodsPage = `${baseUrl}goods`;
   goodsWritePage = `${baseUrl}goods/write`;
   goodsDetailPage = `${baseUrl}goods/:id`;
   goodsEditPage = `${baseUrl}goods/edit/:id`;
