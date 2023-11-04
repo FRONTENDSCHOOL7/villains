@@ -1,8 +1,10 @@
-import React, { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+import React from 'react';
 import styled from 'styled-components';
-import { Link, useNavigate } from 'react-router-dom';
+
 import pageUrlConfig from '../../config/pageUrlConfig';
 import PageTemplate from '../../components/PageTemplate';
+import basicProfile from '../../assets/img/basic-profile.svg';
 
 const ProfilePage = () => {
   const navigate = useNavigate();

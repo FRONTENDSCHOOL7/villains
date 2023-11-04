@@ -4,15 +4,8 @@ import styled from 'styled-components';
 import getProductDetail from '../../api/getProductDetail.api';
 import { useNavigate, useParams } from 'react-router';
 import pageUrlConfig from '../../config/pageUrlConfig';
-import profileImage from '../assets/img/basic-profile.svg';
-import getUserDetail from '../api/getUserDetail.api';
-import DropDown from '../components/DropDown';
-import updateProduct from '../api/updateProduct.api';
-import { useRecoilState, useRecoilValue } from 'recoil';
-import { bottomSheetOptions, bottomSheetStateAtom } from '../atoms/bottomSheetStateAtom';
-import deleteProduct from '../api/deleteProduct.api';
-import realProductAuthorAtom from '../atoms/realProductAuthorAtom';
-import userAtom from '../atoms/userAtom';
+import profileImage from '../../assets/img/basic-profile.svg';
+import getUserDetail from '../../api/getUserDetail.api';
 
 const GoodsDetailPage = () => {
   const navigate = useNavigate();

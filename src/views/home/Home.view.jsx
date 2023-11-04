@@ -1,15 +1,17 @@
+import {  useNavigate, useParams } from 'react-router';
 import React, { useState, useEffect, useMemo } from 'react';
-import styled from 'styled-components';
-import PageTemplate from '../../components/PageTemplate';
-import useGeoLocation from '../../hooks/useGeoLocation';
-import { Map, MapMarker, CustomOverlayMap } from 'react-kakao-maps-sdk';
 import { useQuery } from '@tanstack/react-query';
+import { Map, MapMarker, CustomOverlayMap } from 'react-kakao-maps-sdk';
+import styled from 'styled-components';
+import { useRecoilState, useRecoilValue } from 'recoil';
+
+import useGeoLocation from '../../hooks/useGeoLocation';
 import contactQuery from '../../api/getUserPost.api';
 import getSubOneInfo from '../../api/getSubOneInfo';
 import subOneAtom from '../../atoms/subOneAtom';
-import { useRecoilState, useRecoilValue } from 'recoil';
-import {  useNavigate, useParams } from 'react-router';
 import userAtom from '../../atoms/userAtom';
+
+import PageTemplate from '../../components/PageTemplate';
 
 const HomePage = () => {
   const {id} = useParams();

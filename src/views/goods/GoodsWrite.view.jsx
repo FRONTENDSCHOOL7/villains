@@ -1,21 +1,24 @@
 import { React, useState, useEffect, useRef } from 'react';
-import PageTemplate from '../../components/PageTemplate';
+import { useNavigate } from 'react-router';
+import { useForm } from 'react-hook-form';
 import styled from 'styled-components';
+import { useRecoilValue } from 'recoil';
+import client from '../../config/api.config';
+import pageUrlConfig from '../../config/pageUrlConfig';
+
+import PageTemplate from '../../components/PageTemplate';
 import SearchSub from '../../components/SearchSub';
 import { Input, Label } from '../../components/Input.style';
-import BackArrow from '../assets/img/icon-arrow-left.svg';
 import { BlueSmallBtn } from '../../components/Buttons';
-import { useForm } from 'react-hook-form';
-import { useRecoilValue } from 'recoil';
+import FloatingButton from '../../components/FloatingButton.style';
+
 import goodsQueryStartAtom from '../../atoms/goodsQueryStartAtom';
 import goodsQueryEndAtom from '../../atoms/goodsQueryEndAtom';
-import FloatingButton from '../../components/FloatingButton.style';
-import ImageIcon from '../assets/img/image-icon.svg';
-import ImageBigIcon from '../assets/img/image-big-icon.svg';
+import BackArrow from '../../assets/img/icon-arrow-left.svg';
+import ImageIcon from '../../assets/img/image-icon.svg';
+import ImageBigIcon from '../../assets/img/image-big-icon.svg';
+
 import postImage from '../../api/postImage';
-import client from '../../config/api.config';
-import { useNavigate } from 'react-router';
-import pageUrlConfig from '../../config/pageUrlConfig';
 
 const GoodsWritePage = () => {
   const [isEditMode, setIsEditMode] = useState(false);

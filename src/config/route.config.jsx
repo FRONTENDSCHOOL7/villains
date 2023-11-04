@@ -1,24 +1,36 @@
-import FeedPage from '../views/feed/Feed.view';
-import FeedDetailPage from '../views/feed/FeedDetail.view';
-import FeedWritePage from '../views/feed/FeedWrite.view';
-import HomePage from '../views/home/Home.view';
-import ResultPage from '../views/home/Result.view';
-import SplashPage from '../views/auth/Splash.view';
-import SignInPage from '../views/auth/SignIn.view';
-import SignUpPage from '../views/auth/SignUp.view';
-import ProfilePage from '../views/user/Profile.view';
-import ProfileEditPage from '../views/user/ProfileEdit.view';
-import GoodsPage from '../views/goods/Goods.view';
-import GoodsWritePage from '../views/goods/GoodsWrite.view';
-import GoodsDetailPage from '../views/goods/GoodsDetail.view';
-import ChatPage from '../views/chat/Chat.view';
 import DefaultLayout from '../components/layout/DefautlLayout';
 import PrivateLayout from '../components/layout/PrivateLayout';
 import ErrorPage from '../views/Error.view';
-import SearchLayout from '../components/layout/SearchLayout';
 import pageUrlConfig from './pageUrlConfig';
+
+import SplashPage from '../views/auth/Splash.view';
+import SignInPage from '../views/auth/SignIn.view';
+import SignUpPage from '../views/auth/SignUp.view';
+
+import FeedIndexPage from '../views/feed/index.view';
+import FeedPage from '../views/feed/Feed.view';
+import FeedDetailPage from '../views/feed/FeedDetail.view';
+import FeedWritePage from '../views/feed/FeedWrite.view';
+
+import HomeIndexPage from '../views/home/index.view';
+import HomePage from '../views/home/Home.view';
+import ResultPage from '../views/home/Result.view';
 import HomeTrainPage from '../views/home/Train.view';
-import IndexPage from '../views/home/index.view';
+
+import ProfileIndexPage from '../views/user/index.view';
+import ProfilePage from '../views/user/Profile.view';
+import ProfileEditPage from '../views/user/ProfileEdit.view';
+import ProfileFollowPage from '../views/user/ProfileFollow.view';
+
+import GoodsIndexPage from '../views/goods/index.view';
+import GoodsPage from '../views/goods/Goods.view';
+import GoodsWritePage from '../views/goods/GoodsWrite.view';
+import GoodsDetailPage from '../views/goods/GoodsDetail.view';
+
+import ChatIndexPage from '../views/chat/index.view';
+import ChatPage from '../views/chat/Chat.view';
+
+
 
 /** 라우트 등록하기
  * 1. routeConfig의 children에 객체를 이용해서 path와 element 입력하기
@@ -44,9 +56,34 @@ const routeConfig = [
         path: `/`,
         element: <SearchLayout />,
         children: [
-          { path: pageUrlConfig.feedPage, element: <FeedPage /> },
-          { path: pageUrlConfig.homePage, element: <HomePage /> },
-          { path: pageUrlConfig.resultPage, element: <ResultPage /> },
+          
+            { path: pageUrlConfig.homePage, element: <HomeIndexPage />, children:[
+              { index: true, element: <HomePage />},
+              { path: `${pageUrlConfig.homePage}/:id`, element: <ResultPage /> },
+              { path: `${pageUrlConfig.homePage}/:id/:stationname`, element: <HomeTrainPage /> },
+            ]},
+            { path: pageUrlConfig.feedPage, element: <FeedIndexPage />, children:[
+              { index: true, element: <FeedPage />},
+              { path: pageUrlConfig.feedWritePage, element: <FeedWritePage /> },
+              { path: pageUrlConfig.feedDetailPage, element: <FeedDetailPage /> },
+              { path: pageUrlConfig.feedEditPage, element: <FeedWritePage /> },
+            ]},
+            { path: pageUrlConfig.profilePage, element: <ProfileIndexPage />, children:[
+              { index: true, element: <ProfilePage />},
+              { path: `${pageUrlConfig.profilePage}/:accountname`, element: <ProfileEditPage /> },
+              { path: `${pageUrlConfig.profilePage}/:accountname/follower`, element: <ProfileFollowPage /> },
+              { path: `${pageUrlConfig.profilePage}/:accountname/following`, element: <ProfileFollowPage /> },
+            ]},
+            
+          { path: pageUrlConfig.goodsPage, element: <GoodsIndexPage />, children:[
+            {  index: true, element: <GoodsPage /> },
+            { path: pageUrlConfig.goodsWritePage, element: <GoodsWritePage /> },
+            { path: pageUrlConfig.goodsDetailPage, element: <GoodsDetailPage /> },
+
+          ]},
+          { path: pageUrlConfig.chatPage, element: <ChatIndexPage />, children:[
+            { index: true, element: <ChatPage /> },
+          ] },
         ],
       },
       { path: pageUrlConfig.feedWritePage, element: <FeedWritePage /> },

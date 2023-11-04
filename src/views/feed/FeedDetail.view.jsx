@@ -1,34 +1,40 @@
-import { useNavigate, useParams } from 'react-router';
+import { useMutation } from '@tanstack/react-query';
 import { useEffect, useState } from 'react';
+import { useNavigate, useParams } from 'react-router';
 import styled from 'styled-components';
+import { useRecoilValue, useSetRecoilState } from 'recoil';
+
+import { bottomSheetOptions, bottomSheetStateAtom } from '../../atoms/bottomSheetStateAtom';
+import userAtom from '../../atoms/userAtom';
 import getPostDetail from '../../api/getPostDetail.api';
 import postHeart from '../../api/postHeart.api';
 import getComments from '../../api/getComments.api';
 import postComments from '../../api/postComments.api';
-import useFormatDate from '../../hooks/useFormatDate';
-import PageTemplate from '../../components/PageTemplate';
+import deletePostQuery from '../../api/deletePost.api';
+import postReportQuery from '../../api/postReport.api';
+
 import pageUrlConfig from '../../config/pageUrlConfig';
+import useFormatDate from '../../hooks/useFormatDate';
+import useBottomSheetOptions from '../../hooks/useBottomSheetOptions';
+
+import PageTemplate from '../../components/PageTemplate';
 import Comment from '../../components/feed/Comment';
 import CommentForm from '../../components/feed/CommentForm';
 import { IconLabelBtn } from '../../components/Buttons';
+
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { Pagination, Navigation } from 'swiper/modules';
 import 'swiper/css';
 import 'swiper/css/pagination';
 import 'swiper/css/navigation';
 import swiperStyles from '../../style/swiperStyle';
-import profileImage from '../assets/img/basic-profile.svg';
-import heart from '../assets/img/heart.svg';
-import heartFilled from '../assets/img/heart-filled.svg';
-import commentIcon from '../assets/img/message-circle.svg';
-import verticalIcon from '../assets/img/icon-more-vertical.svg';
-import { useRecoilValue, useSetRecoilState } from 'recoil';
-import { bottomSheetOptions, bottomSheetStateAtom } from '../../atoms/bottomSheetStateAtom';
-import useBottomSheetOptions from '../../hooks/useBottomSheetOptions';
-import userAtom from '../../atoms/userAtom';
-import { useMutation } from '@tanstack/react-query';
-import deletePostQuery from '../../api/deletePost.api';
-import postReportQuery from '../../api/postReport.api';
+
+import profileImage from '../../assets/img/basic-profile.svg';
+import heart from '../../assets/img/heart.svg';
+import heartFilled from '../../assets/img/heart-filled.svg';
+import commentIcon from '../../assets/img/message-circle.svg';
+import verticalIcon from '../../assets/img/icon-more-vertical.svg';
+
 
 const usePostActions = (id, token, navigate) => {
   const deleteMutation = useMutation(deletePostQuery(id, token));

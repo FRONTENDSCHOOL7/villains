@@ -1,9 +1,10 @@
 import { React, useState, useEffect } from 'react';
-import styled from 'styled-components';
 import { useNavigate } from 'react-router';
+import { useForm } from 'react-hook-form';
+import styled from 'styled-components';
+
 import pageUrlConfig from '../../config/pageUrlConfig';
 import client from '../../config/api.config';
-import { useForm } from 'react-hook-form';
 import PageTemplate from '../../components/PageTemplate';
 import { BlueLongBtn, WhiteLongBtn } from '../../components/Buttons';
 import CheckBox from '../../components/CheckBox';
