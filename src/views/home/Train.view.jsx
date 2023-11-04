@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import PageTemplate from "../components/PageTemplate";
+import PageTemplate from "../../components/PageTemplate";
 import { useParams } from "react-router";
 import { Map, MapMarker } from "react-kakao-maps-sdk";
 

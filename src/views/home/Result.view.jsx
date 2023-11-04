@@ -1,17 +1,16 @@
-import { useLocation, useNavigate, useParams } from "react-router";
-import getSubTime from "../api/getSubTime.api";
-import { KakaoMapContext, Map, MapMarker } from "react-kakao-maps-sdk";
+import { useNavigate, useParams } from "react-router";
+import getSubTime from "../../api/getSubTime.api";
 
-import PageTemplate from "../components/PageTemplate"
+import PageTemplate from "../../components/PageTemplate"
 import { useEffect, useState } from "react";
 import styled from "styled-components";
 
-import holiday from '../database/2023-2024-holiday.json';
+import holiday from '../../database/2023-2024-holiday.json';
 import { useRecoilState, useRecoilValue } from "recoil";
-import queryAtom from "../atoms/queryAtom";
-import queryFocusAtom from "../atoms/queryFocusAtom";
-import DefaultBtn, { PrimaryStyle } from "../components/GlobalButton";
-import pageUrlConfig from "../config/pageUrlConfig";
+import queryAtom from "../../atoms/queryAtom";
+import queryFocusAtom from "../../atoms/queryFocusAtom";
+import DefaultBtn, { PrimaryStyle } from "../../components/GlobalButton";
+import pageUrlConfig from "../../config/pageUrlConfig";
 
 // window.kakao 객체를 가져옴
 const { kakao } = window;

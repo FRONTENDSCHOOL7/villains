@@ -1,18 +1,18 @@
 import React, { useState, useEffect, useMemo } from 'react';
 import styled from 'styled-components';
-import PageTemplate from '../components/PageTemplate';
-import useGeoLocation from '../hooks/useGeoLocation';
+import PageTemplate from '../../components/PageTemplate';
+import useGeoLocation from '../../hooks/useGeoLocation';
 import { Map, MapMarker, CustomOverlayMap } from 'react-kakao-maps-sdk';
 import { useQuery } from '@tanstack/react-query';
-import contactQuery from '../api/getUserPost.api';
-import getSubOneInfo from '../api/getSubOneInfo';
-import subOneAtom from '../atoms/subOneAtom';
+import contactQuery from '../../api/getUserPost.api';
+import getSubOneInfo from '../../api/getSubOneInfo';
+import subOneAtom from '../../atoms/subOneAtom';
 import { useRecoilState, useRecoilValue } from 'recoil';
-import pageUrlConfig from '../config/pageUrlConfig';
-import { useNavigate } from 'react-router';
-import userAtom from '../atoms/userAtom';
+import {  useNavigate, useParams } from 'react-router';
+import userAtom from '../../atoms/userAtom';
 
 const HomePage = () => {
+  const {id} = useParams();
   const [subOneInfo, setSubOneInfo] = useRecoilState(subOneAtom);
   const user = useRecoilValue(userAtom);
   const navigate = useNavigate();
@@ -44,7 +44,7 @@ const HomePage = () => {
 
   return (
     <PageTemplate>
-      <Map center={{ lat: latitude, lng: longitude }} style={{ width: '100%', height: '100%' }} level={3}>
+      :<Map center={{ lat: latitude, lng: longitude }} style={{ width: '100%', height: '100%' }} level={3}>
         {posts.map((post, index) => {
           // const content = JSON.parse(post.content?.split("'").join('"'));
           // 계정마다 쓰인 content가 달라서 위의 경우는 문제가 생깁니다.
