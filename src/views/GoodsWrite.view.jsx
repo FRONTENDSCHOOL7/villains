@@ -14,20 +14,36 @@ import ImageIcon from '../assets/img/image-icon.svg';
 import ImageBigIcon from '../assets/img/image-big-icon.svg';
 import postImage from '../api/postImage';
 import client from '../config/api.config';
-import { useNavigate } from 'react-router';
+import { useNavigate, useLocation, useParams } from 'react-router';
 import pageUrlConfig from '../config/pageUrlConfig';
+import updateProduct from '../api/updateProduct.api';
+import userAtom from '../atoms/userAtom';
 
 const GoodsWritePage = () => {
+  const [isEditMode, setIsEditMode] = useState(false);
+  const { id } = useParams();
+  const user = useRecoilValue(userAtom);
+  const product = useLocation().state;
+  // 수정 페이지
+  useEffect(() => {
+    if (id) {
+      setIsEditMode(true);
+    }
+  }, []);
+
   const navigate = useNavigate();
-  //IsShowSearchBar는 첫 렌더 시에만 필요한 값이며, useState를 쓰면 안됩니다.
-  //useState로 사용할 경우 상태가 변경되어 다시 렌더가 되면 또 값이 바뀌고 리렌더링 시키는 무한 렌더링 상태가 됩니다.
-  let IsShowSearchBar = true;
   // react-hook-form
   const {
     register,
     watch,
     formState: { isSubmitted, errors },
-  } = useForm({ mode: 'onChange' });
+  } = useForm({
+    mode: 'onChange',
+    defaultValues: {
+      price: product ? product.price : '',
+      info: product ? JSON.parse(product.link).itemInfo : '',
+    },
+  });
   const startSubway = useRecoilValue(goodsQueryStartAtom);
   const endSubway = useRecoilValue(goodsQueryEndAtom);
   const price = watch('price');
@@ -35,7 +51,7 @@ const GoodsWritePage = () => {
 
   const [image, setImage] = useState({
     file: '',
-    url: '',
+    url: product ? product.itemImage : '',
   });
 
   let inputRef;
@@ -43,7 +59,6 @@ const GoodsWritePage = () => {
   const handleSaveImage = (e) => {
     e.preventDefault();
     const fileReader = new FileReader();
-    console.log(e);
     if (e.target.files[0]) {
       fileReader.readAsDataURL(e.target.files[0]);
     }
@@ -52,7 +67,6 @@ const GoodsWritePage = () => {
         file: e.target.files[0],
         url: fileReader.result,
       });
-      console.log(image);
     };
   };
 
@@ -62,31 +76,40 @@ const GoodsWritePage = () => {
   };
 
   const handleSubmitSaveBtn = async () => {
-    const urls = await postImage(image.file);
-    const user = JSON.parse(localStorage.getItem('user'));
+    const urls = image.file ? await postImage(image.file) : image.url;
     const adminToken = JSON.parse(localStorage.getItem('admin')).token;
     const linkData = JSON.stringify({
       accountname: user.accountname,
       itemInfo: info,
       state: '요청중',
     });
-    try {
-      const response = await client.post(
-        '/product',
-        {
-          product: {
-            itemName: startSubway + '~' + endSubway,
-            price: parseInt(price),
-            link: linkData,
-            itemImage: urls,
+    // 수정 페이지
+    if (isEditMode) {
+      const result = await updateProduct(startSubway + '~' + endSubway, parseInt(price), linkData, urls, id);
+      if (result) {
+        const goodsDetailUrl = `${pageUrlConfig.goodsPage}/${result.id}`;
+        navigate(goodsDetailUrl);
+      }
+    } else {
+      // 일반 택배 요청글 작성
+      // TODO: api 파일 분리
+      try {
+        const response = await client.post(
+          '/product',
+          {
+            product: {
+              itemName: startSubway + '~' + endSubway,
+              price: parseInt(price),
+              link: linkData,
+              itemImage: urls,
+            },
           },
-        },
-        client.BothType(adminToken),
-      );
-      console.log(response);
-      navigate(pageUrlConfig.goodsPage);
-    } catch (error) {
-      console.log(error);
+          client.BothType(adminToken),
+        );
+        navigate(pageUrlConfig.goodsPage);
+      } catch (error) {
+        console.log(error);
+      }
     }
   };
 
@@ -133,24 +156,15 @@ const GoodsWritePage = () => {
           ref={(refParam) => (inputRef = refParam)}
         />
         <SearchInput>
-          {IsShowSearchBar && (
-            <SearchSub
-              type="text"
-              which={'start'}
-              labelText={'출발역'}
-              placeholder={'2~15자 이내여야 합니다.'}
-            />
-          )}
+          <SearchSub
+            type="text"
+            which={'start'}
+            labelText={'출발역'}
+            placeholder={'2~15자 이내여야 합니다.'}
+          />
         </SearchInput>
         <SearchInput>
-          {IsShowSearchBar && (
-            <SearchSub
-              type="text"
-              which={'end'}
-              labelText={'도착역'}
-              placeholder={'2~15자 이내여야합니다.'}
-            />
-          )}
+          <SearchSub type="text" which={'end'} labelText={'도착역'} placeholder={'2~15자 이내여야합니다.'} />
         </SearchInput>
         <Label htmlFor="price">가격</Label>
         <Input
@@ -173,6 +187,8 @@ const GoodsWritePage = () => {
           id="info"
           type="text"
           placeholder="택배 정보를 입력해주세요."
+          // value={link.itemInfo}
+          // onChange={handleInfoChange}
           aria-invalid={isSubmitted ? (info ? 'false' : 'true') : undefined}
           {...register('info')}
         />
