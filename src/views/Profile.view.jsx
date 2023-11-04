@@ -17,7 +17,7 @@ const ProfilePage = () => {
   const navigate = useNavigate();
   //현재 프로필 페이지의 계정
   // /user/:accountname /user/villains /user
-  const user = useRecoilValue(userAtom);
+  // const user = useRecoilValue(userAtom);
   const { accountname } = useParams();
   // const [읽기 전용 변수, 변수 수정용 함수] = useState(읽기 전용 변수의 값);
   // let currentAccount = accountname;
