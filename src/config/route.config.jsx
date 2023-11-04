@@ -25,38 +25,41 @@ import pageUrlConfig from './pageUrlConfig';
 
 const routeConfig = [
   {
-    path: ``,
+    path: pageUrlConfig.splashPage,
     element: <DefaultLayout />,
     children: [
-      { path: pageUrlConfig.splashPage, element: <SplashPage /> },
+      { index: true, element: <SplashPage /> },
       { path: pageUrlConfig.signInPage, element: <SignInPage /> },
       { path: pageUrlConfig.signUpPage, element: <SignUpPage /> },
+    ],
+  },
+  {
+    path: `/`,
+    element: <PrivateLayout />,
+    errorElement: <ErrorPage />,
+    children: [
       {
-        path: ``,
-        element: <PrivateLayout />,
-        errorElement: <ErrorPage />,
+        path: `/`,
+        element: <SearchLayout />,
         children: [
-          {
-            path: ``,
-            element: <SearchLayout />,
-            children: [
-              { path: pageUrlConfig.feedPage, element: <FeedPage /> },
-              { path: pageUrlConfig.homePage, element: <HomePage /> },
-              { path: pageUrlConfig.resultPage, element: <ResultPage /> },
-            ],
-          },
-          { path: pageUrlConfig.feedWritePage, element: <FeedWritePage /> },
-          { path: pageUrlConfig.feedDetailPage, element: <FeedDetailPage /> },
-          { path: pageUrlConfig.feedEditPage, element: <FeedWritePage /> },
-          { path: pageUrlConfig.profilePage, element: <ProfilePage /> },
-          { path: pageUrlConfig.profileEdit, element: <ProfileEditPage /> },
-          { path: pageUrlConfig.goodsPage, element: <GoodsPage /> },
-          { path: pageUrlConfig.goodsWritePage, element: <GoodsWritePage /> },
-          { path: pageUrlConfig.goodsDetailPage, element: <GoodsDetailPage /> },
-          { path: pageUrlConfig.goodsEditPage, element: <GoodsWritePage /> },
-          { path: pageUrlConfig.chatPage, element: <ChatPage /> },
+          { path: pageUrlConfig.feedPage, element: <FeedPage /> },
+          { path: pageUrlConfig.homePage, element: <HomePage /> },
+          { path: pageUrlConfig.resultPage, element: <ResultPage /> },
         ],
       },
+      { path: pageUrlConfig.feedWritePage, element: <FeedWritePage /> },
+      { path: pageUrlConfig.feedDetailPage, element: <FeedDetailPage /> },
+      {
+        path: pageUrlConfig.profilePage,
+        element: <ProfilePage />,
+        children: [{ path: pageUrlConfig.profileEdit, element: <ProfileEditPage /> }],
+      },
+      {
+        path: pageUrlConfig.goodsPage,
+        element: <GoodsPage />,
+        children: [{ path: pageUrlConfig.goodsWritePage, element: <GoodsWritePage /> }],
+      },
+      { path: pageUrlConfig.chatPage, element: <ChatPage /> },
     ],
   },
 ];

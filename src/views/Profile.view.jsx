@@ -1,28 +1,78 @@
-import React from 'react';
-import basicProfile from '../../src/assets/img/basic-profile.svg';
+import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link, useNavigate, useParams } from 'react-router-dom';
+
+import getPosts from '../api/getPosts.api';
 import pageUrlConfig from '../config/pageUrlConfig';
 import PageTemplate from '../components/PageTemplate';
+import PostCard from '../components/feed/PostCard';
+import basicProfile from '../../src/assets/img/basic-profile.svg';
+import ErrorPage from './Error.view';
+import theme from '../style/theme';
+import { useRecoilValue } from 'recoil';
+import userAtom from '../atoms/userAtom';
+// import Profile from '../components/profile/profile';
 
 const ProfilePage = () => {
-  const navigator = useNavigate();
+  const navigate = useNavigate();
+  //현재 프로필 페이지의 계정
+  // /user/:accountname /user/villains /user
+  // const user = useRecoilValue(userAtom);
+  const { accountname } = useParams();
+  // const [읽기 전용 변수, 변수 수정용 함수] = useState(읽기 전용 변수의 값);
+  // let currentAccount = accountname;
+  const [currentAccount, setCurrentAccount] = useState(accountname);
+  if (!accountname) {
+    //url에 accountname이 없는 경우 === 자기의 프로필로 들어왔을 경우 === 내 accountname일 경우
+    //현재 프로필 페이지의 계정을 자신의 것으로 설정한다.
+    //currentAcount = user.accountname;
+    if (!user) {
+      try {
+        const userItem = localStorage.getItem('user');
+        setCurrentAccount(JSON.parse(userItem).accountname);
+      } catch (error) {
+        console.error(error);
+        navigate(pageUrlconfig.signInPage);
+      }
+    } else {
+      setCurrentAccount(user.accountname);
+    }
+  }
+  console.log(currentAccount);
+
+  const [color, setColor] = useState(false);
+  const [alignment, setAlignment] = useState();
+
   const handleClickEdit = () => {
-    navigator(pageUrlConfig.profileEdit);
+    navigate(pageUrlConfig.profileEdit);
   };
+
+  // useEffect(() => {
+  //   if (accountname === user.accountname) {
+  //   }
+  // });
+
+  const handleChange = () => {
+    // color === 'skyblue' ? setColor('white') : setColor('skyblue');
+    setColor(skyblue);
+    console.log('clicked');
+  };
+
+  const handleAlignment = (event, newAlignment) => {
+    if (newAlignment !== null) {
+      setAlignment(newAlignment);
+    }
+  };
+
+  // const { post, loading, error } = getPosts();
+  // if (loading) return <div>Loading...</div>;
+  // if (error) return <div>Error loading posts: {error.message}</div>;
+
   return (
     <PageTemplate>
-      <Title>프로필 페이지</Title>
+      <Header>프로필 페이지 임시 헤더</Header>
 
       <UpperSection>
-        {/* 임시 헤더 입니다.  */}
-        {/* <TopBasicNav>
-          <BackButton>뒤로가기 버튼</BackButton>
-          <Kebab>
-            <img src="/" alt="/" />
-          </Kebab>
-        </TopBasicNav> */}
-
         {/* 유저 정보 */}
         <ProfileHeader>
           <Follow>
@@ -37,12 +87,12 @@ const ProfilePage = () => {
           </Follow>
         </ProfileHeader>
 
-        <ProfileContent>
-          <UserName>나야나</UserName>
-          <ProfileEmail>@villain_no1</ProfileEmail>
-          <ProfileDsc>1호선 빌런 꿈나무</ProfileDsc>
-          {/* <Link to="/user/edit">프로필 수정</Link>  */}
-          {/* <SmallBtn
+        {/* <ProfileContent> */}
+        <UserName>나야나</UserName>
+        <ProfileEmail>@villain_no1</ProfileEmail>
+        <ProfileDsc>1호선 빌런 꿈나무</ProfileDsc>
+        {/* <Link to="/user/edit">프로필 수정</Link>  */}
+        {/* <SmallBtn
             background={'red'}
             color={'black'}
             cursor={'pointer'}
@@ -53,40 +103,42 @@ const ProfilePage = () => {
           >
             프로필 수정
           </SmallBtn> */}
-          <EditBtn>프로필 수정</EditBtn>
-        </ProfileContent>
+        <EditBtn>프로필 수정</EditBtn>
+        {/* </ProfileContent> */}
       </UpperSection>
 
       {/*  게시글 */}
       <DownSection>
-        <Tab>
-          <CardTab>게시글</CardTab>
-          <CardTab>택배 목록</CardTab>
-        </Tab>
+        <TabGroup color={color} value={alignment} onClick={handleChange}>
+          <Tab value={'게시글'}>게시글</Tab>
+          <Tab>택배 목록</Tab>
+        </TabGroup>
 
-        <FeedCard>
-          <CardImg>Img</CardImg>
-          <CardContent>
-            <p>Lorem ipsum dolor sit, amet consectetur adipisicing elit. </p>
-            {/* <ProfileEmail>@villain_no1</ProfileEmail>
+        <PostCard>
+          <FeedCard>
+            <CardImg>Img</CardImg>
+            <CardContent>
+              <p>Lorem ipsum dolor sit, amet consectetur adipisicing elit. </p>
+              {/* <ProfileEmail>@villain_no1</ProfileEmail>
             <Date>2020년 10월 21일</Date>
             <IconBtn>
               <img src="/" alt="좋아요 버튼" />
             </IconBtn> */}
-          </CardContent>
-        </FeedCard>
+            </CardContent>
+          </FeedCard>
+        </PostList>
       </DownSection>
     </PageTemplate>
   );
 };
 export default ProfilePage;
 
-const Title = styled.h1`
-  text-align: center;
-  font-size: 24px;
-  font-weight: bold;
-  padding: 30px;
+const Header = styled.header`
+  width: 100%;
+  height: 48px;
+  background-color: #dbdbdb;
 `;
+
 // 뒤로가기 버튼이 있는 Nav
 // const TopBasicNav = styled.div`
 //   box-shadow: inset 0 0 10px grey;
@@ -108,7 +160,7 @@ const UpperSection = styled.div`
   flex-direction: column;
   border: 0.5px solid blue;
   max-width: 400px;
-  height: 386px;
+  height: 314px;
 `;
 
 const ProfileHeader = styled.div`
@@ -121,12 +173,12 @@ const ProfileHeader = styled.div`
   margin: 0 auto;
 
   width: 100%;
-  /* height: 200px; */
 
   & > :not(:nth-child(2)) {
     margin: 0 auto;
   }
 `;
+
 const Follow = styled.div`
   font-size: 8px;
   & span {
@@ -136,18 +188,6 @@ const Follow = styled.div`
     margin-bottom: 7px;
   }
 `;
-// const FollowersNum = styled.span`
-//   display: block;
-//   /* vertical-align: middle; */
-
-//   font-size: 18px;
-//   font-weight: 800;
-//   margin-bottom: 7px;
-// `;
-
-// const Followers = styled.div`
-//   font-size: 8px;
-// `;
 
 const ProfileImg = styled.img`
   max-width: 100%;
@@ -182,17 +222,8 @@ const ProfileDsc = styled.p`
   margin-bottom: 24px;
 `;
 
-// const ProfileEditBtn = styled.button`
-//   border: 1px solid #dbdbdb;
-//   color: #767676;
-//   border-radius: 30px;
-//   width: 120px;
-//   height: 34px;
-// `;
-
 const EditBtn = styled.button`
-  box-shadow: inset 0 0 10px grey;
-
+  border: 1px solid #dbdbdb;
   border-radius: 30px;
   width: 120px;
   height: 34px;
@@ -211,26 +242,45 @@ const DownSection = styled.div`
   margin-top: 6px;
 `;
 
-const Tab = styled.div`
+const TabGroup = styled.div`
   display: flex;
 
   box-shadow: inset 0 0 10px skyblue;
   max-width: 400px;
   height: 64px;
 `;
-const CardTab = styled.div`
+
+const Tab = styled.button`
   display: flex;
   justify-content: center;
   align-items: center;
 
   border: 1px solid red;
+  background-color: ${(props) => props.color};
   width: 195px;
   height: 64px;
+
+  /* &:active {
+    background-color: white;
+  } */
+  /* ${({ active }) =>
+    active &&
+    `color: ${theme.color.black};
+     border-color: ${theme.color.secondary};
+  `} */
+`;
+const types = ['게시글', '택배 목록'];
+
+const PostList = styled.ul`
+  width: 100%;
+  padding: 20px 20px 0 20px;
 `;
 
 const FeedCard = styled.div`
   box-shadow: 0 0 10px orange;
 
+  border-radius: 10px;
+  border: 1px solid #dbdbdb;
   width: 350px;
   margin-top: 20px;
 `;
