@@ -1,15 +1,12 @@
-import { useRecoilValue } from 'recoil';
 import client from '../config/api.config';
-import userAtom from '../atoms/userAtom';
 
 /**
  * accountname, username을 통해서 유저를 검색합니다.
  * @param {*} keyword 검색어
  *
  */
-const getSearchUser = async (keyword) => {
-  const user = useRecoilValue(userAtom);
-  return await client.get(`/user/searchuser/?keyword=${keyword}`, client.BothType(user.token));
+const getSearchUser = async (keyword, user) => {
+  return await client.get(`/user/searchuser/?keyword=${keyword}`, {}, client.BothType(user.token));
 };
 
 /**
@@ -30,10 +27,10 @@ const getSearchUser = async (keyword) => {
     }
 ]
  */
-const searchUserQuery = (keyword) => ({
-  queryKey: ['get', 'searchUser'],
-  queryFn: async () => getSearchUser(keyword),
-  enabled: !!keyword,
+const searchUserQuery = (keyword, isFeedPage, user) => ({
+  queryKey: ['get', 'searchUser', keyword],
+  queryFn: async () => getSearchUser(keyword, user),
+  enabled: isFeedPage && !!keyword,
 });
 
 export default searchUserQuery;
