@@ -3,7 +3,6 @@ import PageTemplate from '../components/PageTemplate';
 import styled from 'styled-components';
 import SearchSub from '../components/SearchSub';
 import { Input, Label } from '../components/Input.style';
-import BackArrow from '../assets/img/icon-arrow-left.svg';
 import { BlueSmallBtn } from '../components/Buttons';
 import { useForm } from 'react-hook-form';
 import { useRecoilValue } from 'recoil';
@@ -75,7 +74,8 @@ const GoodsWritePage = () => {
     inputRef.click();
   };
 
-  const handleSubmitSaveBtn = async () => {
+  const handleSubmitSaveBtn = async (e) => {
+    e.preventDefault();
     const urls = image.file ? await postImage(image.file) : image.url;
     const adminToken = JSON.parse(localStorage.getItem('admin')).token;
     const linkData = JSON.stringify({
@@ -119,20 +119,22 @@ const GoodsWritePage = () => {
 
   return (
     <PageTemplate>
-      <Header>
+      {/* <Header>
         <BackIcon src={BackArrow} onClick={handleGoBackBtn} alt="" />
+      </Header> */}
+      <Form>
         {errors.price ||
         startSubway === '' ||
         info === '' ||
         endSubway === '' ||
         price === '' ||
         image.url === '' ? (
-          <BlueSmallBtn text={'저장하기'} onClick={handleSubmitSaveBtn} disabled={true}></BlueSmallBtn>
+          <SaveBtn onClick={handleSubmitSaveBtn} disabled>
+            저장하기
+          </SaveBtn>
         ) : (
-          <BlueSmallBtn text={'저장하기'} onClick={handleSubmitSaveBtn}></BlueSmallBtn>
+          <SaveBtn onClick={handleSubmitSaveBtn}>저장하기</SaveBtn>
         )}
-      </Header>
-      <Form>
         <PreviewArea>
           {image.url !== '' ? (
             <Previewimg src={image.url} alt="이미지" />
@@ -161,10 +163,17 @@ const GoodsWritePage = () => {
             which={'start'}
             labelText={'출발역'}
             placeholder={'2~15자 이내여야 합니다.'}
+            value={isEditMode ? "" : product?.itemName?.split('~')[0]}
           />
         </SearchInput>
         <SearchInput>
-          <SearchSub type="text" which={'end'} labelText={'도착역'} placeholder={'2~15자 이내여야합니다.'} />
+          <SearchSub
+            type="text"
+            which={'end'}
+            labelText={'도착역'}
+            placeholder={'2~15자 이내여야합니다.'}
+            value={isEditMode ? "" : product?.itemName?.split('~')[1]}
+          />
         </SearchInput>
         <Label htmlFor="price">가격</Label>
         <Input
@@ -187,8 +196,6 @@ const GoodsWritePage = () => {
           id="info"
           type="text"
           placeholder="택배 정보를 입력해주세요."
-          // value={link.itemInfo}
-          // onChange={handleInfoChange}
           aria-invalid={isSubmitted ? (info ? 'false' : 'true') : undefined}
           {...register('info')}
         />
@@ -202,10 +209,28 @@ const Header = styled.header`
   padding: 8px 16px 8px 16px;
   border-bottom: 1px solid #dbdbdb;
 `;
+const SaveBtn = styled.button`
+  padding: 8px 20px;
+  max-width: 100px;
+  font-size: 14px;
+  border-radius: 9999px;
+  border: 1px solid #3c58c1;
+  background-color: #3c58c1;
+  color: white;
+  &:disabled {
+    border-color: white;
+    background-color: #b1bce6;
+    cursor: default;
+  }
+  position: fixed;
+  top: 6.5px;
+  right: calc(50% - 206px + 16px);
+  z-index: 100;
+`;
 const Form = styled.form`
   display: flex;
   flex-direction: column;
-  padding: 0 34px 0 34px;
+  padding: 0 34px 34px 34px;
 `;
 const SearchInput = styled.div``;
 const InfoArea = styled.textarea`
@@ -252,8 +277,5 @@ const CustomFloatingBtn = styled(FloatingButton)`
 const Warn = styled.strong`
   color: #eb5757;
   font-size: 12px;
-`;
-const BackIcon = styled.img`
-  cursor: pointer;
 `;
 export default GoodsWritePage;
