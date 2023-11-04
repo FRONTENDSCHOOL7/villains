@@ -1,7 +1,6 @@
-import client from '../config/api.config';
+import client from '../../config/api.config';
 
 const uploadPost = async (postData) => {
-  
   const token = JSON.parse(localStorage.getItem('user')).token;
   const headers = client.BothType(token);
 

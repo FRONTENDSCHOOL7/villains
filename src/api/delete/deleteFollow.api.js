@@ -1,6 +1,6 @@
 import { useRecoilValue } from 'recoil';
-import client from '../config/api.config';
-import userAtom from '../atoms/userAtom';
+import client from '../../config/api.config';
+import userAtom from '../../atoms/userAtom';
 
 /** 팔로우를 취소합니다.
  * @param accountname 팔로우를 취소할 사용자 계정

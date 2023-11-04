@@ -1,6 +1,6 @@
 import { useCallback, useEffect, useState } from 'react';
-import client from '../config/api.config';
-import useInfiniteScroll from '../hooks/useInfiniteScroll';
+import client from '../../config/api.config';
+import useInfiniteScroll from '../../hooks/useInfiniteScroll';
 
 const getProducts = () => {
   const [products, setProducts] = useState([]); // 현재 로드된 게시글
@@ -25,7 +25,7 @@ const getProducts = () => {
       //const responseData = response.data.posts;
       console.log(response.data.product);
       //setProducts(response.data.product);
-      fetchedProducts = response.data.product;  
+      fetchedProducts = response.data.product;
       currentSkip += PRODUCTS_REQUEST;
     } catch (error) {
       setError(error);

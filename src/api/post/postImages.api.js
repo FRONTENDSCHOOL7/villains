@@ -1,4 +1,4 @@
-import client from '../config/api.config';
+import client from '../../config/api.config';
 
 const postImages = async (files) => {
   if (!files || files.length === 0) {

@@ -7,10 +7,10 @@ import useGeoLocation from '../../hooks/useGeoLocation';
 import useBlockToBack from '../../hooks/useBlockToBack';
 import userAtom from '../../atoms/userAtom';
 
-import uploadPost from '../../api/uploadPost.api';
-import postImages from '../../api/postImages.api';
-import getPostDetail from '../../api/getPostDetail.api';
-import putPostEdit from '../../api/putPostEdit.api';
+import uploadPost from '../../api/post/postUploadPost.api';
+import postImages from '../../api/post/postImages.api';
+import getPostDetail from '../../api/get/getPostDetail.api';
+import putPostEdit from '../../api/update/updatePostEdit.api';
 
 import PageTemplate from '../../components/PageTemplate';
 import FloatingButton from '../../components/FloatingButton.style';

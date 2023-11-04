@@ -6,8 +6,8 @@ import styled from 'styled-components';
 import { useRecoilState, useRecoilValue } from 'recoil';
 
 import useGeoLocation from '../../hooks/useGeoLocation';
-import contactQuery from '../../api/getUserPost.api';
-import getSubOneInfo from '../../api/getSubOneInfo';
+import contactQuery from '../../api/get/getUserPost.api';
+import getSubOneInfo from '../../api/get/getSubOneInfo.api';
 import subOneAtom from '../../atoms/subOneAtom';
 import userAtom from '../../atoms/userAtom';
 

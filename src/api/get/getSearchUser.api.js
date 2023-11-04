@@ -1,6 +1,6 @@
 import { useRecoilValue } from 'recoil';
-import client from '../config/api.config';
-import userAtom from '../atoms/userAtom';
+import client from '../../config/api.config';
+import userAtom from '../../atoms/userAtom';
 
 /**
  * accountname, username을 통해서 유저를 검색합니다.

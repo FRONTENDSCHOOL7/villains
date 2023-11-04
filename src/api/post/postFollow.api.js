@@ -1,6 +1,6 @@
 import { useRecoilValue } from 'recoil';
-import client from '../config/api.config';
-import userAtom from '../atoms/userAtom';
+import client from '../../config/api.config';
+import userAtom from '../../atoms/userAtom';
 
 /** 다른 사람 계정 팔로우 하기
  * @param accountname 팔로우 할 계정

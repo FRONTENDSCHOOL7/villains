@@ -18,7 +18,7 @@ import BackArrow from '../../assets/img/icon-arrow-left.svg';
 import ImageIcon from '../../assets/img/image-icon.svg';
 import ImageBigIcon from '../../assets/img/image-big-icon.svg';
 
-import postImage from '../../api/postImage';
+import postImage from '../../api/post/postImage.api';
 
 const GoodsWritePage = () => {
   const navigate = useNavigate();

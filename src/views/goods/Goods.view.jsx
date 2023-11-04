@@ -1,6 +1,6 @@
 import React from 'react';
 import PageTemplate from '../../components/PageTemplate';
-import getProducts from '../../api/getProducts.api';
+import getProducts from '../../api/get/getProducts.api';
 import Goods from '../../components/Goods';
 
 const GoodsPage = () => {

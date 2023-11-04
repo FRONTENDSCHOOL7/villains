@@ -1,6 +1,6 @@
-import client from '../config/api.config';
+import client from '../../config/api.config';
 
-const putPostEdit = async (id, postData, token) => {
+const updatePostEdit = async (id, postData, token) => {
   console.log(id);
 
   try {
@@ -16,4 +16,4 @@ const putPostEdit = async (id, postData, token) => {
   }
 };
 
-export default putPostEdit;
+export default updatePostEdit;

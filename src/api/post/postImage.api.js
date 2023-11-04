@@ -1,4 +1,4 @@
-import client from '../config/api.config';
+import client from '../../config/api.config';
 
 const postImage = async (file) => {
   if (!file || file.length === 0) {
@@ -20,7 +20,7 @@ const postImage = async (file) => {
     }
 
     const BASE_URL = import.meta.env.VITE_BASE_URL;
-    return BASE_URL + response.data.filename
+    return BASE_URL + response.data.filename;
   } catch (error) {
     throw error;
   }

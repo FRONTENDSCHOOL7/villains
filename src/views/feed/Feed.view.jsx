@@ -3,7 +3,7 @@ import styled from 'styled-components';
 import pageUrlConfig from '../../config/pageUrlConfig';
 
 import PageTemplate from '../../components/PageTemplate';
-import getPosts from '../../api/getPosts.api';
+import getPosts from '../../api/get/getPosts.api';
 import PostCard from '../../components/feed/PostCard';
 import FloatingButton from '../../components/FloatingButton.style';
 import write from '../../assets/img/write.svg';

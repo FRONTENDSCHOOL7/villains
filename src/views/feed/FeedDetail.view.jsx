@@ -6,12 +6,12 @@ import { useRecoilValue, useSetRecoilState } from 'recoil';
 
 import { bottomSheetOptions, bottomSheetStateAtom } from '../../atoms/bottomSheetStateAtom';
 import userAtom from '../../atoms/userAtom';
-import getPostDetail from '../../api/getPostDetail.api';
-import postHeart from '../../api/postHeart.api';
-import getComments from '../../api/getComments.api';
-import postComments from '../../api/postComments.api';
-import deletePostQuery from '../../api/deletePost.api';
-import postReportQuery from '../../api/postReport.api';
+import getPostDetail from '../../api/get/getPostDetail.api';
+import postHeart from '../../api/post/postHeart.api';
+import getComments from '../../api/get/getComments.api';
+import postComments from '../../api/post/postComments.api';
+import deletePostQuery from '../../api/delete/deletePost.api';
+import postReportQuery from '../../api/post/postReport.api';
 
 import pageUrlConfig from '../../config/pageUrlConfig';
 import useFormatDate from '../../hooks/useFormatDate';
