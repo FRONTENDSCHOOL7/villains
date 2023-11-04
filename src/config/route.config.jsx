@@ -1,8 +1,8 @@
 import FeedPage from '../views/Feed.view';
 import FeedDetailPage from '../views/FeedDetail.view';
 import FeedWritePage from '../views/FeedWrite.view';
-import HomePage from '../views/Home.view';
-import ResultPage from '../views/Result.view';
+import HomePage from '../views/home/Home.view';
+import ResultPage from '../views/home/Result.view';
 import SplashPage from '../views/Splash.view';
 import SignInPage from '../views/SignIn.view';
 import SignUpPage from '../views/SignUp.view';
@@ -17,7 +17,8 @@ import PrivateLayout from '../components/layout/PrivateLayout';
 import ErrorPage from '../views/Error.view';
 import SearchLayout from '../components/layout/SearchLayout';
 import pageUrlConfig from './pageUrlConfig';
-import HomeTrainPage from '../views/Train.view';
+import HomeTrainPage from '../views/home/Train.view';
+import IndexPage from '../views/home/index.view';
 
 /** 라우트 등록하기
  * 1. routeConfig의 children에 객체를 이용해서 path와 element 입력하기
@@ -42,9 +43,11 @@ const routeConfig = [
             element: <SearchLayout />,
             children: [
               { path: pageUrlConfig.feedPage, element: <FeedPage /> },
-              { path: pageUrlConfig.homePage, element: <HomePage /> },
-              { path: pageUrlConfig.resultPage, element: <ResultPage /> },
-              { path: pageUrlConfig.trainPage, element: <HomeTrainPage /> },
+              { path: pageUrlConfig.homePage, element: <IndexPage />, children:[
+                { index: true, element: <HomePage />},
+                { path: `${pageUrlConfig.homePage}/:id`, element: <ResultPage /> },
+                { path: `${pageUrlConfig.homePage}/:id/:stationname`, element: <HomeTrainPage /> },
+              ]},
             ],
           },
           { path: pageUrlConfig.feedWritePage, element: <FeedWritePage /> },

@@ -71,7 +71,9 @@ const SearchLayout = ({ children }) => {
 
   const handleClickBack = () => {
       const mainPath = pathname.split('/')[1];
-      navigate(`/${mainPath}`);
+      console.log(mainPath);
+      setShowListBox(false);
+      // navigate(`/${mainPath}`);
   }
   return (
     <>

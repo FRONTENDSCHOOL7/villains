@@ -28,12 +28,12 @@ const PrivateLayout = () => {
     }
     
     return (
-    <Wrap>
+    <>
         <BackHeader onClick={handleClickBack}/>
         <BackGround />
         <Outlet/>
         <NavMenu/>
-    </Wrap>
+    </>
     )
 }
 

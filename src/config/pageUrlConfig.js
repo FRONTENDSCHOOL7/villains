@@ -4,8 +4,6 @@ class pageUlrConfig {
   signInPage = `${baseUrl}signIn`;
   signUpPage = `${baseUrl}signUp`;
   homePage = `${baseUrl}main`;
-  resultPage = `${baseUrl}main/:id`;
-  trainPage = `${baseUrl}main/:id/:stationname`;
   feedPage = `${baseUrl}feed`;
   feedWritePage = `${baseUrl}feed/write`;
   feedEditPage = `${baseUrl}feed/edit/:id`;
