@@ -1,17 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
-import { Link, useNavigate, useParams } from 'react-router-dom';
-
-import getPosts from '../api/getPosts.api';
-import pageUrlConfig from '../config/pageUrlConfig';
-import PageTemplate from '../components/PageTemplate';
-import PostCard from '../components/feed/PostCard';
-import basicProfile from '../../src/assets/img/basic-profile.svg';
-import ErrorPage from './Error.view';
-import theme from '../style/theme';
-import { useRecoilValue } from 'recoil';
-import userAtom from '../atoms/userAtom';
-// import Profile from '../components/profile/profile';
+import { Link, useNavigate } from 'react-router-dom';
+import pageUrlConfig from '../../config/pageUrlConfig';
+import PageTemplate from '../../components/PageTemplate';
 
 const ProfilePage = () => {
   const navigate = useNavigate();
@@ -126,7 +117,7 @@ const ProfilePage = () => {
             </IconBtn> */}
             </CardContent>
           </FeedCard>
-        </PostList>
+        </PostCard>
       </DownSection>
     </PageTemplate>
   );

@@ -1,11 +1,11 @@
-import PageTemplate from '../components/PageTemplate';
-import getPosts from '../api/getPosts.api';
+import PageTemplate from '../../components/PageTemplate';
+import getPosts from '../../api/getPosts.api';
 import styled from 'styled-components';
-import PostCard from '../components/feed/PostCard';
-import FloatingButton from '../components/FloatingButton.style';
+import PostCard from '../../components/feed/PostCard';
+import FloatingButton from '../../components/FloatingButton.style';
 import write from '../assets/img/write.svg';
 import { useNavigate } from 'react-router';
-import pageUrlConfig from '../config/pageUrlConfig';
+import pageUrlConfig from '../../config/pageUrlConfig';
 
 const FeedPage = () => {
   const { posts, loading, error } = getPosts();
