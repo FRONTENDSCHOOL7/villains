@@ -22,6 +22,8 @@ export default BackHeader;
 
 const BackArrowBtn = styled.button`
   ${BasicStyle}
+
+  margin-right: 8px;
 `;
 
 const StyledHeader = styled.header`
@@ -32,7 +34,7 @@ const StyledHeader = styled.header`
   right: 0;
   left: 0;
   margin: 0 auto;
-  padding: 8px;
+  padding: 8px 16px;
   max-width: 410px;
   height: 48px;
   z-index: 10;

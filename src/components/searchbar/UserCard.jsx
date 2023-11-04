@@ -1,20 +1,41 @@
 import styled from 'styled-components';
+import profileImage from '../../assets/img/basic-profile.svg';
+import { useNavigate } from 'react-router';
+import pageUrlConfig from '../../config/pageUrlConfig';
 
 const UserCard = ({ user }) => {
-  console.log(user.accountname);
-  return <UserHeader>{user.accountname}</UserHeader>;
+  const navigate = useNavigate();
+
+  const handleProfileNav = () => {
+    // TODO : 다른유저 프로필 작업 완료되면 경로 변경
+    navigate(pageUrlConfig.profilePage);
+  };
+
+  return (
+    <StyledUserCard onClick={handleProfileNav}>
+      <ProfileImage>
+        {/* 프로필 기본이미지 수정 필요 */}
+        {/* <img src={user.image} alt="" /> */}
+        <img src={profileImage} alt="" />
+      </ProfileImage>
+      <UserInfo>
+        <UserName>{user.username}</UserName>
+        <Accountname>@ {user.accountname}</Accountname>
+      </UserInfo>
+    </StyledUserCard>
+  );
 };
 
 export default UserCard;
 
-const UserHeader = styled.div`
+const StyledUserCard = styled.li`
   width: 100%;
-  padding: 0 20px;
   display: flex;
   flex-wrap: nowrap;
   align-items: center;
   gap: 12px;
-  margin-bottom: 20px;
+  margin-bottom: 16px;
+  cursor: pointer;
 `;
 
 const ProfileImage = styled.div`
@@ -38,15 +59,4 @@ const Accountname = styled.span`
   display: block;
   color: #767676;
   font-size: 12px;
-`;
-
-const DateText = styled(Accountname)`
-  font-size: 10px;
-  align-self: flex-end;
-`;
-
-const Image = styled.img`
-  width: calc(100% - 48px);
-  height: 260px;
-  border-radius: 10px;
 `;

@@ -314,11 +314,10 @@ const CommentContaier = styled.section`
 `;
 
 // TODO : header에 들어가도록 수정 필요
-// 현재 위치 고정 안됨
 const PostMoreBtn = styled.button`
-  position: absolute;
+  position: fixed;
   top: 12px;
-  right: 12px;
+  right: calc(50% - 206px + 16px);
 
   width: 40px;
   height: 24px;

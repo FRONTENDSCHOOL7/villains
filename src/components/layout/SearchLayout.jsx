@@ -52,9 +52,6 @@ const SearchLayout = ({ children }) => {
     if (focus) {
       if (isHomePage) setShowListBox(true);
       else if (isFeedPage) setShowUserList(true);
-    } else {
-      if (isHomePage) setShowListBox(false);
-      else if (isFeedPage) setShowUserList(false);
     }
   }, [focus]);
 
@@ -105,8 +102,6 @@ const SearchLayout = ({ children }) => {
   const handleClickUser = () => {
     console.log('유저리스트 클릭 !');
   };
-
-  console.log(showUserList);
 
   return (
     <>

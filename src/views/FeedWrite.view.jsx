@@ -120,15 +120,10 @@ const FeedWritePage = () => {
 
   return (
     <PageTemplate showNavMenu={false}>
-      {/* 임시 헤더입니다. */}
-      <Header>
-        <button type="button" onClick={handleBack}>
-          <img src={arrowIcon} alt="뒤로가기 버튼" />
-        </button>
-        <UploadBtn onClick={handleSubmitPost} disabled={!content}>
-          업로드
-        </UploadBtn>
-      </Header>
+      <UploadBtn onClick={handleSubmitPost} disabled={!content}>
+        업로드
+      </UploadBtn>
+
       <FeedWriteForm>
         <form>
           <ImagePreview imageUrls={imagesData} onDeleteImage={handleDeleteImage} />
@@ -157,22 +152,16 @@ const FeedWritePage = () => {
 };
 export default FeedWritePage;
 
-const Header = styled.header`
-  width: 100%;
-  height: 48px;
-  padding: 0 16px;
-  background-color: #dbdbdb;
-
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-`;
-
 const UploadBtn = styled.button`
   width: 90px;
   height: 32px;
   border-radius: 32px;
   color: #fff;
+
+  position: fixed;
+  top: 8px;
+  right: calc(50% - 206px + 16px);
+  z-index: 100;
 
   &:disabled {
     background-color: #b1bce6;
