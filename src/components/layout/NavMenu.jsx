@@ -58,7 +58,7 @@ const NavMenu = () => {
 export default NavMenu;
 
 const Nav = styled.nav`
-  width: 412px;
+  width: 410px;
   position: fixed;
   z-index: 10;
   bottom: 0;
@@ -80,8 +80,10 @@ const BorderStyle = css`
   inset: 0;
   margin: auto;
   margin-top: 0;
-  width: 50%;
-  border-top: 3px solid ${theme.color.primary};
+  width: 40px;
+  height: 3px;
+  background-color: ${theme.color.primary};
+  border-radius: 0px 0px 3px 3px;
 `;
 
 const NavButton = styled.div`
@@ -108,7 +110,7 @@ const NavButton = styled.div`
   flex-basis: calc(100% / 5);
   justify-content: center;
   align-items: center;
-  gap: 5px;
+  gap: 8px;
 `;
 
 const BackGround = styled.div`
