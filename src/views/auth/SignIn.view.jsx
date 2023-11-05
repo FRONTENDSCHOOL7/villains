@@ -5,7 +5,7 @@ import styled from 'styled-components';
 
 import pageUrlConfig from '../../config/pageUrlConfig';
 import client from '../../config/api.config';
-import PageTemplate from '../../components/PageTemplate';
+import { Main } from '../../components/PageTemplate.style';
 import { BlueLongBtn, WhiteLongBtn } from '../../components/Buttons';
 import CheckBox from '../../components/CheckBox';
 
@@ -171,6 +171,10 @@ const SignInPage = () => {
 
 export default SignInPage;
 
+const PageTemplate = styled(Main)`
+  overflow-y: hidden;
+  height: 100vh;
+`;
 const Title = styled.h1`
   text-align: center;
   font-size: 24px;

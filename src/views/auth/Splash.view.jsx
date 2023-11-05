@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Logo1 from '/img/Logo1.svg';
 import Logo2 from '/img/Logo2.svg';
+import { Main } from '../../components/PageTemplate.style';
 
 import Kakao from '../../assets/img/kakao.svg';
 import Google from '../../assets/img/google.svg';
@@ -10,7 +11,6 @@ import Email from '../../assets/img/email.svg';
 
 import styled from 'styled-components';
 import pageUrlConfig from '../../config/pageUrlConfig';
-import PageTemplate from '../../components/PageTemplate';
 import { IconBtn } from '../../components/Buttons';
 
 const SplashPage = () => {
@@ -53,7 +53,10 @@ const SplashPage = () => {
     </PageTemplate>
   );
 };
-
+const PageTemplate = styled(Main)`
+  overflow-y: hidden;
+  height: 100vh;
+`;
 const SplashField = styled.div`
   display: flex;
   flex-direction: column-reverse;

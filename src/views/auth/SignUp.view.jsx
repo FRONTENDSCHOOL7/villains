@@ -1,4 +1,4 @@
-import { React, useState, useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router';
 import { useForm } from 'react-hook-form';
 import styled from 'styled-components';
@@ -6,7 +6,7 @@ import styled from 'styled-components';
 import pageUrlConfig from '../../config/pageUrlConfig';
 import client from '../../config/api.config';
 
-import PageTemplate from '../../components/PageTemplate';
+import { Main } from '../../components/PageTemplate.style';
 import { BlueLongBtn, BlueSmallBtn } from '../../components/Buttons';
 import CheckBox from '../../components/CheckBox';
 
@@ -149,7 +149,7 @@ const SignUpPage = () => {
                 },
               })}
             />
-            {userAccountId ? (
+            {userAccountId && !errors.accountId ? (
               <BlueSmallBtn onClick={checkID} text={'중복확인'}></BlueSmallBtn>
             ) : (
               <BlueSmallBtn onClick={checkID} disabled={true} text={'중복확인'}></BlueSmallBtn>
@@ -176,7 +176,7 @@ const SignUpPage = () => {
                 },
               })}
             />
-            {userEmail ? (
+            {userEmail && !errors.email ? (
               <BlueSmallBtn onClick={checkEmail} text={'중복확인'}></BlueSmallBtn>
             ) : (
               <BlueSmallBtn onClick={checkEmail} disabled={true} text={'중복확인'}></BlueSmallBtn>
@@ -269,8 +269,9 @@ const SignUpPage = () => {
 
 export default SignUpPage;
 
-const Main = styled(PageTemplate)`
-  background: white;
+const PageTemplate = styled(Main)`
+  overflow-y: hidden;
+  height: 100vh;
 `;
 const Title = styled.h1`
   text-align: center;
