@@ -13,7 +13,7 @@ const ErrorPage = ({ errorMessage }) => {
   };
   return (
     <PageTemplate>
-      <img src={NotFoundIcon} alt="404 페이지" />
+      <img src={NotFoundIcon} alt="" />
       <strong>{errorMessage || '페이지를 찾을 수 없습니다. :('}</strong>
       {/* {error.statusText || error.message} */}
       <StyledBtn>

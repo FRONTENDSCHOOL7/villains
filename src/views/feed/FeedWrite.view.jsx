@@ -109,6 +109,7 @@ const FeedWritePage = () => {
       }
     } else {
       // 작성 API 요청
+      // TODO : getUserPost → Recoil (feedWrite 에서도 적용 → 업로드버튼 누르면 리코일에도 push)
       const uploadResult = await uploadPost(postData);
       if (uploadResult) {
         navigate(`${pageUrlConfig.feedPage}/${uploadResult.id}`);
@@ -122,7 +123,7 @@ const FeedWritePage = () => {
   const handleBack = useBlockToBack(content, navigate, pageUrlConfig.feedPage);
 
   return (
-    <PageTemplate showNavMenu={false}>
+    <PageTemplate>
       <UploadBtn onClick={handleSubmitPost} disabled={!content}>
         업로드
       </UploadBtn>
