@@ -1,11 +1,18 @@
 import React, { useState, useEffect } from 'react';
+import { useRecoilState, useRecoilValue } from 'recoil';
+import { bottomSheetStateAtom, bottomSheetOptions } from '../../atoms/bottomSheetStateAtom';
+import userAtom from '../../atoms/userAtom';
+import realProductAuthorAtom from '../../atoms/realProductAuthorAtom';
 import PageTemplate from '../../components/PageTemplate';
 import styled from 'styled-components';
 import getProductDetail from '../../api/get/getProductDetail.api';
+import deleteProduct from '../../api/deleteProduct.api';
 import { useNavigate, useParams } from 'react-router';
 import pageUrlConfig from '../../config/pageUrlConfig';
 import profileImage from '../../assets/img/basic-profile.svg';
 import getUserDetail from '../../api/get/getUserDetail.api';
+import updateProduct from '../../api/updateProduct.api';
+import DropDown from '../../components/DropDown';
 
 const GoodsDetailPage = () => {
   const navigate = useNavigate();
@@ -37,7 +44,6 @@ const GoodsDetailPage = () => {
       setLink(JSON.parse(result.link));
     }
   };
-
 
   // 택배 작성자 찾기
   useEffect(() => {
@@ -153,6 +159,7 @@ const ProfileImg = styled.img`
   height: 50px;
   border-radius: 50px;
   border: 0.5px solid #dbdbdb;
+  object-fit: cover;
 `;
 const NameWrap = styled.div`
   display: flex;
@@ -170,6 +177,7 @@ const AccountName = styled.span`
 const ProductImg = styled.img`
   width: 100%;
   height: 290px;
+  object-fit: cover;
 `;
 const ProductTitleArea = styled.div`
   padding: 20px;

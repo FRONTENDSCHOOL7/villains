@@ -1,5 +1,5 @@
 import { React, useState, useEffect, useRef } from 'react';
-import { useNavigate } from 'react-router';
+import { useNavigate, useParams, useLocation } from 'react-router';
 import { useForm } from 'react-hook-form';
 import styled from 'styled-components';
 import { useRecoilValue } from 'recoil';
@@ -9,14 +9,15 @@ import pageUrlConfig from '../../config/pageUrlConfig';
 import PageTemplate from '../../components/PageTemplate';
 import SearchSub from '../../components/SearchSub';
 import { Input, Label } from '../../components/Input.style';
-import { BlueSmallBtn } from '../../components/Buttons';
 import FloatingButton from '../../components/FloatingButton.style';
 
 import goodsQueryStartAtom from '../../atoms/goodsQueryStartAtom';
 import goodsQueryEndAtom from '../../atoms/goodsQueryEndAtom';
-import BackArrow from '../../assets/img/icon-arrow-left.svg';
+import userAtom from '../../atoms/userAtom';
 import ImageIcon from '../../assets/img/image-icon.svg';
 import ImageBigIcon from '../../assets/img/image-big-icon.svg';
+
+import updateProduct from '../../api/updateProduct.api';
 
 import postImage from '../../api/post/postImage.api';
 
@@ -205,12 +206,6 @@ const GoodsWritePage = () => {
     </PageTemplate>
   );
 };
-const Header = styled.header`
-  display: flex;
-  justify-content: space-between;
-  padding: 8px 16px 8px 16px;
-  border-bottom: 1px solid #dbdbdb;
-`;
 const SaveBtn = styled.button`
   padding: 8px 20px;
   max-width: 100px;
@@ -270,6 +265,7 @@ const PreviewArea = styled.span`
 const Previewimg = styled.img`
   width: 100%;
   height: 100%;
+  object-fit: cover;
 `;
 const CustomFloatingBtn = styled(FloatingButton)`
   position: absolute;

@@ -5,6 +5,8 @@ import getProducts from '../../api/get/getProducts.api';
 import Goods from '../../components/Goods';
 import FloatingButton from '../../components/FloatingButton.style';
 import WriteIcon from '../../assets/img/write.svg';
+import pageUrlConfig from '../../config/pageUrlConfig';
+
 const GoodsPage = () => {
   const { products, loading, error } = getProducts();
 
