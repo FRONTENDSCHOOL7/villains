@@ -25,7 +25,7 @@ const Goods = ({ products }) => {
               ) : (
                 <ProductState color="#767676">{JSON.parse(product.link).state}</ProductState>
               )}
-              <ProductPrice>{product.price}</ProductPrice>
+              <ProductPrice>{product.price}원</ProductPrice>
             </Wrap>
             <AccountName>@ {JSON.parse(product.link).accountname}</AccountName>
           </ProductInfoArea>
@@ -44,6 +44,7 @@ const ProductImg = styled.img`
   height: 110px;
   border-radius: 10px;
   border: 0.5px solid #dbdbdb;
+  object-fit: cover;
 `;
 const ProductInfoArea = styled.div`
   padding: 20px;
@@ -57,7 +58,7 @@ const ProductTitle = styled.span`
 const Wrap = styled.div`
   display: flex;
   align-items: center;
-  gap: 10px;
+  gap: 6px;
 `;
 const ProductState = styled.div`
   padding: 4px 6px;
