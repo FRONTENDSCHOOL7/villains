@@ -1,24 +1,32 @@
-import { useParams } from "react-router";
+import { useLoaderData, useNavigate, useParams } from "react-router";
 import React, { useEffect, useState } from "react";
 import { Map, MapMarker } from "react-kakao-maps-sdk";
 
 import PageTemplate from "../../components/PageTemplate";
 import TrainMap from "../../components/map/TrainMap";
+import pageUrlConfig from "../../config/pageUrlConfig";
 
 const HomeTrainPage = () => {
-    const { stationname } = useParams();
-    const [position, setPosition] = useState([]);
-    useEffect(()=>{
-        const place = new kakao.maps.services.Places();
-        place.keywordSearch(`${stationname}역 1호선`, (result) =>{
-            position.push({lat: result[0]?.y , lng: result[0]?.x});
+    const [position, setPosition] = useState({
+        lat: 0,
+        lng: 0
+    });
+    const searchResult = useLoaderData();
+    setTimeout(()=>{
+        setPosition({
+            lat: searchResult[0].y,
+            lng: searchResult[0].x
         })
-    }, [stationname])
+    }, 1000)
     return(
         <PageTemplate>
-            {position && 
-                <TrainMap center={position} style={{width: `100%`, height: `100%`}} places={position} />
-            }
+            {position.lat === 0 ? 
+                <div>loading...</div>
+            : <TrainMap 
+                center={position}
+                style={{width: `100%`, height: `100%`}}
+                places={[searchResult[0]]}
+            /> }
         </PageTemplate>
     )
 }
