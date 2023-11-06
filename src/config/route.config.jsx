@@ -29,6 +29,7 @@ import GoodsDetailPage from '../views/goods/GoodsDetail.view';
 
 import ChatIndexPage from '../views/chat/index.view';
 import ChatPage from '../views/chat/Chat.view';
+import ChatDetailPage from '../views/chat/ChatDetail.view';
 
 import searchPlace from '../api/loader/searchPlace.loader';
 
@@ -42,49 +43,73 @@ const routeConfig = [
     path: pageUrlConfig.splashPage,
     element: <DefaultLayout />,
     children: [
-      { path: pageUrlConfig.splashPage, element: <AuthIndexPage />, children:[
-        { index: true, element: <SplashPage /> },
-        { path: pageUrlConfig.signInPage, element: <SignInPage /> },
-        { path: pageUrlConfig.signUpPage, element: <SignUpPage /> },
-      ]},
+      {
+        path: pageUrlConfig.splashPage,
+        element: <AuthIndexPage />,
+        children: [
+          { index: true, element: <SplashPage /> },
+          { path: pageUrlConfig.signInPage, element: <SignInPage /> },
+          { path: pageUrlConfig.signUpPage, element: <SignUpPage /> },
+        ],
+      },
       {
         path: `/`,
         element: <PrivateLayout />,
         children: [
-          
-            { path: pageUrlConfig.homePage, element: <HomeIndexPage />, children:[
-              { index: true, element: <HomePage />},
+          {
+            path: pageUrlConfig.homePage,
+            element: <HomeIndexPage />,
+            children: [
+              { index: true, element: <HomePage /> },
               { path: `${pageUrlConfig.homePage}/:id`, element: <ResultPage /> },
-              { 
-                path: `${pageUrlConfig.homePage}/map/:stationname`, 
-                loader: async ({params}) =>{
-                  return await searchPlace( params.stationname )
+              {
+                path: `${pageUrlConfig.homePage}/map/:stationname`,
+                loader: async ({ params }) => {
+                  return await searchPlace(params.stationname);
                 },
-                element: <HomeTrainPage />, 
+                element: <HomeTrainPage />,
               },
-            ]},
-            { path: pageUrlConfig.feedPage, element: <FeedIndexPage />, children:[
-              { index: true, element: <FeedPage />},
+            ],
+          },
+          {
+            path: pageUrlConfig.feedPage,
+            element: <FeedIndexPage />,
+            children: [
+              { index: true, element: <FeedPage /> },
               { path: pageUrlConfig.feedWritePage, element: <FeedWritePage /> },
               { path: pageUrlConfig.feedEditPage, element: <FeedWritePage /> },
               { path: pageUrlConfig.feedDetailPage, element: <FeedDetailPage /> },
-            ]},
-            { path: pageUrlConfig.profilePage, element: <ProfileIndexPage />, children:[
-              { index: true, element: <ProfilePage />},
+            ],
+          },
+          {
+            path: pageUrlConfig.profilePage,
+            element: <ProfileIndexPage />,
+            children: [
+              { index: true, element: <ProfilePage /> },
               { path: `${pageUrlConfig.profilePage}/:accountname`, element: <ProfileEditPage /> },
               { path: `${pageUrlConfig.profilePage}/:accountname/follower`, element: <ProfileFollowPage /> },
               { path: `${pageUrlConfig.profilePage}/:accountname/following`, element: <ProfileFollowPage /> },
-            ]},
-            
-          { path: pageUrlConfig.goodsPage, element: <GoodsIndexPage />, children:[
-            {  index: true, element: <GoodsPage /> },
-            { path: pageUrlConfig.goodsWritePage, element: <GoodsWritePage /> },
-            { path: pageUrlConfig.goodsEditPage, element: <GoodsWritePage /> },
-            { path: pageUrlConfig.goodsDetailPage, element: <GoodsDetailPage /> },
-          ]},
-          { path: pageUrlConfig.chatPage, element: <ChatIndexPage />, children:[
-            { index: true, element: <ChatPage /> },
-          ] },
+            ],
+          },
+
+          {
+            path: pageUrlConfig.goodsPage,
+            element: <GoodsIndexPage />,
+            children: [
+              { index: true, element: <GoodsPage /> },
+              { path: pageUrlConfig.goodsWritePage, element: <GoodsWritePage /> },
+              { path: pageUrlConfig.goodsEditPage, element: <GoodsWritePage /> },
+              { path: pageUrlConfig.goodsDetailPage, element: <GoodsDetailPage /> },
+            ],
+          },
+          {
+            path: pageUrlConfig.chatPage,
+            element: <ChatIndexPage />,
+            children: [
+              { index: true, element: <ChatPage /> },
+              { path: pageUrlConfig.chatDetailPage, element: <ChatDetailPage /> },
+            ],
+          },
         ],
       },
     ],
