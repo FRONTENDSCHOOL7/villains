@@ -16,11 +16,13 @@ import postReportQuery from '../../api/post/postReport.api';
 import pageUrlConfig from '../../config/pageUrlConfig';
 import useFormatDate from '../../hooks/useFormatDate';
 import useBottomSheetOptions from '../../hooks/useBottomSheetOptions';
+import useModal from '../../hooks/useModal';
 
 import PageTemplate from '../../components/PageTemplate';
 import Comment from '../../components/feed/Comment';
 import CommentForm from '../../components/feed/CommentForm';
 import { IconLabelBtn } from '../../components/Buttons';
+import Modal from '../../components/Modal';
 
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { Pagination, Navigation } from 'swiper/modules';
@@ -34,7 +36,6 @@ import heart from '../../assets/img/heart.svg';
 import heartFilled from '../../assets/img/heart-filled.svg';
 import commentIcon from '../../assets/img/message-circle.svg';
 import verticalIcon from '../../assets/img/icon-more-vertical.svg';
-
 
 const usePostActions = (id, token, navigate) => {
   const deleteMutation = useMutation(deletePostQuery(id, token));
@@ -149,11 +150,11 @@ const FeedDetailPage = () => {
     toggleBottomSheetShow();
   };
 
-  // TODO : 확인창 모달로 수정 필요
+  // useModal 훅 사용
+  const { isModalVisible, modalContent, showModal, handleModalConfirm, handleModalCancel } = useModal();
+
   const confirmAction = (message, callback) => {
-    if (confirm(message)) {
-      callback();
-    }
+    showModal(message, callback);
     toggleBottomSheetShow();
   };
 
@@ -163,71 +164,82 @@ const FeedDetailPage = () => {
   }
 
   return (
-    <PageTemplate showNavMenu={false}>
-      <PostWrapper>
-        <PostContainer>
-          <PostMoreBtn aria-label="댓글 삭제/신고 버튼" onClick={handleBottomSheetShow} />
-          <UserHeader>
-            <ProfileImage>
-              {/* 프로필 기본이미지 수정 필요 */}
-              {/* <img src={post.author.image} alt="" /> */}
-              <img src={profileImage} alt="" />
-            </ProfileImage>
-            <UserInfo>
-              <UserName>{post.author.username}</UserName>
-              <Accountname>@ {post.author.accountname}</Accountname>
-            </UserInfo>
-            <DateText>{createdDate}</DateText>
-          </UserHeader>
-          {postImage[0] && (
-            <SwiperWrapper>
-              <Swiper
-                navigation={true}
-                spaceBetween={10}
-                slidesPerView={1}
-                pagination={{ clickable: true, dynamicBullets: true }}
-                modules={[Pagination, Navigation]}
-              >
-                {postImage.map((imgUrl, index) => (
-                  <SwiperSlide key={index}>
-                    <Image src={imgUrl} alt="" />
-                  </SwiperSlide>
-                ))}
-              </Swiper>
-            </SwiperWrapper>
-          )}
-          <ContentText>{JSON.parse(post.content).contents}</ContentText>
-          <IconsContainer>
-            <IconLabelBtn
-              icon={isHearted ? heartFilled : heart}
-              count={heartCount}
-              onClick={handleHeartClick}
-              alt="좋아요 버튼"
-            />
-            <IconLabelBtn icon={commentIcon} count={commentsList.length} alt="코멘트 버튼" />
-          </IconsContainer>
-        </PostContainer>
-      </PostWrapper>
-
-      {/* 댓글 리스트 */}
-      {commentsList && (
-        <CommentContaier>
-          <ul>
-            {commentsList.map((comment, idx) => (
-              <Comment key={idx} comment={comment} id={id} removeCommentFromList={removeCommentFromList} />
-            ))}
-          </ul>
-        </CommentContaier>
+    <>
+      {isModalVisible && (
+        <Modal
+          content={modalContent}
+          confirmText="확인"
+          cancelText="취소"
+          onConfirm={handleModalConfirm}
+          onCancel={handleModalCancel}
+        />
       )}
+      <PageTemplate>
+        <PostWrapper>
+          <PostContainer>
+            <PostMoreBtn aria-label="댓글 삭제/신고 버튼" onClick={handleBottomSheetShow} />
+            <UserHeader>
+              <ProfileImage>
+                {/* 프로필 기본이미지 수정 필요 */}
+                {/* <img src={post.author.image} alt="" /> */}
+                <img src={profileImage} alt="" />
+              </ProfileImage>
+              <UserInfo>
+                <UserName>{post.author.username}</UserName>
+                <Accountname>@ {post.author.accountname}</Accountname>
+              </UserInfo>
+              <DateText>{createdDate}</DateText>
+            </UserHeader>
+            {postImage[0] && (
+              <SwiperWrapper>
+                <Swiper
+                  navigation={true}
+                  spaceBetween={10}
+                  slidesPerView={1}
+                  pagination={{ clickable: true, dynamicBullets: true }}
+                  modules={[Pagination, Navigation]}
+                >
+                  {postImage.map((imgUrl, index) => (
+                    <SwiperSlide key={index}>
+                      <Image src={imgUrl} alt="" />
+                    </SwiperSlide>
+                  ))}
+                </Swiper>
+              </SwiperWrapper>
+            )}
+            <ContentText>{JSON.parse(post.content).contents}</ContentText>
+            <IconsContainer>
+              <IconLabelBtn
+                icon={isHearted ? heartFilled : heart}
+                count={heartCount}
+                onClick={handleHeartClick}
+                alt="좋아요 버튼"
+              />
+              <IconLabelBtn icon={commentIcon} count={commentsList.length} alt="코멘트 버튼" />
+            </IconsContainer>
+          </PostContainer>
+        </PostWrapper>
 
-      {/* 댓글 작성 폼 */}
-      <CommentForm
-        id={id}
-        uploadComment={uploadComment}
-        setCommentsList={setCommentsList}
-        profileImage={profileImage}
-      />
-    </PageTemplate>
+        {/* 댓글 리스트 */}
+        {commentsList && (
+          <CommentContaier>
+            <ul>
+              {commentsList.map((comment, idx) => (
+                <Comment key={idx} comment={comment} id={id} removeCommentFromList={removeCommentFromList} />
+              ))}
+            </ul>
+          </CommentContaier>
+        )}
+
+        {/* 댓글 작성 폼 */}
+        <CommentForm
+          id={id}
+          uploadComment={uploadComment}
+          setCommentsList={setCommentsList}
+          profileImage={profileImage}
+        />
+      </PageTemplate>
+    </>
   );
 };
 

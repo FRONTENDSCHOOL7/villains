@@ -1,14 +1,20 @@
+import { useMutation } from '@tanstack/react-query';
 import styled from 'styled-components';
-import profileImage from '../../assets/img/basic-profile.svg';
-import verticalIcon from '../../assets/img/icon-more-vertical.svg';
-import useFormatDate from '../../hooks/useFormatDate';
 import { useRecoilValue, useSetRecoilState } from 'recoil';
 import { bottomSheetStateAtom, bottomSheetOptions } from '../../atoms/bottomSheetStateAtom';
+
+import userAtom from '../../atoms/userAtom';
 import deleteCommentsQuery from '../../api/delete/deleteComments.api';
 import postCommentsReportQuery from '../../api/post/postCommentsReport.api';
-import { useMutation } from '@tanstack/react-query';
-import userAtom from '../../atoms/userAtom';
+
+import useFormatDate from '../../hooks/useFormatDate';
 import useBottomSheetOptions from '../../hooks/useBottomSheetOptions';
+import useModal from '../../hooks/useModal';
+
+import Modal from '../Modal';
+
+import profileImage from '../../assets/img/basic-profile.svg';
+import verticalIcon from '../../assets/img/icon-more-vertical.svg';
 
 const useCommentActions = (id, commentId, removeCommentFromList) => {
   const deleteMutation = useMutation(deleteCommentsQuery(id, commentId));
@@ -44,6 +50,9 @@ const Comment = ({ comment, id, removeCommentFromList }) => {
 
   const { commentDelete, commentReport } = useCommentActions(id, comment.id, removeCommentFromList);
 
+  // useModal 훅 사용
+  const { isModalVisible, modalContent, showModal, handleModalConfirm, handleModalCancel } = useModal();
+
   const toggleBottomSheetShow = () => setIsVisible((prev) => !prev);
 
   const currentAccountname = useRecoilValue(userAtom).accountname;
@@ -63,16 +72,22 @@ const Comment = ({ comment, id, removeCommentFromList }) => {
     toggleBottomSheetShow();
   };
 
-  // TODO : 확인창 모달로 수정 필요
-  const confirmAction = (message, action) => {
-    if (confirm(message)) {
-      action();
-    }
+  const confirmAction = (message, callback) => {
+    showModal(message, callback);
     toggleBottomSheetShow();
   };
 
   return (
     <>
+      {isModalVisible && (
+        <Modal
+          content={modalContent}
+          confirmText="확인"
+          cancelText="취소"
+          onConfirm={handleModalConfirm}
+          onCancel={handleModalCancel}
+        />
+      )}
       <CommentLi>
         <CommentProfileImage>
           {/* 프로필 기본이미지 수정 필요 */}

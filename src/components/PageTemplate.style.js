@@ -4,15 +4,16 @@ const Wrap = styled.div`
   max-width: 412px;
   min-height: 100vh;
   margin: 0 auto;
-  border-left: 1px solid #ccc;
-  border-right: 1px solid #ccc;
+  border-left: 0.5px solid #dbdbdb;
+  border-right: 0.5px solid #dbdbdb;
   position: relative;
 `;
 
 const Main = styled.main`
-  overflow-y: scroll;
+  /* overflow-y: scroll; */
   width: 100%;
-  height: caLc(100vh - 48px - 77px);
+  /* height: caLc(100vh - 48px - 77px); */
+  min-height: calc(100vh - 48px - 77px);
 `;
 
 export { Wrap, Main };

@@ -2,17 +2,16 @@ import SearchHeader from './SearchHeader';
 import ListBox from '../searchbar/ListBox';
 
 import { useRecoilState, useRecoilValue } from 'recoil';
-import { Outlet, useLocation, useNavigate } from 'react-router';
+import { useLocation, useNavigate } from 'react-router';
 import { useEffect, useState } from 'react';
 import subOneAtom from '../../atoms/subOneAtom';
 import queryFocusAtom from '../../atoms/queryFocusAtom';
 import queryAtom from '../../atoms/queryAtom';
 import pageUrlConfig from '../../config/pageUrlConfig';
 import { useQuery } from '@tanstack/react-query';
-import searchUserQuery from '../../api/getSearchUser';
 import userAtom from '../../atoms/userAtom';
-import getSearchUser from '../../api/getSearchUser';
 import UserListBox from '../searchbar/UserListBox';
+import searchUserQuery from '../../api/get/getSearchUser.api';
 
 const SearchLayout = ({ children }) => {
   const [list, setList] = useState([]);
@@ -99,16 +98,12 @@ const SearchLayout = ({ children }) => {
     }
   }, [query, users]);
 
-  const handleClickUser = () => {
-    console.log('유저리스트 클릭 !');
-  };
-
   return (
     <>
       <SearchHeader onClick={handleClickBack} />
-      {showListBox ? <ListBox list={list} onClick={handleClickInfo} /> : <Outlet />}
+      {showListBox && <ListBox list={list} onClick={handleClickInfo} />}
       {showUserList && !isLoading && !isError && users && (
-        <UserListBox userList={users.data} handleClickUser={handleClickUser} />
+        <UserListBox userList={users.data} showUserList={showUserList} />
       )}
     </>
   );

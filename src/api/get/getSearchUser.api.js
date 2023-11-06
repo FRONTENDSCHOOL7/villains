@@ -29,10 +29,10 @@ const getSearchUser = async (keyword, user) => {
     }
 ]
  */
-const searchUserQuery = (keyword, isFeedPage, user) => ({
+const searchUserQuery = (keyword, user) => ({
   queryKey: ['get', 'searchUser', keyword],
   queryFn: async () => getSearchUser(keyword, user),
-  enabled: isFeedPage && !!keyword,
+  enabled: !!keyword,
 });
 
 export default searchUserQuery;
