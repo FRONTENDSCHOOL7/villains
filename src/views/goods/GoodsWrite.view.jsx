@@ -17,7 +17,7 @@ import userAtom from '../../atoms/userAtom';
 import ImageIcon from '../../assets/img/image-icon.svg';
 import ImageBigIcon from '../../assets/img/image-big-icon.svg';
 
-import updateProduct from '../../api/updateProduct.api';
+import updateProduct from '../../api/update/updateProduct.api';
 
 import postImage from '../../api/post/postImage.api';
 

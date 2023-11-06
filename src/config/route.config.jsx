@@ -30,7 +30,7 @@ import GoodsDetailPage from '../views/goods/GoodsDetail.view';
 import ChatIndexPage from '../views/chat/index.view';
 import ChatPage from '../views/chat/Chat.view';
 
-
+import searchPlace from '../api/loader/searchPlace.loader';
 
 /** 라우트 등록하기
  * 1. routeConfig의 children에 객체를 이용해서 path와 element 입력하기
@@ -55,7 +55,13 @@ const routeConfig = [
             { path: pageUrlConfig.homePage, element: <HomeIndexPage />, children:[
               { index: true, element: <HomePage />},
               { path: `${pageUrlConfig.homePage}/:id`, element: <ResultPage /> },
-              { path: `${pageUrlConfig.homePage}/:id/:stationname`, element: <HomeTrainPage /> },
+              { 
+                path: `${pageUrlConfig.homePage}/map/:stationname`, 
+                loader: async ({params}) =>{
+                  return await searchPlace( params.stationname )
+                },
+                element: <HomeTrainPage />, 
+              },
             ]},
             { path: pageUrlConfig.feedPage, element: <FeedIndexPage />, children:[
               { index: true, element: <FeedPage />},

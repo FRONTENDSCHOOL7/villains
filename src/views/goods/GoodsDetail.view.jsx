@@ -6,12 +6,12 @@ import realProductAuthorAtom from '../../atoms/realProductAuthorAtom';
 import PageTemplate from '../../components/PageTemplate';
 import styled from 'styled-components';
 import getProductDetail from '../../api/get/getProductDetail.api';
-import deleteProduct from '../../api/deleteProduct.api';
+import deleteProduct from '../../api/delete/deleteProduct.api';
 import { useNavigate, useParams } from 'react-router';
 import pageUrlConfig from '../../config/pageUrlConfig';
 import profileImage from '../../assets/img/basic-profile.svg';
 import getUserDetail from '../../api/get/getUserDetail.api';
-import updateProduct from '../../api/updateProduct.api';
+import updateProduct from '../../api/update/updateProduct.api';
 import DropDown from '../../components/DropDown';
 
 const GoodsDetailPage = () => {

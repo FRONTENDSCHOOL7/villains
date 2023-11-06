@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { useNavigate, useParams } from "react-router";
+import { useLocation, useNavigate, useParams } from "react-router";
 import styled from "styled-components";
 import { useRecoilState, useRecoilValue } from "recoil";
 
@@ -18,11 +18,9 @@ import holiday from '../../database/2023-2024-holiday.json';
 const { kakao } = window;
 
 const ResultPage = () => {
-    const {id} = useParams();
-    const [query, setQuery] = useRecoilState(queryAtom);
     const navigate = useNavigate();
-    const title = query;
-    const focus = useRecoilValue(queryFocusAtom);
+    const {id} = useParams();
+    const {state} = useLocation();
 
     const [rowInfo, setRowInfo] = useState([]);
     const [reqCount, setReqCount] = useState(0);
@@ -31,8 +29,6 @@ const ResultPage = () => {
 
     const [refresh, setRefresh] = useState(false);
     const [direct, setDirect] = useState('1');
-
-    const [station, setStation] = useState({});
 
     const [showTime, setShowTime] = useState(false);
     
@@ -107,16 +103,16 @@ const ResultPage = () => {
     });
     }, [count, id, refresh])
 
-    //TODO: title을 클릭하면 해당 지하철역을 보여주는 지도 페이지로 이동
+    //TODO: state 클릭하면 해당 지하철역을 보여주는 지도 페이지로 이동
 
 
     const handleClickStation = () => {
-        navigate(`${pageUrlConfig.homePage}/${id}/${title}`);
+        navigate(`${pageUrlConfig.homePage}/map/${state}`);
     }
 
     return(
         <PageTemplate>
-            <StyledLinkBtn onClick={handleClickStation}>{title}</StyledLinkBtn>
+            <StyledLinkBtn onClick={handleClickStation}>{state}</StyledLinkBtn>
             <ButtonWrap>
                 <DayButton onClick={handleClickDay}>
                     <DefaultBtn variant={day === "1" ? "primary" :"basic"} id='1'>평일</DefaultBtn>
