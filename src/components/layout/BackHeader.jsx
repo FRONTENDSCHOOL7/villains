@@ -4,13 +4,22 @@ import theme from "../../style/theme";
 import BackArrow from "../../assets/img/icon-arrow-left.svg";
 import { useRecoilValue } from "recoil";
 import queryFocusAtom from "../../atoms/queryFocusAtom";
+import { useEffect, useState } from "react";
+import queryAtom from "../../atoms/queryAtom";
 
-const BackHeader = ({onClick, children, focus = true}) => {
-  
+const BackHeader = ({onClick, children}) => {
+  const query = useRecoilValue(queryAtom);
+  const [showBackArrow, setShowBackArrow] = useState(false);
+
+  useEffect(()=>{
+    if(query) setShowBackArrow(true);
+    else setShowBackArrow(false);
+  }, [query])
+
   return (
     <>
       <StyledHeader>
-        {focus && <BackArrowBtn variant={"basic"} onClick={onClick}><img src={BackArrow} alt="뒤로가기" /></BackArrowBtn>}
+        {showBackArrow && <BackArrowBtn variant={"basic"} onClick={onClick}><img src={BackArrow} alt="뒤로가기" /></BackArrowBtn>}
         {children}
       </StyledHeader>
       

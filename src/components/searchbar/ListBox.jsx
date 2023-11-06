@@ -11,7 +11,7 @@ const ListBox = ({ list, onClick }) => {
             {
                 list.map((d, index)=>{
                     return(
-                        <StyledLinkBtn key={`list_${index}`} onClick={onClick} data-etc={d[1]}>
+                        <StyledLinkBtn key={`list_${index}`} onClick={onClick} id={d[1]}>
                             {d[0]}
                         </StyledLinkBtn>
                     )
