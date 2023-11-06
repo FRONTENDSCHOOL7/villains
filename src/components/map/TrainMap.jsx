@@ -1,8 +1,8 @@
 import React from 'react';
 import { Map, MapMarker } from 'react-kakao-maps-sdk';
 
-const TrainMap = ({center, onDragEnd, style, places, level = 3}) => {
-    return <Map center={center} onDragEnd={onDragEnd} style={style} level={level}>
+const TrainMap = ({center, style, places, level = 3}) => {
+    return <Map center={center} style={style} level={level}>
         {places.map((place, index)=>{
             return (
                 <MapMarker key={index} position={{ lat: place.y, lng: place.x }} />

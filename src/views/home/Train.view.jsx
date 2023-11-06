@@ -12,6 +12,7 @@ const HomeTrainPage = () => {
         lng: 0
     });
     const searchResult = useLoaderData();
+    //loader 함수 내에서도 콜백을 사용하기 때문에 데이터가 온전히 도착하는데 시간이 걸립니다. 이를 해결하기 위해 setTimeout을 사용했습니다.
     setTimeout(()=>{
         setPosition({
             lat: searchResult[0].y,
