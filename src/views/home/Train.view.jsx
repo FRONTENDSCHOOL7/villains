@@ -3,23 +3,21 @@ import React, { useEffect, useState } from "react";
 import { Map, MapMarker } from "react-kakao-maps-sdk";
 
 import PageTemplate from "../../components/PageTemplate";
+import TrainMap from "../../components/map/TrainMap";
 
 const HomeTrainPage = () => {
     const { stationname } = useParams();
-    const [position, setPosition] = useState({});
+    const [position, setPosition] = useState([]);
     useEffect(()=>{
         const place = new kakao.maps.services.Places();
         place.keywordSearch(`${stationname}역 1호선`, (result) =>{
-            result ? setPosition({lat: result[0]?.y , lng: result[0]?.x}) : console.log(result);
-            console.log(result);
+            position.push({lat: result[0]?.y , lng: result[0]?.x});
         })
     }, [stationname])
     return(
         <PageTemplate>
             {position && 
-                <Map center={position} style={{ width: '100%', height: '100%' }} level={3}>
-                    <MapMarker position={{ lat: position.lat, lng: position.lng }}></MapMarker>
-                </Map>
+                <TrainMap center={position} style={{width: `100%`, height: `100%`}} places={position} />
             }
         </PageTemplate>
     )

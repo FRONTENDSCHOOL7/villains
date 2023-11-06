@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { useNavigate, useParams } from "react-router";
+import { useLocation, useNavigate, useParams } from "react-router";
 import styled from "styled-components";
 import { useRecoilState, useRecoilValue } from "recoil";
 
@@ -18,11 +18,10 @@ import holiday from '../../database/2023-2024-holiday.json';
 const { kakao } = window;
 
 const ResultPage = () => {
-    const {id} = useParams();
-    const [query, setQuery] = useRecoilState(queryAtom);
     const navigate = useNavigate();
-    const title = query;
-    const focus = useRecoilValue(queryFocusAtom);
+    const {id} = useParams();
+    const {state} = useLocation();
+    const title = state;
 
     const [rowInfo, setRowInfo] = useState([]);
     const [reqCount, setReqCount] = useState(0);
@@ -31,8 +30,6 @@ const ResultPage = () => {
 
     const [refresh, setRefresh] = useState(false);
     const [direct, setDirect] = useState('1');
-
-    const [station, setStation] = useState({});
 
     const [showTime, setShowTime] = useState(false);
     

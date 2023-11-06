@@ -2,14 +2,13 @@ import { useRecoilValue } from 'recoil';
 import client from '../../config/api.config';
 import userAtom from '../../atoms/userAtom';
 
-const getUerPostList = (accountname) => {
-  const user = useRecoilValue(userAtom);
-  return client.get(`/post/${accountname ?? user.accountname}/userpost`, {}, client.AuthType(user.token));
+const getUerPostList = (accountname, token) => {
+  return client.get(`/post/${accountname}/userpost`, {}, client.AuthType(token));
 };
 
-const contactQuery = (accountname = '') => ({
+const contactQuery = (accountname = '', token = '') => ({
   queryKey: ['get', 'userPost', accountname],
-  queryFn: async () => getUerPostList(accountname),
+  queryFn: async () => getUerPostList(accountname, token),
 });
 
 //사용자 정보를 미리 불러오고 싶다면, 해당 함수를 사용할 수 있습니다.

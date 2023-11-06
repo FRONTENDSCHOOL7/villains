@@ -1,4 +1,4 @@
-import client from '../config/api.config';
+import client from '../../config/api.config';
 
 const updateProduct = async (itemName, price, link, Img, id) => {
   const productData = {
