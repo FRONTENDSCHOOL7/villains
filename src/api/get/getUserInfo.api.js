@@ -20,9 +20,8 @@ import client from '../../config/api.config';
 }
  * @fail 해당 계정이 존재하지 않는 경우(기존에 있던 페이지로 리다이렉트)
  */
-const getUserInfo = async (accountname) => {
-  const token = useRecoilValue(userAtom);
-  return await client.get(`/profile/${accountname}`, client.BothType(token.token));
+const getUserInfo = async (accountname, token) => {
+  return await client.get(`/profile/${accountname}`, {}, client.BothType(token));
 };
 
 export default getUserInfo;

@@ -1,3 +1,6 @@
+// window.kakao 객체를 가져옴
+const { kakao } = window;
+
 const place = new kakao.maps.services.Places();
 
 const searchPlace = async (stationname) => {
