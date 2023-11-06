@@ -150,9 +150,9 @@ const SignUpPage = () => {
               })}
             />
             {userAccountId && !errors.accountId ? (
-              <BlueSmallBtn onClick={checkID} text={'중복확인'}></BlueSmallBtn>
+              <BlueSmallBtn onClick={checkID}>중복확인</BlueSmallBtn>
             ) : (
-              <BlueSmallBtn onClick={checkID} disabled={true} text={'중복확인'}></BlueSmallBtn>
+              <BlueSmallBtn onClick={checkID} disabled={true}>중복확인</BlueSmallBtn>
             )}
           </InputWrap>
           {errors.accountId ? (
@@ -177,9 +177,9 @@ const SignUpPage = () => {
               })}
             />
             {userEmail && !errors.email ? (
-              <BlueSmallBtn onClick={checkEmail} text={'중복확인'}></BlueSmallBtn>
+              <BlueSmallBtn onClick={checkEmail}>중복확인</BlueSmallBtn>
             ) : (
-              <BlueSmallBtn onClick={checkEmail} disabled={true} text={'중복확인'}></BlueSmallBtn>
+              <BlueSmallBtn onClick={checkEmail} disabled={true}>중복확인</BlueSmallBtn>
             )}
           </InputWrap>
           {errors.email ? (

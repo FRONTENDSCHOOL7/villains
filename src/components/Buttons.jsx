@@ -30,7 +30,7 @@ const WhiteLongBtn = ({ text, onClick, disabled }) => {
   );
 };
 
-const IconBtn = ({ text, onClick, disabled, img}) => {
+const IconBtn = ({ text, onClick, disabled, img }) => {
   const handleClick = (event) => {
     event.preventDefault();
   };
@@ -51,21 +51,13 @@ const IconBtn = ({ text, onClick, disabled, img}) => {
 //   );
 // };
 
-const BlueSmallBtn = ({ text, onClick, disabled }) => {
+const BlueSmallBtn = ({ children, onClick, disabled }) => {
   return (
-    <>
-      {disabled ? (
-        <SmallButton onClick={onClick} disabled>
-          {text}
-        </SmallButton>
-      ) : (
-        <SmallButton onClick={onClick}>{text}</SmallButton>
-      )}
-    </>
+    <SmallButton onClick={onClick} disabled={disabled ?? false}>
+      {children}
+    </SmallButton>
   );
 };
-
-
 
 const IconLabelBtn = ({ icon, count, onClick, disabled, alt }) => {
   return (
@@ -75,7 +67,6 @@ const IconLabelBtn = ({ icon, count, onClick, disabled, alt }) => {
     </IconLabelButton>
   );
 };
-
 
 const BlueLongButton = styled.button`
   ${PrimaryStyle}
@@ -109,7 +100,7 @@ const IconButton = styled(BlueLongButton)`
 `;
 
 const SmallButton = styled(BlueLongButton)`
-  padding: 8px 20px;
+  padding: 5px 20px;
   border-radius: 32px;
 `;
 
