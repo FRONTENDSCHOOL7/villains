@@ -30,12 +30,9 @@ const PrivateLayout = () => {
     const mainPath = pathname.split('/')[1];
     navigate(`/${mainPath}`);
   };
+  //왜 여기에 헤더가 있는데 다른 페이지에서 헤더를 추가하면 여기에 있는 헤더가 먹힐까요..?
   return (
     <Wrap>
-      <BackHeader onClick={handleClickBack}>
-        {pathname.startsWith('/goods/') && productAccountname === user.accountname && <Tanghulu></Tanghulu>}
-      </BackHeader>
-      <BackGround />
       <Outlet />
       {/* <NavMenu /> */}
     </Wrap>
@@ -44,6 +41,4 @@ const PrivateLayout = () => {
 
 export default PrivateLayout;
 
-const BackGround = styled.div`
-  height: 48px;
-`;
+
