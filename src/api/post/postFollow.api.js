@@ -25,8 +25,9 @@ import userAtom from '../../atoms/userAtom';
 }
  */
 const postFollow = async (accountname) => {
-  const token = useRecoilValue(userAtom);
-  return await client.post(`/profile/${accountname}/follow`, {}, client.BothType(token.token));
+  const user = useRecoilValue(userAtom);
+  // const token = JSON.parse(localStorage.getItem('user')).token;
+  return await client.post(`/profile/${accountname ?? user.token}/follow`, {}, client.BothType(user.token));
 };
 
 export default postFollow;
