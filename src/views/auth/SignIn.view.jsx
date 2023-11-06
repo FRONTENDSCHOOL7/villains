@@ -8,8 +8,11 @@ import client from '../../config/api.config';
 import { Main } from '../../components/PageTemplate.style';
 import { BlueLongBtn, WhiteLongBtn } from '../../components/Buttons';
 import CheckBox from '../../components/CheckBox';
+import userAtom from '../../atoms/userAtom';
 
 const SignInPage = () => {
+  //로그인 시 userInfo를 Atom에 저장하기
+  const [user, setUser] = useRecoilState(userAtom);
   // react-hook-form
   const {
     register,
@@ -64,6 +67,7 @@ const SignInPage = () => {
           token: response.data.user.token,
         };
         localStorage.setItem('user', JSON.stringify(userInfo));
+        setUser(userInfo);
         handleGoToMain();
       }
       // 실패시 에러 메시지 보여주기
