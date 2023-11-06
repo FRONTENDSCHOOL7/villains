@@ -14,8 +14,7 @@ import queryFocusAtom from "../../atoms/queryFocusAtom";
 
 import holiday from '../../database/2023-2024-holiday.json';
 
-// window.kakao 객체를 가져옴
-const { kakao } = window;
+
 
 const ResultPage = () => {
     const navigate = useNavigate();
