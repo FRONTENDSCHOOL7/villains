@@ -3,7 +3,7 @@ import heart from '../../assets/img/heart.svg';
 import heartFilled from '../../assets/img/heart-filled.svg';
 import comment from '../../assets/img/message-circle.svg';
 import { useNavigate } from 'react-router-dom';
-import pageUlrConfig from '../../config/pageUrlConfig';
+import pageUrlConfig from '../../config/pageUrlConfig';
 import postHeart from '../../api/post/postHeart.api';
 import { useState } from 'react';
 import useFormatDate from '../../hooks/useFormatDate';
@@ -29,7 +29,7 @@ const PostCard = ({ post }) => {
   const firstImageUrl = post.image ? post.image.split(',')[0] : null;
 
   const handleFeedDetailNav = () => {
-    const feedDetailUrl = `${pageUlrConfig.feedPage}/${post._id}`;
+    const feedDetailUrl = `${pageUrlConfig.feedPage}/${post._id}`;
     navigate(feedDetailUrl);
   };
 

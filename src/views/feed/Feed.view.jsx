@@ -21,8 +21,8 @@ const FeedPage = () => {
     <PageTemplate>
       {posts && (
         <PostList>
-          {posts.map((post) => (
-            <PostCard post={post} key={post._id} />
+          {posts.map((post, idx) => (
+            <PostCard post={post} key={idx} />
           ))}
         </PostList>
       )}
