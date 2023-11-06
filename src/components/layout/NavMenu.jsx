@@ -90,7 +90,7 @@ const NavButton = styled.div`
   ${BasicStyle}
   color: ${theme.color.grey};
   border-radius: 8px;
-  width: 100%;
+  width: 82px;
   height: 100%;
   padding: 16px;
   position: relative;
