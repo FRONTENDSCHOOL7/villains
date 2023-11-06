@@ -22,7 +22,7 @@ const BackHeader = ({onClick, children}) => {
         {showBackArrow && <BackArrowBtn variant={"basic"} onClick={onClick}><img src={BackArrow} alt="뒤로가기" /></BackArrowBtn>}
         {children}
       </StyledHeader>
-      
+      <BackGround/>
     </>
   )
 }
@@ -33,6 +33,10 @@ const BackArrowBtn = styled.button`
   ${BasicStyle}
 
   margin-right: 8px;
+`;
+
+const BackGround = styled.div`
+  height: 48px;
 `;
 
 const StyledHeader = styled.header`
