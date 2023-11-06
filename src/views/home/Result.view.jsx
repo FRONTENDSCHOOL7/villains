@@ -21,7 +21,6 @@ const ResultPage = () => {
     const navigate = useNavigate();
     const {id} = useParams();
     const {state} = useLocation();
-    const title = state;
 
     const [rowInfo, setRowInfo] = useState([]);
     const [reqCount, setReqCount] = useState(0);
@@ -104,16 +103,16 @@ const ResultPage = () => {
     });
     }, [count, id, refresh])
 
-    //TODO: title을 클릭하면 해당 지하철역을 보여주는 지도 페이지로 이동
+    //TODO: state 클릭하면 해당 지하철역을 보여주는 지도 페이지로 이동
 
 
     const handleClickStation = () => {
-        navigate(`${pageUrlConfig.homePage}/${id}/${title}`);
+        navigate(`${pageUrlConfig.homePage}/map/${state}`);
     }
 
     return(
         <PageTemplate>
-            <StyledLinkBtn onClick={handleClickStation}>{title}</StyledLinkBtn>
+            <StyledLinkBtn onClick={handleClickStation}>{state}</StyledLinkBtn>
             <ButtonWrap>
                 <DayButton onClick={handleClickDay}>
                     <DefaultBtn variant={day === "1" ? "primary" :"basic"} id='1'>평일</DefaultBtn>

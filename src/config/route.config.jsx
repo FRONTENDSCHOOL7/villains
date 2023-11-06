@@ -55,7 +55,7 @@ const routeConfig = [
             { path: pageUrlConfig.homePage, element: <HomeIndexPage />, children:[
               { index: true, element: <HomePage />},
               { path: `${pageUrlConfig.homePage}/:id`, element: <ResultPage /> },
-              { path: `${pageUrlConfig.homePage}/:id/:stationname`, element: <HomeTrainPage /> },
+              { path: `${pageUrlConfig.homePage}/map/:stationname`, element: <HomeTrainPage /> },
             ]},
             { path: pageUrlConfig.feedPage, element: <FeedIndexPage />, children:[
               { index: true, element: <FeedPage />},
