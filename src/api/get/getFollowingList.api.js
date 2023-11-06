@@ -1,6 +1,7 @@
 import { useRecoilValue } from 'recoil';
 import client from '../../config/api.config';
 import userAtom from '../../atoms/userAtom';
+import { useState } from 'react';
 
 /**
  * 팔로잉 리스트를 가져옵니다.
@@ -23,12 +24,24 @@ import userAtom from '../../atoms/userAtom';
     }
 ]
  */
-const getFollowingList = async (accoutnanme) => {
+const getFollowingList = () => {
   const user = useRecoilValue(userAtom);
-  return await client.get(
-    `/profile/${accoutnanme ?? user.accoutnanme}/following`,
-    client.BothType(user.token),
-  );
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState(null);
+
+  const fetchFollowing = async (accountname) => {
+    setLoading(true);
+    // const token = JSON.parse(localStorage.getItem('user')).token;
+    try {
+      const response = await client.get(`/profile/${accountname ?? user.accoutnanme}/following`, {}, client.BothType(user.token));
+      return response.data;
+    } catch (error) {
+      setError(error);
+      return;
+    }
+    setLoading(false);
+  };
+  return { fetchFollowing, loading, error };
 };
 /**
  * 페이지네이션이나 무한스크롤을 적용할 때 쓰는 api입니다.
