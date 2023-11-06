@@ -2,7 +2,7 @@ import { React, useState, useEffect, useRef } from 'react';
 import { useNavigate, useParams, useLocation } from 'react-router';
 import { useForm } from 'react-hook-form';
 import styled from 'styled-components';
-import { useRecoilValue } from 'recoil';
+import { useRecoilState, useRecoilValue } from 'recoil';
 import client from '../../config/api.config';
 import pageUrlConfig from '../../config/pageUrlConfig';
 
@@ -13,6 +13,7 @@ import FloatingButton from '../../components/FloatingButton.style';
 
 import goodsQueryStartAtom from '../../atoms/goodsQueryStartAtom';
 import goodsQueryEndAtom from '../../atoms/goodsQueryEndAtom';
+import { headerBtnStateAtom, headerBtnOptionsAtom } from '../../atoms/headerBtnStateAtom';
 import userAtom from '../../atoms/userAtom';
 import ImageIcon from '../../assets/img/image-icon.svg';
 import ImageBigIcon from '../../assets/img/image-big-icon.svg';
@@ -26,6 +27,8 @@ const GoodsWritePage = () => {
   const { id } = useParams();
   const user = useRecoilValue(userAtom);
   const product = useLocation().state;
+  const [headerBtnState, setHeaderBtnState] = useRecoilState(headerBtnStateAtom);
+  const [headerBtnOptions, setHeaderBtnOptions] = useRecoilState(headerBtnOptionsAtom);
   // 수정 페이지
   useEffect(() => {
     if (id) {
@@ -77,44 +80,69 @@ const GoodsWritePage = () => {
     inputRef.click();
   };
 
-  const handleSubmitSaveBtn = async (e) => {
-    e.preventDefault();
-    const urls = image.file ? await postImage(image.file) : image.url;
+  useEffect(() => {
+    if (
+      typeof errors.price === 'undefined' ||
+      startSubway === '' ||
+      info === '' ||
+      endSubway === '' ||
+      price === '' ||
+      image.url === ''
+    ) {
+      setHeaderBtnState(false);
+    } else {
+      setHeaderBtnState(true);
+    }
     const adminToken = JSON.parse(localStorage.getItem('admin')).token;
     const linkData = JSON.stringify({
       accountname: user.accountname,
       itemInfo: info,
       state: '요청중',
     });
-    // 수정 페이지
     if (isEditMode) {
-      const result = await updateProduct(startSubway + '~' + endSubway, parseInt(price), linkData, urls, id);
-      if (result) {
-        const goodsDetailUrl = `${pageUrlConfig.goodsPage}/${result.id}`;
-        navigate(goodsDetailUrl);
-      }
+      setHeaderBtnOptions({
+        label: '저장하기',
+        callback: async () => {
+          const urls = image.file ? await postImage(image.file) : image.url;
+          const result = await updateProduct(
+            startSubway + '~' + endSubway,
+            parseInt(price),
+            linkData,
+            urls,
+            id,
+          );
+          if (result) {
+            const goodsDetailUrl = `${pageUrlConfig.goodsPage}/${result.id}`;
+            navigate(goodsDetailUrl);
+          }
+        },
+      });
     } else {
-      // 일반 택배 요청글 작성
-      // TODO: api 파일 분리
-      try {
-        const response = await client.post(
-          '/product',
-          {
-            product: {
-              itemName: startSubway + '~' + endSubway,
-              price: parseInt(price),
-              link: linkData,
-              itemImage: urls,
-            },
-          },
-          client.BothType(adminToken),
-        );
-        navigate(pageUrlConfig.goodsPage);
-      } catch (error) {
-        console.log(error);
-      }
+      setHeaderBtnOptions({
+        label: '저장하기',
+        callback: async () => {
+          const urls = image.file ? await postImage(image.file) : image.url;
+          try {
+            const response = await client.post(
+              '/product',
+              {
+                product: {
+                  itemName: startSubway + '~' + endSubway,
+                  price: parseInt(price),
+                  link: linkData,
+                  itemImage: urls,
+                },
+              },
+              client.BothType(adminToken),
+            );
+            navigate(pageUrlConfig.goodsPage);
+          } catch (error) {
+            console.log(error);
+          }
+        },
+      });
     }
-  };
+  }, [image, startSubway, endSubway, info, price]);
 
   const handleGoBackBtn = () => {
     navigate(pageUrlConfig.goodsPage);
@@ -122,22 +150,7 @@ const GoodsWritePage = () => {
 
   return (
     <PageTemplate>
-      {/* <Header>
-        <BackIcon src={BackArrow} onClick={handleGoBackBtn} alt="" />
-      </Header> */}
       <Form>
-        {errors.price ||
-        startSubway === '' ||
-        info === '' ||
-        endSubway === '' ||
-        price === '' ||
-        image.url === '' ? (
-          <SaveBtn onClick={handleSubmitSaveBtn} disabled>
-            저장하기
-          </SaveBtn>
-        ) : (
-          <SaveBtn onClick={handleSubmitSaveBtn}>저장하기</SaveBtn>
-        )}
         <PreviewArea>
           {image.url !== '' ? (
             <Previewimg src={image.url} alt="이미지" />
@@ -166,7 +179,7 @@ const GoodsWritePage = () => {
             which={'start'}
             labelText={'출발역'}
             placeholder={'2~15자 이내여야 합니다.'}
-            value={isEditMode ? "" : product?.itemName?.split('~')[0]}
+            value={isEditMode ? '' : product?.itemName?.split('~')[0]}
           />
         </SearchInput>
         <SearchInput>
@@ -175,7 +188,7 @@ const GoodsWritePage = () => {
             which={'end'}
             labelText={'도착역'}
             placeholder={'2~15자 이내여야합니다.'}
-            value={isEditMode ? "" : product?.itemName?.split('~')[1]}
+            value={isEditMode ? '' : product?.itemName?.split('~')[1]}
           />
         </SearchInput>
         <Label htmlFor="price">가격</Label>
@@ -206,24 +219,6 @@ const GoodsWritePage = () => {
     </PageTemplate>
   );
 };
-const SaveBtn = styled.button`
-  padding: 8px 20px;
-  max-width: 100px;
-  font-size: 14px;
-  border-radius: 9999px;
-  border: 1px solid #3c58c1;
-  background-color: #3c58c1;
-  color: white;
-  &:disabled {
-    border-color: white;
-    background-color: #b1bce6;
-    cursor: default;
-  }
-  position: fixed;
-  top: 6.5px;
-  right: calc(50% - 206px + 16px);
-  z-index: 100;
-`;
 const Form = styled.form`
   display: flex;
   flex-direction: column;
