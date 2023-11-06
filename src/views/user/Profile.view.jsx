@@ -82,12 +82,12 @@ const ProfilePage = () => {
           </Follow>
         </ProfileHeader>
 
-        {/* <ProfileContent> */}
-        <UserName>나야나</UserName>
-        <ProfileEmail>@villain_no1</ProfileEmail>
-        <ProfileDsc>1호선 빌런 꿈나무</ProfileDsc>
-        {/* <Link to="/user/edit">프로필 수정</Link>  */}
-        {/* <SmallBtn
+        <ProfileContent>
+          <UserName>나야나</UserName>
+          <ProfileEmail>@villain_no1</ProfileEmail>
+          <ProfileDsc>1호선 빌런 꿈나무</ProfileDsc>
+          {/* <Link to="/user/edit">프로필 수정</Link>  */}
+          {/* <SmallBtn
             background={'red'}
             color={'black'}
             cursor={'pointer'}
@@ -98,8 +98,8 @@ const ProfilePage = () => {
           >
             프로필 수정
           </SmallBtn> */}
-        <EditBtn>프로필 수정</EditBtn>
-        {/* </ProfileContent> */}
+          <EditBtn>프로필 수정</EditBtn>
+        </ProfileContent>
       </UpperSection>
 
       {/*  게시글 */}

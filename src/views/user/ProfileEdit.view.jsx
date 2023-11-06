@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
 import PageTemplate from '../../components/PageTemplate';
 import basicProfile from '../../assets/img/basic-profile.svg';
-// import imgIcon from `../assets/img/image-icon.svg`
+// import imgIcon from `../../assets/img/image-icon.svg`
 
 const ProfileEditPage = () => {
   return (
@@ -15,12 +15,16 @@ const ProfileEditPage = () => {
     </IconButton> */}
       </ProfileHeader>
 
-      <ProfileEditContent>
-        <p>사용자 이름</p>
-        <input placeholder="2~10자 이내" />
-        <p>소개</p>
-        <input placeholder="자기소개" />
-      </ProfileEditContent>
+      <ProfileEditContentWrap>
+        <ProfileEditContent>
+          <p>사용자 이름</p>
+          <ProfileInput placeholder="2~10자 이내여야 합니다."></ProfileInput>
+        </ProfileEditContent>
+        <ProfileEditContent>
+          <p>소개</p>
+          <ProfileInput placeholder="자신과 판매할 상품에 대해 소개해 주세요."></ProfileInput>
+        </ProfileEditContent>
+      </ProfileEditContentWrap>
     </PageTemplate>
   );
 };
@@ -52,23 +56,41 @@ const ProfileImg = styled.img`
 `;
 
 const ImgEditBtn = styled.button`
-  box-shadow: inset 0 0 10px orange;
+  box-shadow: inset 0 0 10px blue;
 
   position: absolute;
   right: 33%;
-  bottom: 7%;
+  bottom: 16%;
   width: 50px;
   height: 50px;
   border-radius: 50px;
 `;
 
-const ProfileEditContent = styled.div`
-  box-shadow: inset 0 0 10px orange;
+const ProfileEditContentWrap = styled.div`
+  box-shadow: inset 0 0 10px red;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
 `;
 
-const input = styled.input`
-  box-shadow: inset 0 0 10px orange;
-  border-bottom: 1px solid #767676;
+const ProfileEditContent = styled.div`
+  /* box-shadow: inset 0 0 10px orange; */
+
   width: 322px;
   height: 48px;
+  font-size: 14px;
+  color: #767676;
+`;
+
+const ProfileInput = styled.input`
+  border-bottom: 1px solid #767676;
+
+  /* -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none; */
+  width: 100%;
+  padding-bottom: 7px;
+  border-width: 0 0 1px;
+  border-color: #dbdbdb;
 `;
