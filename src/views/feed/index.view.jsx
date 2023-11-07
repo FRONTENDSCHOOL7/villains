@@ -46,7 +46,7 @@ const FeedIndexPage = () => {
       {showUserList && !isLoading && !isError && users ? (
         <UserListBox userList={users.data} showUserList={showUserList} />
       ) : (
-        <Outlet />
+        <Outlet context={user} />
       )}
       {pathname === pageUrlConfig.feedPage && <NavMenu />}
     </>

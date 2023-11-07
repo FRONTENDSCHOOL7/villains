@@ -28,15 +28,15 @@ const App = () => {
   
   const router = createBrowserRouter(routeConfig);
   return (
-    <QueryClientProvider client={queryClient} contextSharing={true}>
-      <RecoilRoot>
-        <RouterProvider
-          router={router}
-          basename={process.env.NODE_ENV === 'production' ? '/VILLAINS/' : '/'}
-        />
-      </RecoilRoot>
-      <ReactQueryDevtools initialIsOpen={false} />
-    </QueryClientProvider>
+    <RecoilRoot>
+      <QueryClientProvider client={queryClient} contextSharing={true}>
+          <RouterProvider
+            router={router}
+            basename={process.env.NODE_ENV === 'production' ? '/VILLAINS/' : '/'}
+          />
+        <ReactQueryDevtools initialIsOpen={false} />
+      </QueryClientProvider>
+    </RecoilRoot>
   );
 };
 

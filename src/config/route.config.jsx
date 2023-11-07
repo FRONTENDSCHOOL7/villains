@@ -31,6 +31,7 @@ import ChatIndexPage from '../views/chat/index.view';
 import ChatPage from '../views/chat/Chat.view';
 
 import searchPlace from '../api/loader/searchPlace.loader';
+import sendUserInfo from '../api/loader/sendUserInfo.loader';
 
 /** 라우트 등록하기
  * 1. routeConfig의 children에 객체를 이용해서 path와 element 입력하기
@@ -49,6 +50,8 @@ const routeConfig = [
       ]},
       {
         path: `/`,
+        id: 'user',
+        loader: async()=>await sendUserInfo(),
         element: <PrivateLayout />,
         children: [
           
