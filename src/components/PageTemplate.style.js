@@ -1,4 +1,5 @@
 import styled from 'styled-components';
+import theme from '../style/theme';
 
 const Wrap = styled.div`
   max-width: 412px;
@@ -12,7 +13,21 @@ const Wrap = styled.div`
 
 const Main = styled.main`
   width: 100%;
-  min-height: calc(100vh - 48px - 77px);
+  height: calc(100vh - 48px - 80px);
+  overflow-y: scroll;
+
+  &::-webkit-scrollbar {
+    width: 6px; /* 세로축 스크롤바 폭 너비 */
+  }
+
+  &::-webkit-scrollbar-thumb {
+    border-radius: 9999px;
+    background-color: ${theme.color.light};
+  }
+
+  &::-webkit-scrollbar-track {
+    background-color: ${theme.color.white};
+  }
 `;
 
 export { Wrap, Main };

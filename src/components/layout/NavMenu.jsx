@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link, useNavigate, useRouteLoaderData } from 'react-router-dom';
 import pageUrlConfig from '../../config/pageUrlConfig';
 
 import styled, { css } from 'styled-components';
@@ -9,6 +9,7 @@ import theme from '../../style/theme';
 
 const NavMenu = () => {
   const { pathname } = useLocation();
+  const user = useRouteLoaderData('user');
   const navContents = [
     [`feed`, `피드`],
     [`goods`, `택배`],
@@ -23,7 +24,7 @@ const NavMenu = () => {
           const click = pathname.includes(content[0]);
           const src = click ? `nav-${content[0]}-click.svg` : `nav-${content[0]}.svg`;
           return (
-            <Link to={`/${content[0]}`} key={index}>
+            <Link to={`${import.meta.env.BASE_URL}${content[0]}`} key={index}>
               <NavButton state={click}>
                 <img src={`${import.meta.env.BASE_URL}nav/${src}`} alt={content[1]} />
                 <span>{content[1]}</span>
@@ -31,25 +32,6 @@ const NavMenu = () => {
             </Link>
           );
         })}
-        {/* <Link to="/feed">
-          <NavButton>피드 메뉴 버튼</NavButton>
-        </Link>
-  
-        <Link to="/goods">
-          <NavButton>택배 버튼</NavButton>
-        </Link>
-  
-        <Link to="/main">
-          <NavButton>홈 버튼</NavButton>
-        </Link>
-  
-        <Link to="/chat">
-          <NavButton>메세지 버튼</NavButton>
-        </Link>
-  
-        <Link to="/user">
-          <NavButton>프로필 버튼</NavButton>
-        </Link> */}
       </Nav>
       <BackGround />
     </>
@@ -97,7 +79,7 @@ const NavButton = styled.div`
 
   &::before {
     ${(props) => {
-      return props.state ? BorderStyle : '';
+      return props.state === true ? BorderStyle : '';
     }}
   }
 
@@ -114,5 +96,5 @@ const NavButton = styled.div`
 `;
 
 const BackGround = styled.div`
-  height: 77px;
+  height: 80px;
 `;
