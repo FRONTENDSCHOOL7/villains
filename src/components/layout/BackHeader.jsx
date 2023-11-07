@@ -4,16 +4,25 @@ import theme from "../../style/theme";
 import BackArrow from "../../assets/img/icon-arrow-left.svg";
 import { useRecoilValue } from "recoil";
 import queryFocusAtom from "../../atoms/queryFocusAtom";
+import { useEffect, useState } from "react";
+import queryAtom from "../../atoms/queryAtom";
 
-const BackHeader = ({onClick, children, focus = true}) => {
-  
+const BackHeader = ({onClick, children}) => {
+  const query = useRecoilValue(queryAtom);
+  const [showBackArrow, setShowBackArrow] = useState(false);
+
+  useEffect(()=>{
+    if(query) setShowBackArrow(true);
+    else setShowBackArrow(false);
+  }, [query])
+
   return (
     <>
       <StyledHeader>
-        {focus && <BackArrowBtn variant={"basic"} onClick={onClick}><img src={BackArrow} alt="뒤로가기" /></BackArrowBtn>}
+        {showBackArrow && <BackArrowBtn variant={"basic"} onClick={onClick}><img src={BackArrow} alt="뒤로가기" /></BackArrowBtn>}
         {children}
       </StyledHeader>
-      
+      <BackGround/>
     </>
   )
 }
@@ -22,6 +31,12 @@ export default BackHeader;
 
 const BackArrowBtn = styled.button`
   ${BasicStyle}
+
+  margin-right: 8px;
+`;
+
+const BackGround = styled.div`
+  height: 48px;
 `;
 
 const StyledHeader = styled.header`
@@ -32,7 +47,7 @@ const StyledHeader = styled.header`
   right: 0;
   left: 0;
   margin: 0 auto;
-  padding: 8px;
+  padding: 8px 16px;
   max-width: 410px;
   height: 48px;
   z-index: 10;

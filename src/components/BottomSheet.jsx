@@ -9,34 +9,36 @@ const BottomSheet = () => {
 
   const wrapperRef = useRef(null);
 
-  // TODO : 바텀 시트가 아닌 다른 곳을 누르면 바텀시트가 사라지도록 수정
-  // const handleOutsideClick = (e) => {
-  //   if (wrapperRef.current && !wrapperRef.current.contains(e.target)) {
-  //     setIsVisible(false);
-  //   }
-  // };
-
-  // useEffect(() => {
-  //   document.addEventListener('mousedown', handleOutsideClick);
-  //   return () => {
-  //     document.removeEventListener('mousedown', handleOutsideClick);
-  //   };
-  // }, []);
-
+  const handleBottomSheetClose = () => {
+    setIsVisible(false);
+  };
 
   return isVisible ? (
-    <BottomSheetWrapper>
-      <CloseButton onClick={() => setIsVisible(false)} />
-      {options.map((option, index) => (
-        <Option key={index} onClick={option.callback}>
-          {option.label}
-        </Option>
-      ))}
-    </BottomSheetWrapper>
+    <>
+      <Overlay onClick={handleBottomSheetClose} />
+      <BottomSheetWrapper ref={wrapperRef}>
+        <CloseButton onClick={handleBottomSheetClose} />
+        {options.map((option, index) => (
+          <Option key={index} onClick={option.callback}>
+            {option.label}
+          </Option>
+        ))}
+      </BottomSheetWrapper>
+    </>
   ) : null;
 };
 
 export default BottomSheet;
+
+const Overlay = styled.div`
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: transparent;
+  z-index: 100;
+`;
 
 const BottomSheetWrapper = styled.div`
   width: 410px;
@@ -54,7 +56,7 @@ const BottomSheetWrapper = styled.div`
 
 const Option = styled.div`
   font-size: 14px;
-  padding: 16px 26px;
+  padding: 20px 26px;
   cursor: pointer;
 
   &:hover {

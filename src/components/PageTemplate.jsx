@@ -13,8 +13,7 @@ import pageUrlConfig from '../config/pageUrlConfig';
 import FloatingButton from './FloatingButton.style';
 import BottomSheet from './BottomSheet';
 
-
-const PageTemplate = ({ children, showNavMenu = true }) => {
+const PageTemplate = ({ children }) => {
   const [list, setList] = useState([]);
   const [isClickInfo, setIsClickInfo] = useState(false);
   const [params, setParams] = useState('');
@@ -80,3 +79,4 @@ const PageTemplate = ({ children, showNavMenu = true }) => {
 };
 
 export default PageTemplate;
+//떡볶이...

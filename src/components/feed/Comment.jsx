@@ -1,71 +1,100 @@
+import { useMutation } from '@tanstack/react-query';
 import styled from 'styled-components';
+import { useRecoilValue, useSetRecoilState } from 'recoil';
+import { bottomSheetStateAtom, bottomSheetOptions } from '../../atoms/bottomSheetStateAtom';
+
+import userAtom from '../../atoms/userAtom';
+import deleteCommentsQuery from '../../api/delete/deleteComments.api';
+import postCommentsReportQuery from '../../api/post/postCommentsReport.api';
+
+import useFormatDate from '../../hooks/useFormatDate';
+import useBottomSheetOptions from '../../hooks/useBottomSheetOptions';
+import useModal from '../../hooks/useModal';
+
+import Modal from '../Modal';
+
 import profileImage from '../../assets/img/basic-profile.svg';
 import verticalIcon from '../../assets/img/icon-more-vertical.svg';
-import useFormatDate from '../../hooks/useFormatDate';
-import { useSetRecoilState } from 'recoil';
-import { bottomSheetStateAtom, bottomSheetOptions } from '../../atoms/bottomSheetStateAtom';
-import deleteCommentsQuery from '../../api/deleteComments.api';
-import postCommentsReportQuery from '../../api/postCommentsReport.api';
-import { useMutation } from '@tanstack/react-query';
 
 const useCommentActions = (id, commentId, removeCommentFromList) => {
   const deleteMutation = useMutation(deleteCommentsQuery(id, commentId));
   const reportMutation = useMutation(postCommentsReportQuery(id, commentId));
 
-  const handleDelete = () => {
+  const commentDelete = () => {
     deleteMutation.mutate(
       { id, commentId },
       {
         onSuccess: () => removeCommentFromList(commentId),
-        onError: () => alert('댓글 삭제에 실패했습니다'),
+        onError: () => alertAction('댓글 삭제에 실패했습니다'),
       },
     );
   };
 
-  const handleReport = () => {
+  const commentReport = () => {
     reportMutation.mutate(
       { id, commentId },
       {
         onSuccess: () => removeCommentFromList(commentId),
-        onError: () => alert('댓글 신고에 실패했습니다'),
+        onError: () => alertAction('댓글 신고에 실패했습니다'),
       },
     );
   };
 
-  return { handleDelete, handleReport };
+  return { commentDelete, commentReport };
 };
-
 
 const Comment = ({ comment, id, removeCommentFromList }) => {
   const setIsVisible = useSetRecoilState(bottomSheetStateAtom);
   const setOptions = useSetRecoilState(bottomSheetOptions);
   const time = useFormatDate(comment.createdAt, 'comment');
 
-  const { handleDelete, handleReport } = useCommentActions(id, comment.id, removeCommentFromList);
+  const { commentDelete, commentReport } = useCommentActions(id, comment.id, removeCommentFromList);
 
-  const currentAccountname = JSON.parse(localStorage.getItem('user')).accountname;
-  
+  // useModal 훅 사용
+  const { isModalVisible, modalContent, showModal, handleModalConfirm, handleModalCancel } = useModal();
+
   const toggleBottomSheetShow = () => setIsVisible((prev) => !prev);
 
-  const handleBottomSheetShow = () => {
-    const options =
-      currentAccountname === comment.author.accountname
-        ? [{ label: '댓글 삭제', callback: () => confirmAction('댓글을 삭제할까요?', handleDelete) }]
-        : [{ label: '댓글 신고', callback: () => confirmAction('댓글을 신고할까요?', handleReport) }];
+  const currentAccountname = useRecoilValue(userAtom).accountname;
+  const authorAccountname = comment.author.accountname;
+
+  const options = useBottomSheetOptions({
+    currentAccountname,
+    authorAccountname,
+    commentDelete: () => confirmAction('댓글을 삭제할까요?', commentDelete),
+    commentReport: () => confirmAction('댓글을 신고할까요?', commentReport),
+    type: 'comment',
+  });
+
+  const handleBottomSheetShow = (event) => {
+    event.stopPropagation();
     setOptions(options);
     toggleBottomSheetShow();
   };
 
-  // TODO : 확인창 모달로 수정 필요
-  const confirmAction = (message, action) => {
-    if (confirm(message)) {
-      action();
-    }
+  // confirm을 위한 액션
+  const confirmAction = (message, callback) => {
+    showModal(message, callback);
+    toggleBottomSheetShow();
+  };
+
+  // alert를 위한 액션
+  const alertAction = (message) => {
+    showModal(message);
     toggleBottomSheetShow();
   };
 
   return (
     <>
+      {isModalVisible && (
+        <Modal
+          content={modalContent}
+          confirmText="확인"
+          cancelText={confirmAction ? "취소" : null}
+          onConfirm={handleModalConfirm}
+          onCancel={handleModalCancel}
+        />
+      )}
       <CommentLi>
         <CommentProfileImage>
           {/* 프로필 기본이미지 수정 필요 */}
