@@ -7,9 +7,9 @@ import { useState } from 'react';
 const ChatDetailPage = () => {
   const [messages, setMessages] = useState([
     // 예시 메시지 데이터
-    { id: 1, text: '안녕하세요, 고객 서비스입니다.😊😊😊', time: '12:39', sender: 'customerService' },
-    { id: 2, text: '네 안녕하세요.', time: '12:41', sender: 'user' },
-    { id: 3, text: '네 알겠습니다.', time: '12:50', sender: 'user', image: 'path_to_dog_image.jpg' },
+    { id: 1, text: '온수 ~ 부천 택배 요청 수락했습니다! 언제 물건을 가지러 가면 될까요?', time: '12:39', sender: 'customerService' },
+    { id: 2, text: '네, 안녕하세요.', time: '12:41', sender: 'user' },
+    { id: 3, text: '오늘 3시에 가능하신가요?', time: '12:50', sender: 'user', image: 'path_to_dog_image.jpg' },
     // ...
   ]);
 

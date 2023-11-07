@@ -9,7 +9,7 @@ const ChatListItem = ({ image, username, content, date }) => {
   const handleChatDetailNav = () => {
     navigate(`${pageUrlConfig.chatPage}/123123`);
   };
-  
+
   return (
     <StyledUserHeader onClick={handleChatDetailNav}>
       <ProfileImage>
@@ -61,6 +61,11 @@ const Contents = styled.span`
   display: block;
   color: #767676;
   font-size: 12px;
+  max-width: 250px;
+
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 `;
 
 const DateText = styled(Contents)`

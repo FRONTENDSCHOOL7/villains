@@ -49,7 +49,7 @@ const MessageText = styled.span`
   align-self: ${(props) => (props.sender === 'user' ? 'flex-end' : 'flex-start')};
   line-height: 22px;
 
-  word-break: break-word;
+  word-break: keep-all;
   display: flex;
 `;
 
