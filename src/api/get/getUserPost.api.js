@@ -9,6 +9,7 @@ const getUerPostList = (accountname, token) => {
 const contactQuery = (accountname = '', token = '') => ({
   queryKey: ['get', 'userPost', accountname],
   queryFn: async () => getUerPostList(accountname, token),
+  enabled: !!accountname,
 });
 
 //사용자 정보를 미리 불러오고 싶다면, 해당 함수를 사용할 수 있습니다.

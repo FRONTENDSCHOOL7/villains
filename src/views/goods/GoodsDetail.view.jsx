@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef, useMemo } from 'react';
 import { useRecoilState, useRecoilValue } from 'recoil';
 import { bottomSheetStateAtom, bottomSheetOptions } from '../../atoms/bottomSheetStateAtom';
 import userAtom from '../../atoms/userAtom';
@@ -13,6 +13,10 @@ import profileImage from '../../assets/img/basic-profile.svg';
 import getUserDetail from '../../api/get/getUserDetail.api';
 import updateProduct from '../../api/update/updateProduct.api';
 import DropDown from '../../components/DropDown';
+import useSearchData from '../../hooks/useSearchData';
+import subOneAtom from '../../atoms/subOneAtom';
+import searchPlace from '../../api/loader/searchPlace.loader';
+import TrainMap from '../../components/map/TrainMap';
 
 const GoodsDetailPage = () => {
   const navigate = useNavigate();
@@ -25,10 +29,12 @@ const GoodsDetailPage = () => {
   const [link, setLink] = useState('');
   const [isDropdownVisible, setIsDropdownVisible] = useState(false); // 초기에는 드롭다운 숨김 상태
   const loginUser = JSON.parse(localStorage.getItem('user')).accountname;
-  const [bottomSheetTogle, setBottomSheetTogle] = useRecoilState(bottomSheetStateAtom);
+  const [bottomSheetTogle, setBottomSheetToggle] = useRecoilState(bottomSheetStateAtom);
   const [buttonOptions, setButtonOptions] = useRecoilState(bottomSheetOptions);
   const [realProductAuthor, setRealProductAuthor] = useRecoilState(realProductAuthorAtom);
   const user = useRecoilValue(userAtom);
+  
+  const [stationName, setStationName] = useState([]); //[startStation, endStation]
 
   // product 상세 정보 가져오기
   useEffect(() => {
@@ -40,8 +46,10 @@ const GoodsDetailPage = () => {
     if (!result) {
       return navigate(pageUrlConfig.goodsPage);
     } else {
+      const stations = result.itemName.split('~');
       setProduct(result);
       setLink(JSON.parse(result.link));
+      setStationName([stations[0], stations[1]]);
     }
   };
 
@@ -68,7 +76,7 @@ const GoodsDetailPage = () => {
         callback: async () => {
           const result = await deleteProduct(id);
           if (result) {
-            setBottomSheetTogle(false);
+            setBottomSheetToggle(false);
             navigate(pageUrlConfig.goodsPage);
           }
         },
@@ -77,7 +85,7 @@ const GoodsDetailPage = () => {
         label: '수정',
         callback: () => {
           //수정 페이지로 데이터 전달, 이동
-          setBottomSheetTogle(false);
+          setBottomSheetToggle(false);
           const goodsEditUrl = `${pageUrlConfig.goodsPage}/edit/${id}`;
           navigate(goodsEditUrl, { state: product });
         },
@@ -99,9 +107,12 @@ const GoodsDetailPage = () => {
     if (result) {
       // 택배 상태 버튼 업데이트를 위해 한번 더 api 호출 -> 리액트 쿼리로 바꾸면 한번만 불러도?..
       fetchProductData();
+      
     }
     setIsDropdownVisible(false);
   };
+
+    
 
   return (
     <PageTemplate>
@@ -144,6 +155,9 @@ const GoodsDetailPage = () => {
           <InfoArea>
             <Info>{link.itemInfo}</Info>
           </InfoArea>
+         <MapWrap>
+          <TrainMap stations={stationName} style={{width: `90%`, height: `100%`, margin: `auto`}} />
+          </MapWrap>
         </>
       )}
     </PageTemplate>
@@ -206,5 +220,10 @@ const InfoArea = styled.div`
   padding: 30px 32px;
 `;
 const Info = styled.div``;
+
+const MapWrap = styled.div`
+  width: 100%;
+  height: 200px;
+`;
 
 export default GoodsDetailPage;
