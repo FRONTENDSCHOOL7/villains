@@ -1,5 +1,5 @@
 import { Outlet, useLocation, useNavigate } from 'react-router';
-import { useEffect, useMemo } from 'react';
+import { useEffect } from 'react';
 import { useRecoilValue, useRecoilState } from 'recoil';
 import realProductAuthor from '../../atoms/realProductAuthorAtom';
 import userAtom from '../../atoms/userAtom';
@@ -7,7 +7,6 @@ import pageUrlConfig from '../../config/pageUrlConfig';
 import BackHeader from './BackHeader';
 import styled from 'styled-components';
 import Tanghulu from '../Tanghulu';
-import NavMenu from './NavMenu';
 import { Wrap } from '../PageTemplate.style';
 
 const PrivateLayout = () => {
@@ -32,13 +31,16 @@ const PrivateLayout = () => {
   };
   //왜 여기에 헤더가 있는데 다른 페이지에서 헤더를 추가하면 여기에 있는 헤더가 먹힐까요..?
   return (
-    <Wrap>
+    <PrivateWrap>
       <Outlet />
-      {/* <NavMenu /> */}
-    </Wrap>
+    </PrivateWrap>
   );
 };
 
 export default PrivateLayout;
 
 
+
+const PrivateWrap = styled(Wrap)`
+  border: none;
+`;

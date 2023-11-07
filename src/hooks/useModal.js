@@ -3,16 +3,16 @@ import { useState } from 'react';
 const useModal = () => {
   const [isModalVisible, setIsModalVisible] = useState(false);
   const [modalContent, setModalContent] = useState('');
-  const [modalAction, setModalAction] = useState(() => {});
+  const [modalAction, setModalAction] = useState(null);
 
-  const showModal = (message, action) => {
+  const showModal = (message, callback) => {
     setModalContent(message);
-    setModalAction(() => action);
+    setModalAction(() => callback);
     setIsModalVisible(true);
   };
 
   const handleModalConfirm = () => {
-    modalAction();
+    if (modalAction) modalAction();
     setIsModalVisible(false);
   };
 

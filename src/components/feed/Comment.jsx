@@ -25,7 +25,7 @@ const useCommentActions = (id, commentId, removeCommentFromList) => {
       { id, commentId },
       {
         onSuccess: () => removeCommentFromList(commentId),
-        onError: () => alert('댓글 삭제에 실패했습니다'),
+        onError: () => alertAction('댓글 삭제에 실패했습니다'),
       },
     );
   };
@@ -35,7 +35,7 @@ const useCommentActions = (id, commentId, removeCommentFromList) => {
       { id, commentId },
       {
         onSuccess: () => removeCommentFromList(commentId),
-        onError: () => alert('댓글 신고에 실패했습니다'),
+        onError: () => alertAction('댓글 신고에 실패했습니다'),
       },
     );
   };
@@ -72,8 +72,15 @@ const Comment = ({ comment, id, removeCommentFromList }) => {
     toggleBottomSheetShow();
   };
 
+  // confirm을 위한 액션
   const confirmAction = (message, callback) => {
     showModal(message, callback);
+    toggleBottomSheetShow();
+  };
+
+  // alert를 위한 액션
+  const alertAction = (message) => {
+    showModal(message);
     toggleBottomSheetShow();
   };
 
@@ -83,7 +90,7 @@ const Comment = ({ comment, id, removeCommentFromList }) => {
         <Modal
           content={modalContent}
           confirmText="확인"
-          cancelText="취소"
+          cancelText={confirmAction ? "취소" : null}
           onConfirm={handleModalConfirm}
           onCancel={handleModalCancel}
         />

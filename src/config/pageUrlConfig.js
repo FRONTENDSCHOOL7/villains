@@ -10,6 +10,7 @@ class pageUlrConfig {
   feedEditPage = `${baseUrl}feed/edit/:id`;
   feedDetailPage = `${baseUrl}feed/:id`;
   chatPage = `${baseUrl}chat`;
+  chatDetailPage = `${baseUrl}chat/:id`;
   goodsPage = `${baseUrl}goods`;
   goodsWritePage = `${baseUrl}goods/write`;
   goodsDetailPage = `${baseUrl}goods/:id`;
