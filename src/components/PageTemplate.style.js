@@ -10,10 +10,10 @@ const Wrap = styled.div`
 `;
 
 const Main = styled.main`
-  /* overflow-y: scroll; */
+  overflow-y: scroll;
   width: 100%;
-  /* height: caLc(100vh - 48px - 77px); */
-  min-height: calc(100vh - 48px - 77px);
+  height: caLc(100vh - 48px - 77px);
+  // min-height: calc(100vh - 48px - 77px);
 `;
 
 export { Wrap, Main };

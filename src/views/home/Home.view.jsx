@@ -69,7 +69,6 @@ const HomePage = () => {
     const feedId = event.currentTarget.id;
     navigate(`${pageUrlConfig.feedPage}/${feedId}`);
   }
-
   return (
     <PageTemplate>
       <Map 
