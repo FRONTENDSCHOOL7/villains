@@ -31,25 +31,6 @@ const NavMenu = () => {
             </Link>
           );
         })}
-        {/* <Link to="/feed">
-          <NavButton>피드 메뉴 버튼</NavButton>
-        </Link>
-  
-        <Link to="/goods">
-          <NavButton>택배 버튼</NavButton>
-        </Link>
-  
-        <Link to="/main">
-          <NavButton>홈 버튼</NavButton>
-        </Link>
-  
-        <Link to="/chat">
-          <NavButton>메세지 버튼</NavButton>
-        </Link>
-  
-        <Link to="/user">
-          <NavButton>프로필 버튼</NavButton>
-        </Link> */}
       </Nav>
       <BackGround />
     </>
@@ -114,5 +95,5 @@ const NavButton = styled.div`
 `;
 
 const BackGround = styled.div`
-  height: 77px;
+  height: 80px;
 `;
