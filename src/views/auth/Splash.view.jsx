@@ -1,8 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import Logo1 from '/img/Logo1.svg';
-import Logo2 from '/img/Logo2.svg';
 import { Main } from '../../components/PageTemplate.style';
+import Logo from '/img/Logo.png';
 
 import Kakao from '../../assets/img/kakao.svg';
 import Google from '../../assets/img/google.svg';
@@ -16,11 +15,19 @@ import { IconBtn } from '../../components/Buttons';
 const SplashPage = () => {
   const navigate = useNavigate();
   const [showSplash, setShowSplash] = useState(true);
+  const [backgroundBlue, setBackgroundBlue] = useState(false);
+  const [showSnsWrap, setShowSnsWrap] = useState(false);
 
   useEffect(() => {
-    setTimeout(() => {
+    const timer = setTimeout(() => {
       setShowSplash(false);
-    }, 1000);
+      setBackgroundBlue(true);
+      setTimeout(() => {
+        setShowSnsWrap(true);
+      }, 1000);
+    }, 3000);
+
+    return () => clearTimeout(timer);
   }, []);
 
   const moveToLogin = () => {
@@ -33,10 +40,8 @@ const SplashPage = () => {
 
   return (
     <PageTemplate>
-      {showSplash ? ( // showSplash가 true일 때만 field_splash가 나타납니다.
-        <SplashField logo={Logo1} color={'white'}></SplashField>
-      ) : (
-        <SplashField logo={Logo2} color={'#3c58c1'}>
+      <SplashField logo={Logo} color={backgroundBlue ? '#3c58c1' : 'white'}>
+        {showSnsWrap && (
           <SnsWrap>
             <IconBtn img={Email} onClick={moveToLogin} text={'이메일로 로그인'} disabled={false}></IconBtn>
             <IconBtn img={Kakao} disabled={true} text={'카카오톡 계정으로 로그인'}></IconBtn>
@@ -48,8 +53,8 @@ const SplashPage = () => {
               <BottomBtn onClick={moveToSingUp}>회원가입</BottomBtn>
             </ButtonWrap>
           </SnsWrap>
-        </SplashField>
-      )}
+        )}
+      </SplashField>
     </PageTemplate>
   );
 };
@@ -62,10 +67,14 @@ const SplashField = styled.div`
   flex-direction: column-reverse;
   height: 100vh;
   background-image: url(${(props) => props.logo});
+  background-size: 380px;
   background-repeat: no-repeat;
-  background-position: center 40%;
+  background-position: center 25%;
   background-color: ${(props) => props.color};
+
+  transition: background-color 1s;
 `;
+
 const SnsWrap = styled.div`
   display: flex;
   flex-direction: column;
@@ -73,6 +82,15 @@ const SnsWrap = styled.div`
   padding: 40px 34px 50px 34px;
   background: white;
   border-radius: 20px 20px 0 0;
+
+  transform: translateY(100%);
+  animation: slideUp 1s forwards;
+
+  @keyframes slideUp {
+    to {
+      transform: translateY(0);
+    }
+  }
 `;
 const ButtonWrap = styled.div`
   margin-top: 20px;
