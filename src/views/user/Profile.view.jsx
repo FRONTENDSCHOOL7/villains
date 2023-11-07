@@ -9,13 +9,18 @@ import { useRecoilValue } from 'recoil';
 import userAtom from '../../atoms/userAtom';
 import profileAtom from '../../atoms/profileAtom';
 import getUserInfo from '../../api/get/getUserInfo.api';
-import { BasicStyle, SecondaryStyle } from '../../components/GlobalButton';
+import DefaultBtn, { BasicStyle, PrimaryStyle, SecondaryStyle } from '../../components/GlobalButton';
+import theme from '../../style/theme';
+import { IconBtn } from '../../components/Buttons';
+import ChatIcon from '../../assets/img/message-circle.svg';
+
 
 const ProfilePage = () => {
   const navigate = useNavigate();
   const user = useRouteLoaderData('user');
   const { accountname } = useParams();
 
+  const [isLoading, setIsLoading] = useState(true);
   const [color, setColor] = useState(false);
   const [isMy, setIsMy] = useState(false);
   const [currentAccount, setCurrentAccount] = useState(accountname);
@@ -27,6 +32,7 @@ const ProfilePage = () => {
   };
 
   useEffect(() => {
+    if(profileInfo) setIsLoading(false);
     if (accountname === user.accountname) {
       setIsMy(true);
       setProfileInfo(myProfileInfo);
@@ -39,41 +45,48 @@ const ProfilePage = () => {
         console.error(error);
       })
     }
-  }, []);
+  }, [profileInfo]);
 
   const handleClickTab = (event) => {
     event.target.id === `1` ? setColor(false) : setColor(true);
   }
   return (
     <PageTemplate>
-      <UpperSection>
-        <ProfileHeader>
-          <Follow>
-            <span>{profileInfo.followerCount}</span>
-            followers
-          </Follow>
-          <ProfileImg src={profileInfo.image} alt="프로필 이미지" onError={(event)=>{event.target.src = basicProfile}}/>
-
-          <Follow>
-            <span>{profileInfo.followingCount}</span>
-            followings
-          </Follow>
-        </ProfileHeader>
-
-        <ProfileBody>
-          <UserName>{profileInfo.username}</UserName>
-          <ProfileEmail>@{currentAccount}</ProfileEmail>
-          <ProfileDsc>{profileInfo?.intro ?? `1호선 빌런 꿈나무`}</ProfileDsc>
-          {isMy ? <EditBtn>프로필 수정</EditBtn> : <EditBtn>팔로우</EditBtn>}
-        </ProfileBody>
-      </UpperSection>
-
-      <DownSection>
-        <TabGroup color={color} onClick={handleClickTab}>
-          <Tab id={`1`}>게시글</Tab>
-          <Tab id={`2`}>택배 목록</Tab>
-        </TabGroup>
-      </DownSection>
+      {isLoading ? <div>loading...</div>
+      :<>
+        <UpperSection>
+          <ProfileHeader>
+            <Follow>
+              <span>{profileInfo.followerCount}</span>
+              followers
+            </Follow>
+            <ProfileImg src={profileInfo.image} alt="프로필 이미지" onError={(event)=>{event.target.src = basicProfile}}/>
+  
+            <Follow>
+              <span>{profileInfo.followingCount}</span>
+              followings
+            </Follow>
+          </ProfileHeader>
+  
+          <ProfileBody>
+            <UserName>{profileInfo.username}</UserName>
+            <ProfileEmail>@{currentAccount}</ProfileEmail>
+            <ProfileDsc>{profileInfo?.intro ?? `1호선 빌런 꿈나무`}</ProfileDsc>
+            <ButtonWrap>
+              <button><img src={ChatIcon} alt="chat"/></ button>
+              {isMy ? <EditBtn>프로필 수정</EditBtn> : <EditBtn state={profileInfo.isfollow}>{profileInfo.isfollow ? `언팔로우` : `팔로우`}</EditBtn>}
+              <button><img src={ChatIcon} alt="chat"/></ button>
+              </ButtonWrap>
+          </ProfileBody>
+        </UpperSection>
+  
+        <DownSection>
+          <TabGroup color={color} onClick={handleClickTab}>
+            <Tab id={`1`}>게시글</Tab>
+            <Tab id={`2`}>택배 목록</Tab>
+          </TabGroup>
+        </DownSection>
+      </>}
     </PageTemplate>
   );
 };
@@ -83,7 +96,7 @@ export default ProfilePage;
 const UpperSection = styled.div`
   display: flex;
   flex-direction: column;
-  height: 314px;
+  padding: 26px;
 `;
 
 const ProfileHeader = styled.div`
@@ -92,7 +105,6 @@ const ProfileHeader = styled.div`
   align-items: center;
   text-align: center;
 
-  border: 1px solid orange;
   margin: 0 auto;
 
   width: 100%;
@@ -138,18 +150,35 @@ const ProfileDsc = styled.p`
   font-size: 16px;
   margin-bottom: 24px;
 `;
+const ButtonWrap = styled.div`
+  display: flex;
+  justify-content: center;
+  align-item: center;
+  gap: 10px;
 
+  & > :not(:nth-child(2)){
+    border: 1px solid;
+    border-radius: 50%;
+    padding: 7px;
+    border-color: ${theme.color.grey};
+    width: 34px;
+    height: 34px;
+    img {
+      max-width: 100%;
+    }
+  }
+`;
 const EditBtn = styled.button`
-  border: 1px solid #dbdbdb;
-  border-radius: 30px;
   width: 120px;
-  height: 34px;
+  padding: 9px 0;
   margin-bottom: 24px;
+  border-radius: 9999px;  
+  ${props => props.state ? BasicStyle : PrimaryStyle}
 `;
 
 // 컨텐츠를 포함하는 하단부
 const DownSection = styled.div`
-  margin-top: 6px;
+  border-top: 6px solid ${theme.color.light};
 `;
 
 const TabGroup = styled.div`
