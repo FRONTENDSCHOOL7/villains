@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import styled from 'styled-components';
-import { useRecoilValue } from 'recoil';
+import { useRecoilState, useRecoilValue } from 'recoil';
 import pageUrlConfig from '../../config/pageUrlConfig';
 import useGeoLocation from '../../hooks/useGeoLocation';
 import useBlockToBack from '../../hooks/useBlockToBack';
@@ -19,6 +19,7 @@ import ResizingTextarea from '../../components/feed/ResizingTextarea';
 
 import imageIcon from '../../assets/img/image-icon.svg';
 import arrowIcon from '../../assets/img/icon-arrow-left.svg';
+import userPostAtom from '../../atoms/userPostAtom';
 
 const FeedWritePage = () => {
   const [isEditMode, setIsEditMode] = useState(false);
@@ -33,6 +34,8 @@ const FeedWritePage = () => {
   const token = useRecoilValue(userAtom).token;
 
   const { fetchPost, loading, error } = getPostDetail();
+
+  const [userPosts, setUserPosts] = useRecoilState(userPostAtom);
 
   // params가 있다면 수정 모드로 변경
   useEffect(() => {
@@ -103,6 +106,16 @@ const FeedWritePage = () => {
       // TODO : 리액트 쿼리로 변경
       const updateResult = await putPostEdit(id, postData, token);
       if (updateResult) {
+        // 리코일 부분 작동하는지 확인 필요
+        setUserPosts((prevPosts) => {
+          const postIndex = prevPosts.indexOf((post) => post.id === id);
+          if (postIndex !== -1) {
+            const newPosts = [...prevPosts];
+            newPosts[postIndex] = updateResult;
+            return newPosts;
+          }
+          return oldPosts;
+        });
         navigate(`${pageUrlConfig.feedPage}/${updateResult.id}`);
       } else {
         console.error('게시글 수정에 실패했습니다.');
@@ -112,6 +125,7 @@ const FeedWritePage = () => {
       // TODO : getUserPost → Recoil (feedWrite 에서도 적용 → 업로드버튼 누르면 리코일에도 push)
       const uploadResult = await uploadPost(postData);
       if (uploadResult) {
+        setUserPosts((prevPosts) => [...prevPosts, uploadResult]);
         navigate(`${pageUrlConfig.feedPage}/${uploadResult.id}`);
       } else {
         console.error('게시글 업로드에 실패했습니다.');
