@@ -9,6 +9,7 @@ import { Main } from '../../components/PageTemplate.style';
 import { BlueLongBtn, WhiteLongBtn } from '../../components/Buttons';
 import CheckBox from '../../components/CheckBox';
 import userAtom from '../../atoms/userAtom';
+import { useRecoilState } from 'recoil';
 
 const SignInPage = () => {
   //로그인 시 userInfo를 Atom에 저장하기

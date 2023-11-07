@@ -7,15 +7,12 @@ import PageTemplate from '../../components/PageTemplate';
 import styled from 'styled-components';
 import getProductDetail from '../../api/get/getProductDetail.api';
 import deleteProduct from '../../api/delete/deleteProduct.api';
-import { useNavigate, useParams } from 'react-router';
+import { useNavigate, useParams, useRouteLoaderData } from 'react-router';
 import pageUrlConfig from '../../config/pageUrlConfig';
 import profileImage from '../../assets/img/basic-profile.svg';
 import getUserDetail from '../../api/get/getUserDetail.api';
 import updateProduct from '../../api/update/updateProduct.api';
 import DropDown from '../../components/DropDown';
-import useSearchData from '../../hooks/useSearchData';
-import subOneAtom from '../../atoms/subOneAtom';
-import searchPlace from '../../api/loader/searchPlace.loader';
 import TrainMap from '../../components/map/TrainMap';
 
 const GoodsDetailPage = () => {
@@ -32,7 +29,7 @@ const GoodsDetailPage = () => {
   const [bottomSheetTogle, setBottomSheetToggle] = useRecoilState(bottomSheetStateAtom);
   const [buttonOptions, setButtonOptions] = useRecoilState(bottomSheetOptions);
   const [realProductAuthor, setRealProductAuthor] = useRecoilState(realProductAuthorAtom);
-  const user = useRecoilValue(userAtom);
+  const user = useRouteLoaderData('user');
   
   const [stationName, setStationName] = useState([]); //[startStation, endStation]
 
