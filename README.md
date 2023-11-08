@@ -236,6 +236,10 @@ feat/: 기능별 작업용 브랜치
   - 매일 오전 9시, 오후 5시에 회고록을 작성하면서 아이스브레이킹 타임을 가질 수 있도록 노력했습니다.
   - 프로젝트 중 힘들어서 지치면 휴식 시간을 가지며 분위기를 풀어갈 수 있도록 했습니다.
 
+![1호선_1](https://github.com/FRONTENDSCHOOL7/villains/assets/128403039/40d3b457-ac48-440e-9ce8-3f93b176f9c4)
+![MBTI_1](https://github.com/FRONTENDSCHOOL7/villains/assets/128403039/b35054e9-9060-4fa8-a3f6-f431a6750277)
+![만세_2](https://github.com/FRONTENDSCHOOL7/villains/assets/128403039/9929c4a8-9c60-42df-9bb6-6736285f8aa4)
+
 
 * 커뮤니케이션
   - 각자 전공과 프로젝트 경험 여부를 체크하여 난이도에 맞는 역할 분담을 하여 부담을 줄일 수 있도록 노력하였습니다.
@@ -243,9 +247,9 @@ feat/: 기능별 작업용 브랜치
     원활한 진행을 위해 각 선택 사항에 대한 장단점을 설명하고 사용 경험 여부와 어떤 부분이 부담인지 의견을 들어보고 보완할 수 있는 방법을 찾을 수 있도록 하였습니다.
   - 모르는 내용이 있으면 자유롭게 질문하는 분위기를 만들 수 있도록 노력하였습니다.
   - 각자 잘하는 부분을 칭찬하고 노력을 응원하면서 성실히 참여할 수 있는 분위기를 만들었습니다.
- 
-![의사결정 _1jpg](https://github.com/FRONTENDSCHOOL7/villains/assets/128403039/07fb755f-f216-46dd-a5fd-7e8b829adf50)
-![리코일로_1](https://github.com/FRONTENDSCHOOL7/villains/assets/128403039/933f092d-8c4c-4eb9-adba-4f470edf3210)
+![의사결정_3](https://github.com/FRONTENDSCHOOL7/villains/assets/128403039/021aa2a8-3939-44f3-809c-75fbc8c701d3)
+![리코일로](https://github.com/FRONTENDSCHOOL7/villains/assets/128403039/e38d0c74-e2c8-4b32-89ca-a65fd5aedcde)
+
 
 
 
