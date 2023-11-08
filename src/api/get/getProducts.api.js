@@ -24,7 +24,6 @@ const getProducts = (page) => {
       );
       if(page === "profile") {
         fetchedProducts = response.data.product.filter((item, idx) => JSON.parse(item.link).accountname === user.accountname)
-        console.log(fetchedProducts)
       } else {
         fetchedProducts = response.data.product;
       }

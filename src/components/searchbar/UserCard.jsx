@@ -2,12 +2,16 @@ import styled from 'styled-components';
 import profileImage from '../../assets/img/basic-profile.svg';
 import { useNavigate } from 'react-router';
 import pageUrlConfig from '../../config/pageUrlConfig';
+import { useRecoilState } from 'recoil';
+import queryAtom from '../../atoms/queryAtom';
 
 const UserCard = ({ user }) => {
+  const [query, setQuery] = useRecoilState(queryAtom);
   const navigate = useNavigate();
 
   const handleProfileNav = () => {
     // TODO : 다른유저 프로필 작업 완료되면 경로 변경
+    setQuery("");
     navigate(pageUrlConfig.profilePage);
   };
 
