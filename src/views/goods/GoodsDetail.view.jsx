@@ -28,7 +28,7 @@ const GoodsDetailPage = () => {
   const [author, setAuthor] = useState('');
   const [link, setLink] = useState('');
   const [isDropdownVisible, setIsDropdownVisible] = useState(false); // 초기에는 드롭다운 숨김 상태
-  const loginUser = JSON.parse(localStorage.getItem('user')).accountname;
+  const loginUser = JSON.parse(localStorage.getItem('user'));
   const [bottomSheetTogle, setBottomSheetToggle] = useRecoilState(bottomSheetStateAtom);
   const [buttonOptions, setButtonOptions] = useRecoilState(bottomSheetOptions);
   const [realProductAuthor, setRealProductAuthor] = useRecoilState(realProductAuthorAtom);
@@ -136,7 +136,7 @@ const GoodsDetailPage = () => {
     const content = JSON.stringify({
       title: `[${product.itemName}] ` + realProductAuthor + ' 님과의 채팅방',
       productAuthor: realProductAuthor,
-      acceptUser: user.accountname,
+      acceptUser: loginUser.username,
       postId: 'chat',
     });
     const uploadResult = await uploadPost({
@@ -169,7 +169,11 @@ const GoodsDetailPage = () => {
         <>
           <ProfileArea>
             {/* <ProfileImg src={product.author.image}></ProfileImg> */}
-            <ProfileImg src={profileImage}></ProfileImg>
+            <ProfileImg src={
+                author.image === 'http://146.56.183.55:5050/Ellipse.png'
+                  ? 'https://api.mandarin.weniv.co.kr/Ellipse.png'
+                  : author.image
+              }></ProfileImg>
             <NameWrap>
               <Name>{author.username}</Name>
               <AccountName>@ {author.accountname}</AccountName>
