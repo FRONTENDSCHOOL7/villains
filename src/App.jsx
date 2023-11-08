@@ -32,10 +32,9 @@ const App = () => {
       <RecoilRoot>
         <RouterProvider
           router={router}
-          basename={process.env.NODE_ENV === 'production' ? '/VILLAINS/' : '/'}
         />
       </RecoilRoot>
-      {/* <ReactQueryDevtools initialIsOpen={false} /> */}
+      <ReactQueryDevtools initialIsOpen={false} />
     </QueryClientProvider>
   );
 };

@@ -1,3 +1,4 @@
+//인자 받을 때, 객체로 구조분해 할당하는 것보단, 인자의 순서대로 분류해서 받는 것은 어떠할까요?
 const useBottomSheetOptions = ({
   currentAccountname,
   authorAccountname,
@@ -6,6 +7,8 @@ const useBottomSheetOptions = ({
   postReport,
   commentDelete,
   commentReport,
+  logout,
+  profileReport,
   type,
 }) => {
   let options = [];
@@ -27,6 +30,14 @@ const useBottomSheetOptions = ({
         options = [{ label: '댓글 삭제', callback: commentDelete }];
       } else {
         options = [{ label: '댓글 신고', callback: commentReport }];
+      }
+      break;
+
+    case 'user':
+      if (currentAccountname === authorAccountname) {
+        options = [{ label: '로그아웃', callback: logout }];
+      } else {
+        options = [{ label: '유저 신고', callback: profileReport }];
       }
       break;
 
