@@ -1,6 +1,5 @@
-import { useState } from 'react';
-import { useNavigate, useRouteLoaderData } from 'react-router';
-import { useInfiniteQuery } from '@tanstack/react-query';
+
+import { useNavigate } from 'react-router';
 import styled from 'styled-components';
 import pageUrlConfig from '../../config/pageUrlConfig';
 
@@ -14,8 +13,6 @@ import LoadingSpinner from '../../components/LoadingSpinner';
 
 import write from '../../assets/img/write.svg';
 
-import useInfinite from '../../hooks/useInfinite';
-import getPostListQuery from '../../api/get/getPostList.api';
 
 const FeedPage = () => {
   const { posts, loading, error } = getPosts();
@@ -28,23 +25,8 @@ const FeedPage = () => {
 
   const skeletonCards = [...Array(5)].map((_, idx) => <SkeletonCard key={idx} />);
   
-  const user = useRouteLoaderData('user');
-
-  const REQUEST_PAGE = 10;
-  const [pageParam, setPageParam] = useState(0);
-
-  const { data, isLoading, isFetching, fetchNextPage, hasNextPage, isError } = useInfiniteQuery(
-    getPostListQuery(REQUEST_PAGE, pageParam),
-  );
-
-  const handleClickMore = () => {
-    setPageParam(pageParam+1);
-    if (hasNextPage) fetchNextPage();
-    console.log(data);
-  }
   return (
     <PageTemplate>
-      <button onClick={handleClickMore}>more</button>
       {!posts || posts.length === 0 ? (
         skeletonCards
       ) : (
