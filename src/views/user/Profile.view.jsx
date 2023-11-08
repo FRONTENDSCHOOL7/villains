@@ -71,7 +71,6 @@ const ProfilePage = () => {
   useEffect(() => {
     if (!myFeedList || !feedLoading) {
       setFeedList(data.data.post);
-      console.log(feedList);
     }
   }, [feedLoading, feedList, myFeedList]);
 

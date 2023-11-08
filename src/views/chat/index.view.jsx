@@ -21,19 +21,22 @@ const ChatIndexPage = () => {
   };
 
   const handleChatHeader = () => {
-    if (page[3] === user.accountname) {
+    if (page[4] === user.accountname) {
       return <Tanghulu />;
     } else return null;
   };
 
+
   return (
     <>
-      <BackHeader>
-        <BackArrowBtn variant={'basic'} onClick={handleClickBack}>
-          <img src={BackArrow} alt="뒤로가기" />
-        </BackArrowBtn>
-        {handleChatHeader()}
-      </BackHeader>
+      {pathname.split('/').length > 3 && (
+        <BackHeader>
+          <BackArrowBtn variant={'basic'} onClick={handleClickBack}>
+            <img src={BackArrow} alt="뒤로가기" />
+          </BackArrowBtn>
+          {handleChatHeader()}
+        </BackHeader>
+      )}
       <Outlet />
       {pathname === pageUrlConfig.chatPage && <NavMenu />}
     </>

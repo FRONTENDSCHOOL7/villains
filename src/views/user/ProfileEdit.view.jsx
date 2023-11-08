@@ -46,7 +46,6 @@ const ProfileEditPage = () => {
         image: urls,
       },
     };
-    console.log(newInfo);
     if (saveContents) {
       updateUser(newInfo, user.token)
         .then((result) => {

@@ -6,8 +6,11 @@ import styled, { css } from 'styled-components';
 import { useLocation } from 'react-router-dom';
 import { BasicStyle } from '../default/GlobalButton';
 import theme from '../../style/theme';
+import { useRecoilState } from 'recoil';
+import queryAtom from '../../atoms/queryAtom';
 
 const NavMenu = () => {
+  const [query, setQuery] = useRecoilState(queryAtom);
   const { pathname } = useLocation();
   const user = useRouteLoaderData('user');
   const navContents = [
@@ -25,7 +28,7 @@ const NavMenu = () => {
           const src = click ? `nav-${content[0]}-click.svg` : `nav-${content[0]}.svg`;
           return (
             <Link to={`${import.meta.env.BASE_URL}${content[0]}`} key={index}>
-              <NavButton state={click}>
+              <NavButton state={click} onClick={() => setQuery("")}>
                 <img src={`${import.meta.env.BASE_URL}nav/${src}`} alt={content[1]} />
                 <span>{content[1]}</span>
               </NavButton>

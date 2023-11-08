@@ -16,7 +16,6 @@ import write from '../../assets/img/write.svg';
 
 const FeedPage = () => {
   const { posts, loading, error } = getPosts();
-
   const navigate = useNavigate();
 
   const handleFeedWriteNav = () => {

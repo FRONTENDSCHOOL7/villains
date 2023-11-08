@@ -29,6 +29,7 @@ import ChatDetailPage from '../views/chat/ChatDetail.view';
 import SplashPage from '../views/auth/Splash.view';
 import SignInPage from '../views/auth/SignIn.view';
 import SignUpPage from '../views/auth/SignUp.view';
+import FeedPage from '../views/feed/Feed.view';
 
 /** 라우트 등록하기
  * 1. routeConfig의 children에 객체를 이용해서 path와 element 입력하기
@@ -73,7 +74,7 @@ const routeConfig = [
             path: pageUrlConfig.feedPage,
             element: <FeedIndexPage/>,
             children: [
-              { index: true, lazy: () => import(  '../views/feed/Feed.view') },
+              { index: true, element:<FeedPage/> },
               { path: pageUrlConfig.feedWritePage, element: <FeedWritePage /> },
               { path: pageUrlConfig.feedEditPage, element: <FeedWritePage /> },
               { path: pageUrlConfig.feedDetailPage, element: <FeedDetailPage /> },
