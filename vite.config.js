@@ -17,26 +17,36 @@ export default defineConfig(({ mode }) => {
   };
   return {
     // Vite 설정
-    // base: '/villains/',
     base: env.NODE_ENV === 'production' ? '/villains/' : '/',
-    plugins: [react(), htmlPlugin()],
+    plugins: [react(), htmlPlugin()], // vendor code spliting 설정
     define: {
       __APP_ENV__: JSON.stringify(env.APP_ENV),
     },
     resolve: {
       alias: [
-        { find: '@lib', replacement: './lib' },
+        { find: '@view', replacement: './view' },
         { find: '@data', replacement: './data' },
         { find: '@components', replacement: './components' },
       ],
     },
-    // build: {
-    //   rollupOptions: {
-    //     output: {
-    //       entryFileNames: '[name].js',
-    //       assetFileNames: '[name].[ext]',
-    //     },
-    //   },
-    // },
+    build: {
+      //console 제거
+      minify: 'terser',
+      terserOptions: {
+        compress: {
+          drop_console: true,
+          drop_debugger: true,
+        },
+      },
+      watch: {
+        // https://rollupjs.org/configuration-options/#watch
+      },
+      rollupOptions: {
+        output: {
+          entryFileNames: '[name].js',
+          assetFileNames: '[name].[ext]',
+        },
+      },
+    },
   };
 });

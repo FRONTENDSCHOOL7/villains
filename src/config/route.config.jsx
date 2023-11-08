@@ -1,43 +1,47 @@
+import {lazy} from 'react-router';
 import DefaultLayout from '../components/layout/DefautlLayout';
 import PrivateLayout from '../components/layout/PrivateLayout';
 import pageUrlConfig from './pageUrlConfig';
 
-import AuthIndexPage from '../views/auth/index.view';
-import SplashPage from '../views/auth/Splash.view';
-import SignInPage from '../views/auth/SignIn.view';
-import SignUpPage from '../views/auth/SignUp.view';
+// lazy를 이용한 코드 스플리팅 설정
+const AuthIndexPage = lazy(() => import('../views/auth/index.view'));
+const SplashPage = lazy(() => import( '../views/auth/Splash.view'));
+const SignInPage = lazy(() => import( '../views/auth/SignIn.view'));
+const SignUpPage = lazy(() => import( '../views/auth/SignUp.view'));
 
-import FeedIndexPage from '../views/feed/index.view';
-import FeedPage from '../views/feed/Feed.view';
-import FeedDetailPage from '../views/feed/FeedDetail.view';
-import FeedWritePage from '../views/feed/FeedWrite.view';
+const FeedIndexPage = lazy(() => import( '../views/feed/index.view'));
+const FeedPage = lazy(() => import( '../views/feed/Feed.view'));
+const FeedDetailPage = lazy(() => import( '../views/feed/FeedDetail.view'));
+const FeedWritePage = lazy(() => import( '../views/feed/FeedWrite.view'));
 
-import HomeIndexPage from '../views/home/index.view';
-import HomePage from '../views/home/Home.view';
-import ResultPage from '../views/home/Result.view';
-import HomeTrainPage from '../views/home/Train.view';
+const HomeIndexPage = lazy(() => import( '../views/home/index.view'));
+const HomePage = lazy(() => import( '../views/home/Home.view'));
+const ResultPage = lazy(() => import( '../views/home/Result.view'));
+const HomeTrainPage = lazy(() => import( '../views/home/Train.view'));
 
-import ProfileIndexPage from '../views/user/index.view';
-import ProfilePage from '../views/user/Profile.view';
-import ProfileEditPage from '../views/user/ProfileEdit.view';
-import ProfileFollowPage from '../views/user/ProfileFollow.view';
+const ProfileIndexPage = lazy(() => import( '../views/user/index.view'));
+const ProfilePage = lazy(() => import( '../views/user/Profile.view'));
+const ProfileEditPage = lazy(() => import( '../views/user/ProfileEdit.view'));
+const ProfileFollowPage = lazy(() => import( '../views/user/ProfileFollow.view'));
 
-import GoodsIndexPage from '../views/goods/index.view';
-import GoodsPage from '../views/goods/Goods.view';
-import GoodsWritePage from '../views/goods/GoodsWrite.view';
-import GoodsDetailPage from '../views/goods/GoodsDetail.view';
+const GoodsIndexPage = lazy(() => import( '../views/goods/index.view'));
+const GoodsPage = lazy(() => import( '../views/goods/Goods.view'));
+const GoodsWritePage = lazy(() => import( '../views/goods/GoodsWrite.view'));
+const GoodsDetailPage = lazy(() => import( '../views/goods/GoodsDetail.view'));
 
-import ChatIndexPage from '../views/chat/index.view';
-import ChatPage from '../views/chat/Chat.view';
-import ChatDetailPage from '../views/chat/ChatDetail.view';
+const ChatIndexPage = lazy(() => import( '../views/chat/index.view'));
+const ChatPage = lazy(() => import( '../views/chat/Chat.view'));
+const ChatDetailPage = lazy(() => import( '../views/chat/ChatDetail.view'));
 
-import searchPlace from '../api/loader/searchPlace.loader';
-import sendUserInfo from '../api/loader/sendUserInfo.loader';
+const searchPlace = lazy(() => import( '../api/loader/searchPlace.loader'));
+const sendUserInfo = lazy(() => import( '../api/loader/sendUserInfo.loader'));
 
 /** 라우트 등록하기
  * 1. routeConfig의 children에 객체를 이용해서 path와 element 입력하기
  * 2. pageUrlConfig에 해당 path로 변수만들어서 link 이동 시 사용하기
  *  **/
+
+
 
 const routeConfig = [
   {
