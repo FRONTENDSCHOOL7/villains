@@ -17,6 +17,7 @@ const getPosts = () => {
     const headers = client.BothType(token);
 
     while (fetchedPosts.length < POSTS_REQUEST) {
+      setLoading(true);
       try {
         const response = await client.get(
           `/post?limit=${POSTS_REQUEST}&skip=${currentSkip}`,

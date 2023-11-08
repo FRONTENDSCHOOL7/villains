@@ -114,7 +114,7 @@ const FeedWritePage = () => {
             newPosts[postIndex] = updateResult;
             return newPosts;
           }
-          return oldPosts;
+          return prevPosts;
         });
         navigate(`${pageUrlConfig.feedPage}/${updateResult.id}`);
       } else {

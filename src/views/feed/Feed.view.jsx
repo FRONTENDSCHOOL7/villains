@@ -8,6 +8,9 @@ import PostCard from '../../components/feed/PostCard';
 import FloatingButton from '../../components/FloatingButton.style';
 import write from '../../assets/img/write.svg';
 
+import SkeletonCard from '../../components/SkeletonCard';
+import LoadingSpinner from '../../components/LoadingSpinner';
+
 const FeedPage = () => {
   const { posts, loading, error } = getPosts();
 
@@ -17,15 +20,21 @@ const FeedPage = () => {
     navigate(pageUrlConfig.feedWritePage);
   };
 
+  const skeletonCards = [...Array(5)].map((_, idx) => <SkeletonCard key={idx} />);
+
   return (
     <PageTemplate>
-      {posts && (
+      {!posts || posts.length === 0 ? (
+        skeletonCards
+      ) : (
         <PostList>
           {posts.map((post, idx) => (
             <PostCard post={post} key={idx} />
           ))}
+          {loading && <LoadingSpinner />}
         </PostList>
       )}
+
       <FloatingButton img={write} onClick={handleFeedWriteNav} />
     </PageTemplate>
   );
