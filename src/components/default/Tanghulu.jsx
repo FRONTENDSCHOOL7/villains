@@ -6,10 +6,10 @@ import { useRecoilState } from 'recoil';
 import styled from 'styled-components';
 
 const Tanghulu = () => {
-  const [buttomSheetToggle, setButtomSheetTogle] = useRecoilState(bottomSheetStateAtom);
+  const [bottomSheetToggle, setBottomSheetToggle] = useRecoilState(bottomSheetStateAtom);
 
   const handleTangOnClick = () => {
-    setButtomSheetTogle((prevButtomSheekToggle) => !prevButtomSheekToggle);
+    setBottomSheetToggle((prevBottomSheetToggle) => !prevBottomSheetToggle);
   };
   return (
     <TangIconImg onClick={handleTangOnClick}>

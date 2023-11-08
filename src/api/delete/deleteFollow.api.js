@@ -9,7 +9,7 @@ const deleteFollow = async (accountname, token) => {
 const deleteFollowQuery = (accountname, token) => ({
   mutationKey: [`delete`, `follow`, accountname],
   mutationFn: async () => deleteFollow(accountname, token),
-  enabled: !!token,
+  enabled: !!accountname,
 });
 
 export { deleteFollow };

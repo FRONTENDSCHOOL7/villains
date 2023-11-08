@@ -7,7 +7,7 @@ import { useRecoilState, useRecoilValue } from 'recoil';
 
 import useGeoLocation from '../../hooks/useGeoLocation';
 
-import userAtom from '../../atoms/userAtom';
+import {useRouteLoaderData} from 'react-router-dom';
 import profileAtom from '../../atoms/profileAtom';
 import userPostAtom from '../../atoms/userPostAtom';
 import contactQuery from '../../api/get/getUserPost.api';
@@ -20,7 +20,7 @@ import pageUrlConfig from '../../config/pageUrlConfig';
 
 const HomePage = () => {
   const navigate = useNavigate();
-  const user = useRecoilValue(userAtom);
+  const user = useRouteLoaderData('user');
   const [profileInfo, setProfileInfo] = useRecoilState(profileAtom);
   const [posts, setPosts] = useRecoilState(userPostAtom);
   
@@ -29,7 +29,7 @@ const HomePage = () => {
   const { latitude, longitude } = location ?? {latitude: 37.566535, longitude: 126.9779692};
 
   const { data, isError, isLoading, isFetching } = useQuery(
-    contactQuery(user.accountname, user.token)
+    contactQuery(user?.accountname, user?.token)
   );
 
   useEffect(()=>{
@@ -49,7 +49,7 @@ const HomePage = () => {
   }
 
   useEffect(() => {
-    if (data) setPosts(data.data.post);
+    if (data?.data.post.content.includes('postId')) setPosts(data.data.post);
   }, [!isLoading && data]);
 
   
