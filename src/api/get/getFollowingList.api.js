@@ -25,15 +25,16 @@ import { useState } from 'react';
 ]
  */
 const getFollowingList = () => {
-  const user = useRecoilValue(userAtom);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
 
-  const fetchFollowing = async (accountname) => {
+  const fetchFollowing = async () => {
     setLoading(true);
-    // const token = JSON.parse(localStorage.getItem('user')).token;
+    const accountname = JSON.parse(localStorage.getItem('user')).accountname;
+    const token = JSON.parse(localStorage.getItem('user')).token;
+
     try {
-      const response = await client.get(`/profile/${accountname ?? user.accoutnanme}/following`, {}, client.BothType(user.token));
+      const response = await client.get(`/profile/${accountname}/following`, {}, client.BothType(token));
       return response.data;
     } catch (error) {
       setError(error);
