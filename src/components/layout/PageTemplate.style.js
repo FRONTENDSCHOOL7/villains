@@ -14,7 +14,7 @@ const Wrap = styled.div`
 const Main = styled.main`
   width: 100%;
   height: calc(100vh - 48px - 80px);
-  overflow-y: scroll;
+  overflow-y: auto;
 
   &::-webkit-scrollbar {
     width: 6px; /* 세로축 스크롤바 폭 너비 */
