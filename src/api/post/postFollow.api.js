@@ -24,10 +24,15 @@ import userAtom from '../../atoms/userAtom';
     }
 }
  */
-const postFollow = async (accountname) => {
-  const user = useRecoilValue(userAtom);
+const postFollow = async (accountname, token) => {
   // const token = JSON.parse(localStorage.getItem('user')).token;
-  return await client.post(`/profile/${accountname ?? user.token}/follow`, {}, client.BothType(user.token));
+  return await client.post(`/profile/${accountname}/follow`, {}, client.BothType(token));
 };
 
-export default postFollow;
+const postFollowQuery = (accountname, token) => ({
+  mutationKey: [`post`, `follow`, accountname],
+  mutationFn: async () => postFollow(accountname, token),
+  enabled: !!token,
+});
+
+export default postFollowQuery;

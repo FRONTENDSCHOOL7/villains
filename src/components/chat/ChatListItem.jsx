@@ -1,28 +1,35 @@
 import styled from 'styled-components';
 import basicProfile from '../../assets/img/basic-profile.svg';
 import { useNavigate } from 'react-router';
+import { useRecoilValue } from 'recoil';
 import pageUrlConfig from '../../config/pageUrlConfig';
+import useFormatDate from '../../hooks/useFormatDate';
+import { useState, useEffect } from 'react';
 
-const ChatListItem = ({ image, username, content, date }) => {
+const ChatListItem = ({ post }) => {
   const navigate = useNavigate();
 
   const handleChatDetailNav = () => {
-    navigate(`${pageUrlConfig.chatPage}/123123`);
+    navigate(`${pageUrlConfig.chatPage}/${post._id}/${post.author.accountname}`);
   };
 
   return (
-    <StyledUserHeader onClick={handleChatDetailNav}>
-      <ProfileImage>
-        {/* 프로필 기본이미지 수정 필요 */}
-        {/* <img src={post.author.image} alt="" /> */}
-        <img src={basicProfile} alt="" />
-      </ProfileImage>
-      <UserInfo>
-        <UserName>{username || '애월읍 위니브 감귤농장'}</UserName>
-        <Contents>{content || '이번에 정정 언제하맨마씸?'}</Contents>
-      </UserInfo>
-      <DateText>{date || '2020.10.25'}</DateText>
-    </StyledUserHeader>
+    <>
+      {post.content.title && (
+        <StyledUserHeader onClick={handleChatDetailNav}>
+          <ProfileImage>
+            {/* 프로필 기본이미지 수정 필요 */}
+            {/* <img src={post.author.image} alt="" /> */}
+            <img src={basicProfile} alt="" />
+          </ProfileImage>
+          <UserInfo>
+            <UserName>{post.content.title}</UserName>
+            <Contents>배달 수락자 : {post.content.acceptUser}</Contents>
+          </UserInfo>
+          <DateText>{useFormatDate(post.createdAt)}</DateText>
+        </StyledUserHeader>
+      )}
+    </>
   );
 };
 
@@ -30,13 +37,12 @@ export default ChatListItem;
 
 const StyledUserHeader = styled.li`
   width: 100%;
-  padding: 0 20px;
+  padding: 20px;
   display: flex;
   flex-wrap: nowrap;
   align-items: center;
   gap: 12px;
-  margin-bottom: 20px;
-
+  border-bottom: 1px solid #dbdbdb;
   cursor: pointer;
 `;
 

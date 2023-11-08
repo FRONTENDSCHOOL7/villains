@@ -1,29 +1,38 @@
-import React from 'react';
-import { Outlet, useLocation, useNavigate } from 'react-router';
-import PageTemplate from '../../components/PageTemplate';
+import React, { useState, useEffect } from 'react';
+import { Outlet, useLocation, useNavigate, useParams } from 'react-router';
 import NavMenu from '../../components/layout/NavMenu';
 import BackHeader from '../../components/layout/BackHeader';
-import DefaultBtn, { BasicStyle } from '../../components/GlobalButton';
+import DefaultBtn, { BasicStyle } from '../../components/default/GlobalButton';
 import BackArrow from '../../assets/img/icon-arrow-left.svg';
 import styled from 'styled-components';
-import Tanghulu from '../../components/Tanghulu';
+import Tanghulu from '../../components/default/Tanghulu';
 import pageUrlConfig from '../../config/pageUrlConfig';
+import userAtom from '../../atoms/userAtom';
+import { useRecoilState, useRecoilValue } from 'recoil';
 
 const ChatIndexPage = () => {
+  const user = useRecoilValue(userAtom);
   const navigate = useNavigate();
   const { pathname } = useLocation();
+  const page = pathname.split('/');
 
   const handleClickBack = () => {
-    navigate(-1);
+    navigate(pageUrlConfig.chatPage);
   };
-  
+
+  const handleChatHeader = () => {
+    if (page[3] === user.accountname) {
+      return <Tanghulu />;
+    } else return null;
+  };
+
   return (
     <>
       <BackHeader>
         <BackArrowBtn variant={'basic'} onClick={handleClickBack}>
           <img src={BackArrow} alt="뒤로가기" />
         </BackArrowBtn>
-        <Tanghulu />
+        {handleChatHeader()}
       </BackHeader>
       <Outlet />
       {pathname === pageUrlConfig.chatPage && <NavMenu />}

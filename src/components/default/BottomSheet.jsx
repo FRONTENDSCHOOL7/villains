@@ -1,7 +1,7 @@
 import React, { useRef, useEffect } from 'react';
 import styled from 'styled-components';
 import { useRecoilState, useRecoilValue } from 'recoil';
-import { bottomSheetStateAtom, bottomSheetOptions } from '../atoms/bottomSheetStateAtom';
+import { bottomSheetStateAtom, bottomSheetOptions } from '../../atoms/bottomSheetStateAtom';
 
 const BottomSheet = () => {
   const [isVisible, setIsVisible] = useRecoilState(bottomSheetStateAtom);
@@ -13,7 +13,7 @@ const BottomSheet = () => {
     setIsVisible(false);
   };
 
-  return isVisible ? (
+  return isVisible &&
     <>
       <Overlay onClick={handleBottomSheetClose} />
       <BottomSheetWrapper ref={wrapperRef}>
@@ -25,7 +25,6 @@ const BottomSheet = () => {
         ))}
       </BottomSheetWrapper>
     </>
-  ) : null;
 };
 
 export default BottomSheet;

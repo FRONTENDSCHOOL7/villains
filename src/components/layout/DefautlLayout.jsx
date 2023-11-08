@@ -1,5 +1,5 @@
 import { Outlet } from "react-router"
-import { Wrap } from "../PageTemplate.style"
+import { Wrap } from "./PageTemplate.style"
 
 const DefaultLayout = () => {
 

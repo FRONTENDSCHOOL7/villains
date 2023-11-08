@@ -50,7 +50,7 @@ jobs:
           echo "VITE_MAP_KEY=${{secrets.VITE_MAP_KEY }}" >> .env.production
 
       - name: Install dependencies
-        run: npm install
+        run: npm ci
       - name: Build
         run: npm run build
       - name: Setup Pages

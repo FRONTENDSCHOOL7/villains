@@ -1,147 +1,172 @@
-import { useNavigate, useParams } from 'react-router-dom';
-import React, { useState } from 'react';
+import { useNavigate, useParams, useRouteLoaderData, useLocation, Link } from 'react-router-dom';
+import {useQuery, useMutation} from '@tanstack/react-query'
+import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
 
 import pageUrlConfig from '../../config/pageUrlConfig';
-import PageTemplate from '../../components/PageTemplate';
+import PageTemplate from '../../components/layout/PageTemplate';
 import basicProfile from '../../assets/img/basic-profile.svg';
-import { useRecoilValue } from 'recoil';
-import userAtom from '../../atoms/userAtom';
+import { useRecoilValue, useRecoilState } from 'recoil';
+import PostCard from '../../components/feed/PostCard';
+import userPostAtom from '../../atoms/userPostAtom';
+import profileAtom from '../../atoms/profileAtom';
+import getUserInfo from '../../api/get/getUserInfo.api';
+import  DefaultBtn, { BasicStyle, PrimaryStyle, SecondaryStyle } from '../../components/default/GlobalButton';
+import theme from '../../style/theme';
+import contactQuery from '../../api/get/getUserPost.api';
+import Goods from '../../components/Goods';
+import ChatIcon from '../../assets/img/message-circle.svg';
+import ShareIcon from '../../assets/img/icon-404.svg'
+import getProducts from '../../api/get/getProducts.api';
+import postFollowQuery from '../../api/post/postFollow.api';
+import deleteFollowQuery from '../../api/delete/deleteFollow.api';
+
 
 const ProfilePage = () => {
+  const user = useRouteLoaderData('user');
   const navigate = useNavigate();
-  //현재 프로필 페이지의 계정
-  // /user/:accountname /user/villains /user
-  const user = useRecoilValue(userAtom);
+  const {pathname} = useLocation();
   const { accountname } = useParams();
-  // const [읽기 전용 변수, 변수 수정용 함수] = useState(읽기 전용 변수의 값);
-  // let currentAccount = accountname;
-  const [currentAccount, setCurrentAccount] = useState(accountname);
-  // if (!accountname) {
-  //   //url에 accountname이 없는 경우 === 자기의 프로필로 들어왔을 경우 === 내 accountname일 경우
-  //   //현재 프로필 페이지의 계정을 자신의 것으로 설정한다.
-  //   //currentAcount = user.accountname;
-  //   if (!user) {
-  //     try {
-  //       const userItem = localStorage.getItem('user');
-  //       setCurrentAccount(JSON.parse(userItem).accountname);
-  //     } catch (error) {
-  //       console.error(error);
-  //       navigate(pageUrlConfig.signInPage);
-  //     }
-  //   } else {
-  //     setCurrentAccount(user.accountname);
-  //   }
-  // }
-  console.log(currentAccount);
 
+  const [isLoading, setIsLoading] = useState(true);
   const [color, setColor] = useState(false);
-  const [alignment, setAlignment] = useState();
+  const [isMy, setIsMy] = useState(false);
+  const [profileInfo, setProfileInfo] = useState();
+  const [feedList, setFeedList] = useState([]);
+  const [goodsList, setGoodsList] = useState([]);
 
-  const handleClickEdit = () => {
-    navigate(pageUrlConfig.profileEdit);
-  };
+  const [myProfileInfo, setMyProfileInfo] = useRecoilState(profileAtom);
+  const myFeedList = useRecoilValue(userPostAtom);
 
-  // useEffect(() => {
-  //   if (accountname === user.accountname) {
-  //   }
-  // });
+  
+  const { products, loading, error } = getProducts();
+  useEffect(()=>{
+    setGoodsList(products);
+  },[loading])
 
-  const handleChange = () => {
-    // color === 'skyblue' ? setColor('white') : setColor('skyblue');
-    setColor(skyblue);
-    console.log('clicked');
-  };
-
-  const handleAlignment = (event, newAlignment) => {
-    if (newAlignment !== null) {
-      setAlignment(newAlignment);
+  const {data, isFetching, isLoading:feedLoading, isError} = useQuery(contactQuery(accountname, user.token));
+  
+  useEffect(() => {
+    if (accountname === user.accountname) {
+      setIsMy(true);
     }
-  };
+    //   setProfileInfo(myProfileInfo);
+    //   setFeedList(myFeedList);
+    // } else{
+      getUserInfo(accountname, user.token)
+      .then((result)=>{
+        setProfileInfo(result.data.profile);
+        setIsLoading(false);
+        setMyProfileInfo(result.data.profile);
+      })
+      .catch((error)=>{
+        console.error(error);
+      })
+    // }
+  }, [accountname]);
 
-  // const { post, loading, error } = getPosts();
-  // if (loading) return <div>Loading...</div>;
-  // if (error) return <div>Error loading posts: {error.message}</div>;
+  useEffect(()=>{
+    if(!myFeedList || !feedLoading){
+      setFeedList(data.data.post)
+    }
+  }, [feedLoading, feedList, myFeedList])
 
+
+  const handleClickTab = (event) => {
+    event.target.id === `1` ? setColor(false) : setColor(true);
+  }
+
+  const {data:FollowData, isLoading:FollowLoading, mutate:Following } = useMutation(postFollowQuery(accountname, user.token));
+
+  const {data:unFollowData, isLoading:unFollowLoading, mutate:unFollowing } = useMutation(deleteFollowQuery(accountname, user.token));
+
+  const handleClickBtns = (event) => {
+    switch(event.target.id){
+      case 'chat':
+        navigate(pageUrlConfig.chatPage);
+        break;
+      case 'share':
+        const BASE_URL = import.meta.env.BASE_URL;
+        navigator.clipboard.writeText(`${BASE_URL}${pathname}`);
+        alert('링크 복사 완료!');
+        break;
+      case 'edit':
+        navigate(`${pageUrlConfig.profilePage}/${user.accountname}/edit`)
+        break;
+      case 'unfollow':
+        unFollowing();
+        break;
+      case 'follow':
+        Following();
+        break;
+    }
+
+  }
   return (
     <PageTemplate>
-      <Header>프로필 페이지 임시 헤더</Header>
+        {(isLoading && !profileInfo) ?
+        <div>loading</div>
+        : <UpperSection>
+          <ProfileHeader>
+            <Link to={`${pageUrlConfig.profilePage}/${accountname}/follower`}>
+            <Follow>
+              <span>{profileInfo.followerCount}</span>
+              followers
+            </Follow>
+            </Link>
+            <ProfileImg src={profileInfo.image} alt="프로필 이미지" onError={(event)=>{event.target.src = basicProfile}}/>
+            <Link to={`${pageUrlConfig.profilePage}/${accountname}/following`}>
+            <Follow>
+              <span>{profileInfo.followingCount}</span>
+              followings
+            </Follow>
+            </Link>
+          </ProfileHeader>
+  
+          <ProfileBody>
+            <UserName>{profileInfo.username}</UserName>
+            <AccountName>@{accountname}</AccountName>
+            <ProfileDsc>{profileInfo?.intro ?? `1호선 빌런 꿈나무`}</ProfileDsc>
+            <ButtonWrap onClick={handleClickBtns}>
+              <button id='chat'></ button>
+              {isMy ? 
+              <DefaultBtn id={`edit`}>프로필 수정</DefaultBtn> : (profileInfo.isfollow ? 
+                <DefaultBtn variant={'basic'} id={`unfollow`}>언팔로우</DefaultBtn> 
+                :  <DefaultBtn variant={'primary'} id={`follow`}>팔로우</DefaultBtn> 
+              )}
+              <button id='share'></ button>
+              </ButtonWrap>
+          </ProfileBody>
+        </UpperSection>}
+  
+        <DownSection>
+          <TabGroup color={color} onClick={handleClickTab}>
+            <Tab id={`1`}>게시글</Tab>
+            <Tab id={`2`}>택배 목록</Tab>
+          </TabGroup>
+         <ListWrap>
+            {color ?
+              <Goods products={goodsList}/>
+             :
+             feedList.map((post, index) => {
+                const contents = JSON.parse(post.content);
+                const parsedPost = {...post, _id: post.id, content: contents}
+                return <PostCard post={parsedPost} key={post.id}/>
+              })
+            }
+         </ListWrap>
 
-      <UpperSection>
-        {/* 유저 정보 */}
-        <ProfileHeader>
-          <Follow>
-            <span>2950</span>
-            followers
-          </Follow>
-          <ProfileImg src={basicProfile} alt="프로필 이미지" />
-
-          <Follow>
-            <span>128</span>
-            followings
-          </Follow>
-        </ProfileHeader>
-
-        {/* <ProfileContent> */}
-        <UserName>나야나</UserName>
-        <ProfileEmail>@villain_no1</ProfileEmail>
-        <ProfileDsc>1호선 빌런 꿈나무</ProfileDsc>
-        {/* <Link to="/user/edit">프로필 수정</Link>  */}
-        {/* <SmallBtn
-            background={'red'}
-            color={'black'}
-            cursor={'pointer'}
-            border={'black'}
-            text={'프로필 수정'}
-            onClick={handleClickEdit}
-            disabled={false}
-          >
-            프로필 수정
-          </SmallBtn> */}
-        <EditBtn>프로필 수정</EditBtn>
-        {/* </ProfileContent> */}
-      </UpperSection>
-
-      {/*  게시글 */}
-      <DownSection>
-        <TabGroup color={color} value={alignment} onClick={handleChange}>
-          <Tab value={'게시글'}>게시글</Tab>
-          <Tab>택배 목록</Tab>
-        </TabGroup>
-      </DownSection>
+        </DownSection>
     </PageTemplate>
   );
 };
 export default ProfilePage;
 
-const Header = styled.header`
-  width: 100%;
-  height: 48px;
-  background-color: #dbdbdb;
-`;
 
-// 뒤로가기 버튼이 있는 Nav
-// const TopBasicNav = styled.div`
-//   box-shadow: inset 0 0 10px grey;
-//   max-width: 390px;
-//   height: 40px;
-// `;
-
-// const BackButton = styled.button`
-//   border: 1px solid #000;
-// `;
-
-// const Kebab = styled.button`
-//   border: 1px solid #000;
-// `;
-
-// 프로필 카드 상단부
-const UpperSection = styled.div`
+const UpperSection = styled.section`
   display: flex;
   flex-direction: column;
-  border: 0.5px solid blue;
-  max-width: 400px;
-  height: 314px;
+  padding: 26px;
 `;
 
 const ProfileHeader = styled.div`
@@ -150,22 +175,25 @@ const ProfileHeader = styled.div`
   align-items: center;
   text-align: center;
 
-  border: 1px solid orange;
   margin: 0 auto;
 
   width: 100%;
+  min-height: 110px;
 
   & > :not(:nth-child(2)) {
     margin: 0 auto;
   }
 `;
-
+const ProfileBody = styled.div`
+  margin: 0 auto;
+  text-align: center;
+`
 const Follow = styled.div`
-  font-size: 8px;
+  font-size: ${theme.fontSize.caption};
   & span {
     display: block;
-    font-size: 18px;
-    font-weight: 800;
+    font-size: ${theme.fontSize.body1};
+    font-weight: ${theme.fontWeight.bold};
     margin-bottom: 7px;
   }
 `;
@@ -178,104 +206,76 @@ const ProfileImg = styled.img`
   margin-bottom: 11px;
 `;
 
-// 프로필 설명
-const ProfileContent = styled.div`
-  box-shadow: inset 0 0 10px gold;
-  text-align: center;
-`;
-
 const UserName = styled.p`
-  color: #000;
-  font-size: 16px;
-  font-weight: 800;
+  font-weight: ${theme.fontWeight.bold};
   margin-bottom: 10px;
 `;
 
-const ProfileEmail = styled.p`
-  color: #000;
-  font-size: 16px;
+const AccountName = styled.p`
   margin-bottom: 17px;
+  font-size: ${theme.fontSize.body3}
 `;
 
 const ProfileDsc = styled.p`
-  color: #000;
-  font-size: 16px;
   margin-bottom: 24px;
 `;
-
-const EditBtn = styled.button`
-  border: 1px solid #dbdbdb;
-  border-radius: 30px;
-  width: 120px;
-  height: 34px;
-  margin-bottom: 24px;
-`;
-
-// 컨텐츠를 포함하는 하단부
-const DownSection = styled.div`
+const ButtonWrap = styled.div`
   display: flex;
-  flex-direction: column;
-  align-items: center;
+  justify-content: center;
+  align-item: center;
+  gap: 10px;
+  min-height: 2em;
+  
+  flex-shrink: 0;
 
-  box-shadow: inset 0 0 10px blue;
-  max-width: 400px;
-  height: 100vh;
-  margin-top: 6px;
+  & > :not(:nth-child(2)){
+    flex-grow: 0.5;
+    border: 1px solid;
+    border-radius: 50%;
+    padding: 7px;
+    border-color: ${theme.color.grey};
+    width: 44px;
+    height: 34px;
+    background: url(${ShareIcon}) no-repeat center/80%;
+  }
+
+    
+  & > :nth-child(1){
+    background: url(${ChatIcon}) no-repeat center/70%;
+  }
+  & > :nth-child(2){
+    padding: 9px;
+    min-width: 120px;
+    flex-grow: 1.5;
+  }
+`;
+
+const DownSection = styled.section`
+  border-top: 6px solid ${theme.color.light};
 `;
 
 const TabGroup = styled.div`
+  position: sticky;
+  top: 0;
+  z-index: 10;
   display: flex;
-
-  box-shadow: inset 0 0 10px skyblue;
-  max-width: 400px;
+  width: 100%;
   height: 64px;
+  background-color: ${theme.color.white};
+
+  & :nth-child(1){
+    ${(props)=> props.color? SecondaryStyle : BasicStyle}
+  }
+  & :nth-child(2){
+    ${(props)=> !props.color? SecondaryStyle : BasicStyle}
+  }
 `;
 
 const Tab = styled.button`
-  display: flex;
-  justify-content: center;
-  align-items: center;
-
-  border: 1px solid red;
-  background-color: ${(props) => props.color};
-  width: 195px;
-  height: 64px;
-
-  /* &:active {
-    background-color: white;
-  } */
-  /* ${({ active }) =>
-    active &&
-    `color: ${theme.color.black};
-     border-color: ${theme.color.secondary};
-  `} */
-`;
-const types = ['게시글', '택배 목록'];
-
-const PostList = styled.ul`
-  width: 100%;
-  padding: 20px 20px 0 20px;
+  flex-basis: 50%;
+  flex-shrink: 0;
 `;
 
-const FeedCard = styled.div`
-  box-shadow: 0 0 10px orange;
-
-  border-radius: 10px;
-  border: 1px solid #dbdbdb;
-  width: 350px;
-  margin-top: 20px;
-`;
-
-const CardImg = styled.div`
-  box-shadow: 0 0 10px orange;
-
-  width: 350px;
-  height: 180px;
-`;
-
-const CardContent = styled.div`
-  box-shadow: 0 0 10px orange;
-  width: 350px;
-  height: 88px;
-  padding: 16px;
-`;
+const ListWrap = styled.ul`
+  padding: 16px 8px;
+`

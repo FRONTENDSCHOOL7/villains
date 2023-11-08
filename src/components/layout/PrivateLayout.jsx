@@ -6,8 +6,8 @@ import userAtom from '../../atoms/userAtom';
 import pageUrlConfig from '../../config/pageUrlConfig';
 import BackHeader from './BackHeader';
 import styled from 'styled-components';
-import Tanghulu from '../Tanghulu';
-import { Wrap } from '../PageTemplate.style';
+import Tanghulu from '../default/Tanghulu';
+import { Wrap } from './PageTemplate.style';
 
 const PrivateLayout = () => {
   const navigate = useNavigate();

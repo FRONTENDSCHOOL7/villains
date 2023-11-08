@@ -6,10 +6,10 @@ import { useRecoilState, useRecoilValue } from 'recoil';
 import client from '../../config/api.config';
 import pageUrlConfig from '../../config/pageUrlConfig';
 
-import PageTemplate from '../../components/PageTemplate';
+import PageTemplate from '../../components/layout/PageTemplate';
 import SearchSub from '../../components/SearchSub';
-import { Input, Label } from '../../components/Input.style';
-import FloatingButton from '../../components/FloatingButton.style';
+import { Input, Label } from '../../components/default/Input.style';
+import FloatingButton from '../../components/default/FloatingButton.style';
 
 import goodsQueryStartAtom from '../../atoms/goodsQueryStartAtom';
 import goodsQueryEndAtom from '../../atoms/goodsQueryEndAtom';
@@ -82,16 +82,16 @@ const GoodsWritePage = () => {
 
   useEffect(() => {
     if (
-      typeof errors.price === 'undefined' ||
+      errors.price ||
       startSubway === '' ||
       info === '' ||
       endSubway === '' ||
       price === '' ||
       image.url === ''
     ) {
-      setHeaderBtnState(false);
-    } else {
       setHeaderBtnState(true);
+    } else {
+      setHeaderBtnState(false);
     }
     const adminToken = JSON.parse(localStorage.getItem('admin')).token;
     const linkData = JSON.stringify({

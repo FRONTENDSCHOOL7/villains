@@ -2,7 +2,7 @@ import { useCallback, useEffect, useState } from 'react';
 import client from '../../config/api.config';
 import useInfiniteScroll from '../../hooks/useInfiniteScroll';
 
-const getPosts = () => {
+const getChatPosts = () => {
   const [posts, setPosts] = useState([]); // 현재 로드된 게시글
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
@@ -17,7 +17,6 @@ const getPosts = () => {
     const headers = client.BothType(token);
 
     while (fetchedPosts.length < POSTS_REQUEST) {
-      setLoading(true);
       try {
         const response = await client.get(
           `/post?limit=${POSTS_REQUEST}&skip=${currentSkip}`,
@@ -34,7 +33,7 @@ const getPosts = () => {
             // JSON 파싱에 실패한 경우
             return false;
           }
-          return Boolean(parsedContent.postId === 'villains');
+          return Boolean(parsedContent.postId === 'chat');
         });
 
         fetchedPosts = [...fetchedPosts, ...filteredData];
@@ -71,4 +70,4 @@ const getPosts = () => {
   return { posts, loading, error };
 };
 
-export default getPosts;
+export default getChatPosts;

@@ -7,20 +7,20 @@ import { useRecoilState, useRecoilValue } from 'recoil';
 
 import useGeoLocation from '../../hooks/useGeoLocation';
 
-import userAtom from '../../atoms/userAtom';
+import {useRouteLoaderData} from 'react-router-dom';
 import profileAtom from '../../atoms/profileAtom';
 import userPostAtom from '../../atoms/userPostAtom';
 import contactQuery from '../../api/get/getUserPost.api';
 import getUserInfo from '../../api/get/getUserInfo.api';
 
-import PageTemplate from '../../components/PageTemplate';
+import PageTemplate from '../../components/layout/PageTemplate';
 import defaultImg from '../../assets/img/basic-profile.svg';
 import theme from '../../style/theme';
 import pageUrlConfig from '../../config/pageUrlConfig';
 
 const HomePage = () => {
   const navigate = useNavigate();
-  const user = useRecoilValue(userAtom);
+  const user = useRouteLoaderData('user');
   const [profileInfo, setProfileInfo] = useRecoilState(profileAtom);
   const [posts, setPosts] = useRecoilState(userPostAtom);
   
@@ -29,7 +29,7 @@ const HomePage = () => {
   const { latitude, longitude } = location ?? {latitude: 37.566535, longitude: 126.9779692};
 
   const { data, isError, isLoading, isFetching } = useQuery(
-    contactQuery(user.accountname, user.token)
+    contactQuery(user?.accountname, user?.token)
   );
 
   useEffect(()=>{
@@ -49,10 +49,12 @@ const HomePage = () => {
   }
 
   useEffect(() => {
-    if (data) setPosts(data.data.post);
-  }, [!isLoading && data]);
-
-  
+    if(!isLoading && data){
+      data?.data.post.map((post, index)=>{
+        if (post.content?.includes('postId')) setPosts(data.data.post);
+      })
+    }
+  }, [isLoading, data]);
 
   //Todo: 지도 레벨이 일정 이상 커지면 커스텀 오버레이에 글씨 없애기 대신 사용자 프로필?
   const level = 3;

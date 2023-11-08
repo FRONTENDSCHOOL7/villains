@@ -28,9 +28,8 @@ import userAtom from '../../atoms/userAtom';
     }
 }
 */
-const updateUser = async (newUserInfo) => {
-  const token = useRecoilValue(userAtom);
-  return await client.put(`/user`, newUserInfo, client.BothType(token.token));
+const updateUser = async (newUserInfo, token) => {
+  return await client.put(`/user`, newUserInfo, client.BothType(token));
 };
 
 export default updateUser;

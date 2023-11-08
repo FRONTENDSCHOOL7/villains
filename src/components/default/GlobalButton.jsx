@@ -1,5 +1,5 @@
 import styled, { css } from "styled-components";
-import theme from "../style/theme";
+import theme from "../../style/theme";
 
 /**@param variant: "primary" | "secondary" | "basic" */
 const DefaultBtn = ({children, variant, disabled, id}) => {

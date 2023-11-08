@@ -1,27 +1,110 @@
 import styled from 'styled-components';
-import PageTemplate from '../../components/PageTemplate';
+import PageTemplate from '../../components/layout/PageTemplate';
 import Message from '../../components/chat/Message';
 import ChatInputField from '../../components/chat/ChatInputField';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
+import { useNavigate, useParams } from 'react-router';
+import getComments from '../../api/get/getComments.api';
+import postComments from '../../api/post/postComments.api';
+import { useRecoilState, useRecoilValue } from 'recoil';
+import { bottomSheetOptions, bottomSheetStateAtom } from '../../atoms/bottomSheetStateAtom';
+import deletePostQuery from '../../api/delete/deletePost.api';
+import { useMutation } from '@tanstack/react-query';
+import userAtom from '../../atoms/userAtom';
+import Modal from '../../components/Modal';
+import pageUrlConfig from '../../config/pageUrlConfig';
+
+const usePostActions = (id, token, navigate) => {
+  const deleteMutation = useMutation(deletePostQuery(id, token));
+
+  const postDelete = () => {
+    deleteMutation.mutate(
+      { id, token },
+      {
+        onSuccess: () => navigate(pageUrlConfig.chatPage),
+        onError: () => alert('게시글 삭제에 실패했습니다.'),
+      },
+    );
+  };
+
+  return { postDelete };
+};
 
 const ChatDetailPage = () => {
-  const [messages, setMessages] = useState([
-    // 예시 메시지 데이터
-    { id: 1, text: '온수 ~ 부천 택배 요청 수락했습니다! 언제 물건을 가지러 가면 될까요?', time: '12:39', sender: 'customerService' },
-    { id: 2, text: '네, 안녕하세요.', time: '12:41', sender: 'user' },
-    { id: 3, text: '오늘 3시에 가능하신가요?', time: '12:50', sender: 'user', image: 'path_to_dog_image.jpg' },
-    // ...
-  ]);
+  const user = useRecoilValue(userAtom);
+  const navigate = useNavigate();
+  const [messages, setMessages] = useState([]);
+  const { id } = useParams();
+  const { fetchComments } = getComments();
+  const { uploadComment } = postComments();
+  const [bottomSheetTogle, setBottomSheetToggle] = useRecoilState(bottomSheetStateAtom);
+  const [buttonOptions, setButtonOptions] = useRecoilState(bottomSheetOptions);
+  const [showModal, setShowModal] = useState(false);
+  const [modalContent, setModalContent] = useState({
+    content: '',
+    confirmText: '',
+    cancelText: '',
+    onConfirm: '',
+    onCancel: '',
+  });
+  const { postDelete } = usePostActions(id, user.token, navigate);
+
+  useEffect(() => {
+    setButtonOptions([
+      {
+        label: '삭제',
+        callback: () => {
+          setShowModal(true);
+          setBottomSheetToggle(false);
+          setModalContent({
+            content: '채팅방을 삭제할까요?',
+            confirmText: '삭제',
+            cancelText: '취소',
+            onConfirm: () => postDelete(),
+            onCancel: () => setShowModal(false),
+          });
+        },
+      },
+    ]);
+  }, [id]);
+
+  useEffect(() => {
+    fetchData();
+  }, [id]);
+
+  const fetchData = async () => {
+    const result = await fetchComments(id);
+    if (result) {
+      setMessages(result.reverse());
+    }
+  };
+
+  const handleSendChat = async (text) => {
+    const result = await uploadComment(id, text);
+    console.log(result);
+    if (result) {
+      fetchData();
+    }
+  };
 
   return (
     <PageTemplate>
+      {showModal && (
+        <Modal
+          content={modalContent.content}
+          confirmText={modalContent.confirmText}
+          cancelText={modalContent.cancelText}
+          onConfirm={modalContent.onConfirm}
+          onCancel={modalContent.onCancel}
+        ></Modal>
+      )}
       <ChatContainer>
         <MessageList>
           {messages.map((message) => (
             <Message key={message.id} data={message} />
           ))}
         </MessageList>
-        <ChatInputField />
+        <ChatInputField onClick={handleSendChat} />
       </ChatContainer>
     </PageTemplate>
   );

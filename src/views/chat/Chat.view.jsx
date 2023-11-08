@@ -1,44 +1,32 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
-import PageTemplate from '../../components/PageTemplate';
+import PageTemplate from '../../components/layout/PageTemplate';
 import ChatListItem from '../../components/chat/ChatListItem';
+import getChatPosts from '../../api/get/getChatPost.api';
+import SkeletonList from '../../components/SkeletonList';
+import SkeletonChatList from '../../components/SkeletonChatList';
 
 const ChatPage = () => {
-  const [chatList, setChatList] = useState([
-    // 예시 데이터
-    {
-      id: 1,
-      username: '1호선 빌런 꿈나무',
-      content: '우리, 친하게 지내요 :)',
-      date: '2023.11.07',
-    },
-    {
-      id: 2,
-      username: 'SUBONE 고객센터',
-      content: '안녕하세요, 고객 서비스입니다.😊😊😊',
-      date: '2023.11.06',
-    },
-    {
-      id: 3,
-      username: '택배요정',
-      content: '온수 ~ 부천 택배 요청 수락했습니다! 언제 물건을 가지러 가면 될까요?',
-      date: '2023.11.05',
-    },
-    // ...
-  ]);
+  //const user = useRecoilValue(userAtom);
+  const user = JSON.parse(localStorage.getItem('user'));
+  const { posts, loading, error } = getChatPosts();
+  const skeletonLists = [...Array(5)].map((_, idx) => <SkeletonChatList key={idx} />);
 
   return (
     <PageTemplate>
-      <ChatList>
-        {chatList.map((item, idx) => (
-          <ChatListItem username={item.username} content={item.content} date={item.date} ket={idx} />
-        ))}
-      </ChatList>
+      {posts && (
+        <ChatList>
+          {posts.map((item, idx) => (
+            <ChatListItem post={item} key={idx}/>
+          ))}
+        </ChatList>
+      )}
+      {loading && skeletonLists}
     </PageTemplate>
   );
 };
 export default ChatPage;
 
 const ChatList = styled.ul`
-  padding: 24px 0;
+  
 `;
