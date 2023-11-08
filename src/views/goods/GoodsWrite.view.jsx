@@ -82,16 +82,16 @@ const GoodsWritePage = () => {
 
   useEffect(() => {
     if (
-      typeof errors.price === 'undefined' ||
+      errors.price ||
       startSubway === '' ||
       info === '' ||
       endSubway === '' ||
       price === '' ||
       image.url === ''
     ) {
-      setHeaderBtnState(false);
-    } else {
       setHeaderBtnState(true);
+    } else {
+      setHeaderBtnState(false);
     }
     const adminToken = JSON.parse(localStorage.getItem('admin')).token;
     const linkData = JSON.stringify({
