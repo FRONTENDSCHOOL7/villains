@@ -37,13 +37,12 @@ export default ChatListItem;
 
 const StyledUserHeader = styled.li`
   width: 100%;
-  padding: 0 20px;
+  padding: 20px;
   display: flex;
   flex-wrap: nowrap;
   align-items: center;
   gap: 12px;
-  margin-bottom: 20px;
-
+  border-bottom: 1px solid #dbdbdb;
   cursor: pointer;
 `;
 
