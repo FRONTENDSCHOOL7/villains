@@ -34,7 +34,7 @@ const App = () => {
           router={router}
         />
       </RecoilRoot>
-      {/* <ReactQueryDevtools initialIsOpen={false} /> */}
+      <ReactQueryDevtools initialIsOpen={false} />
     </QueryClientProvider>
   );
 };

@@ -5,14 +5,15 @@ import TangImg from '../../assets/img/icon-more-vertical.svg';
 import { useRecoilState } from 'recoil';
 import styled from 'styled-components';
 
-const Tanghulu = () => {
+const Tanghulu = ({onClick}) => {
   const [bottomSheetToggle, setBottomSheetToggle] = useRecoilState(bottomSheetStateAtom);
 
   const handleTangOnClick = () => {
     setBottomSheetToggle((prevBottomSheetToggle) => !prevBottomSheetToggle);
   };
+  
   return (
-    <TangIconImg onClick={handleTangOnClick}>
+    <TangIconImg onClick={onClick ?? handleTangOnClick}>
       <img src={TangImg}></img>
     </TangIconImg>
   );

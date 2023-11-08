@@ -49,10 +49,12 @@ const HomePage = () => {
   }
 
   useEffect(() => {
-    if (data?.data.post.content.includes('postId')) setPosts(data.data.post);
-  }, [!isLoading && data]);
-
-  
+    if(!isLoading && data){
+      data?.data.post.map((post, index)=>{
+        if (post.content?.includes('postId')) setPosts(data.data.post);
+      })
+    }
+  }, [isLoading, data]);
 
   //Todo: 지도 레벨이 일정 이상 커지면 커스텀 오버레이에 글씨 없애기 대신 사용자 프로필?
   const level = 3;

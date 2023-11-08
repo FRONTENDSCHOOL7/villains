@@ -13,7 +13,7 @@ const BottomSheet = () => {
     setIsVisible(false);
   };
 
-  return isVisible ? (
+  return isVisible &&
     <>
       <Overlay onClick={handleBottomSheetClose} />
       <BottomSheetWrapper ref={wrapperRef}>
@@ -25,7 +25,6 @@ const BottomSheet = () => {
         ))}
       </BottomSheetWrapper>
     </>
-  ) : null;
 };
 
 export default BottomSheet;
