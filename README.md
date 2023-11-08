@@ -30,9 +30,13 @@ PW: 123123
 * 전체 일정
 `이미지 추가 예정`
 
+
+
 * 명세 기능별 일정
+![명세일정](https://github.com/FRONTENDSCHOOL7/villains/assets/128403039/72880591-6bb4-4097-a2cc-03e1f684b088)
 
 `상세 일정은 프로젝트 링크`
+![상세일정](https://github.com/FRONTENDSCHOOL7/villains/assets/128403039/3130f0bf-37ab-480d-9ff7-0e4d4ffafd5a)
 
 
 ## 2. 팀 소개
@@ -200,13 +204,13 @@ PW: 123123
 ## 8. 트러블슈팅
 
 - 깃허브 위키 연결
-
+![트러블슈팅](https://github.com/FRONTENDSCHOOL7/villains/wiki/Trouble-Shooting)
 
 ## 9. Branch 전략
 
 브랜치 모델은 깃 플로우(Git Flow) 참고하여 **main- development - feature** 단계로 나누어 코드를 관리하는 전략을 사용하였습니다. 브랜치는 세 가지가 있는데 항상 유지되는 (main, development(dev)) 브랜치가 있고, 일시적으로 생성되었다가 사라지는 (feature(feat)) 브랜치가 있습니다. 기능, 페이지 작업 시 feature 브랜치를 생성 후 작업하고 dev 에 push 하여 rebase 하고, 완료되면 브랜치를 삭제 후 새로 생성하는 방식으로 진행하였습니다. main 으로 push 하는 경우 2명 이상의 승인 후 가능하도록 하여 실수로 파일이 날아가는 것을 방지하였습니다.
 
-`이미지 추가 예정`
+![깃 플로우](https://github.com/FRONTENDSCHOOL7/villains/assets/128403039/dcd8dfae-3fe7-4560-93ff-db33f16b3752)
 
 ```markdown
 git flow: main - dev(test) - feat/기능명
@@ -222,6 +226,7 @@ feat/: 기능별 작업용 브랜치
 ## 10. 협업
 
 → 깃헙 위키에 업로드해서 링크 연결
+
 - 회의록
 
 ![image](https://github.com/FRONTENDSCHOOL7/villains/assets/117346967/e73f7952-4ab8-4f8a-b82d-d4fc27c6eec6)
@@ -229,15 +234,24 @@ feat/: 기능별 작업용 브랜치
 ## 11. 팀 문화
 
 * 아이스브레이킹
-  - 첫 모임에 낯가림이 있었지만 사는 지역, MBTI, 전공, 개인 일정 등을 주제로 이야기 나누었습니다. 아이스브레이킹으로 모든 팀원이 서울 지하철 1호선 근처에 거주 한다는 공통점을 발견하였고 이 특징을 바탕으로 개성 있는 팀 프로젝트 아이디어가 나오게 되었습니다.
+  - 첫 모임에 낯가림이 있었지만 사는 지역, MBTI, 전공, 개인 일정 등을 주제로 이야기 나누었습니다. 
+    아이스브레이킹으로 모든 팀원이 서울 지하철 1호선 근처에 거주 한다는 공통점을 발견하였고 이 특징을 바탕으로 개성 있는 팀 프로젝트 아이디어가 나오게 되었습니다.
   - 매일 오전 9시, 오후 5시에 회고록을 작성하면서 아이스브레이킹 타임을 가질 수 있도록 노력했습니다.
   - 프로젝트 중 힘들어서 지치면 휴식 시간을 가지며 분위기를 풀어갈 수 있도록 했습니다.
+![1호선](https://github.com/FRONTENDSCHOOL7/villains/assets/128403039/1f680b58-0058-4740-a2f8-540aa37e2265)
+![MBTI](https://github.com/FRONTENDSCHOOL7/villains/assets/128403039/fa915cf4-fc91-4228-aa31-0174ff2f01e3)
+![만세](https://github.com/FRONTENDSCHOOL7/villains/assets/128403039/baeb2c5c-4dbd-4f07-840e-1916f395d1f7)
 
 * 커뮤니케이션
   - 각자 전공과 프로젝트 경험 여부를 체크하여 난이도에 맞는 역할 분담을 하여 부담을 줄일 수 있도록 노력하였습니다.
-  - 초반에 아이디어 및 설정 관련해서 의사 결정 사항이 많았습니다. 원활한 진행을 위해 각 선택 사항에 대한 장단점을 설명하고 사용 경험 여부와 어떤 부분이 부담인지 의견을 들어보고 보완할 수 있는 방법을 찾을 수 있도록 하였습니다.
+  - 초반에 아이디어 및 설정 관련해서 의사 결정 사항이 많았습니다. 
+    원활한 진행을 위해 각 선택 사항에 대한 장단점을 설명하고 사용 경험 여부와 어떤 부분이 부담인지 의견을 들어보고 보완할 수 있는 방법을 찾을 수 있도록 하였습니다.
   - 모르는 내용이 있으면 자유롭게 질문하는 분위기를 만들 수 있도록 노력하였습니다.
   - 각자 잘하는 부분을 칭찬하고 노력을 응원하면서 성실히 참여할 수 있는 분위기를 만들었습니다.
+ 
+![의사결정](https://github.com/FRONTENDSCHOOL7/villains/assets/128403039/1ba5816f-7b84-4ac7-a581-ac7c8f8e9963)
+![리코일로](https://github.com/FRONTENDSCHOOL7/villains/assets/128403039/d63c47a3-3f92-4dc9-bd6b-c9a5feac2255)
+
 
 * 매일 오전, 오후 스프린트 2회 진행
   - 각자 진행 상황을 파악하고 오전, 오후 목표를 정하였습니다. 머지 과정을 거치면서 코드가 너무 달라져서 큰 충돌이 생기는 일을 방지하였습니다.
@@ -245,10 +259,15 @@ feat/: 기능별 작업용 브랜치
 * 주 1회 오프라인 모임
   - 모두 서울에 거주하여 접근성이 좋았으므로 주 1회 이상 오프라인으로 만나 프로젝트를 진행 하도록 일정을 계획했습니다.
 
+![용산모임_3](https://github.com/FRONTENDSCHOOL7/villains/assets/128403039/499aec9b-f7e5-4838-9aac-d4a3d8041485)
+![용산 모임 _1](https://github.com/FRONTENDSCHOOL7/villains/assets/128403039/8277b564-822e-47ce-be03-50eda241def3)
+
+
  * 스터디
    - 오전 9시부터 오후 6시까지는 개발에 집중하고 공부가 필요한 부분은 저녁 7시 이후에 따로 스터디를 진행하였습니다.
    - 리코일을 이용해 검색어를 저장하고 리액트 쿼리를 이용해 자주사용하는 검색어 같은 데이터를 관리하는 방법에 관해 스터디를 진행하였습니다.
-     링크: [https://www.notion.so/2eebd0fa8b8746c48e3d9a0c15d1a744?pvs=4](https://github.com/FRONTENDSCHOOL7/villains/wiki/Study)
+   - 링크: [https://www.notion.so/2eebd0fa8b8746c48e3d9a0c15d1a744?pvs=4](https://github.com/FRONTENDSCHOOL7/villains/wiki/Study)
+     
 
 * 문서화
   - 노션, 깃 위키, 옵시디언 등을 활용하여 주기적으로 진행하던 회의와 회고, 스터디에 관한 자료를 정리하였습니다.
