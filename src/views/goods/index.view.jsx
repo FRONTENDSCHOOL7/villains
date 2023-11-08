@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { Outlet, useLocation, useNavigate, useParams } from 'react-router';
-import DefaultBtn, { BasicStyle } from '../../components/GlobalButton';
+import DefaultBtn, { BasicStyle } from '../../components/default/GlobalButton';
 import NavMenu from '../../components/layout/NavMenu';
 import SearchHeader from '../../components/layout/SearchHeader';
 import BackHeader from '../../components/layout/BackHeader';
@@ -8,11 +8,11 @@ import userAtom from '../../atoms/userAtom';
 import { useRecoilValue } from 'recoil';
 import realProductAuthorAtom from '../../atoms/realProductAuthorAtom';
 import { headerBtnOptionsAtom, headerBtnStateAtom } from '../../atoms/headerBtnStateAtom';
-import Tanghulu from '../../components/Tanghulu';
+import Tanghulu from '../../components/default/Tanghulu';
 import styled from 'styled-components';
 import pageUrlConfig from '../../config/pageUrlConfig';
 import BackArrow from '../../assets/img/icon-arrow-left.svg';
-import { BlueSmallBtn } from '../../components/Buttons';
+import { BlueSmallBtn } from '../../components/default/Buttons';
 
 const GoodsIndexPage = () => {
   const navigate = useNavigate();

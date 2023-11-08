@@ -12,8 +12,8 @@ import postImages from '../../api/post/postImages.api';
 import getPostDetail from '../../api/get/getPostDetail.api';
 import putPostEdit from '../../api/update/updatePostEdit.api';
 
-import PageTemplate from '../../components/PageTemplate';
-import FloatingButton from '../../components/FloatingButton.style';
+import PageTemplate from '../../components/layout/PageTemplate';
+import FloatingButton from '../../components/default/FloatingButton.style';
 import ImagePreview from '../../components/feed/ImagePreview';
 import ResizingTextarea from '../../components/feed/ResizingTextarea';
 

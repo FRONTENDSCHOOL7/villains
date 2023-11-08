@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
-import { bottomSheetOptions, bottomSheetStateAtom } from '../atoms/bottomSheetStateAtom';
+import { bottomSheetOptions, bottomSheetStateAtom } from '../../atoms/bottomSheetStateAtom';
 import BottomSheet from './BottomSheet';
-import TangImg from '../assets/img/icon-more-vertical.svg';
+import TangImg from '../../assets/img/icon-more-vertical.svg';
 import { useRecoilState } from 'recoil';
 import styled from 'styled-components';
 

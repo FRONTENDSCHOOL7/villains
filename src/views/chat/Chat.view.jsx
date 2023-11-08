@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
-import PageTemplate from '../../components/PageTemplate';
+import PageTemplate from '../../components/layout/PageTemplate';
 import ChatListItem from '../../components/chat/ChatListItem';
 import { useRecoilValue } from 'recoil';
 import userAtom from '../../atoms/userAtom';

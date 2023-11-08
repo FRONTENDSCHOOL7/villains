@@ -18,10 +18,10 @@ import useFormatDate from '../../hooks/useFormatDate';
 import useBottomSheetOptions from '../../hooks/useBottomSheetOptions';
 import useModal from '../../hooks/useModal';
 
-import PageTemplate from '../../components/PageTemplate';
+import PageTemplate from '../../components/layout/PageTemplate';
 import Comment from '../../components/feed/Comment';
 import CommentForm from '../../components/feed/CommentForm';
-import { IconLabelBtn } from '../../components/Buttons';
+import { IconLabelBtn } from '../../components/default/Buttons';
 import Modal from '../../components/Modal';
 
 import { Swiper, SwiperSlide } from 'swiper/react';

@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import PageTemplate from '../../components/PageTemplate';
+import PageTemplate from '../../components/layout/PageTemplate';
 import Message from '../../components/chat/Message';
 import ChatInputField from '../../components/chat/ChatInputField';
 import { useState, useEffect } from 'react';

@@ -45,12 +45,13 @@ const TrainMap = ({stations, style, level = 3}) => {
     }, [isLoading])
     
     useEffect(()=>{
-        if(center.lat != 0) map.current.setBounds(bounds);
-    }, [isLoading])
+        if(!map) return;
+        // if(center.lat != 0) map.current.setBounds(bounds);
+    }, [isLoading, map])
 
     
     return  (
-    <Map center={center} style={style} level={level} ref={map}>
+    <Map center={center} style={style} level={8} ref={setMap}>
         {markers.map((marker, index)=>{
             return <MapMarker key={index} position={{ lat: marker.y, lng: marker.x }} />
         })}

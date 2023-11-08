@@ -3,7 +3,7 @@ import followPageStateAtom from '../atoms/followPageStateAtom';
 import { useRecoilValue } from 'recoil';
 import styled from 'styled-components';
 import postFollow from '../api/post/postFollow.api';
-import postUnFollow from '../api/post/postUnFollow.api';
+import deleteFollow from '../api/delete/deleteFollow.api';
 import { useNavigate } from 'react-router';
 import pageUrlConfig from '../config/pageUrlConfig';
 
@@ -38,7 +38,7 @@ const Follower = ({ data }) => {
               <FollowBtn onClick={async () => await postFollow(user.accountname)}>팔로우</FollowBtn>
             )}
             {followPageState === 'following' && user.isfollow && (
-              <FollowBtn onClick={async () => await postUnFollow(user.accountname)}>언팔로우</FollowBtn>
+              <FollowBtn onClick={async () => await deleteFollow(user.accountname)}>언팔로우</FollowBtn>
             )}
           </BtnArea>
         </Card>

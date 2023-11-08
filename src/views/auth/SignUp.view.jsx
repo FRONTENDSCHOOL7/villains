@@ -6,9 +6,9 @@ import styled from 'styled-components';
 import pageUrlConfig from '../../config/pageUrlConfig';
 import client from '../../config/api.config';
 
-import { Main } from '../../components/PageTemplate.style';
-import { BlueLongBtn, BlueSmallBtn } from '../../components/Buttons';
-import CheckBox from '../../components/CheckBox';
+import { Main } from '../../components/layout/PageTemplate.style';
+import { BlueLongBtn, BlueSmallBtn } from '../../components/default/Buttons';
+import CheckBox from '../../components/default/CheckBox';
 
 const SignUpPage = () => {
   // react-hook-form

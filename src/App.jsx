@@ -35,7 +35,7 @@ const App = () => {
           basename={process.env.NODE_ENV === 'production' ? '/VILLAINS/' : '/'}
         />
       </RecoilRoot>
-      <ReactQueryDevtools initialIsOpen={false} />
+      {/* <ReactQueryDevtools initialIsOpen={false} /> */}
     </QueryClientProvider>
   );
 };

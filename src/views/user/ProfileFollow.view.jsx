@@ -5,7 +5,7 @@ import { useRecoilState } from 'recoil';
 import getUserFollower from '../../api/get/getUserFollower.api';
 import getFollowingList from '../../api/get/getFollowingList.api';
 import Follower from '../../components/Follower';
-import PageTemplate from '../../components/PageTemplate';
+import PageTemplate from '../../components/layout/PageTemplate';
 
 const ProfileFollowPage = () => {
   const location = useLocation();
