@@ -1,7 +1,6 @@
 import React, { useEffect, useMemo, useRef, useState } from 'react';
 import { Map, MapMarker } from 'react-kakao-maps-sdk';
 
-
 const TrainMap = ({stations, style, level = 3}) => {
     const [markers, setMarkers] = useState([])
     const [center, setCenter]= useState({lat: 0, lng: 0});

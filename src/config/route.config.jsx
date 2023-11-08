@@ -1,11 +1,34 @@
 import DefaultLayout from '../components/layout/DefautlLayout';
 import PrivateLayout from '../components/layout/PrivateLayout';
 import pageUrlConfig from './pageUrlConfig';
-
-// lazy를 이용한 코드 스플리팅 설정
-
-import searchPlace from '../api/loader/searchPlace.loader';
 import sendUserInfo from '../api/loader/sendUserInfo.loader';
+
+import FeedIndexPage from '../views/feed/index.view';
+import ProfileIndexPage from '../views/user/index.view';
+import GoodsIndexPage from '../views/goods/index.view';
+import ChatIndexPage from '../views/chat/index.view';
+import AuthIndexPage from '../views/auth/index.view';
+
+import HomeIndexPage from '../views/home/index.view';
+import HomePage from '../views/home/Home.view';
+import ResultPage from '../views/home/Result.view';
+import HomeTrainPage from '../views/home/Train.view';
+
+import ProfilePage from '../views/user/Profile.view';
+import ProfileEditPage from '../views/user/ProfileEdit.view';
+import ProfileFollowPage from '../views/user/ProfileFollow.view';
+
+import FeedWritePage from '../views/feed/FeedWrite.view';
+import FeedDetailPage from '../views/feed/FeedDetail.view';
+
+import GoodsPage from '../views/goods/Goods.view';
+import GoodsWritePage from '../views/goods/GoodsWrite.view';
+import GoodsDetailPage from '../views/goods/GoodsDetail.view';
+import ChatPage from '../views/chat/Chat.view';
+import ChatDetailPage from '../views/chat/ChatDetail.view';
+import SplashPage from '../views/auth/Splash.view';
+import SignInPage from '../views/auth/SignIn.view';
+import SignUpPage from '../views/auth/SignUp.view';
 
 /** 라우트 등록하기
  * 1. routeConfig의 children에 객체를 이용해서 path와 element 입력하기
@@ -13,79 +36,76 @@ import sendUserInfo from '../api/loader/sendUserInfo.loader';
  *  **/
 
 
-
+const baseUrl = import.meta.env.BASE_URL;
 const routeConfig = [
   {
-    path: pageUrlConfig.splashPage,
+    path: baseUrl,
     element: <DefaultLayout />,
     children: [
       {
         path: pageUrlConfig.splashPage,
-        lazy: () => import('../views/auth/index.view'),
+        element: <AuthIndexPage/>,
         children: [
-          { index: true, lazy: () => import( '../views/auth/Splash.view') },
-          { path: pageUrlConfig.signInPage, lazy: () => import( '../views/auth/SignIn.view') },
-          { path: pageUrlConfig.signUpPage, lazy: () => import( '../views/auth/SignUp.view')},
+          { index: true, element: <SplashPage /> },
+          { path: pageUrlConfig.signInPage, element: <SignInPage /> },
+          { path: pageUrlConfig.signUpPage, element: <SignUpPage />},
         ],
       },
       {
-        path: `/`,
+        path: baseUrl,
         loader: async()=>sendUserInfo(),
         id: 'user',
         element: <PrivateLayout />,
         children: [
           {
             path: pageUrlConfig.homePage,
-            lazy: () => import(   '../views/home/index.view'),
+            element: <HomeIndexPage/>,
             children: [
-              { index: true, lazy: () => import('../views/home/Home.view' )},
-              { path: `${pageUrlConfig.homePage}/:id`, lazy: () => import( '../views/home/Result.view') },
+              { index: true, element:<HomePage/>},
+              { path: `${pageUrlConfig.homePage}/:id`, element:<ResultPage/> },
               {
                 path: `${pageUrlConfig.homePage}/map/:stationname`,
-                loader: async ({ params }) => {
-                  return await searchPlace(params.stationname);
-                },
-                lazy: () => import( '../views/home/Train.view' )
+                element: <HomeTrainPage/>
               },
             ],
           },
           {
             path: pageUrlConfig.feedPage,
-            lazy: () => import(  '../views/home/index.view'),
+            element: <FeedIndexPage/>,
             children: [
               { index: true, lazy: () => import(  '../views/feed/Feed.view') },
-              { path: pageUrlConfig.feedWritePage,lazy: () => import( '../views/feed/FeedWrite.view') },
-              { path: pageUrlConfig.feedEditPage,lazy: () => import( '../views/feed/FeedWrite.view') },
-              { path: pageUrlConfig.feedDetailPage,lazy: () => import( '../views/feed/FeedDetail.view') },
+              { path: pageUrlConfig.feedWritePage, element: <FeedWritePage /> },
+              { path: pageUrlConfig.feedEditPage, element: <FeedWritePage /> },
+              { path: pageUrlConfig.feedDetailPage, element: <FeedDetailPage /> },
             ],
           },
           {
             path: `${pageUrlConfig.profilePage}`,
-            lazy: () => import( '../views/user/index.view'),
+            element: <ProfileIndexPage/>,
             children: [
-              { path: `${pageUrlConfig.profilePage}/:accountname`, lazy: () => import( '../views/user/Profile.view') },
-              { path: `${pageUrlConfig.profilePage}/:accountname/edit`, lazy: () => import( '../views/user/ProfileEdit.view') },
-              { path: `${pageUrlConfig.profilePage}/:accountname/follower`, lazy: () => import( '../views/user/ProfileFollow.view') },
-              { path: `${pageUrlConfig.profilePage}/:accountname/following`, lazy: () => import( '../views/user/ProfileFollow.view') },
+              { path: `${pageUrlConfig.profilePage}/:accountname`, element: <ProfilePage /> },
+              { path: `${pageUrlConfig.profilePage}/:accountname/edit`, element: <ProfileEditPage /> },
+              { path: `${pageUrlConfig.profilePage}/:accountname/follower`, element: <ProfileFollowPage /> },
+              { path: `${pageUrlConfig.profilePage}/:accountname/following`, element: <ProfileFollowPage /> },
             ],
           },
 
           {
             path: pageUrlConfig.goodsPage,
-            lazy: () => import( '../views/goods/index.view'),
+            element: <GoodsIndexPage/>,
             children: [
-              { index: true, lazy: () => import( '../views/goods/index.view') },
-              { path: pageUrlConfig.goodsWritePage, lazy: () => import( '../views/goods/GoodsWrite.view') },
-              { path: pageUrlConfig.goodsEditPage, lazy: () => import( '../views/goods/GoodsDetail.view') },
-              { path: pageUrlConfig.goodsDetailPage, lazy: () => import( '../views/goods/GoodsDetail.view') },
+              { index: true, element: <GoodsPage /> },
+              { path: pageUrlConfig.goodsWritePage, element: <GoodsWritePage /> },
+              { path: pageUrlConfig.goodsEditPage, element: <GoodsWritePage /> },
+              { path: pageUrlConfig.goodsDetailPage, element: <GoodsDetailPage /> },
             ],
           },
           {
             path: pageUrlConfig.chatPage,
-            lazy: () => import( '../views/chat/index.view'),
+            element: <ChatIndexPage/>,
             children: [
-              { index: true, lazy: () => import( '../views/chat/Chat.view') },
-              { path: pageUrlConfig.chatDetailPage, lazy: () => import( '../views/chat/ChatDetail.view') },
+              { index: true, element : <ChatPage /> },
+              { path: pageUrlConfig.chatDetailPage, element: <ChatDetailPage /> },
             ],
           },
         ],

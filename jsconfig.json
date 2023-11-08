@@ -1,9 +1,13 @@
 {
-    "compilerOptions": {
-      /* 경로 alias 설정 */
-      "baseUrl": ".",
-      "paths": {
-        "@/*": ["*"],
-      }
-    },
-  }
+  "compilerOptions": {
+    "jsx": "react",
+    "baseUrl": ".",
+    "paths": {
+      "@lib/*": ["../lib/*"],
+       },
+    "module": "ESNext",
+    "moduleResolution": "node"
+  },
+  "include": ["src", "**/*.js", "**/*.jsx"],
+  "exclude": ["node_modules"]
+}
