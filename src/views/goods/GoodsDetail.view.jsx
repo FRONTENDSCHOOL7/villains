@@ -203,7 +203,7 @@ const GoodsDetailPage = () => {
                   배달수락
                 </State>
               ) : user.accountname !== realProductAuthor && link.state === '배달중' ? (
-                <State color={'#3c58c1'}>{link.state}</State>
+                <State color={'#4CAF50'}>{link.state}</State>
               ) : (
                 <State color={'#767676'}>{link.state}</State>
               )}
