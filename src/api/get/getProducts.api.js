@@ -2,7 +2,7 @@ import { useCallback, useEffect, useState } from 'react';
 import client from '../../config/api.config';
 import useInfiniteScroll from '../../hooks/useInfiniteScroll';
 
-const getProducts = () => {
+const getProducts = (page) => {
   const [products, setProducts] = useState([]); // 현재 로드된 게시글
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
@@ -12,17 +12,22 @@ const getProducts = () => {
   const fetchProducts = useCallback(async () => {
     let fetchedProducts = [];
     let currentSkip = skip;
-    const admin = JSON.parse(localStorage.getItem('admin')).accountname;
-    const token = JSON.parse(localStorage.getItem('user')).token;
-    const headers = client.BothType(token);
+    const admin = JSON.parse(localStorage.getItem('admin'));
+    const user = JSON.parse(localStorage.getItem('user'));
+    const headers = client.BothType(user.token);
 
     try {
       const response = await client.get(
-        `/product/${admin}/?limit=${PRODUCTS_REQUEST}&skip=${currentSkip}`,
+        `/product/${admin.accountname}/?limit=${PRODUCTS_REQUEST}&skip=${currentSkip}`,
         {},
         { ...headers },
       );
-      fetchedProducts = response.data.product;
+      if(page === "profile") {
+        fetchedProducts = response.data.product.filter((item, idx) => JSON.parse(item.link).accountname === user.accountname)
+        console.log(fetchedProducts)
+      } else {
+        fetchedProducts = response.data.product;
+      }
       currentSkip += PRODUCTS_REQUEST;
     } catch (error) {
       setError(error);

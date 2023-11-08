@@ -1,5 +1,5 @@
 import { useNavigate, useParams, useRouteLoaderData, useLocation, Link } from 'react-router-dom';
-import {useQuery, useMutation} from '@tanstack/react-query'
+import { useQuery, useMutation } from '@tanstack/react-query';
 import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
 
@@ -11,21 +11,20 @@ import PostCard from '../../components/feed/PostCard';
 import userPostAtom from '../../atoms/userPostAtom';
 import profileAtom from '../../atoms/profileAtom';
 import getUserInfo from '../../api/get/getUserInfo.api';
-import  DefaultBtn, { BasicStyle, PrimaryStyle, SecondaryStyle } from '../../components/default/GlobalButton';
+import DefaultBtn, { BasicStyle, PrimaryStyle, SecondaryStyle } from '../../components/default/GlobalButton';
 import theme from '../../style/theme';
 import contactQuery from '../../api/get/getUserPost.api';
 import Goods from '../../components/Goods';
 import ChatIcon from '../../assets/img/message-circle.svg';
-import ShareIcon from '../../assets/img/icon-404.svg'
+import ShareIcon from '../../assets/img/icon-404.svg';
 import getProducts from '../../api/get/getProducts.api';
 import postFollowQuery from '../../api/post/postFollow.api';
 import deleteFollowQuery from '../../api/delete/deleteFollow.api';
 
-
 const ProfilePage = () => {
   const user = useRouteLoaderData('user');
   const navigate = useNavigate();
-  const {pathname} = useLocation();
+  const { pathname } = useLocation();
   const { accountname } = useParams();
 
   const [isLoading, setIsLoading] = useState(true);
@@ -38,14 +37,18 @@ const ProfilePage = () => {
   const [myProfileInfo, setMyProfileInfo] = useRecoilState(profileAtom);
   const myFeedList = useRecoilValue(userPostAtom);
 
-  
-  const { products, loading, error } = getProducts();
-  useEffect(()=>{
+  const { products, loading, error } = getProducts('profile');
+  useEffect(() => {
     setGoodsList(products);
-  },[loading])
+  }, [loading]);
 
-  const {data, isFetching, isLoading:feedLoading, isError} = useQuery(contactQuery(accountname, user.token));
-  
+  const {
+    data,
+    isFetching,
+    isLoading: feedLoading,
+    isError,
+  } = useQuery(contactQuery(accountname, user.token));
+
   useEffect(() => {
     if (accountname === user.accountname) {
       setIsMy(true);
@@ -53,35 +56,43 @@ const ProfilePage = () => {
     //   setProfileInfo(myProfileInfo);
     //   setFeedList(myFeedList);
     // } else{
-      getUserInfo(accountname, user.token)
-      .then((result)=>{
+    getUserInfo(accountname, user.token)
+      .then((result) => {
         setProfileInfo(result.data.profile);
         setIsLoading(false);
         setMyProfileInfo(result.data.profile);
       })
-      .catch((error)=>{
+      .catch((error) => {
         console.error(error);
-      })
+      });
     // }
   }, [accountname]);
 
-  useEffect(()=>{
-    if(!myFeedList || !feedLoading){
-      setFeedList(data.data.post)
+  useEffect(() => {
+    if (!myFeedList || !feedLoading) {
+      setFeedList(data.data.post);
+      console.log(feedList);
     }
-  }, [feedLoading, feedList, myFeedList])
-
+  }, [feedLoading, feedList, myFeedList]);
 
   const handleClickTab = (event) => {
     event.target.id === `1` ? setColor(false) : setColor(true);
-  }
+  };
 
-  const {data:FollowData, isLoading:FollowLoading, mutate:Following } = useMutation(postFollowQuery(accountname, user.token));
+  const {
+    data: FollowData,
+    isLoading: FollowLoading,
+    mutate: Following,
+  } = useMutation(postFollowQuery(accountname, user.token));
 
-  const {data:unFollowData, isLoading:unFollowLoading, mutate:unFollowing } = useMutation(deleteFollowQuery(accountname, user.token));
+  const {
+    data: unFollowData,
+    isLoading: unFollowLoading,
+    mutate: unFollowing,
+  } = useMutation(deleteFollowQuery(accountname, user.token));
 
   const handleClickBtns = (event) => {
-    switch(event.target.id){
+    switch (event.target.id) {
       case 'chat':
         navigate(pageUrlConfig.chatPage);
         break;
@@ -91,7 +102,7 @@ const ProfilePage = () => {
         alert('링크 복사 완료!');
         break;
       case 'edit':
-        navigate(`${pageUrlConfig.profilePage}/${user.accountname}/edit`)
+        navigate(`${pageUrlConfig.profilePage}/${user.accountname}/edit`);
         break;
       case 'unfollow':
         unFollowing();
@@ -100,68 +111,88 @@ const ProfilePage = () => {
         Following();
         break;
     }
-
-  }
+  };
   return (
     <PageTemplate>
-        {(isLoading && !profileInfo) ?
+      {isLoading && !profileInfo ? (
         <div>loading</div>
-        : <UpperSection>
+      ) : (
+        <UpperSection>
           <ProfileHeader>
             <Link to={`${pageUrlConfig.profilePage}/${accountname}/follower`}>
-            <Follow>
-              <span>{profileInfo.followerCount}</span>
-              followers
-            </Follow>
+              <Follow>
+                <span>{profileInfo.followerCount}</span>
+                followers
+              </Follow>
             </Link>
-            <ProfileImg src={profileInfo.image} alt="프로필 이미지" onError={(event)=>{event.target.src = basicProfile}}/>
+            <ProfileImg
+              src={
+                profileInfo.image === 'http://146.56.183.55:5050/Ellipse.png'
+                  ? 'https://api.mandarin.weniv.co.kr/Ellipse.png'
+                  : profileInfo.image
+              }
+              alt="프로필 이미지"
+              onError={(event) => {
+                event.target.src = basicProfile;
+              }}
+            />
             <Link to={`${pageUrlConfig.profilePage}/${accountname}/following`}>
-            <Follow>
-              <span>{profileInfo.followingCount}</span>
-              followings
-            </Follow>
+              <Follow>
+                <span>{profileInfo.followingCount}</span>
+                followings
+              </Follow>
             </Link>
           </ProfileHeader>
-  
+
           <ProfileBody>
             <UserName>{profileInfo.username}</UserName>
             <AccountName>@{accountname}</AccountName>
             <ProfileDsc>{profileInfo?.intro ?? `1호선 빌런 꿈나무`}</ProfileDsc>
             <ButtonWrap onClick={handleClickBtns}>
-              <button id='chat'></ button>
-              {isMy ? 
-              <DefaultBtn id={`edit`}>프로필 수정</DefaultBtn> : (profileInfo.isfollow ? 
-                <DefaultBtn variant={'basic'} id={`unfollow`}>언팔로우</DefaultBtn> 
-                :  <DefaultBtn variant={'primary'} id={`follow`}>팔로우</DefaultBtn> 
+              <button id="chat"></button>
+              {isMy ? (
+                <DefaultBtn id={`edit`}>프로필 수정</DefaultBtn>
+              ) : profileInfo.isfollow ? (
+                <DefaultBtn variant={'basic'} id={`unfollow`}>
+                  언팔로우
+                </DefaultBtn>
+              ) : (
+                <DefaultBtn variant={'primary'} id={`follow`}>
+                  팔로우
+                </DefaultBtn>
               )}
-              <button id='share'></ button>
-              </ButtonWrap>
+              <button id="share"></button>
+            </ButtonWrap>
           </ProfileBody>
-        </UpperSection>}
-  
-        <DownSection>
-          <TabGroup color={color} onClick={handleClickTab}>
-            <Tab id={`1`}>게시글</Tab>
-            <Tab id={`2`}>택배 목록</Tab>
-          </TabGroup>
-         <ListWrap>
-            {color ?
-              <Goods products={goodsList}/>
-             :
-             feedList.map((post, index) => {
-                const contents = JSON.parse(post.content);
-                const parsedPost = {...post, _id: post.id, content: contents}
-                return <PostCard post={parsedPost} key={post.id}/>
-              })
-            }
-         </ListWrap>
+        </UpperSection>
+      )}
 
-        </DownSection>
+      <DownSection>
+        <TabGroup color={color} onClick={handleClickTab}>
+          <Tab id={`1`}>게시글</Tab>
+          <Tab id={`2`}>택배 목록</Tab>
+        </TabGroup>
+        <ListWrap>
+          {color ? (
+            <Goods products={goodsList} />
+          ) : (
+            feedList
+              .filter((post) => {
+                const contents = JSON.parse(post.content);
+                return contents.postId === 'villains';
+              })
+              .map((post, index) => {
+                const contents = JSON.parse(post.content);
+                const parsedPost = { ...post, _id: post.id, content: contents };
+                return <PostCard post={parsedPost} key={post.id} />;
+              })
+          )}
+        </ListWrap>
+      </DownSection>
     </PageTemplate>
   );
 };
 export default ProfilePage;
-
 
 const UpperSection = styled.section`
   display: flex;
@@ -187,7 +218,7 @@ const ProfileHeader = styled.div`
 const ProfileBody = styled.div`
   margin: 0 auto;
   text-align: center;
-`
+`;
 const Follow = styled.div`
   font-size: ${theme.fontSize.caption};
   & span {
@@ -199,7 +230,10 @@ const Follow = styled.div`
 `;
 
 const ProfileImg = styled.img`
-  max-width: 100%;
+  width: 150px;
+  height: 150px;
+  border-radius: 50%;
+  object-fit: cover;
   flex-shrink: 0;
   flex-basis: calc(100% / 3);
   margin-top: 30px;
@@ -213,7 +247,7 @@ const UserName = styled.p`
 
 const AccountName = styled.p`
   margin-bottom: 17px;
-  font-size: ${theme.fontSize.body3}
+  font-size: ${theme.fontSize.body3};
 `;
 
 const ProfileDsc = styled.p`
@@ -225,10 +259,10 @@ const ButtonWrap = styled.div`
   align-item: center;
   gap: 10px;
   min-height: 2em;
-  
+
   flex-shrink: 0;
 
-  & > :not(:nth-child(2)){
+  & > :not(:nth-child(2)) {
     flex-grow: 0.5;
     border: 1px solid;
     border-radius: 50%;
@@ -239,11 +273,10 @@ const ButtonWrap = styled.div`
     background: url(${ShareIcon}) no-repeat center/80%;
   }
 
-    
-  & > :nth-child(1){
+  & > :nth-child(1) {
     background: url(${ChatIcon}) no-repeat center/70%;
   }
-  & > :nth-child(2){
+  & > :nth-child(2) {
     padding: 9px;
     min-width: 120px;
     flex-grow: 1.5;
@@ -263,11 +296,11 @@ const TabGroup = styled.div`
   height: 64px;
   background-color: ${theme.color.white};
 
-  & :nth-child(1){
-    ${(props)=> props.color? SecondaryStyle : BasicStyle}
+  & :nth-child(1) {
+    ${(props) => (props.color ? SecondaryStyle : BasicStyle)}
   }
-  & :nth-child(2){
-    ${(props)=> !props.color? SecondaryStyle : BasicStyle}
+  & :nth-child(2) {
+    ${(props) => (!props.color ? SecondaryStyle : BasicStyle)}
   }
 `;
 
@@ -278,4 +311,4 @@ const Tab = styled.button`
 
 const ListWrap = styled.ul`
   padding: 16px 8px;
-`
+`;
