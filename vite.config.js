@@ -30,13 +30,13 @@ export default defineConfig(({ mode }) => {
         { find: '@components', replacement: './components' },
       ],
     },
-    build: {
-      rollupOptions: {
-        output: {
-          entryFileNames: '[name].js',
-          assetFileNames: '[name].[ext]',
-        },
-      },
-    },
+    // build: {
+    //   rollupOptions: {
+    //     output: {
+    //       entryFileNames: '[name].js',
+    //       assetFileNames: '[name].[ext]',
+    //     },
+    //   },
+    // },
   };
 });
