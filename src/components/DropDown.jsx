@@ -30,6 +30,7 @@ const StyledBox = styled.div`
   width: 100%;
   border-radius: 0px 0px 10px 10px;
   box-shadow: 2px 2px 4px 0px rgba(0, 0, 0, 0.25);
+  z-index: 100;
 `;
 
 const StyledLinkBox = styled.div`

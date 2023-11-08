@@ -3,12 +3,12 @@ import styled from 'styled-components';
 import ResizingTextarea from '../feed/ResizingTextarea';
 import imageIcon from '../../assets/img/image-icon.svg';
 
-const ChatInputField = ({ onSendMessage }) => {
+const ChatInputField = ({ onClick }) => {
   const [text, setText] = useState('');
 
   const handleSend = () => {
     if (text.trim()) {
-      onSendMessage(text);
+      onClick(text);
       setText('');
     }
   };
