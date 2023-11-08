@@ -290,7 +290,7 @@ https://github.com/orgs/FRONTENDSCHOOL7/projects/1
 
 ### [디자인 시스템]
 
-`이미지 추가 예정`
+<img width="1000" alt="basic design system" src="https://github.com/FRONTENDSCHOOL7/villains/assets/128403039/ba72160f-615c-4301-9884-7a123c195c23">
 
 
 ### [페이지 기능]
