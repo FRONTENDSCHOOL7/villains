@@ -91,7 +91,7 @@ https://github.com/orgs/FRONTENDSCHOOL7/projects/1
 <details>
 <summary>토글 접기/펼치기</summary>
 <div markdown="1">
-
+```
 📦 villains
 ├─ .eslintrc.cjs
 ├─ .githu
@@ -265,7 +265,7 @@ https://github.com/orgs/FRONTENDSCHOOL7/projects/1
 │        ├─ ProfileFollow.view.jsx
 │        └─ index.view.jsx
 └─ vite.config.js
-
+```
 </div>
 </details>
 
