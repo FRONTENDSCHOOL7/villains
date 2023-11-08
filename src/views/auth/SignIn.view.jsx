@@ -67,6 +67,7 @@ const SignInPage = () => {
         const userInfo = {
           accountname: response.data.user.accountname,
           token: response.data.user.token,
+          username: response.data.user.username,
         };
         localStorage.setItem('user', JSON.stringify(userInfo));
         setUser(userInfo);
