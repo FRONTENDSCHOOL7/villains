@@ -24,8 +24,6 @@ PW: 123123
 
 - 서울권의 지하철 노선만 총 23개이므로 모든 노선을 구현하기엔 한계가 있다고 판단했습니다. 프로젝트의 범위를 명확하게 설정하고, 실현 가능한 목표를 세우기 위해 상징성과 대중성을 갖춘 1호선을 중심으로 서비스를 구현하기로 결정하였습니다.
 
-- SUBONE 앱은 지하철 이용객의 일상에 실질적인 편의를 제공하고, 지하철에서의 시간을 즐거운 경험으로 만들고 싶습니다.
-
 
 ### [프로젝트 일정]
 
@@ -50,7 +48,6 @@ PW: 123123
 | <img width="180" alt="프로필_이지현" src="https://avatars.githubusercontent.com/u/111721483?v=4"> | <img width="180" alt="프로필_김규리" src="https://avatars.githubusercontent.com/u/117346967?v=4"> | <img width="180" alt="프로필_김윤상" src="https://avatars.githubusercontent.com/u/92397578?v=4"> | <img width="180" alt="프로필_신명진" src="https://avatars.githubusercontent.com/u/128403039?v=4"> |
 | [JiHyeon Lee](https://github.com/Sleepingoff) | [gyulls2](https://github.com/gyulls2) | [YOONSANG KIM](https://github.com/kys0417) | [ mj.shin](https://github.com/mjshin0425) |
 | 팀장 | 팀원 | 팀원 | 팀원 |
-|깃주소 | 깃주소 | 깃주소 | 깃주소 |
 
 
 [방향성]
@@ -101,13 +98,61 @@ PW: 123123
 
 `이미지 추가 예정`
 
-![image](https://github.com/FRONTENDSCHOOL7/villains/assets/128403039/91240bd0-fea7-49fe-b082-cfb79a40514d)
-
-
 
 ### [페이지 기능]
 
-- Gif
+### 1) 로그인 / 회원가입
+
+| 스플래시 페이지 | 로그인 페이지 | 회원가입 페이지 |
+| --- | --- | --- |
+| ![스플래시](https://github.com/FRONTENDSCHOOL7/villains/assets/117346967/cba7c7a1-8acd-43b7-9590-10062fa4f794) | ![로그인](https://github.com/FRONTENDSCHOOL7/villains/assets/117346967/c11d0c6a-454c-4c3a-b16f-f60ad2d78f51) | ![회원가입](https://github.com/FRONTENDSCHOOL7/villains/assets/117346967/0086d7c9-b1c8-4954-92fc-5091869866e1) |
+
+### 2) 홈
+
+| 홈 페이지 |
+| --- |
+| ![mainPage](https://github.com/FRONTENDSCHOOL7/villains/assets/117346967/1cca847d-b5b9-4716-9aca-2a9e213f13cb) |
+
+
+### 3) 피드
+
+| 피드 페이지 | 유저 검색 기능 | 게시글 작성 페이지 |
+| --- | --- | --- |
+|  ![피드](https://github.com/FRONTENDSCHOOL7/villains/assets/117346967/d4898995-3ef1-4ab9-a8f3-3fa9443834e9) | ![유저검색](https://github.com/FRONTENDSCHOOL7/villains/assets/117346967/4b307755-5bf8-4f58-8ca3-f5db95db3df3) | ![게시글작성](https://github.com/FRONTENDSCHOOL7/villains/assets/117346967/2b80c5c2-4238-43bb-9915-a603e328754c) |
+
+
+| 게시글 상세 페이지 | 게시글 수정 기능 | 게시글 삭제 기능 |
+| --- | --- | --- |
+| ![게시글상세](https://github.com/FRONTENDSCHOOL7/villains/assets/117346967/f9ceb0a8-b349-4620-894c-5a3308bcc103) | ![게시글수정](https://github.com/FRONTENDSCHOOL7/villains/assets/117346967/0a40a169-1cb9-40d3-845b-b6aa75ec4624) | ![게시글삭제](https://github.com/FRONTENDSCHOOL7/villains/assets/117346967/5a7666d9-c768-4b58-b2e3-a53be75653f7) |
+
+
+| 댓글 작성 | 댓글 삭제 기능 | 댓글 신고 기능 |
+| --- | --- | --- |
+|  |  |  |
+
+
+### 4) 지하철 택배
+
+| 택배 등록 | 택배 배달수락 / 채팅 | 채팅 확인 / 택배 상태 변경 |
+| --- | --- | --- |
+| ![유저 1 택배 등록](https://github.com/FRONTENDSCHOOL7/villains/assets/117346967/678a59ba-06ef-4a9d-8103-85b1175c9986) | ![유저 2 택배 배달수락 채팅](https://github.com/FRONTENDSCHOOL7/villains/assets/117346967/ca65a420-6f13-420c-aafc-6661ccbd9cef) | ![유저 1 채팅 확인 택배 상태 변경](https://github.com/FRONTENDSCHOOL7/villains/assets/117346967/a6f4053d-5da7-406c-ba55-c40a7e83ce9f) |
+
+| 배달 완료 채팅 | 배달 완료 확인 / 택배 상태 변경 | 택배 수정 |
+| --- | --- | --- |
+| ![유저 2 배달 완료 채팅](https://github.com/FRONTENDSCHOOL7/villains/assets/117346967/058fd771-ddcd-4fb8-8284-189699c8dea0) | ![유저 1 배달 완료 확인 택배 상태 변경](https://github.com/FRONTENDSCHOOL7/villains/assets/117346967/7bb093f6-e081-4624-b665-660a3fb67a64) | ![택배 수정](https://github.com/FRONTENDSCHOOL7/villains/assets/117346967/a3af765e-928f-4d3f-a1ef-7f2fb4d4f72b) |
+
+| 택배 삭제 |
+| --- |
+| ![택배삭제](https://github.com/FRONTENDSCHOOL7/villains/assets/117346967/553e6b33-e12c-4fae-b09d-dbbf903ceebf) |
+
+
+### 5) 프로필
+
+| 프로필 페이지 | 프로필 수정 페이지 | 팔로워 / 팔로잉 페이지 |
+| --- | --- | --- |
+|  |  |  |
+
+
 
 
 ## 7. 핵심 기능 및 코드
