@@ -92,7 +92,179 @@ https://github.com/orgs/FRONTENDSCHOOL7/projects/1
 <summary>토글 접기/펼치기</summary>
 <div markdown="1">
 
-안녕
+📦 villains
+├─ .eslintrc.cjs
+├─ .githu
+│  ├─ ISSUE_TEMPLATE
+│  │  └─ -😈feat-.md
+│  ├─ pull_request_template.md
+│  └─ workflows
+│     └─ deploy.yml
+├─ .gitignore
+├─ .gitmessage.txt
+├─ .nvmrc
+├─ .prettierrc
+├─ README.md
+├─ index.html
+├─ package-lock.json
+├─ package.json
+├─ public
+├─ src
+│  ├─ App.jsx
+│  ├─ api
+│  │  ├─ delete
+│  │  │  ├─ deleteComments.api.js
+│  │  │  ├─ deleteFollow.api.js
+│  │  │  ├─ deletePost.api.js
+│  │  │  └─ deleteProduct.api.js
+│  │  ├─ get
+│  │  │  ├─ getCheckToken.api.js
+│  │  │  ├─ getComments.api.js
+│  │  │  ├─ getFollowingList.api.js
+│  │  │  ├─ getMyInfo.api.js
+│  │  │  ├─ getPostDetail.api.js
+│  │  │  ├─ getPosts.api.js
+│  │  │  ├─ getProductDetail.api.js
+│  │  │  ├─ getProducts.api.js
+│  │  │  ├─ getSearchUser.api.js
+│  │  │  ├─ getSubOneInfo.api.js
+│  │  │  ├─ getSubTime.api.js
+│  │  │  ├─ getUserDetail.api.js
+│  │  │  ├─ getUserFollower.api.js
+│  │  │  ├─ getUserInfo.api.js
+│  │  │  └─ getUserPost.api.js
+│  │  ├─ loader
+│  │  │  └─ searchPlace.loader.js
+│  │  ├─ post
+│  │  │  ├─ postComments.api.js
+│  │  │  ├─ postCommentsReport.api.js
+│  │  │  ├─ postFollow.api.js
+│  │  │  ├─ postHeart.api.js
+│  │  │  ├─ postImage.api.js
+│  │  │  ├─ postImages.api.js
+│  │  │  ├─ postReport.api.js
+│  │  │  ├─ postUnFollow.api.js
+│  │  │  └─ postUploadPost.api.js
+│  │  └─ update
+│  │     ├─ updatePostEdit.api.js
+│  │     ├─ updateProduct.api.js
+│  │     └─ updateUser.api.js
+│  ├─ assets
+│  │  ├─ fonts
+│  │  └─ img
+│  ├─ atoms
+│  │  ├─ bottomSheetStateAtom.js
+│  │  ├─ followPageStateAtom.js
+│  │  ├─ goodsFocusEndAtom.js
+│  │  ├─ goodsFocusStartAtom.js
+│  │  ├─ goodsQueryEndAtom.js
+│  │  ├─ goodsQueryStartAtom.js
+│  │  ├─ headerBtnStateAtom.js
+│  │  ├─ profileAtom.js
+│  │  ├─ queryAtom.js
+│  │  ├─ queryFocusAtom.js
+│  │  ├─ realProductAuthorAtom.js
+│  │  ├─ stationPlaceAtom.js
+│  │  ├─ subOneAtom.js
+│  │  ├─ userAtom.js
+│  │  └─ userPostAtom.js
+│  ├─ components
+│  │  ├─ BottomSheet.jsx
+│  │  ├─ Buttons.jsx
+│  │  ├─ CheckBox.jsx
+│  │  ├─ DropDown.jsx
+│  │  ├─ FloatingButton.style.jsx
+│  │  ├─ Follower.jsx
+│  │  ├─ GlobalButton.jsx
+│  │  ├─ Goods.jsx
+│  │  ├─ Input.style.jsx
+│  │  ├─ Modal.jsx
+│  │  ├─ PageTemplate.jsx
+│  │  ├─ PageTemplate.style.js
+│  │  ├─ SearchSub.jsx
+│  │  ├─ Tanghulu.jsx
+│  │  ├─ chat
+│  │  │  ├─ ChatInputField.jsx
+│  │  │  ├─ ChatListItem.jsx
+│  │  │  └─ Message.jsx
+│  │  ├─ feed
+│  │  │  ├─ Comment.jsx
+│  │  │  ├─ CommentForm.jsx
+│  │  │  ├─ ImagePreview.jsx
+│  │  │  ├─ PostCard.jsx
+│  │  │  └─ ResizingTextarea.jsx
+│  │  ├─ layout
+│  │  │  ├─ BackHeader.jsx
+│  │  │  ├─ DefautlLayout.jsx
+│  │  │  ├─ NavMenu.jsx
+│  │  │  ├─ PrivateLayout.jsx
+│  │  │  ├─ SearchHeader.jsx
+│  │  │  └─ SearchLayout.jsx
+│  │  ├─ map
+│  │  │  └─ TrainMap.jsx
+│  │  ├─ profile
+│  │  │  └─ profile.jsx
+│  │  ├─ searchbar
+│  │  │  ├─ ListBox.jsx
+│  │  │  ├─ SearchBar.jsx
+│  │  │  ├─ UserCard.jsx
+│  │  │  └─ UserListBox.jsx
+│  │  └─ splash
+│  │     └─ Splash.style.js
+│  ├─ config
+│  │  ├─ api.config.js
+│  │  ├─ contact.jsx
+│  │  ├─ pageUrlConfig.js
+│  │  └─ route.config.jsx
+│  ├─ database
+│  │  └─ 2023-2024-holiday.json
+│  ├─ hooks
+│  │  ├─ useBlockToBack.js
+│  │  ├─ useBottomSheetOptions.js
+│  │  ├─ useFormatDate.js
+│  │  ├─ useGeoLocation.js
+│  │  ├─ useInfiniteScroll.js
+│  │  ├─ useModal.js
+│  │  └─ useSearchData.js
+│  ├─ index.jsx
+│  ├─ style
+│  │  ├─ GlobalStyles.jsx
+│  │  ├─ swiperStyle.js
+│  │  └─ theme.js
+│  └─ views
+│     ├─ Error.view.jsx
+│     ├─ FollowersList.view.jsx
+│     ├─ FollowingsList.view.jsx
+│     ├─ auth
+│     │  ├─ SignIn.view.jsx
+│     │  ├─ SignUp.view.jsx
+│     │  ├─ Splash.view.jsx
+│     │  └─ index.view.jsx
+│     ├─ chat
+│     │  ├─ Chat.view.jsx
+│     │  ├─ ChatDetail.view.jsx
+│     │  └─ index.view.jsx
+│     ├─ feed
+│     │  ├─ Feed.view.jsx
+│     │  ├─ FeedDetail.view.jsx
+│     │  ├─ FeedWrite.view.jsx
+│     │  └─ index.view.jsx
+│     ├─ goods
+│     │  ├─ Goods.view.jsx
+│     │  ├─ GoodsDetail.view.jsx
+│     │  ├─ GoodsWrite.view.jsx
+│     │  └─ index.view.jsx
+│     ├─ home
+│     │  ├─ Home.view.jsx
+│     │  ├─ Result.view.jsx
+│     │  ├─ Train.view.jsx
+│     │  └─ index.view.jsx
+│     └─ user
+│        ├─ Profile.view.jsx
+│        ├─ ProfileEdit.view.jsx
+│        ├─ ProfileFollow.view.jsx
+│        └─ index.view.jsx
+└─ vite.config.js
 
 </div>
 </details>
