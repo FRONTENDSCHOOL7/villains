@@ -135,7 +135,7 @@ PW: 123123
 
 | 택배 등록 | 택배 배달수락 / 채팅 | 채팅 확인 / 택배 상태 변경 |
 | --- | --- | --- |
-| ![유저 1 택배 등록](https://github.com/FRONTENDSCHOOL7/villains/assets/117346967/678a59ba-06ef-4a9d-8103-85b1175c9986) | ![유저 2 택배 배달수락 채팅](https://github.com/FRONTENDSCHOOL7/villains/assets/117346967/ca65a420-6f13-420c-aafc-6661ccbd9cef) | ![유저 1 채팅 확인 택배 상태 변경](https://github.com/FRONTENDSCHOOL7/villains/assets/117346967/a6f4053d-5da7-406c-ba55-c40a7e83ce9f) |
+| ![유저 1 택배 등록](https://github.com/FRONTENDSCHOOL7/villains/assets/117346967/678a59ba-06ef-4a9d-8103-85b1175c9986) | ![유저2 배달수락](https://github.com/FRONTENDSCHOOL7/villains/assets/92397578/88fe8b9a-082d-4244-84a3-b81fb54d9be7) | ![유저 1 채팅 확인 택배 상태 변경](https://github.com/FRONTENDSCHOOL7/villains/assets/117346967/a6f4053d-5da7-406c-ba55-c40a7e83ce9f) |
 
 | 배달 완료 채팅 | 배달 완료 확인 / 택배 상태 변경 | 택배 수정 |
 | --- | --- | --- |
@@ -157,7 +157,45 @@ PW: 123123
 
 ## 7. 핵심 기능 및 코드
 
+### react-hook-form
+프로젝트 진행 중 로그인 페이지, 회원가입 페이지, 게시글 작성 페이지, 수정 페이지 등등 form data를 관리하는 페이지가 점점 늘어나게 되었습니다. 
 
+기존 회원가입 form data를 관리 및 유효성 검사를 진행하기 위해서는 ```form 상태관리를 위한 state``` , ```form 입력 값이 변경되는 이벤트를 처리할 handler```, ```form 데이터의 유효성을 검사하기 위한 validation 함수```,  ```에러 메시지 값을 상태관리할 state``` 를 전부 코드로 작성해야했습니다. 하지만 저희는 여러개의 form data를 관리하고 있었고, 그에따른 state와 함수를 추가로 선언해야 했습니다.
+
+이를 간소화 시키기 위해 ```react-hook-form``` 라이브러리를 사용했으며, ```react-hook-form``` 사용으로 위에 선언해야할 state 및 함수들을 전부 ```react-hook-form```으로 관리가 가능했습니다.
+
+```jsx
+// react-hook-form
+  const {
+    register,
+    handleSubmit,
+    watch,
+    formState: { isSubmitting, isSubmitted, errors },
+  } = useForm({ mode: 'onChange' });
+  const userAccountId = watch('accountId');
+  const userEmail = watch('email');
+  const userPwd = watch('password');
+
+...
+
+<Input
+  id="accountId"
+  type="accountId"
+  name="accountId"
+  placeholder="영문, 숫자, 특수문자(.),(_)만 사용 가능"
+  aria-invalid={isSubmitted ? (errors.accountId ? 'true' : 'false') : undefined}
+   {...register('accountId', {
+     required: '*계정ID를 입력해주세요.',
+     pattern: {
+     value: /^[A-Za-z0-9._]+$/,
+     message: '*계정ID 형식에 맞지 않습니다.',
+    },
+  })}
+ />
+
+...
+```
+```register```를 사용해 입력전 required 메시지, 유효성 검증 정규식, 유효성 검증 에러 메시지를 관리 할 수 있고, ```watch```를 통해 form 상태 관리를 위한 state, 입력 값이 변경되는 이벤트를 처리할 handler를 대신하여 ```react-hook-form```을 사용하기 전보다 훨씬 간결한 코드를 작성할 수가 있었습니다.
 
 ## 8. 트러블슈팅
 
