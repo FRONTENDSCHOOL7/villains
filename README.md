@@ -235,6 +235,7 @@ feat/: 기능별 작업용 브랜치
     아이스브레이킹으로 모든 팀원이 서울 지하철 1호선 근처에 거주 한다는 공통점을 발견하였고 이 특징을 바탕으로 개성 있는 팀 프로젝트 아이디어가 나오게 되었습니다.
   - 매일 오전 9시, 오후 5시에 회고록을 작성하면서 아이스브레이킹 타임을 가질 수 있도록 노력했습니다.
   - 프로젝트 중 힘들어서 지치면 휴식 시간을 가지며 분위기를 풀어갈 수 있도록 했습니다.
+ 
 ![1호선02](https://github.com/FRONTENDSCHOOL7/villains/assets/128403039/563c9db5-e425-4a99-b6bd-b3221bb62ebd)
 ![MBTI02](https://github.com/FRONTENDSCHOOL7/villains/assets/128403039/63dfb016-1812-4bec-a953-2ee6829adc06)
 ![만세02jpg](https://github.com/FRONTENDSCHOOL7/villains/assets/128403039/46c4b85d-42ab-4c2c-bb9b-39e78090c7b8)
@@ -247,6 +248,7 @@ feat/: 기능별 작업용 브랜치
     원활한 진행을 위해 각 선택 사항에 대한 장단점을 설명하고 사용 경험 여부와 어떤 부분이 부담인지 의견을 들어보고 보완할 수 있는 방법을 찾을 수 있도록 하였습니다.
   - 모르는 내용이 있으면 자유롭게 질문하는 분위기를 만들 수 있도록 노력하였습니다.
   - 각자 잘하는 부분을 칭찬하고 노력을 응원하면서 성실히 참여할 수 있는 분위기를 만들었습니다.
+  
 ![의사결정_3](https://github.com/FRONTENDSCHOOL7/villains/assets/128403039/021aa2a8-3939-44f3-809c-75fbc8c701d3)
 ![리코일로02](https://github.com/FRONTENDSCHOOL7/villains/assets/128403039/8c5c4425-ad5a-42b5-9d68-8a31cee9e8fb)
 
