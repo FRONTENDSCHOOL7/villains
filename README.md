@@ -442,7 +442,7 @@ const routeConfig = [
             children: [
 ```
 
-### 스타일드 컴폰넌트를 이용한 버튼 컴포넌트, 글로벌 스타일
+### 스타일드 컴포넌트를 이용한 버튼 컴포넌트, 글로벌 스타일
 
  📂src/components/default/GlobalButton.jsx
 
