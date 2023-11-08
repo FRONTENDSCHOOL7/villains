@@ -88,11 +88,25 @@ https://github.com/orgs/FRONTENDSCHOOL7/projects/1
 
 ## 4. 폴더 구조
 
+<details>
+<summary>토글 접기/펼치기</summary>
+<div markdown="1">
 
+안녕
+
+</div>
+</details>
 
 ## 5. 구현 기능
 
-
+- 로그인/ 회원가입
+- 좋아요
+- 게시글 등록
+- 지도에 위치 표시
+- 검색
+- 무한스크롤
+- 택배 리스트
+  
 ## 6. UI
 
 ### [전체 페이지]
