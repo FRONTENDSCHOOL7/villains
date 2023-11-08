@@ -17,8 +17,9 @@ export default defineConfig(({ mode }) => {
   };
   return {
     // Vite 설정
-    base: env.NODE_ENV === 'production' ? '/villains/' : '/',
-    plugins: [react(), htmlPlugin()], // vendor code spliting 설정
+    // base: env.NODE_ENV === 'production' ? '/villains/' : '/',
+    base: `/villains/`,
+    plugins: [react(), htmlPlugin()],
     define: {
       __APP_ENV__: JSON.stringify(env.APP_ENV),
     },
