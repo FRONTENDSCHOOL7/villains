@@ -30,6 +30,8 @@ export default defineConfig(({ mode }) => {
       ],
     },
     build: {
+      assetsDir: 'views',
+      sourcemap: false,
       //console 제거
       minify: 'terser',
       terserOptions: {
@@ -38,11 +40,11 @@ export default defineConfig(({ mode }) => {
           drop_debugger: true,
         },
       },
-      watch: {
-        // https://rollupjs.org/configuration-options/#watch
-      },
       rollupOptions: {
         output: {
+          manualChunks: {
+            vendor: ['react', 'react-router-dom', 'react-dom'],
+          },
           entryFileNames: '[name].js',
           assetFileNames: '[name].[ext]',
         },

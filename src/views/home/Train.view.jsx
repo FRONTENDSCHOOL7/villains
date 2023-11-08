@@ -1,10 +1,8 @@
-import { useLoaderData, useNavigate, useParams } from "react-router";
-import React, { useEffect, useState } from "react";
-import { Map, MapMarker } from "react-kakao-maps-sdk";
+import { useParams } from "react-router";
+import React from "react";
 
 import PageTemplate from "../../components/layout/PageTemplate";
 import TrainMap from "../../components/map/TrainMap";
-import pageUrlConfig from "../../config/pageUrlConfig";
 
 const HomeTrainPage = () => {
     const { stationname } = useParams();
