@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useEffect} from "react";
 import { Outlet, useRouteLoaderData, useParams, useNavigate, useLocation } from "react-router";
 import NavMenu from '../../components/layout/NavMenu';
 import BackHeader from '../../components/layout/BackHeader';
@@ -12,10 +12,11 @@ const ProfileIndexPage = () => {
   const user = useRouteLoaderData('user');
   const navigate = useNavigate();
   const { pathname } = useLocation();
-  const { accountname } = useParams();
   
-  if(!accountname) navigate(`${pageUrlConfig.profilePage}/${user.accountname}`)
-
+  useEffect(() => {
+    if(pathname === '/user') navigate(`${pageUrlConfig.profilePage}/${user.accountname}`)
+  }, [])
+    
   const handleClickBack = () => {
     navigate(-1);
   };
@@ -29,7 +30,7 @@ const ProfileIndexPage = () => {
         <Tanghulu />
       </BackHeader>
       <Outlet />
-      {pathname === pageUrlConfig.profilePage && <NavMenu />}
+      <NavMenu />
     </>
   ); 
 }
