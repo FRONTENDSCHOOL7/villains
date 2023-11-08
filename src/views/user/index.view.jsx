@@ -1,15 +1,15 @@
-import React, {useEffect} from "react";
-import { Outlet, useRouteLoaderData, useParams, useNavigate, useLocation } from "react-router";
+import React, { useEffect } from 'react';
+import { Outlet, useRouteLoaderData, useParams, useNavigate, useLocation } from 'react-router';
 import styled from 'styled-components';
 import { useRecoilState, useSetRecoilState } from 'recoil';
 
-import triggerAtom from "../../atoms/tirggerAtom";
-import { bottomSheetOptions, bottomSheetStateAtom } from "../../atoms/bottomSheetStateAtom";
+import triggerAtom from '../../atoms/tirggerAtom';
+import { bottomSheetOptions, bottomSheetStateAtom } from '../../atoms/bottomSheetStateAtom';
 import userAtom from '../../atoms/userAtom';
 
 import pageUrlConfig from '../../config/pageUrlConfig';
-import useModal from "../../hooks/useModal";
-import useBottomSheetOptions from "../../hooks/useBottomSheetOptions";
+import useModal from '../../hooks/useModal';
+import useBottomSheetOptions from '../../hooks/useBottomSheetOptions';
 
 import NavMenu from '../../components/layout/NavMenu';
 import BackHeader from '../../components/layout/BackHeader';
@@ -17,7 +17,7 @@ import DefaultBtn, { BasicStyle } from '../../components/default/GlobalButton';
 import Tanghulu from '../../components/default/Tanghulu';
 
 import BackArrow from '../../assets/img/icon-arrow-left.svg';
-import Modal from "../../components/Modal";
+import Modal from '../../components/Modal';
 // import logout from "../../components/splash/logout";
 
 const ProfileIndexPage = () => {
@@ -25,6 +25,7 @@ const ProfileIndexPage = () => {
   const navigate = useNavigate();
   const location = useLocation();
   const { accountname } = useParams();
+  const { pathname } = useLocation();
 
   const [trigger, setTrigger] = useRecoilState(triggerAtom);
   const [bottomSheet, setBottomSheet] = useRecoilState(bottomSheetOptions);
@@ -36,14 +37,14 @@ const ProfileIndexPage = () => {
   const profileReport = () => {
     handleModalConfirm();
     alert('신고완료');
-  }
+  };
 
   const logout = () => {
     localStorage.clear();
     setUserInfo(null);
     navigate('/');
   };
-  
+
   const currentAccountname = user.accountname;
   const authorAccountname = accountname;
   // 바텀시트 옵션 생성
@@ -56,7 +57,6 @@ const ProfileIndexPage = () => {
   });
 
   const [bottomSheetToggle, setBottomSheetToggle] = useRecoilState(bottomSheetStateAtom);
-  
 
   const handleBottomSheetShow = (event) => {
     event.stopPropagation();
@@ -65,38 +65,43 @@ const ProfileIndexPage = () => {
   };
 
   useEffect(() => {
-    if(!accountname){
-      navigate(`${pageUrlConfig.profilePage}/${user.accountname}`)
+    if (!accountname) {
+      navigate(`${pageUrlConfig.profilePage}/${user.accountname}`);
     }
   }, [accountname]);
 
   const handleClickBack = () => {
     navigate(-1);
   };
-  
+
   const handleClickSubmit = () => {
     setTrigger(true);
-  }
+  };
 
   return (
     <>
       <BackHeader>
-        <BackArrowBtn variant={'basic'} onClick={handleClickBack}>
-          <img src={BackArrow} alt="뒤로가기" />
-        </BackArrowBtn>
-        {location.pathname.includes('edit') ?
-         <BtnWrap onClick={handleClickSubmit}>
-          <DefaultBtn >저장</DefaultBtn>
-        </BtnWrap>
-        :<Tanghulu onClick={handleBottomSheetShow}/>
-        }
+        {pathname.split('/').length > 4 ?  (
+          <BackArrowBtn variant={'basic'} onClick={handleClickBack}>
+            <img src={BackArrow} alt="뒤로가기" />
+          </BackArrowBtn>
+        ) : <div></div>}
+        {location.pathname.includes('edit') ? (
+          <BtnWrap onClick={handleClickSubmit}>
+            <DefaultBtn>저장</DefaultBtn>
+          </BtnWrap>
+        ) : (
+          <Tanghulu onClick={handleBottomSheetShow} />
+        )}
       </BackHeader>
-      {isModalVisible && <Modal content={modalContent} confirmText={`응`} cancelText={'미안'} onConfirm={handleModalConfirm}/>}
+      {isModalVisible && (
+        <Modal content={modalContent} confirmText={`응`} cancelText={'미안'} onConfirm={handleModalConfirm} />
+      )}
       <Outlet />
       <NavMenu />
     </>
-  ); 
-}
+  );
+};
 
 export default ProfileIndexPage;
 
@@ -107,4 +112,4 @@ const BackArrowBtn = styled.button`
 
 const BtnWrap = styled.div`
   flex-basis: 20%;
-`
+`;

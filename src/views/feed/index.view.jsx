@@ -46,8 +46,8 @@ const FeedIndexPage = () => {
   };
 
   const handleClickBack = () => {
-    const mainPath = pathname.split('/')[1];
-    navigate(`/${mainPath}`);
+    const mainPath = pathname.split('/')[2];
+    navigate(`/villains/${mainPath}`);
   };
 
   return (

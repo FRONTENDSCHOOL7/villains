@@ -47,7 +47,7 @@ const GoodsIndexPage = () => {
   };
 
   useEffect(() => {
-    const page = location.pathname.split('/')[2];
+    const page = location.pathname.split('/')[3];
     setPageState(page);
   }, [location]);
 
