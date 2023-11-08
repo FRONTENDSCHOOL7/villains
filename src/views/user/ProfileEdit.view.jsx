@@ -1,5 +1,5 @@
 import React, { useEffect, useState, useRef } from 'react';
-import { useRouteLoaderData } from 'react-router-dom'; 
+import { useRouteLoaderData, useNavigate } from 'react-router-dom'; 
 import styled from 'styled-components';
 import PageTemplate from '../../components/layout/PageTemplate';import { useRecoilValue, useRecoilState } from 'recoil';
 import basicProfile from '../../assets/img/basic-profile.svg';
@@ -9,14 +9,19 @@ import FloatingButton from '../../components/default/FloatingButton.style';
 import imageIcon from '../../assets/img/image-icon.svg';
 import theme from '../../style/theme';
 import ResizingTextarea from '../../components/feed/ResizingTextarea';
+import triggerAtom from '../../atoms/tirggerAtom';
+import updateUser from '../../api/update/updateUser.api';
+import pageUrlConfig from '../../config/pageUrlConfig';
 // import imgIcon from `../assets/img/image-icon.svg`
 
 const ProfileEditPage = () => {
   const user = useRouteLoaderData('user');
-  const myProfileInfo = useRecoilValue(profileAtom);
+  const [myProfileInfo, setMyProfileInfo] = useRecoilState(profileAtom);
 
   const [name, setName] = useState(myProfileInfo.username);
   const [intro, setIntro] = useState(myProfileInfo?.intro ?? "");
+
+  const [saveContents, setSaveContetns] = useRecoilState(triggerAtom);
 
   const fileInputRef = useRef();
   const [imagesData, setImagesData] = useState([]);
@@ -27,6 +32,30 @@ const ProfileEditPage = () => {
   const handleChangeIntro = (event) => {
     setIntro(event.target.value);
   }
+  const navigate = useNavigate();
+
+  useEffect(()=>{
+    const newInfo = { 
+      user: { 
+        "username": name, 
+        "intro": intro, 
+        "image": imagesData
+      } 
+    };
+    if(saveContents){
+
+      updateUser(newInfo, user.token)
+      .then((result)=>{
+        navigate(`${pageUrlConfig.profilePage}/${user.accountname}`, {state: newInfo})
+      })
+      .catch((error)=>{
+        alert('이미 사용 중인 이름입니다');
+        console.error(error);
+      })
+    setSaveContetns(false);
+    
+  }
+  }, [saveContents]);
 
   const handleImageChange = async (event) => {
     const files = Array.from(event.target.files);
@@ -66,15 +95,15 @@ const ProfileEditPage = () => {
         />
       </ImgSection>
 
-<InputSection>
-          <Label>사용자 이름
-          <Input placeholder="2~10자 이내" value={name} onChange={handleChangeName}/>
-          </Label>
-  
-          <Label>소개
-          <ResizingTextarea placeholder="자기소개" value={intro} onChange={handleChangeIntro} />
-          </Label>
-</InputSection>
+      <InputSection>
+        <Label>사용자 이름
+        <Input placeholder="2~10자 이내" value={name} onChange={handleChangeName}/>
+        </Label>
+
+        <Label>소개
+        <ResizingTextarea placeholder="자기소개" value={intro} onChange={handleChangeIntro} />
+        </Label>
+      </InputSection>
     </PageTemplate>
   );
 };
