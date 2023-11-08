@@ -5,7 +5,7 @@ import NavMenu from '../../components/layout/NavMenu';
 import SearchHeader from '../../components/layout/SearchHeader';
 import BackHeader from '../../components/layout/BackHeader';
 import userAtom from '../../atoms/userAtom';
-import { useRecoilValue } from 'recoil';
+import { useRecoilValue, useRecoilState } from 'recoil';
 import realProductAuthorAtom from '../../atoms/realProductAuthorAtom';
 import { headerBtnOptionsAtom, headerBtnStateAtom } from '../../atoms/headerBtnStateAtom';
 import Tanghulu from '../../components/default/Tanghulu';
@@ -13,6 +13,11 @@ import styled from 'styled-components';
 import pageUrlConfig from '../../config/pageUrlConfig';
 import BackArrow from '../../assets/img/icon-arrow-left.svg';
 import { BlueSmallBtn } from '../../components/default/Buttons';
+import UserListBox from '../../components/searchbar/UserListBox';
+import queryAtom from '../../atoms/queryAtom';
+import queryFocusAtom from '../../atoms/queryFocusAtom';
+import { useQuery } from '@tanstack/react-query';
+import searchUserQuery from '../../api/get/getSearchUser.api';
 
 const GoodsIndexPage = () => {
   const navigate = useNavigate();
@@ -23,6 +28,23 @@ const GoodsIndexPage = () => {
   const [pageState, setPageState] = useState('');
   const location = useLocation();
   const id = useParams().id;
+
+  const [query, setQuery] = useRecoilState(queryAtom);
+  const [focus, setFocus] = useRecoilState(queryFocusAtom);
+  // 유저 검색
+  const [showUserList, setShowUserList] = useState(false);
+  const [userList, setUserList] = useState([]);
+  const { data: users, isLoading, isError } = useQuery(searchUserQuery(query, user));
+  useEffect(() => {
+    if (focus || users) {
+      setShowUserList(true);
+    } else {
+      setShowUserList(false);
+    }
+  }, [query, users, focus]);
+  const handleSearchBack = () => {
+    setQuery('');
+  };
 
   useEffect(() => {
     const page = location.pathname.split('/')[2];
@@ -54,7 +76,7 @@ const GoodsIndexPage = () => {
       );
       // 택배 리스트
     } else {
-      return <SearchHeader></SearchHeader>;
+      return <SearchHeader onClick={handleSearchBack} placeholder={`유저를 검색해주세요`} />;
     }
   };
 
@@ -65,7 +87,11 @@ const GoodsIndexPage = () => {
   return (
     <>
       {headerChange()}
-      <Outlet />
+      {showUserList && !isLoading && !isError && users ? (
+        <UserListBox userList={users.data} showUserList={showUserList} />
+      ) : (
+        <Outlet />
+      )}
       <NavMenu></NavMenu>
     </>
   );
@@ -74,9 +100,6 @@ const GoodsIndexPage = () => {
 const BackArrowBtn = styled.button`
   ${BasicStyle}
   margin-right: 8px;
-`;
-const BtnWrap = styled.div`
-  min-width: 100px;
 `;
 
 export default GoodsIndexPage;
