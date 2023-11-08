@@ -157,7 +157,241 @@ https://github.com/orgs/FRONTENDSCHOOL7/projects/1
 
 
 ## 7. 핵심 기능 및 코드
+### Open API
 
+ 📂src/views/home/index.view.jsx
+
+useMemo를 사용하여 정적 데이터를 불러오고, 그것을 바탕으로 리코일에 저장하였습니다. 그래서 불필요한 api 요청을 최대한 줄이려 했고, 이를 이용해 ListBox를 렌더링하는데, 이 또한 기존의 검색 리스트박스가 position 속성을 사용하던 것과 달리 별도의 컴포넌트로 하여 리플로우를 줄이려고 하였습니다.
+
+```
+const HomeIndexPage = ( ) => {
+  const navigate = useNavigate();
+  const [subOneInfo, setSubOneInfo] = useRecoilState(subOneAtom);
+  const [query, setQuery] = useRecoilState(queryAtom);
+  
+  useMemo(() => {
+    //도시철도 1호선 지하철역 정보 불러오기
+    getSubOneInfo().then((data) => {
+      const dataList = data.data.SearchInfoBySubwayNameService.row;
+      const rowInfo = [...dataList].filter((elem) => elem.LINE_NUM === '01호선');
+      const newInfo = rowInfo.map((info, index) => {
+        return (info = { Query: info.STATION_NM, Id: info.STATION_CD });
+      });
+      setSubOneInfo(newInfo);
+    });
+  }, []);
+
+  const list = useSearchData(query, subOneInfo);
+
+  const handleClickBack = () => {
+      setQuery('');
+  }
+  const handleClickStation = (event) => {
+    navigate(`${pageUrlConfig.homePage}/${event.target.id}`, {state: event.target.textContent});
+    setQuery('');
+  }
+  return <>
+  <SearchHeader onClick={handleClickBack} placeholder={`지하철역을 검색해주세요`}/>
+  {query ? <ListBox list={list} onClick={handleClickStation}/> : <Outlet />}
+  <NavMenu/>
+  </>
+}
+
+export default HomeIndexPage;
+```
+
+- 라우터
+
+ 📂src/config/pageUrlConfig.js
+
+별도의 클래스로 생성하여 라우터를 최대한 한 곳에서 수정할 수 있도록 하였습니다.
+
+```jsx
+const baseUrl = import.meta.env.BASE_URL;
+class pageUlrConfig {
+  splashPage = `${baseUrl}`;
+//생략
+  goodsDetailPage = `${baseUrl}goods/:id`;
+  goodsEditPage = `${baseUrl}goods/edit/:id`;
+}
+
+export default new pageUlrConfig()
+```
+
+ 📂src/config/route.config.jsx
+
+PrivateLayout을 사용하여 로그인 후 접근이 가능하도록 하였고, loader를 사용해 미리 사용자 정보를 하위 컴포넌트에서 가져올 수 있도록 하여 매번 localStorage에 접근하는 코드를 줄였습니다.
+
+```jsx
+const routeConfig = [
+  {
+    path: baseUrl,
+    element: <DefaultLayout />,
+    children: [
+      {
+        path: pageUrlConfig.splashPage,
+        element: <AuthIndexPage/>,
+        children: [
+          { index: true, element: <SplashPage /> },
+          { path: pageUrlConfig.signInPage, element: <SignInPage /> },
+          { path: pageUrlConfig.signUpPage, element: <SignUpPage />},
+        ],
+      },
+      {
+        path: baseUrl,
+        loader: async()=>sendUserInfo(),
+        id: 'user',
+        element: <PrivateLayout />,
+        children: [
+          {
+            path: pageUrlConfig.homePage,
+            element: <HomeIndexPage/>,
+            children: [
+```
+
+### 스타일드 컴폰넌트를 이용한 버튼 컴포넌트, 글로벌 스타일
+
+ 📂src/components/default/GlobalButton.jsx
+
+공통적으로 쓰이는 스타일 등은 css로 정의하고 버튼에 가져올 수 있도록 하였고, 외의 다른 스타일에도 쉽게 적용할 수 있었습니다.
+
+```jsx
+import styled, { css } from "styled-components";
+import theme from "../../style/theme";
+
+/**@param variant: "primary" | "secondary" | "basic" */
+const DefaultBtn = ({children, variant, disabled, id}) => {
+    return <StyledButton variant={variant ?? "primary"} disabled={disabled ?? false} id={id ?? ""}>{children}</StyledButton>
+}
+
+const PrimaryStyle = css`
+    background-color: ${theme.color.primary};
+    color: ${theme.color.white};
+    border-color: ${theme.color.primary};
+`;
+
+const SecondaryStyle = css`
+    background-color: ${theme.color.secondary};
+    color: ${theme.color.black};
+    border-color: ${theme.color.secondary};
+`;
+
+const BasicStyle = css`
+    background-color: ${theme.color.white};
+    color: ${theme.color.primary};
+    border-color: ${theme.color.primary};
+`
+
+const StyledButton = styled.button`
+    width: 100%;
+    height: 100%;
+    border: 1px solid;
+    border-radius: 9999px;
+    cursor: pointer;
+    ${(props)=>{
+        switch(props.variant){
+        case 'primary':
+            return PrimaryStyle;
+        case 'secondary':
+            return SecondaryStyle;
+        case 'basic':
+            return BasicStyle;
+        }
+    }}
+    &:disabled {
+        border-color: ${theme.color.grey};
+        background-color: ${theme.color.grey};
+        color: ${theme.color.white};
+        cursor: default;
+    }
+
+`;
+export {PrimaryStyle, SecondaryStyle, BasicStyle};
+export default DefaultBtn;
+```
+
+ 📂src/style/theme.js
+
+```jsx
+const theme = {
+  color: {
+    primary: '#3c58c1',
+    secondary: '#B1BCE6',
+    white: '#FFF',
+    black: '#000',
+    brown: '#663C06',
+    grey: '#767676',
+    light: '#DBDBDB',
+  },
+  //생략
+  fontSize: {
+    h1: `48px`,
+    h2: `36px`,
+    h3: `24px`,
+    body1: `18px`,
+    body2: `16px`,
+    body3: `14px`,
+    caption: `12px`,
+  },
+};
+export default theme;
+```
+
+### 프로필
+
+많은 버튼들이 필요한 곳이어서 이벤트 버블링을 통해 버튼 클릭 이벤트를 관리하였습니다. 또한, 게시글과 택배 목록을 넘나드는 탭 메뉴는 간단하게 스타일 컴포넌트를 사용하여 조절하였습니다.
+
+```jsx
+const handleClickBtns = (event) => {
+    switch(event.target.id){
+      case 'chat':
+        navigate(pageUrlConfig.chatPage);
+        break;
+      case 'share':
+        const BASE_URL = import.meta.env.BASE_URL;
+        navigator.clipboard.writeText(`${BASE_URL}${pathname}`);
+        alert('링크 복사 완료!');
+        break;
+      case 'edit':
+        navigate(`${pageUrlConfig.profilePage}/${user.accountname}/edit`)
+        break;
+      case 'unfollow':
+        unFollowing();
+        break;
+      case 'follow':
+        Following();
+        break;
+    }
+//생략
+<ButtonWrap onClick={handleClickBtns}>
+  <button id='chat'></ button>
+  {isMy ? 
+       <DefaultBtn id={`edit`}>프로필 수정</DefaultBtn> 
+				: (profileInfo.isfollow ? 
+		       <DefaultBtn variant={'basic'} id={`unfollow`}>언팔로우</DefaultBtn> 
+	        :  <DefaultBtn variant={'primary'} id={`follow`}>팔로우</DefaultBtn> 
+   )}
+ <button id='share'></ button>
+</ButtonWrap>
+//생략
+//탭 메뉴 클릭하면 스타일 반대로 주기
+const TabGroup = styled.div`
+  position: sticky;
+  top: 0;
+  z-index: 10;
+  display: flex;
+  width: 100%;
+  height: 64px;
+  background-color: ${theme.color.white};
+
+  & :nth-child(1){
+    ${(props)=> props.color? SecondaryStyle : BasicStyle}
+  }
+  & :nth-child(2){
+    ${(props)=> !props.color? SecondaryStyle : BasicStyle}
+  }
+`;
+```
 ### react-hook-form
 프로젝트 진행 중 로그인 페이지, 회원가입 페이지, 게시글 작성 페이지, 수정 페이지 등등 form data를 관리하는 페이지가 점점 늘어나게 되었습니다. 
 
