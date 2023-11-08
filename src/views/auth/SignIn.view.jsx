@@ -2,14 +2,15 @@ import { React, useState, useEffect } from 'react';
 import { useNavigate } from 'react-router';
 import { useForm } from 'react-hook-form';
 import styled from 'styled-components';
+import { useRecoilState } from 'recoil';
 
 import pageUrlConfig from '../../config/pageUrlConfig';
 import client from '../../config/api.config';
-import { Main } from '../../components/PageTemplate.style';
-import { BlueLongBtn, WhiteLongBtn } from '../../components/Buttons';
-import CheckBox from '../../components/CheckBox';
-import { useRecoilState } from 'recoil';
 import userAtom from '../../atoms/userAtom';
+
+import { Main } from '../../components/layout/PageTemplate.style';
+import { BlueLongBtn, WhiteLongBtn } from '../../components/default/Buttons';
+import CheckBox from '../../components/default/CheckBox';
 
 const SignInPage = () => {
   //로그인 시 userInfo를 Atom에 저장하기

@@ -4,7 +4,7 @@ import pageUrlConfig from '../../config/pageUrlConfig';
 
 import styled, { css } from 'styled-components';
 import { useLocation } from 'react-router-dom';
-import { BasicStyle } from '../GlobalButton';
+import { BasicStyle } from '../default/GlobalButton';
 import theme from '../../style/theme';
 
 const NavMenu = () => {

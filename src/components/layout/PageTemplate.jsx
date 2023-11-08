@@ -1,17 +1,13 @@
-import Header from './layout/SearchHeader';
-import ListBox from './searchbar/ListBox';
-import NavMenu from './layout/NavMenu';
-import { Wrap, Main } from './PageTemplate.style';
+import { Main } from './PageTemplate.style';
 
 import { useRecoilState, useRecoilValue } from 'recoil';
 import { useLocation, useNavigate } from 'react-router';
 import { useEffect, useState } from 'react';
-import subOneAtom from '../atoms/subOneAtom';
-import queryFocusAtom from '../atoms/queryFocusAtom';
-import queryAtom from '../atoms/queryAtom';
-import pageUrlConfig from '../config/pageUrlConfig';
-import FloatingButton from './FloatingButton.style';
-import BottomSheet from './BottomSheet';
+import subOneAtom from '../../atoms/subOneAtom';
+import queryFocusAtom from '../../atoms/queryFocusAtom';
+import queryAtom from '../../atoms/queryAtom';
+import pageUrlConfig from '../../config/pageUrlConfig';
+import BottomSheet from '../default/BottomSheet';
 
 const PageTemplate = ({ children }) => {
   const [list, setList] = useState([]);

@@ -2,19 +2,20 @@ import React, {useEffect} from "react";
 import { Outlet, useRouteLoaderData, useParams, useNavigate, useLocation } from "react-router";
 import NavMenu from '../../components/layout/NavMenu';
 import BackHeader from '../../components/layout/BackHeader';
-import DefaultBtn, { BasicStyle } from '../../components/GlobalButton';
+import DefaultBtn, { BasicStyle } from '../../components/default/GlobalButton';
 import BackArrow from '../../assets/img/icon-arrow-left.svg';
 import styled from 'styled-components';
-import Tanghulu from '../../components/Tanghulu';
+import Tanghulu from '../../components/default/Tanghulu';
 import pageUrlConfig from '../../config/pageUrlConfig';
 
 const ProfileIndexPage = () => {
   const user = useRouteLoaderData('user');
   const navigate = useNavigate();
   const { pathname } = useLocation();
+  const { accountname } = useParams();
   
   useEffect(() => {
-    if(pathname === '/user') navigate(`${pageUrlConfig.profilePage}/${user.accountname}`)
+    if(!accountname) navigate(`${pageUrlConfig.profilePage}/${user.accountname}`)
   }, [])
     
   const handleClickBack = () => {

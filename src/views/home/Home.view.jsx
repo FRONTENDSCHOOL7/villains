@@ -13,7 +13,7 @@ import userPostAtom from '../../atoms/userPostAtom';
 import contactQuery from '../../api/get/getUserPost.api';
 import getUserInfo from '../../api/get/getUserInfo.api';
 
-import PageTemplate from '../../components/PageTemplate';
+import PageTemplate from '../../components/layout/PageTemplate';
 import defaultImg from '../../assets/img/basic-profile.svg';
 import theme from '../../style/theme';
 import pageUrlConfig from '../../config/pageUrlConfig';

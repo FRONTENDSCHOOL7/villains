@@ -1,79 +1,84 @@
-import { useNavigate, useParams, useRouteLoaderData, useLocation } from 'react-router-dom';
-import {useQuery} from '@tanstack/react-query'
+import { useNavigate, useParams, useRouteLoaderData, useLocation, Link } from 'react-router-dom';
+import {useQuery, useMutation} from '@tanstack/react-query'
 import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
 
 import pageUrlConfig from '../../config/pageUrlConfig';
-import PageTemplate from '../../components/PageTemplate';
+import PageTemplate from '../../components/layout/PageTemplate';
 import basicProfile from '../../assets/img/basic-profile.svg';
-import { useRecoilValue } from 'recoil';
+import { useRecoilValue, useRecoilState } from 'recoil';
 import PostCard from '../../components/feed/PostCard';
 import userPostAtom from '../../atoms/userPostAtom';
 import profileAtom from '../../atoms/profileAtom';
 import getUserInfo from '../../api/get/getUserInfo.api';
-import  DefaultBtn, { BasicStyle, PrimaryStyle, SecondaryStyle } from '../../components/GlobalButton';
+import  DefaultBtn, { BasicStyle, PrimaryStyle, SecondaryStyle } from '../../components/default/GlobalButton';
 import theme from '../../style/theme';
 import contactQuery from '../../api/get/getUserPost.api';
 import Goods from '../../components/Goods';
 import ChatIcon from '../../assets/img/message-circle.svg';
 import ShareIcon from '../../assets/img/icon-404.svg'
 import getProducts from '../../api/get/getProducts.api';
+import postFollowQuery from '../../api/post/postFollow.api';
+import deleteFollowQuery from '../../api/delete/deleteFollow.api';
 
 
 const ProfilePage = () => {
+  const user = useRouteLoaderData('user');
   const navigate = useNavigate();
   const {pathname} = useLocation();
-  const user = useRouteLoaderData('user');
   const { accountname } = useParams();
 
   const [isLoading, setIsLoading] = useState(true);
   const [color, setColor] = useState(false);
   const [isMy, setIsMy] = useState(false);
-  const [currentAccount, setCurrentAccount] = useState(accountname);
   const [profileInfo, setProfileInfo] = useState();
-  const myProfileInfo = useRecoilValue(profileAtom);
-  const myFeedList = useRecoilValue(userPostAtom);
   const [feedList, setFeedList] = useState([]);
   const [goodsList, setGoodsList] = useState([]);
 
-  const {data, isFetching, isLoading:feedLoading, isError} = useQuery(contactQuery(user.accountname, user.token));
+  const [myProfileInfo, setMyProfileInfo] = useRecoilState(profileAtom);
+  const myFeedList = useRecoilValue(userPostAtom);
 
+  
   const { products, loading, error } = getProducts();
   useEffect(()=>{
     setGoodsList(products);
   },[loading])
 
+  const {data, isFetching, isLoading:feedLoading, isError} = useQuery(contactQuery(accountname, user.token));
+  
   useEffect(() => {
-    if(profileInfo) setIsLoading(false);
     if (accountname === user.accountname) {
       setIsMy(true);
-      setProfileInfo(myProfileInfo);
-      setFeedList(myFeedList);
-    } else{
-      getUserInfo(currentAccount, user.token)
+    }
+    //   setProfileInfo(myProfileInfo);
+    //   setFeedList(myFeedList);
+    // } else{
+      getUserInfo(accountname, user.token)
       .then((result)=>{
         setProfileInfo(result.data.profile);
+        setIsLoading(false);
+        setMyProfileInfo(result.data.profile);
       })
       .catch((error)=>{
         console.error(error);
       })
-    }
-  }, [profileInfo]);
+    // }
+  }, [accountname]);
 
   useEffect(()=>{
     if(!myFeedList || !feedLoading){
       setFeedList(data.data.post)
     }
   }, [feedLoading, feedList, myFeedList])
-  
-  console.log(feedList);
-  const handleClickEdit = () => {
-    navigate(pageUrlConfig.profileEdit);
-  };
+
 
   const handleClickTab = (event) => {
     event.target.id === `1` ? setColor(false) : setColor(true);
   }
+
+  const {data:FollowData, isLoading:FollowLoading, mutate:Following } = useMutation(postFollowQuery(accountname, user.token));
+
+  const {data:unFollowData, isLoading:unFollowLoading, mutate:unFollowing } = useMutation(deleteFollowQuery(accountname, user.token));
 
   const handleClickBtns = (event) => {
     switch(event.target.id){
@@ -81,44 +86,46 @@ const ProfilePage = () => {
         navigate(pageUrlConfig.chatPage);
         break;
       case 'share':
-        console.log('here')
         const BASE_URL = import.meta.env.BASE_URL;
         navigator.clipboard.writeText(`${BASE_URL}${pathname}`);
         alert('링크 복사 완료!');
         break;
       case 'edit':
         navigate(`${pageUrlConfig.profilePage}/${user.accountname}/edit`)
-      break;
+        break;
       case 'unfollow':
-
-      break;
+        unFollowing();
+        break;
       case 'follow':
-
+        Following();
         break;
     }
 
   }
   return (
     <PageTemplate>
-      {isLoading ? <div>loading...</div>
-      :<>
-        <UpperSection>
+        {(isLoading && !profileInfo) ?
+        <div>loading</div>
+        : <UpperSection>
           <ProfileHeader>
+            <Link to={`${pageUrlConfig.profilePage}/${accountname}/follower`}>
             <Follow>
               <span>{profileInfo.followerCount}</span>
               followers
             </Follow>
+            </Link>
             <ProfileImg src={profileInfo.image} alt="프로필 이미지" onError={(event)=>{event.target.src = basicProfile}}/>
-  
+            <Link to={`${pageUrlConfig.profilePage}/${accountname}/following`}>
             <Follow>
               <span>{profileInfo.followingCount}</span>
               followings
             </Follow>
+            </Link>
           </ProfileHeader>
   
           <ProfileBody>
             <UserName>{profileInfo.username}</UserName>
-            <ProfileEmail>@{currentAccount}</ProfileEmail>
+            <AccountName>@{accountname}</AccountName>
             <ProfileDsc>{profileInfo?.intro ?? `1호선 빌런 꿈나무`}</ProfileDsc>
             <ButtonWrap onClick={handleClickBtns}>
               <button id='chat'></ button>
@@ -130,7 +137,7 @@ const ProfilePage = () => {
               <button id='share'></ button>
               </ButtonWrap>
           </ProfileBody>
-        </UpperSection>
+        </UpperSection>}
   
         <DownSection>
           <TabGroup color={color} onClick={handleClickTab}>
@@ -150,16 +157,13 @@ const ProfilePage = () => {
          </ListWrap>
 
         </DownSection>
-
-
-      </>}
     </PageTemplate>
   );
 };
 export default ProfilePage;
 
 
-const UpperSection = styled.div`
+const UpperSection = styled.section`
   display: flex;
   flex-direction: column;
   padding: 26px;
@@ -185,11 +189,11 @@ const ProfileBody = styled.div`
   text-align: center;
 `
 const Follow = styled.div`
-  font-size: 8px;
+  font-size: ${theme.fontSize.caption};
   & span {
     display: block;
-    font-size: 18px;
-    font-weight: 800;
+    font-size: ${theme.fontSize.body1};
+    font-weight: ${theme.fontWeight.bold};
     margin-bottom: 7px;
   }
 `;
@@ -203,18 +207,16 @@ const ProfileImg = styled.img`
 `;
 
 const UserName = styled.p`
-  font-size: 16px;
-  font-weight: 800;
+  font-weight: ${theme.fontWeight.bold};
   margin-bottom: 10px;
 `;
 
-const ProfileEmail = styled.p`
-  font-size: 16px;
+const AccountName = styled.p`
   margin-bottom: 17px;
+  font-size: ${theme.fontSize.body3}
 `;
 
 const ProfileDsc = styled.p`
-  font-size: 16px;
   margin-bottom: 24px;
 `;
 const ButtonWrap = styled.div`
@@ -247,16 +249,8 @@ const ButtonWrap = styled.div`
     flex-grow: 1.5;
   }
 `;
-const EditBtn = styled.button`
-  width: 120px;
-  padding: 9px 0;
-  margin-bottom: 24px;
-  border-radius: 9999px;  
-  ${props => props.state ? BasicStyle : PrimaryStyle}
-`;
 
-// 컨텐츠를 포함하는 하단부
-const DownSection = styled.div`
+const DownSection = styled.section`
   border-top: 6px solid ${theme.color.light};
 `;
 

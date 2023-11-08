@@ -1,7 +1,7 @@
 import React, { useRef, useEffect } from 'react';
 import styled from 'styled-components';
 import { useRecoilState, useRecoilValue } from 'recoil';
-import { bottomSheetStateAtom, bottomSheetOptions } from '../atoms/bottomSheetStateAtom';
+import { bottomSheetStateAtom, bottomSheetOptions } from '../../atoms/bottomSheetStateAtom';
 
 const BottomSheet = () => {
   const [isVisible, setIsVisible] = useRecoilState(bottomSheetStateAtom);

@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { Main } from '../../components/PageTemplate.style';
+import styled from 'styled-components';
+import pageUrlConfig from '../../config/pageUrlConfig';
 import Logo from '/img/Logo.png';
 
 import Kakao from '../../assets/img/kakao.svg';
@@ -8,9 +9,8 @@ import Google from '../../assets/img/google.svg';
 import Facebook from '../../assets/img/facebook.svg';
 import Email from '../../assets/img/email.svg';
 
-import styled from 'styled-components';
-import pageUrlConfig from '../../config/pageUrlConfig';
-import { IconBtn } from '../../components/Buttons';
+import { Main } from '../../components/layout/PageTemplate.style';
+import { IconBtn } from '../../components/default/Buttons';
 
 const SplashPage = () => {
   const navigate = useNavigate();

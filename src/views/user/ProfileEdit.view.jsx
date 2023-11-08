@@ -1,46 +1,98 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useRef } from 'react';
+import { useRouteLoaderData } from 'react-router-dom'; 
 import styled from 'styled-components';
-import PageTemplate from '../../components/PageTemplate';
+import PageTemplate from '../../components/layout/PageTemplate';import { useRecoilValue, useRecoilState } from 'recoil';
 import basicProfile from '../../assets/img/basic-profile.svg';
+import { Input } from '../../components/default/Input.style';
+import profileAtom from '../../atoms/profileAtom';
+import FloatingButton from '../../components/default/FloatingButton.style';
+import imageIcon from '../../assets/img/image-icon.svg';
+import theme from '../../style/theme';
+import ResizingTextarea from '../../components/feed/ResizingTextarea';
 // import imgIcon from `../assets/img/image-icon.svg`
 
 const ProfileEditPage = () => {
+  const user = useRouteLoaderData('user');
+  const myProfileInfo = useRecoilValue(profileAtom);
+
+  const [name, setName] = useState(myProfileInfo.username);
+  const [intro, setIntro] = useState(myProfileInfo?.intro ?? "");
+
+  const fileInputRef = useRef();
+  const [imagesData, setImagesData] = useState([]);
+  
+  const handleChangeName = (event) => {
+    setName(event.target.value);
+  }
+  const handleChangeIntro = (event) => {
+    setIntro(event.target.value);
+  }
+
+  const handleImageChange = async (event) => {
+    const files = Array.from(event.target.files);
+
+    if (imagesData.length + files.length > 3) {
+      alert('최대 3개의 이미지만 업로드할 수 있습니다.');
+      return;
+    }
+
+    try {
+      const uploadedImageUrls = await postImages(files);
+      setImagesData((prevData) => [...prevData, ...uploadedImageUrls]);
+    } catch (error) {
+      console.error('이미지 업로드에 실패했습니다:', error);
+    }
+  };
+
+  const triggerFileInput = () => {
+    fileInputRef.current.click();
+  };
   return (
     <PageTemplate>
-      <ProfileHeader>
+      <ImgSection>
         <ProfileImg src={basicProfile} alt="프로필 이미지" />
-        <ImgEditBtn>버튼</ImgEditBtn>
-        {/* <IconButton onClick={onClick ?? handleClick} disabled={disabled ?? false} img={imgIcon}>
-      {이미지 업로드 버튼}
-    </IconButton> */}
-      </ProfileHeader>
+        <InsertImageBtn htmlFor="file">
+          <FloatingButton img={imageIcon} type="button" onClick={triggerFileInput} style={{
+            top: `180px`, bottom: `auto`, right: `calc(50% - 50px)`
+          }} />
+        </InsertImageBtn>
+        <InputFile
+          ref={fileInputRef}
+          type="file"
+          id="file"
+          accept="image/*"
+          multiple
+          onChange={handleImageChange}
+        />
+      </ImgSection>
 
-      <ProfileEditContent>
-        <p>사용자 이름</p>
-        <input placeholder="2~10자 이내" />
-        <p>소개</p>
-        <input placeholder="자기소개" />
-      </ProfileEditContent>
+<InputSection>
+          <Label>사용자 이름
+          <Input placeholder="2~10자 이내" value={name} onChange={handleChangeName}/>
+          </Label>
+  
+          <Label>소개
+          <ResizingTextarea placeholder="자기소개" value={intro} onChange={handleChangeIntro} />
+          </Label>
+</InputSection>
     </PageTemplate>
   );
 };
 
 export default ProfileEditPage;
 
-const ProfileHeader = styled.div`
+const ImgSection = styled.section`
   display: flex;
   justify-content: center;
   align-items: center;
   text-align: center;
 
-  border: 1px solid orange;
   margin: 0 auto;
   width: 100%;
-  position: relative;
-
-  /* & > :not(:nth-child(2)) {
-    margin: 0 auto;
-  } */
+`;
+const InputSection = styled.section`
+  width: 100%;
+  padding: 34px;
 `;
 
 const ProfileImg = styled.img`
@@ -51,24 +103,22 @@ const ProfileImg = styled.img`
   margin-bottom: 30px;
 `;
 
-const ImgEditBtn = styled.button`
-  box-shadow: inset 0 0 10px orange;
-
-  position: absolute;
-  right: 33%;
-  bottom: 7%;
+const InsertImageBtn = styled.label`
   width: 50px;
   height: 50px;
-  border-radius: 50px;
+  z-index: 10;
 `;
 
-const ProfileEditContent = styled.div`
-  box-shadow: inset 0 0 10px orange;
+const InputFile = styled.input`
+  display: none;
 `;
 
-const input = styled.input`
-  box-shadow: inset 0 0 10px orange;
-  border-bottom: 1px solid #767676;
-  width: 322px;
-  height: 48px;
+const Label = styled.label`
+  font-size: ${theme.fontSize.caption};
+  color: ${theme.color.grey};
+  &, input {
+    display: block;
+    padding: 10px 0 ;
+    width: 100%;
+  }
 `;
