@@ -21,7 +21,7 @@ const ProfileFollowPage = () => {
   const [newAccountname, setNewAccountname] = useState('');
 
   const fetchData = async () => {
-    const followState = location.pathname.split('/')[3];
+    const followState = location.pathname.split('/')[4];
     if (followState === 'follower') {
       try {
         const followerData = await fetchFollower();
