@@ -151,7 +151,7 @@ https://github.com/orgs/FRONTENDSCHOOL7/projects/1
 
 | 프로필 페이지 | 프로필 수정 페이지 | 팔로워 / 팔로잉 페이지 |
 | --- | --- | --- |
-|  |  |  |
+| ![프로필페이지](https://github.com/FRONTENDSCHOOL7/villains/assets/92397578/c5544a7d-fb01-496d-b4f7-8c0b1a10d30f)| ![프로필수정](https://github.com/FRONTENDSCHOOL7/villains/assets/92397578/cb386b1d-6a9e-4c41-962a-52ede107db8d)| ![팔로워,팔로잉페이지](https://github.com/FRONTENDSCHOOL7/villains/assets/92397578/0585e6eb-d651-41be-b6ff-81a3938f289c) |
 
 
 
