@@ -28,16 +28,13 @@ PW: 123123
 ### [프로젝트 일정]
 
 * 전체 일정
-`이미지 추가 예정`
-
+![상세일정](https://github.com/FRONTENDSCHOOL7/villains/assets/128403039/3130f0bf-37ab-480d-9ff7-0e4d4ffafd5a)
 
 
 * 명세 기능별 일정
 ![명세일정](https://github.com/FRONTENDSCHOOL7/villains/assets/128403039/72880591-6bb4-4097-a2cc-03e1f684b088)
 
-`상세 일정은 프로젝트 링크`
-![상세일정](https://github.com/FRONTENDSCHOOL7/villains/assets/128403039/3130f0bf-37ab-480d-9ff7-0e4d4ffafd5a)
-
+https://github.com/orgs/FRONTENDSCHOOL7/projects/1
 
 ## 2. 팀 소개
 
