@@ -660,10 +660,6 @@ feat/: 기능별 작업용 브랜치
 
 [👉컨벤션](https://github.com/FRONTENDSCHOOL7/villains/wiki/Convention)
 
-[👉스터디](https://github.com/FRONTENDSCHOOL7/villains/wiki/Study)
-- Git branch 전략에 관해 스터디를 진행하였습니다.
-- 리액트 쿼리에 관해 스터디를 진행하였습니다.
-
 [👉Github discussions](https://github.com/FRONTENDSCHOOL7/villains/discussions)
 ![image](https://github.com/FRONTENDSCHOOL7/villains/assets/117346967/eb544e81-28d9-4488-8f99-1e4264774b7e)
 
@@ -706,10 +702,9 @@ feat/: 기능별 작업용 브랜치
 ![용산모임_6](https://github.com/FRONTENDSCHOOL7/villains/assets/128403039/7d8fdd1d-6780-43f1-a8f2-4bd0ed7c907e)
 
 
- * 스터디
+ * [👉스터디](https://github.com/FRONTENDSCHOOL7/villains/wiki/Study)
    - 오전 9시부터 오후 6시까지는 개발에 집중하고 공부가 필요한 부분은 저녁 7시 이후에 따로 스터디를 진행하였습니다.
    - 리코일을 이용해 검색어를 저장하고 리액트 쿼리를 이용해 자주사용하는 검색어 같은 데이터를 관리하는 방법에 관해 스터디를 진행하였습니다.
-   - 링크: [https://www.notion.so/2eebd0fa8b8746c48e3d9a0c15d1a744?pvs=4](https://github.com/FRONTENDSCHOOL7/villains/wiki/Study)
      
 
 * 문서화
@@ -722,11 +717,17 @@ feat/: 기능별 작업용 브랜치
 ## 12. 프로젝트 관련 문서
 
 🔗 [팀 노션](https://mammoth-sassafras-ff5.notion.site/16-VILLAINS-0c17ff672d704c168e87c41c2d61196e?pvs=4)
+
 🔗 기능 명세서
+
 🔗 와이어프레임
+
 🔗 User Flow Chart
+
 🔗 SITE MAP
+
 🔗 피그마 디자인
+
 🔗 깃허브 위키
 
 
