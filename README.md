@@ -9,7 +9,7 @@
 ## 1. 프로젝트 소개 및 개요
 
 - 프로젝트 기간 : 2023.10.12 ~ 2023.11.09
-- 배포 URL 🔗
+- [배포 URL 🔗](https://frontendschool7.github.io/villains/)
 
 ```
 ID: villain@test.com
