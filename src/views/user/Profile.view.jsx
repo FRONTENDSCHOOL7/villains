@@ -16,10 +16,10 @@ import theme from '../../style/theme';
 import contactQuery from '../../api/get/getUserPost.api';
 import Goods from '../../components/Goods';
 import ChatIcon from '../../assets/img/message-circle.svg';
-import ShareIcon from '../../assets/img/icon-404.svg';
 import getProducts from '../../api/get/getProducts.api';
 import postFollowQuery from '../../api/post/postFollow.api';
 import deleteFollowQuery from '../../api/delete/deleteFollow.api';
+import ShareIcon from '../../components/profile/ShareIcon';
 
 const ProfilePage = () => {
   const user = useRouteLoaderData('user');
@@ -156,7 +156,7 @@ const ProfilePage = () => {
                   팔로우
                 </DefaultBtn>
               )}
-              <button id="share"></button>
+              <button id="share"><ShareIcon /></button>
             </ButtonWrap>
           </ProfileBody>
         </UpperSection>
@@ -265,7 +265,6 @@ const ButtonWrap = styled.div`
     border-color: ${theme.color.grey};
     width: 44px;
     height: 34px;
-    background: url(${ShareIcon}) no-repeat center/80%;
   }
 
   & > :nth-child(1) {
