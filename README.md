@@ -625,10 +625,72 @@ const TabGroup = styled.div`
 ```
 ```register```를 사용해 입력전 required 메시지, 유효성 검증 정규식, 유효성 검증 에러 메시지를 관리 할 수 있고, ```watch```를 통해 form 상태 관리를 위한 state, 입력 값이 변경되는 이벤트를 처리할 handler를 대신하여 ```react-hook-form```을 사용하기 전보다 훨씬 간결한 코드를 작성할 수가 있었습니다.
 
+### 바텀시트 컴포넌트 재사용
+바텀시트 UI를 재사용할 수 있도록 상태를 Recoil을 통해 전역으로 관리하고, 옵션을 생성하는 커스텀 훅을 만들었습니다.
+📂src/atoms/bottomSheetStateAtom.js
+
+```jsx
+import { atom } from 'recoil';
+
+export const bottomSheetStateAtom = atom({
+  key: 'bottomSheetState',
+  default: false,
+});
+
+export const bottomSheetOptions = atom({
+  key: 'bottomSheetOptions',
+  default: [],
+});
+```
+
+📂src/hooks/uswBottomSheetOption.js
+
+```jsx
+const useBottomSheetOptions = ({
+  currentAccountname,
+  authorAccountname,
+  postEdit,
+  postDelete,
+  postReport,
+  commentDelete,
+  commentReport,
+  type,
+}) => {
+  let options = [];
+
+  switch (type) {
+    case 'post':
+      if (currentAccountname === authorAccountname) {
+        options = [
+          { label: '게시글 수정', callback: postEdit },
+          { label: '게시글 삭제', callback: postDelete },
+        ];
+      } else {
+        options = [{ label: '게시글 신고', callback: postReport }];
+      }
+      break;
+
+    case 'comment':
+      if (currentAccountname === authorAccountname) {
+        options = [{ label: '댓글 삭제', callback: commentDelete }];
+      } else {
+        options = [{ label: '댓글 신고', callback: commentReport }];
+      }
+      break;
+
+    default:
+      break;
+  }
+
+  return options;
+};
+
+export default useBottomSheetOptions;
+```
+
 ## 8. 트러블슈팅
 
-- 깃허브 위키 연결
-![트러블슈팅](https://github.com/FRONTENDSCHOOL7/villains/wiki/Trouble-Shooting)
+- [🚀Trouble Shooting](https://github.com/FRONTENDSCHOOL7/villains/wiki/Trouble-Shooting)
 
 ## 9. Branch 전략
 
