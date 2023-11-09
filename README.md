@@ -402,7 +402,7 @@ const HomeIndexPage = () => {
 export default HomeIndexPage;
 ```
 
-- 라우터
+### 라우터
 
 📂src/config/pageUrlConfig.js
 

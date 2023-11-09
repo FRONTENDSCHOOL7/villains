@@ -53,9 +53,6 @@ const ProfilePage = () => {
     if (accountname === user.accountname) {
       setIsMy(true);
     }
-    //   setProfileInfo(myProfileInfo);
-    //   setFeedList(myFeedList);
-    // } else{
     getUserInfo(accountname, user.token)
       .then((result) => {
         setProfileInfo(result.data.profile);
@@ -65,7 +62,6 @@ const ProfilePage = () => {
       .catch((error) => {
         console.error(error);
       });
-    // }
   }, [accountname]);
 
   useEffect(() => {
