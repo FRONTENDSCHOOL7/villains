@@ -649,11 +649,25 @@ feat/: 기능별 작업용 브랜치
 
 ## 10. 협업
 
-→ 깃헙 위키에 업로드해서 링크 연결
+- 팀 규칙
+![image](https://github.com/FRONTENDSCHOOL7/villains/assets/117346967/0dd4fc5e-d83f-4a37-a4ed-1f1b47fcf7f1)
 
-- 회의록
 
+[👉회의록](https://github.com/FRONTENDSCHOOL7/villains/wiki/%ED%9A%8C%EC%9D%98%EB%A1%9D)
 ![image](https://github.com/FRONTENDSCHOOL7/villains/assets/117346967/e73f7952-4ab8-4f8a-b82d-d4fc27c6eec6)
+
+[👉회고록](https://github.com/FRONTENDSCHOOL7/villains/wiki/Retrospect)
+
+[👉컨벤션](https://github.com/FRONTENDSCHOOL7/villains/wiki/Convention)
+
+[👉스터디](https://github.com/FRONTENDSCHOOL7/villains/wiki/Study)
+- Git branch 전략에 관해 스터디를 진행하였습니다.
+- 리액트 쿼리에 관해 스터디를 진행하였습니다.
+
+[👉Github discussions](https://github.com/FRONTENDSCHOOL7/villains/discussions)
+![image](https://github.com/FRONTENDSCHOOL7/villains/assets/117346967/eb544e81-28d9-4488-8f99-1e4264774b7e)
+
+
 
 ## 11. 팀 문화
 
@@ -707,13 +721,13 @@ feat/: 기능별 작업용 브랜치
 
 ## 12. 프로젝트 관련 문서
 
-- 팀 노션 🔗
-- 기능 명세서
-- 와이어프레임
-- User Flow Chart
-- SITE MAP
-- 피그마 디자인
-- 깃허브 위키
+🔗 [팀 노션](https://mammoth-sassafras-ff5.notion.site/16-VILLAINS-0c17ff672d704c168e87c41c2d61196e?pvs=4)
+🔗 기능 명세서
+🔗 와이어프레임
+🔗 User Flow Chart
+🔗 SITE MAP
+🔗 피그마 디자인
+🔗 깃허브 위키
 
 
 ## 12. 리팩토링
