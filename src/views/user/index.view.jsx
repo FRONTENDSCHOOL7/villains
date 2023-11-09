@@ -35,14 +35,14 @@ const ProfileIndexPage = () => {
   const { isModalVisible, modalContent, showModal, handleModalConfirm, handleModalCancel } = useModal();
 
   const profileReport = () => {
-    handleModalConfirm();
     alert('신고완료');
   };
 
   const logout = () => {
     localStorage.clear();
     setUserInfo(null);
-    navigate('/');
+    setBottomSheetToggle(!bottomSheetToggle);
+    navigate(`${import.meta.env.BASE_URL}`);
   };
 
   const currentAccountname = user.accountname;
