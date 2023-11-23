@@ -11,7 +11,7 @@ import useFormatDate from '../../hooks/useFormatDate';
 import useBottomSheetOptions from '../../hooks/useBottomSheetOptions';
 import useModal from '../../hooks/useModal';
 
-import Modal from '../Modal';
+import Modal from '../modal/Modal';
 
 import profileImage from '../../assets/img/basic-profile.svg';
 import verticalIcon from '../../assets/img/icon-more-vertical.svg';

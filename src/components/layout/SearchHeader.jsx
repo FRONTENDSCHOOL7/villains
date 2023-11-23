@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import SearchBar from '../searchbar/SearchBar.jsx';
+import SearchBar from '../card/SearchBar.jsx';
 import { useLocation, useNavigate } from 'react-router';
 import queryAtom from '../../atoms/queryAtom.js';
 import { useRecoilState, useRecoilValue } from 'recoil';

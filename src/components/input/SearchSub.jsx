@@ -2,15 +2,15 @@ import React, { useState, useEffect, useMemo } from 'react';
 import { useRecoilState } from 'recoil';
 import styled from 'styled-components';
 
-import goodsFocusStartAtom from '../atoms/goodsFocusStartAtom';
-import goodsFocusEndAtom from '../atoms/goodsFocusEndAtom';
-import goodsQueryStartAtom from '../atoms/goodsQueryStartAtom';
-import goodsQueryEndAtom from '../atoms/goodsQueryEndAtom';
-import getSubOneInfo from '../api/get/getSubOneInfo.api';
-import subOneAtom from '../atoms/subOneAtom';
+import goodsFocusStartAtom from '../../atoms/goodsFocusStartAtom';
+import goodsFocusEndAtom from '../../atoms/goodsFocusEndAtom';
+import goodsQueryStartAtom from '../../atoms/goodsQueryStartAtom';
+import goodsQueryEndAtom from '../../atoms/goodsQueryEndAtom';
+import getSubOneInfo from '../../api/get/getSubOneInfo.api';
+import subOneAtom from '../../atoms/subOneAtom';
 
-import { Input, Label } from './default/Input.style';
-import DropDown from './default/DropDown';
+import { Input, Label } from './Input.style';
+import DropDown from '../option/DropDown';
 
 
 import IconSearch from '../assets/img/icon-search.svg';

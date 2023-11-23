@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 import PageTemplate from '../../components/layout/PageTemplate';
-import Message from '../../components/chat/Message';
-import ChatInputField from '../../components/chat/ChatInputField';
+import Message from '../../components/textarea/Message';
+import ChatInputField from '../../components/textarea/ChatInputField';
 import { useState, useEffect } from 'react';
 import { useNavigate, useParams } from 'react-router';
 import getComments from '../../api/get/getComments.api';
@@ -11,7 +11,7 @@ import { bottomSheetOptions, bottomSheetStateAtom } from '../../atoms/bottomShee
 import deletePostQuery from '../../api/delete/deletePost.api';
 import { useMutation } from '@tanstack/react-query';
 import userAtom from '../../atoms/userAtom';
-import Modal from '../../components/Modal';
+import Modal from '../../components/modal/Modal';
 import pageUrlConfig from '../../config/pageUrlConfig';
 
 const usePostActions = (id, token, navigate) => {

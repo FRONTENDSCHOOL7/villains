@@ -10,7 +10,7 @@ import Facebook from '../../assets/img/facebook.svg';
 import Email from '../../assets/img/email.svg';
 
 import { Main } from '../../components/layout/PageTemplate.style';
-import { IconBtn } from '../../components/default/Buttons';
+import { IconBtn } from '../../components/button/Buttons';
 
 const SplashPage = () => {
   const navigate = useNavigate();

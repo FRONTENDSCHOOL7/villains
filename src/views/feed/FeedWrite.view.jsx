@@ -13,9 +13,9 @@ import getPostDetail from '../../api/get/getPostDetail.api';
 import putPostEdit from '../../api/update/updatePostEdit.api';
 
 import PageTemplate from '../../components/layout/PageTemplate';
-import FloatingButton from '../../components/default/FloatingButton.style';
-import ImagePreview from '../../components/feed/ImagePreview';
-import ResizingTextarea from '../../components/feed/ResizingTextarea';
+import FloatingButton from '../../components/button/FloatingButton.style';
+import ImagePreview from '../../components/card/ImagePreview';
+import ResizingTextarea from '../../components/textarea/ResizingTextarea';
 
 import imageIcon from '../../assets/img/image-icon.svg';
 import arrowIcon from '../../assets/img/icon-arrow-left.svg';

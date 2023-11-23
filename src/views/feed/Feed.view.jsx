@@ -6,9 +6,9 @@ import pageUrlConfig from '../../config/pageUrlConfig';
 import getPosts from '../../api/get/getPosts.api';
 
 import PageTemplate from '../../components/layout/PageTemplate';
-import PostCard from '../../components/feed/PostCard';
-import FloatingButton from '../../components/default/FloatingButton.style';
-import SkeletonCard from '../../components/SkeletonCard';
+import PostCard from '../../components/card/PostCard';
+import FloatingButton from '../../components/button/FloatingButton.style';
+import SkeletonCard from '../../components/card/SkeletonCard';
 import LoadingSpinner from '../../components/LoadingSpinner';
 
 import write from '../../assets/img/write.svg';

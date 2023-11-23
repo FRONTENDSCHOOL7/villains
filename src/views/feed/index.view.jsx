@@ -12,10 +12,10 @@ import queryFocusAtom from '../../atoms/queryFocusAtom';
 import SearchHeader from '../../components/layout/SearchHeader';
 import pageUrlConfig from '../../config/pageUrlConfig';
 import NavMenu from '../../components/layout/NavMenu';
-import UserListBox from '../../components/searchbar/UserListBox';
+import UserListBox from '../../components/card/UserListBox';
 import BackHeader from '../../components/layout/BackHeader';
 
-import { BasicStyle } from '../../components/default/GlobalButton';
+import { BasicStyle } from '../../components/button/GlobalButton';
 import BackArrow from '../../assets/img/icon-arrow-left.svg';
 
 const FeedIndexPage = () => {

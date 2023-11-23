@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import DefaultBtn, { BasicStyle } from "../default/GlobalButton";
+import DefaultBtn, { BasicStyle } from "../button/GlobalButton";
 import theme from "../../style/theme";
 import BackArrow from "../../assets/img/icon-arrow-left.svg";
 import { useRecoilValue } from "recoil";

@@ -1,13 +1,13 @@
 import React, { useEffect, useState } from 'react';
-import followPageStateAtom from '../atoms/followPageStateAtom';
+import followPageStateAtom from '../../atoms/followPageStateAtom';
 import { useRecoilValue } from 'recoil';
 import styled from 'styled-components';
-import postFollowQuery from '../api/post/postFollow.api';
-import deleteFollowQuery from '../api/delete/deleteFollow.api';
+import postFollowQuery from '../../api/post/postFollow.api';
+import deleteFollowQuery from '../../api/delete/deleteFollow.api';
 import { useNavigate, useParams } from 'react-router';
-import pageUrlConfig from '../config/pageUrlConfig';
+import pageUrlConfig from '../../config/pageUrlConfig';
 import { useMutation } from '@tanstack/react-query';
-import userAtom from '../atoms/userAtom';
+import userAtom from '../../atoms/userAtom';
 import { useRouteLoaderData } from 'react-router';
 
 const Follower = ({ data, user, Following, unFollowing, setNewAccountname }) => {

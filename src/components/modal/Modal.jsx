@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import theme from '../style/theme';
+import theme from '../../style/theme';
 
 // TODO : 키보드 접근성 구현
 const Modal = ({ content, confirmText, cancelText, onConfirm, onCancel }) => {

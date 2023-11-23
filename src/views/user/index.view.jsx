@@ -13,11 +13,11 @@ import useBottomSheetOptions from '../../hooks/useBottomSheetOptions';
 
 import NavMenu from '../../components/layout/NavMenu';
 import BackHeader from '../../components/layout/BackHeader';
-import DefaultBtn, { BasicStyle } from '../../components/default/GlobalButton';
-import Tanghulu from '../../components/default/Tanghulu';
+import DefaultBtn, { BasicStyle } from '../../components/button/GlobalButton';
+import Tanghulu from '../../components/icon/Tanghulu';
 
 import BackArrow from '../../assets/img/icon-arrow-left.svg';
-import Modal from '../../components/Modal';
+import Modal from '../../components/modal/Modal';
 // import logout from "../../components/splash/logout";
 
 const ProfileIndexPage = () => {

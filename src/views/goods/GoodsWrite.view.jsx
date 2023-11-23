@@ -7,9 +7,9 @@ import client from '../../config/api.config';
 import pageUrlConfig from '../../config/pageUrlConfig';
 
 import PageTemplate from '../../components/layout/PageTemplate';
-import SearchSub from '../../components/SearchSub';
-import { Input, Label } from '../../components/default/Input.style';
-import FloatingButton from '../../components/default/FloatingButton.style';
+import SearchSub from '../../components/input/SearchSub';
+import { Input, Label } from '../../components/input/Input.style';
+import FloatingButton from '../../components/button/FloatingButton.style';
 
 import goodsQueryStartAtom from '../../atoms/goodsQueryStartAtom';
 import goodsQueryEndAtom from '../../atoms/goodsQueryEndAtom';

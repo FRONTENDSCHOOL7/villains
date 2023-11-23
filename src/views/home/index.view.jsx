@@ -3,7 +3,7 @@ import { Outlet, useNavigate } from "react-router";
 import SearchHeader from "../../components/layout/SearchHeader";
 import pageUrlConfig from "../../config/pageUrlConfig";
 import NavMenu from "../../components/layout/NavMenu";
-import ListBox from "../../components/searchbar/ListBox";
+import ListBox from "../../components/card/ListBox";
 import { useRecoilState } from "recoil";
 import subOneAtom from "../../atoms/subOneAtom";
 import useSearchData from "../../hooks/useSearchData";

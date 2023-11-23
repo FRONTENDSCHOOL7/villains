@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
-import ResizingTextarea from '../feed/ResizingTextarea';
+import ResizingTextarea from './ResizingTextarea';
 import imageIcon from '../../assets/img/image-icon.svg';
 
 const ChatInputField = ({ onClick }) => {

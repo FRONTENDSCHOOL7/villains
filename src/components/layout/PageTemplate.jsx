@@ -7,7 +7,7 @@ import subOneAtom from '../../atoms/subOneAtom';
 import queryFocusAtom from '../../atoms/queryFocusAtom';
 import queryAtom from '../../atoms/queryAtom';
 import pageUrlConfig from '../../config/pageUrlConfig';
-import BottomSheet from '../default/BottomSheet';
+import BottomSheet from '../option/BottomSheet';
 
 const PageTemplate = ({ children }) => {
   const [list, setList] = useState([]);

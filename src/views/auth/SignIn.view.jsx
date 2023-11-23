@@ -9,8 +9,8 @@ import client from '../../config/api.config';
 import userAtom from '../../atoms/userAtom';
 
 import { Main } from '../../components/layout/PageTemplate.style';
-import { BlueLongBtn, WhiteLongBtn } from '../../components/default/Buttons';
-import CheckBox from '../../components/default/CheckBox';
+import { BlueLongBtn, WhiteLongBtn } from '../../components/button/Buttons';
+import CheckBox from '../../components/checkbox/CheckBox';
 
 const SignInPage = () => {
   //로그인 시 userInfo를 Atom에 저장하기

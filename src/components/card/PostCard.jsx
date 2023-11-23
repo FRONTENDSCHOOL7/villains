@@ -5,7 +5,7 @@ import styled from 'styled-components';
 import pageUrlConfig from '../../config/pageUrlConfig';
 import postHeart from '../../api/post/postHeart.api';
 import useFormatDate from '../../hooks/useFormatDate';
-import { IconLabelBtn } from '../default/Buttons';
+import { IconLabelBtn } from '../button/Buttons';
 
 import heart from '../../assets/img/heart.svg';
 import heartFilled from '../../assets/img/heart-filled.svg';

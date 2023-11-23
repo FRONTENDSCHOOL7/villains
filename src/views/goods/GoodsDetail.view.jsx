@@ -13,9 +13,9 @@ import profileImage from '../../assets/img/basic-profile.svg';
 import getUserDetail from '../../api/get/getUserDetail.api';
 import updateProduct from '../../api/update/updateProduct.api';
 import uploadPost from '../../api/post/postUploadPost.api';
-import DropDown from '../../components/default/DropDown';
+import DropDown from '../../components/option/DropDown';
 import TrainMap from '../../components/map/TrainMap';
-import Modal from '../../components/Modal';
+import Modal from '../../components/modal/Modal';
 import getPostDetail from '../../api/get/getPostDetail.api';
 
 const GoodsDetailPage = () => {

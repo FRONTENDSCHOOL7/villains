@@ -7,11 +7,11 @@ import pageUrlConfig from '../../config/pageUrlConfig';
 import PageTemplate from '../../components/layout/PageTemplate';
 import basicProfile from '../../assets/img/basic-profile.svg';
 import { useRecoilValue, useRecoilState } from 'recoil';
-import PostCard from '../../components/feed/PostCard';
+import PostCard from '../../components/card/PostCard';
 import userPostAtom from '../../atoms/userPostAtom';
 import profileAtom from '../../atoms/profileAtom';
 import getUserInfo from '../../api/get/getUserInfo.api';
-import DefaultBtn, { BasicStyle, PrimaryStyle, SecondaryStyle } from '../../components/default/GlobalButton';
+import DefaultBtn, { BasicStyle, PrimaryStyle, SecondaryStyle } from '../../components/button/GlobalButton';
 import theme from '../../style/theme';
 import contactQuery from '../../api/get/getUserPost.api';
 import Goods from '../../components/Goods';
@@ -19,7 +19,7 @@ import ChatIcon from '../../assets/img/message-circle.svg';
 import getProducts from '../../api/get/getProducts.api';
 import postFollowQuery from '../../api/post/postFollow.api';
 import deleteFollowQuery from '../../api/delete/deleteFollow.api';
-import ShareIcon from '../../components/profile/ShareIcon';
+import ShareIcon from '../../components/icon/ShareIcon';
 
 const ProfilePage = () => {
   const user = useRouteLoaderData('user');
