@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
 import PageTemplate from '../../components/layout/PageTemplate';
-import ChatListItem from '../../components/chat/ChatListItem';
+import ChatListItem from '../../components/card/ChatListItem';
 import getChatPosts from '../../api/get/getChatPost.api';
 import SkeletonList from '../../components/card/SkeletonList';
 import SkeletonChatList from '../../components/card/SkeletonChatList';
