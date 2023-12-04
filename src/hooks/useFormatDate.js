@@ -1,4 +1,4 @@
-const useFormatDate = (createdAt, mode = 'defult') => {
+const useFormatDate = (createdAt, mode = 'default') => {
   const now = new Date();
   const created = new Date(createdAt);
 
@@ -10,7 +10,7 @@ const useFormatDate = (createdAt, mode = 'defult') => {
 
   if (mode === 'comment') {
     if (diffMin < 0) {
-      return "방금 전";  // 만약 음수라면 방금 전이라고 표시
+      return '방금 전'; // 만약 음수라면 방금 전이라고 표시
     } else if (diffMin < 60) {
       return `${Math.floor(diffMin)}분 전`;
     } else if (diffHour < 24) {
