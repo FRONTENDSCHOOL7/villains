@@ -16,12 +16,12 @@ import pageUrlConfig from '../../config/pageUrlConfig';
 import useFormatDate from '../../hooks/useFormatDate';
 import useBottomSheetOptions from '../../hooks/useBottomSheetOptions';
 import useConfirm from '../../hooks/useConfirm';
+import useConfirm from '../../hooks/useConfirm';
 
 import PageTemplate from '../../components/layout/PageTemplate';
 import Comment from '../../components/textarea/Comment';
 import { IconLabelBtn } from '../../components/button/Buttons';
 import ConfirmModal from '../../components/modal/ConfirmModal';
-import DefaultInputField from '../../components/textarea/DefaultInputField';
 
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { Pagination, Navigation } from 'swiper/modules';
@@ -40,6 +40,7 @@ const usePostActions = (id, token, navigate) => {
   const reportMutation = useMutation(postReportQuery(id, token));
 
   const postEdit = () => {
+    navigate(`${pageUrlConfig.feedPage}/edit/${id}`);
     navigate(`${pageUrlConfig.feedPage}/edit/${id}`);
   };
 

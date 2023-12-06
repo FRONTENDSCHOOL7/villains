@@ -251,7 +251,7 @@ const ProfileDsc = styled.p`
 const ButtonWrap = styled.div`
   display: flex;
   justify-content: center;
-  align-item: center;
+  align-items: center;
   gap: 10px;
   min-height: 2em;
 
