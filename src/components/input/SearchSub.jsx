@@ -13,7 +13,7 @@ import { Input, Label } from './Input.style';
 import DropDown from '../option/DropDown';
 
 
-import IconSearch from '../assets/img/icon-search.svg';
+import IconSearch from '../../assets/img/icon-search.svg';
 
 const SearchSub = ({ which, labelText, placeholder, value }) => {
   const [subOneInfo, setSubOneInfo] = useRecoilState(subOneAtom);

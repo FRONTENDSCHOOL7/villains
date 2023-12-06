@@ -16,13 +16,13 @@ import postReportQuery from '../../api/post/postReport.api';
 import pageUrlConfig from '../../config/pageUrlConfig';
 import useFormatDate from '../../hooks/useFormatDate';
 import useBottomSheetOptions from '../../hooks/useBottomSheetOptions';
-import useModal from '../../hooks/useModal';
+import useConfirm from '../../hooks/useConfirm';
 
 import PageTemplate from '../../components/layout/PageTemplate';
 import Comment from '../../components/textarea/Comment';
 import CommentForm from '../../components/textarea/CommentForm';
 import { IconLabelBtn } from '../../components/button/Buttons';
-import Modal from '../../components/modal/Modal';
+import ConfirmModal from '../../components/modal/ConfirmModal';
 
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { Pagination, Navigation } from 'swiper/modules';
@@ -42,7 +42,7 @@ const usePostActions = (id, token, navigate) => {
   const reportMutation = useMutation(postReportQuery(id, token));
 
   const postEdit = () => {
-    navigate(`/feed/edit/${id}`);
+    navigate(`${pageUrlConfig.feedPage}/edit/${id}`);
   };
 
   const postDelete = () => {
@@ -150,11 +150,11 @@ const FeedDetailPage = () => {
     toggleBottomSheetShow();
   };
 
-  // useModal 훅 사용
-  const { isModalVisible, modalContent, showModal, handleModalConfirm, handleModalCancel } = useModal();
+  // useConfirm 훅 사용
+  const { isConfirmVisible, confirmMessage, showConfirm, handleConfirm, handleCancel } = useConfirm();
 
   const confirmAction = (message, callback) => {
-    showModal(message, callback);
+    showConfirm(message, callback);
     toggleBottomSheetShow();
   };
 
@@ -165,13 +165,13 @@ const FeedDetailPage = () => {
 
   return (
     <>
-      {isModalVisible && (
-        <Modal
-          content={modalContent}
+      {isConfirmVisible && (
+        <ConfirmModal
+          content={confirmMessage}
           confirmText="확인"
           cancelText="취소"
-          onConfirm={handleModalConfirm}
-          onCancel={handleModalCancel}
+          onConfirm={handleConfirm}
+          onCancel={handleCancel}
         />
       )}
       <PageTemplate>
@@ -179,11 +179,14 @@ const FeedDetailPage = () => {
           <PostContainer>
             <PostMoreBtn aria-label="댓글 삭제/신고 버튼" onClick={handleBottomSheetShow} />
             <UserHeader>
-              <ProfileImage>
-                {/* 프로필 기본이미지 수정 필요 */}
-                {/* <img src={post.author.image} alt="" /> */}
-                <img src={profileImage} alt="" />
-              </ProfileImage>
+              <ProfileImage
+                src={
+                  post.author.image === 'http://146.56.183.55:5050/Ellipse.png'
+                    ? 'https://api.mandarin.weniv.co.kr/Ellipse.png'
+                    : post.author.image
+                }
+                alt=""
+              />
               <UserInfo>
                 <UserName>{post.author.username}</UserName>
                 <Accountname>@ {post.author.accountname}</Accountname>
@@ -266,11 +269,12 @@ const UserHeader = styled.div`
   margin-bottom: 20px;
 `;
 
-const ProfileImage = styled.div`
+const ProfileImage = styled.img`
   width: 42px;
   height: 42px;
   border-radius: 50%;
-  background-color: #c4c4c4;
+  object-fit: cover;
+  border: 1px solid #c4c4c4;
 `;
 
 const UserInfo = styled.div`

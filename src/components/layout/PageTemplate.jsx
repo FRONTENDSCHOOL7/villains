@@ -8,6 +8,7 @@ import queryFocusAtom from '../../atoms/queryFocusAtom';
 import queryAtom from '../../atoms/queryAtom';
 import pageUrlConfig from '../../config/pageUrlConfig';
 import BottomSheet from '../option/BottomSheet';
+import ConfirmModal from '../modal/ConfirmModal';
 
 const PageTemplate = ({ children }) => {
   const [list, setList] = useState([]);
@@ -75,4 +76,3 @@ const PageTemplate = ({ children }) => {
 };
 
 export default PageTemplate;
-//떡볶이...
