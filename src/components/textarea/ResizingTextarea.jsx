@@ -1,6 +1,6 @@
 import React, { useRef, useEffect } from 'react';
 import styled from 'styled-components';
-
+//?? handleResizeHeight를 외부로 빼서 다른 textarea에서도 쉽게 적용할 수 있도록 하는 건 어떤가요?
 const ResizingTextarea = ({ onChange, ...props }) => {
   const textareaRef = useRef();
 
