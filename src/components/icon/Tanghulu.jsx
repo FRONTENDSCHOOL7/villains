@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
 import { bottomSheetOptions, bottomSheetStateAtom } from '../../atoms/bottomSheetStateAtom';
 import BottomSheet from '../option/BottomSheet';
-import TangImg from '../../assets/img/icon-more-vertical.svg';
 import { useRecoilState } from 'recoil';
 import styled from 'styled-components';
+import MoreIcon from './MoreIcon';
 
 const Tanghulu = ({onClick}) => {
   const [bottomSheetToggle, setBottomSheetToggle] = useRecoilState(bottomSheetStateAtom);
@@ -14,7 +14,7 @@ const Tanghulu = ({onClick}) => {
   
   return (
     <TangIconImg onClick={onClick ?? handleTangOnClick}>
-      <img src={TangImg}></img>
+      <MoreIcon />
     </TangIconImg>
   );
 };
