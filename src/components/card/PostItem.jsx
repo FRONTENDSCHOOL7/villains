@@ -1,8 +1,9 @@
 import styled from 'styled-components';
 import { IconLabelBtn } from '../button/Buttons';
-import heart from '../../assets/img/heart.svg';
-import heartFilled from '../../assets/img/heart-filled.svg';
-import comment from '../../assets/img/message-circle.svg';
+import HeartIcon from '../icon/HeartIcon';
+import MessageIcon from '../icon/MessageIcon';
+import IconLabel from '../icon/IconLabel';
+// import comment from '../../assets/img/message-circle.svg';
 
 const PostItem = (args) => {
     const date = new Date(args.createdDate);
@@ -15,14 +16,12 @@ const PostItem = (args) => {
         <Author>@ {args.accountname}</Author>
         <Time>{date.getFullYear()}-{date.getMonth()+1}-{date.getDate()}</Time>
         <IconsContainer>
-          <IconLabelBtn
-            icon={args.isHearted ? heartFilled : heart}
-            count={args.heartCount}
-            onClick={()=>{
-                args.isHearted = !args.isHearted
-            }}
-          />
-          <IconLabelBtn icon={comment} count={args.comments.length} />
+          <IconLabel onClick={()=>{args.isHearted = !args.isHearted;}}>
+            <HeartIcon filled={args.isHearted} />{args.heartCount}
+          </IconLabel>
+          <IconLabel>
+            <MessageIcon />{args.comments.length}
+          </IconLabel>
         </IconsContainer>
       </CardContent>
     </Card>

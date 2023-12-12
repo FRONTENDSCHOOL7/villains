@@ -1,6 +1,6 @@
 import React from 'react';
 import styled, { css } from 'styled-components';
-import Email from '../../assets/img/email.svg';
+import EmailIcon from '../icon/EmailIcon';
 import { PrimaryStyle } from './GlobalButton';
 
 const BlueLongBtn = ({ text, onClick, disabled }) => {
