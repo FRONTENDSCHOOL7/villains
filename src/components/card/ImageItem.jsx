@@ -1,12 +1,7 @@
 import styled from 'styled-components';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import 'swiper/css';
-/*
-? 이미지의 개수에 따라서 컴포넌트가 달라진다. 하나의 컴포넌트로 관리할 수 없을까?
--> discussion open: https://github.com/FRONTENDSCHOOL7/villains/discussions/157
-*/ 
 
-//게시글 쓰기에서 이미지가 없을 경우
 const DefaultImage = () => {
     return(
         <ImagePreviewCont>
@@ -19,23 +14,21 @@ const DefaultImage = () => {
     )
 }
 
-//이미지가 하나일 경우
 const SingleImage = ({url, onClick}) => {
     return(
         <ImageWrapper>
         <StyledImage src={url} alt="" />
-        <DeleteButton aria-label="이미지 삭제 버튼" type="button" onClick={onClick} />
+        <DeleteButton aria-label="이미지 삭제 버튼" type="button" onClick={() => onClick(idx)} />
       </ImageWrapper>
     )
 }
 
-//이미지가 여러개인 경우
 const MultiImage = ({imageUrls, onClick}) => {
     return (
         <Swiper spaceBetween={10} slidesPerView={1.2} pagination={{ clickable: true }}>
         {imageUrls.map((url, idx) => (
             <SwiperSlide key={idx}>
-                <SingleImage url={url} onClick={onClick} idx={idx} />
+                <SingleImage url={url} onClick={onClick} />
             </SwiperSlide>
         ))}
         </Swiper>
