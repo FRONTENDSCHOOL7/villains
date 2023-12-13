@@ -18,7 +18,7 @@ const SingleImage = ({url, onClick}) => {
     return(
         <ImageWrapper>
         <StyledImage src={url} alt="" />
-        <DeleteButton aria-label="이미지 삭제 버튼" type="button" onClick={() => onClick(idx)} />
+        <DeleteButton aria-label="이미지 삭제 버튼" type="button" onClick={onClick} />
       </ImageWrapper>
     )
 }
@@ -28,7 +28,7 @@ const MultiImage = ({imageUrls, onClick}) => {
         <Swiper spaceBetween={10} slidesPerView={1.2} pagination={{ clickable: true }}>
         {imageUrls.map((url, idx) => (
             <SwiperSlide key={idx}>
-                <SingleImage url={url} onClick={onClick} />
+                <SingleImage url={url} onClick={onClick} idx={idx} />
             </SwiperSlide>
         ))}
         </Swiper>
