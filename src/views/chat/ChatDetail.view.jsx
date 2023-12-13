@@ -13,6 +13,8 @@ import { useMutation } from '@tanstack/react-query';
 import userAtom from '../../atoms/userAtom';
 import Modal from '../../components/modal/Modal';
 import pageUrlConfig from '../../config/pageUrlConfig';
+import DefaultTextField from '../../components/textarea/DefaultTextField';
+import imageIcon from '../../assets/img/image-icon.svg';
 
 const usePostActions = (id, token, navigate) => {
   const deleteMutation = useMutation(deletePostQuery(id, token));
@@ -34,6 +36,8 @@ const ChatDetailPage = () => {
   const user = useRecoilValue(userAtom);
   const navigate = useNavigate();
   const [messages, setMessages] = useState([]);
+  const [inputMessage, setInputMessage] = useState('');
+
   const { id } = useParams();
   const { fetchComments } = getComments();
   const { uploadComment } = postComments();
@@ -79,9 +83,10 @@ const ChatDetailPage = () => {
     }
   };
 
-  const handleSendChat = async (text) => {
-    const result = await uploadComment(id, text);
-    console.log(result);
+  const handleSendChat = async (event) => {
+    event.preventDefault();
+
+    const result = await uploadComment(id, inputMessage);
     if (result) {
       fetchData();
     }
@@ -104,7 +109,16 @@ const ChatDetailPage = () => {
             <Message key={message.id} data={message} />
           ))}
         </MessageList>
-        <ChatInputField onClick={handleSendChat} />
+        <DefaultTextField
+          handleTextFieldSubmit={handleSendChat}
+          iconImg={imageIcon}
+          handleIconBtnClick={() => console.log('click')}
+          placeholderContent="메시지 입력하기..."
+          submitText="전송"
+          text={inputMessage}
+          setText={setInputMessage}
+          profile={false}
+        />
       </ChatContainer>
     </PageTemplate>
   );

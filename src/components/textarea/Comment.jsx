@@ -90,16 +90,21 @@ const Comment = ({ comment, id, removeCommentFromList }) => {
         <Modal
           content={modalContent}
           confirmText="확인"
-          cancelText={confirmAction ? "취소" : null}
+          cancelText={confirmAction ? '취소' : null}
           onConfirm={handleModalConfirm}
           onCancel={handleModalCancel}
         />
       )}
       <CommentLi>
         <CommentProfileImage>
-          {/* 프로필 기본이미지 수정 필요 */}
-          {/* <img src={comment.author.image} alt={comment.author.username} /> */}
-          <img src={profileImage} alt={comment.author.username} />
+          <img
+            src={
+              comment.author.image === 'http://146.56.183.55:5050/Ellipse.png'
+                ? 'https://api.mandarin.weniv.co.kr/Ellipse.png'
+                : comment.author.image
+            }
+            alt=""
+          />
         </CommentProfileImage>
         <CommentContent>
           <CommnetHeader>
@@ -130,7 +135,7 @@ const CommentProfileImage = styled.div`
   border-radius: 50%;
   overflow: hidden;
   margin-right: 10px;
-  border: 0.5px solid #dbdbdb;
+  border: 1px solid #c4c4c4;
 
   img {
     width: 100%;

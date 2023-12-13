@@ -8,16 +8,16 @@ const DefaultTextField = ({
   placeholderContent,
   submitText,
   text,
-  setText
+  setText,
+  profile,
 }) => {
-
   const handleTextChange = (event) => {
     setText(event.target.value);
   };
 
   return (
     <StyledForm onSubmit={handleTextFieldSubmit}>
-      <IconBtn iconImg={iconImg} onClick={handleIconBtnClick} />
+      <IconBtn iconImg={iconImg} onClick={handleIconBtnClick} profile={profile}/>
       <ResizingTextarea rows="1" placeholder={placeholderContent} onChange={handleTextChange} value={text} />
       <SubmitBtn disabled={!text}>{submitText}</SubmitBtn>
     </StyledForm>
@@ -43,8 +43,9 @@ const IconBtn = styled.button`
   width: 36px;
   height: 36px;
   border-radius: 50%;
-  border: 0.5px solid #dbdbdb;
-  background: url(${(props) => props.iconImg}) no-repeat center / cover;
+  border: 1px solid #c4c4c4;
+  background: #c4c4c4 url(${(props) => props.iconImg}) no-repeat center;
+  background-size: ${(props) => (props.profile ? 'cover' : '22px 22px')};
 `;
 
 const SubmitBtn = styled.button`
