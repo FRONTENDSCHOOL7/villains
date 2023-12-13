@@ -1,4 +1,3 @@
-
 import { useNavigate } from 'react-router';
 import styled from 'styled-components';
 import pageUrlConfig from '../../config/pageUrlConfig';
@@ -11,8 +10,7 @@ import FloatingButton from '../../components/button/FloatingButton.style';
 import SkeletonCard from '../../components/card/SkeletonCard';
 import LoadingSpinner from '../../components/LoadingSpinner';
 
-import write from '../../assets/img/write.svg';
-
+import WriteIcon from '../../components/icon/WriteIcon';
 
 const FeedPage = () => {
   const { posts, loading, error } = getPosts();
@@ -23,7 +21,7 @@ const FeedPage = () => {
   };
 
   const skeletonCards = [...Array(5)].map((_, idx) => <SkeletonCard key={idx} />);
-  
+
   return (
     <PageTemplate>
       {!posts || posts.length === 0 ? (
