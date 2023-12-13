@@ -10,8 +10,7 @@ import FloatingButton from '../../components/button/FloatingButton.style';
 import SkeletonCard from '../../components/card/SkeletonCard';
 import LoadingSpinner from '../../components/LoadingSpinner';
 
-import write from '../../assets/img/write.svg';
-import useInfinite from '../../hooks/useInfinite';
+import WriteIcon from '../../components/icon/WriteIcon';
 
 const FeedPage = () => {
   const { posts, fetchNextPage, hasNextPage, isFetchingNextPage } = getPosts();
