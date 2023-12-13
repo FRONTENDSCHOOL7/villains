@@ -1,35 +1,39 @@
-import styled from "styled-components";
-import DefaultBtn, { BasicStyle } from "../button/GlobalButton";
-import theme from "../../style/theme";
-import BackArrow from "../../assets/img/icon-arrow-left.svg";
-import { useRecoilValue } from "recoil";
-import queryFocusAtom from "../../atoms/queryFocusAtom";
-import { useEffect, useState } from "react";
-import queryAtom from "../../atoms/queryAtom";
+import styled from 'styled-components';
+import DefaultBtn, { BasicStyle } from '../button/GlobalButton';
+import theme from '../../style/theme';
+import ArrowIcon from '../icon/ArrowIcon';
+import { useRecoilValue } from 'recoil';
+import queryFocusAtom from '../../atoms/queryFocusAtom';
+import { useEffect, useState } from 'react';
+import queryAtom from '../../atoms/queryAtom';
 
-const BackHeader = ({onClick, children}) => {
+const BackHeader = ({ onClick, children }) => {
   const query = useRecoilValue(queryAtom);
-  const [showBackArrow, setShowBackArrow] = useState(false);
+  const [showArrowIcon, setShowArrowIcon] = useState(false);
 
-  useEffect(()=>{
-    if(query) setShowBackArrow(true);
-    else setShowBackArrow(false);
-  }, [query])
+  useEffect(() => {
+    if (query) setShowArrowIcon(true);
+    else setShowArrowIcon(false);
+  }, [query]);
 
   return (
     <>
       <StyledHeader>
-        {showBackArrow && <BackArrowBtn variant={"basic"} onClick={onClick}><img src={BackArrow} alt="뒤로가기" /></BackArrowBtn>}
+        {showArrowIcon && (
+          <ArrowIconBtn variant={'basic'} onClick={onClick}>
+            <img src={BackArrow} alt="뒤로가기" />
+          </ArrowIconBtn>
+        )}
         {children}
       </StyledHeader>
-      <BackGround/>
+      <BackGround />
     </>
-  )
-}
+  );
+};
 
 export default BackHeader;
 
-const BackArrowBtn = styled.button`
+const ArrowIconBtn = styled.button`
   ${BasicStyle}
 
   margin-right: 8px;
@@ -54,4 +58,3 @@ const StyledHeader = styled.header`
   background-color: ${theme.color.white};
   border-bottom: 1px solid #dbdbdb;
 `;
-
