@@ -30,7 +30,8 @@ import 'swiper/css/pagination';
 import 'swiper/css/navigation';
 import swiperStyles from '../../style/swiperStyle';
 
-import heart from '../../assets/img/heart.svg';
+import profileImage from '../../assets/img/basic-profile.svg';
+import HeartIcon from '../../components/icon/HeartIcon';
 import heartFilled from '../../assets/img/heart-filled.svg';
 import commentIcon from '../../assets/img/message-circle.svg';
 import verticalIcon from '../../assets/img/icon-more-vertical.svg';
@@ -229,12 +230,10 @@ const FeedDetailPage = () => {
             )}
             <ContentText>{JSON.parse(post.content).contents}</ContentText>
             <IconsContainer>
-              <IconLabelBtn
-                icon={isHearted ? heartFilled : heart}
-                count={heartCount}
-                onClick={handleHeartClick}
-                alt="좋아요 버튼"
-              />
+              <label onClick={handleHeartClick} title="좋아요 버튼">
+                <HeartIcon filled={isHearted} />
+                {heartCount}
+              </label>
               <IconLabelBtn icon={commentIcon} count={commentsList.length} alt="코멘트 버튼" />
             </IconsContainer>
           </PostContainer>
