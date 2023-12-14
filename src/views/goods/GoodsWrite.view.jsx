@@ -15,7 +15,7 @@ import goodsQueryStartAtom from '../../atoms/goodsQueryStartAtom';
 import goodsQueryEndAtom from '../../atoms/goodsQueryEndAtom';
 import { headerBtnStateAtom, headerBtnOptionsAtom } from '../../atoms/headerBtnStateAtom';
 import userAtom from '../../atoms/userAtom';
-import ImageIcon from '../../components/ImageIcon';
+import ImageIcon from '../../components/icon/ImageIcon';
 import ImageBigIcon from '../../assets/img/image-big-icon.svg';
 
 import updateProduct from '../../api/update/updateProduct.api';
