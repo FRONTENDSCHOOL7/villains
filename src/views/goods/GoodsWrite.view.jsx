@@ -15,8 +15,7 @@ import goodsQueryStartAtom from '../../atoms/goodsQueryStartAtom';
 import goodsQueryEndAtom from '../../atoms/goodsQueryEndAtom';
 import { headerBtnStateAtom, headerBtnOptionsAtom } from '../../atoms/headerBtnStateAtom';
 import userAtom from '../../atoms/userAtom';
-import ImageIcon from '../../components/icon/ImageIcon';
-import ImageBigIcon from '../../assets/img/image-big-icon.svg';
+import ImageIcon from '../../components/icon/ImageIcon'; // 이미지 빅 아이콘 포함
 
 import updateProduct from '../../api/update/updateProduct.api';
 
@@ -156,7 +155,8 @@ const GoodsWritePage = () => {
             <Previewimg src={image.url} alt="이미지" />
           ) : (
             <>
-              <img src={ImageBigIcon} alt="큰 아이콘" />
+              <button src={ImageIcon} title="큰 아이콘"></button>
+
               <p>
                 오른쪽 하단 버튼을 눌러
                 <br />
