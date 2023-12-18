@@ -23,7 +23,7 @@ import PageTemplate from '../../components/layout/PageTemplate';
 import Comment from '../../components/textarea/Comment';
 import { IconLabelBtn } from '../../components/button/Buttons';
 import ConfirmModal from '../../components/modal/ConfirmModal';
-import DefaultTextField from '../../components/textarea/DefaultTextField';
+import DefaultInputField from '../../components/textarea/DefaultInputField';
 
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { Pagination, Navigation } from 'swiper/modules';
@@ -255,7 +255,7 @@ const FeedDetailPage = () => {
         )}
 
         {/* 댓글 작성 폼 */}
-        <DefaultTextField
+        {/* <DefaultInputField
           handleTextFieldSubmit={handlePostComments}
           iconImg={
             myProfileInfo.image === 'http://146.56.183.55:5050/Ellipse.png'
@@ -268,7 +268,28 @@ const FeedDetailPage = () => {
           text={inputComment}
           setText={setInputComment}
           profile={true}
-        />
+        /> */}
+        <DefaultInputField>
+          <DefaultInputField.IconBtn
+            iconImg={
+              myProfileInfo.image === 'http://146.56.183.55:5050/Ellipse.png'
+                ? 'https://api.mandarin.weniv.co.kr/Ellipse.png'
+                : myProfileInfo.image
+            }
+            handleIconBtnClick={handleProfileClick}
+            profile={true}
+          />
+          <DefaultInputField.TextArea
+            text={inputComment}
+            setText={setInputComment}
+            placeholderContent="댓글 입력하기..."
+          />
+          <DefaultInputField.SubmitBtn
+            text={inputComment}
+            handleTextFieldSubmit={handlePostComments}
+            submitText="게시"
+          />
+        </DefaultInputField>
       </PageTemplate>
     </>
   );

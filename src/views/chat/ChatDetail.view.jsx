@@ -13,7 +13,7 @@ import { useMutation } from '@tanstack/react-query';
 import userAtom from '../../atoms/userAtom';
 import Modal from '../../components/modal/Modal';
 import pageUrlConfig from '../../config/pageUrlConfig';
-import DefaultTextField from '../../components/textarea/DefaultTextField';
+import DefaultInputField from '../../components/textarea/DefaultInputField';
 import imageIcon from '../../assets/img/image-icon.svg';
 
 const usePostActions = (id, token, navigate) => {
@@ -109,7 +109,7 @@ const ChatDetailPage = () => {
             <Message key={message.id} data={message} />
           ))}
         </MessageList>
-        <DefaultTextField
+        <DefaultInputField
           handleTextFieldSubmit={handleSendChat}
           iconImg={imageIcon}
           handleIconBtnClick={() => console.log('click')}
