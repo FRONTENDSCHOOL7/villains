@@ -255,20 +255,6 @@ const FeedDetailPage = () => {
         )}
 
         {/* 댓글 작성 폼 */}
-        {/* <DefaultInputField
-          handleTextFieldSubmit={handlePostComments}
-          iconImg={
-            myProfileInfo.image === 'http://146.56.183.55:5050/Ellipse.png'
-              ? 'https://api.mandarin.weniv.co.kr/Ellipse.png'
-              : myProfileInfo.image
-          }
-          handleIconBtnClick={handleProfileClick}
-          placeholderContent="댓글 입력하기..."
-          submitText="게시"
-          text={inputComment}
-          setText={setInputComment}
-          profile={true}
-        /> */}
         <DefaultInputField>
           <DefaultInputField.IconBtn
             iconImg={
@@ -282,7 +268,7 @@ const FeedDetailPage = () => {
           <DefaultInputField.TextArea
             text={inputComment}
             setText={setInputComment}
-            placeholderContent="댓글 입력하기..."
+            placeholder="댓글 입력하기..."
           />
           <DefaultInputField.SubmitBtn
             text={inputComment}

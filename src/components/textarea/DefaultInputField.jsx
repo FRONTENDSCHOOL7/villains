@@ -5,11 +5,11 @@ const IconBtn = ({ iconImg, handleIconBtnClick, profile }) => (
   <StyledIconBtn iconImg={iconImg} onClick={handleIconBtnClick} profile={profile} />
 );
 
-const TextArea = ({ text, setText, placeholderContent }) => {
+const TextArea = ({ text, setText, placeholder }) => {
   const handleTextChange = (event) => setText(event.target.value);
 
   return (
-    <ResizingTextarea rows="1" placeholder={placeholderContent} onChange={handleTextChange} value={text} />
+    <ResizingTextarea rows="1" placeholder={placeholder} onChange={handleTextChange} value={text} />
   );
 };
 

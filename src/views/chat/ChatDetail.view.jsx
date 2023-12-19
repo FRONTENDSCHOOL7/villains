@@ -90,6 +90,8 @@ const ChatDetailPage = () => {
     if (result) {
       fetchData();
     }
+
+    setInputMessage('');
   };
 
   return (
@@ -109,16 +111,25 @@ const ChatDetailPage = () => {
             <Message key={message.id} data={message} />
           ))}
         </MessageList>
-        <DefaultInputField
-          handleTextFieldSubmit={handleSendChat}
-          iconImg={imageIcon}
-          handleIconBtnClick={() => console.log('click')}
-          placeholderContent="메시지 입력하기..."
-          submitText="전송"
-          text={inputMessage}
-          setText={setInputMessage}
-          profile={false}
-        />
+
+        <DefaultInputField>
+          <DefaultInputField.IconBtn
+            iconImg={imageIcon}
+            // TODO : 사진 전송 기능
+            handleIconBtnClick={() => console.log('click')}
+            profile={false}
+          />
+          <DefaultInputField.TextArea
+            text={inputMessage}
+            setText={setInputMessage}
+            placeholder="메시지 입력하기..."
+          />
+          <DefaultInputField.SubmitBtn
+            text={inputMessage}
+            handleTextFieldSubmit={handleSendChat}
+            submitText="게시"
+          />
+        </DefaultInputField>
       </ChatContainer>
     </PageTemplate>
   );
@@ -130,13 +141,13 @@ const ChatContainer = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: flex-end;
-  min-height: calc(100vh - 48px);
+  min-height: 100%;
 `;
 
 const MessageList = styled.div`
   flex-grow: 1;
   display: flex;
   flex-direction: column;
-  padding: 20px 16px 68px 16px;
+  padding: 20px 16px 30px 16px;
   background: #f2f2f2; // 채팅창 배경색
 `;

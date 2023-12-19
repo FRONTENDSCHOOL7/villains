@@ -13,7 +13,7 @@ const Wrap = styled.div`
 
 const Main = styled.main`
   width: 100%;
-  height: calc(100vh - 48px - 80px);
+  height: calc(100vh - 80px);
   overflow-y: auto;
 
   &::-webkit-scrollbar {
