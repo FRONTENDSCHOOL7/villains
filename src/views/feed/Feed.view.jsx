@@ -1,4 +1,3 @@
-
 import { useNavigate } from 'react-router';
 import styled from 'styled-components';
 import pageUrlConfig from '../../config/pageUrlConfig';
@@ -12,6 +11,9 @@ import SkeletonCard from '../../components/card/SkeletonCard';
 import LoadingSpinner from '../../components/LoadingSpinner';
 
 import WriteIcon from '../../components/icon/WriteIcon';
+import useInfiniteScroll from '../../hooks/useInfiniteScroll';
+import { useEffect, useRef } from 'react';
+import useInfinite from '../../hooks/useInfinite';
 
 const FeedPage = () => {
   const { posts, fetchNextPage, hasNextPage, isFetchingNextPage } = getPosts();
