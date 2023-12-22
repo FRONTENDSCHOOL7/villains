@@ -1,7 +1,6 @@
 import styled from 'styled-components';
 import PageTemplate from '../../components/layout/PageTemplate';
 import Message from '../../components/chat/Message';
-import ChatInputField from '../../components/textarea/ChatInputField';
 import { useState, useEffect } from 'react';
 import { useNavigate, useParams } from 'react-router';
 import getComments from '../../api/get/getComments.api';
@@ -117,7 +116,6 @@ const ChatDetailPage = () => {
             iconImg={imageIcon}
             // TODO : 사진 전송 기능
             handleIconBtnClick={() => console.log('click')}
-            profile={false}
           />
           <DefaultInputField.TextArea
             text={inputMessage}
@@ -149,5 +147,5 @@ const MessageList = styled.div`
   display: flex;
   flex-direction: column;
   padding: 20px 16px 30px 16px;
-  background: #f2f2f2; // 채팅창 배경색
+  background: #f2f2f2;
 `;

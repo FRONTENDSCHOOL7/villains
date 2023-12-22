@@ -48,7 +48,7 @@ const StyledIconBtn = styled.button`
   border-radius: 50%;
   border: 1px solid #c4c4c4;
   background: #c4c4c4 url(${(props) => props.iconImg}) no-repeat center;
-  background-size: ${(props) => (props.profile ? 'cover' : '22px 22px')};
+  background-size: ${(props) => (props.profile === "profile" ? 'cover' : '22px 22px')};
 `;
 
 const StyledSubmitBtn = styled.button`

@@ -1,4 +1,3 @@
-
 import { useNavigate } from 'react-router';
 import styled from 'styled-components';
 import pageUrlConfig from '../../config/pageUrlConfig';
@@ -12,10 +11,16 @@ import SkeletonCard from '../../components/card/SkeletonCard';
 import LoadingSpinner from '../../components/LoadingSpinner';
 
 import write from '../../assets/img/write.svg';
-
+import useInfiniteScroll from '../../hooks/useInfiniteScroll';
+import { useEffect, useRef } from 'react';
+import useInfinite from '../../hooks/useInfinite';
 
 const FeedPage = () => {
-  const { posts, loading, error } = getPosts();
+  // const { posts, loading, error } = getPosts();
+
+  const { posts, fetchNextPage, hasNextPage, isFetchingNextPage } = getPosts();
+  const lastElementRef = useInfinite(hasNextPage, isFetchingNextPage, fetchNextPage);
+
   const navigate = useNavigate();
 
   const handleFeedWriteNav = () => {
@@ -23,17 +28,21 @@ const FeedPage = () => {
   };
 
   const skeletonCards = [...Array(5)].map((_, idx) => <SkeletonCard key={idx} />);
-  
+
   return (
     <PageTemplate>
       {!posts || posts.length === 0 ? (
         skeletonCards
       ) : (
         <PostList>
-          {posts.map((post, idx) => (
-            <PostCard post={post} key={idx} />
-          ))}
-          {loading && <LoadingSpinner />}
+          {posts.map((post, idx) =>
+            idx === posts.length - 1 ? (
+              <PostCard ref={lastElementRef} post={post} key={idx} />
+            ) : (
+              <PostCard post={post} key={idx} />
+            ),
+          )}
+          {isFetchingNextPage && <LoadingSpinner />}
         </PostList>
       )}
 

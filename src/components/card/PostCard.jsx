@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, forwardRef } from 'react';
 import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 
@@ -11,7 +11,7 @@ import heart from '../../assets/img/heart.svg';
 import heartFilled from '../../assets/img/heart-filled.svg';
 import comment from '../../assets/img/message-circle.svg';
 
-const PostCard = ({ post }) => {
+const PostCard = forwardRef(({ post }, ref) => {
   const navigate = useNavigate();
   const { toggleHeartStatus, loading, error } = postHeart();
   const [isHearted, setIsHearted] = useState(false);
@@ -31,14 +31,14 @@ const PostCard = ({ post }) => {
   const firstImageUrl = post.image ? post.image.split(',')[0] : null;
 
   const handleFeedDetailNav = () => {
-    const feedDetailUrl = `${pageUrlConfig.feedPage}/${post._id}`;
+    const feedDetailUrl = `${pageUrlConfig.feedPage}/${post.id}`;
     navigate(feedDetailUrl);
   };
 
   const createdDate = useFormatDate(post.createdAt);
 
   return (
-    <Card onClick={handleFeedDetailNav}>
+    <Card ref={ref} onClick={handleFeedDetailNav}>
       {firstImageUrl && <CardImage src={firstImageUrl} alt="" />}
       <CardContent>
         <Title>{post.content.contents}</Title>
@@ -56,7 +56,7 @@ const PostCard = ({ post }) => {
       </CardContent>
     </Card>
   );
-};
+});
 
 export default PostCard;
 

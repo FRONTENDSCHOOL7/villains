@@ -10,18 +10,20 @@ const UserCard = ({ user }) => {
   const navigate = useNavigate();
 
   const handleProfileNav = () => {
-    // TODO : 다른유저 프로필 작업 완료되면 경로 변경
-    setQuery("");
-    navigate(pageUrlConfig.profilePage);
+    setQuery('');
+    navigate(`${pageUrlConfig.profilePage}/${user.accountname}`);
   };
 
   return (
     <StyledUserCard onClick={handleProfileNav}>
-      <ProfileImage>
-        {/* 프로필 기본이미지 수정 필요 */}
-        {/* <img src={user.image} alt="" /> */}
-        <img src={profileImage} alt="" />
-      </ProfileImage>
+      <ProfileImage
+        src={
+          user.image === 'http://146.56.183.55:5050/Ellipse.png'
+            ? 'https://api.mandarin.weniv.co.kr/Ellipse.png'
+            : user.image
+        }
+        alt=""
+      />
       <UserInfo>
         <UserName>{user.username}</UserName>
         <Accountname>@ {user.accountname}</Accountname>
@@ -38,15 +40,21 @@ const StyledUserCard = styled.li`
   flex-wrap: nowrap;
   align-items: center;
   gap: 12px;
-  margin-bottom: 16px;
   cursor: pointer;
+  padding: 8px 16px;
+
+
+  &:hover {
+    background-color: #f2f2f2;
+  }
 `;
 
-const ProfileImage = styled.div`
+const ProfileImage = styled.img`
   width: 42px;
   height: 42px;
   border-radius: 50%;
   background-color: #c4c4c4;
+  border: 0.5px solid #c4c4c4;
 `;
 
 const UserInfo = styled.div`

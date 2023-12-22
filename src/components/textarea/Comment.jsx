@@ -9,11 +9,12 @@ import postCommentsReportQuery from '../../api/post/postCommentsReport.api';
 
 import useFormatDate from '../../hooks/useFormatDate';
 import useBottomSheetOptions from '../../hooks/useBottomSheetOptions';
-import useModal from '../../hooks/useModal';
+import useConfirm from '../../hooks/useConfirm';
+import useAlert from '../../hooks/useAlert';
 
-import Modal from '../modal/Modal';
+import ConfirmModal from '../modal/ConfirmModal';
+import AlertModal from '../modal/AlertModal';
 
-import profileImage from '../../assets/img/basic-profile.svg';
 import verticalIcon from '../../assets/img/icon-more-vertical.svg';
 
 const useCommentActions = (id, commentId, removeCommentFromList) => {
@@ -50,8 +51,8 @@ const Comment = ({ comment, id, removeCommentFromList }) => {
 
   const { commentDelete, commentReport } = useCommentActions(id, comment.id, removeCommentFromList);
 
-  // useModal 훅 사용
-  const { isModalVisible, modalContent, showModal, handleModalConfirm, handleModalCancel } = useModal();
+  const { isConfirmVisible, confirmMessage, showConfirm, handleConfirm, handleCancel } = useConfirm();
+  const { isAlertVisible, alertMessage, showAlert, hideAlert } = useAlert();
 
   const toggleBottomSheetShow = () => setIsVisible((prev) => !prev);
 
@@ -74,25 +75,32 @@ const Comment = ({ comment, id, removeCommentFromList }) => {
 
   // confirm을 위한 액션
   const confirmAction = (message, callback) => {
-    showModal(message, callback);
+    showConfirm(message, callback);
     toggleBottomSheetShow();
   };
 
   // alert를 위한 액션
   const alertAction = (message) => {
-    showModal(message);
+    showAlert(message);
     toggleBottomSheetShow();
   };
 
   return (
     <>
-      {isModalVisible && (
-        <Modal
-          content={modalContent}
+      {isConfirmVisible && (
+        <ConfirmModal
+          content={confirmMessage}
           confirmText="확인"
-          cancelText={confirmAction ? '취소' : null}
-          onConfirm={handleModalConfirm}
-          onCancel={handleModalCancel}
+          cancelText="취소"
+          onConfirm={handleConfirm}
+          onCancel={handleCancel}
+        />
+      )}
+      {isAlertVisible && (
+        <AlertModal
+          content={alertMessage}
+          confirmText="확인"
+          onConfirm={hideAlert}
         />
       )}
       <CommentLi>

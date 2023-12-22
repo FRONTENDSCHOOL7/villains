@@ -263,7 +263,7 @@ const FeedDetailPage = () => {
                 : myProfileInfo.image
             }
             handleIconBtnClick={handleProfileClick}
-            profile={true}
+            profile="profile"
           />
           <DefaultInputField.TextArea
             text={inputComment}
