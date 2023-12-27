@@ -20,7 +20,7 @@ const ImagePreview = ({ imageUrls, onDeleteImage }) => {
   if (imageUrls.length === 1) {
     return (
       <ImageWrapper>
-        <StyledImage src={imageUrls[0]} alt="" />
+        <StyledImage src={imageUrls[0].url} alt="" />
         <DeleteButton onClick={() => onDeleteImage(0)} />
       </ImageWrapper>
     );
@@ -28,10 +28,10 @@ const ImagePreview = ({ imageUrls, onDeleteImage }) => {
 
   return (
     <Swiper spaceBetween={10} slidesPerView={1.2} pagination={{ clickable: true }}>
-      {imageUrls.map((url, idx) => (
+      {imageUrls.map((imageData, idx) => (
         <SwiperSlide key={idx}>
           <ImageWrapper>
-            <StyledImage src={url} alt="" />
+            <StyledImage src={imageData.url} alt="" />
             <DeleteButton aria-label="이미지 삭제 버튼" type="button" onClick={() => onDeleteImage(idx)} />
           </ImageWrapper>
         </SwiperSlide>
