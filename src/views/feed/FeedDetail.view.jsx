@@ -2,11 +2,9 @@ import { useMutation } from '@tanstack/react-query';
 import { useEffect, useState } from 'react';
 import { useNavigate, useParams } from 'react-router';
 import styled from 'styled-components';
-import { useRecoilValue, useSetRecoilState } from 'recoil';
+import { useSetRecoilState } from 'recoil';
 
 import { bottomSheetOptions, bottomSheetStateAtom } from '../../atoms/bottomSheetStateAtom';
-import userAtom from '../../atoms/userAtom';
-import profileAtom from '../../atoms/profileAtom';
 import getPostDetail from '../../api/get/getPostDetail.api';
 import postHeart from '../../api/post/postHeart.api';
 import getComments from '../../api/get/getComments.api';
@@ -88,8 +86,7 @@ const FeedDetailPage = () => {
   const createdDate = useFormatDate(post?.createdAt);
   const postImage = post?.image.split(',');
 
-  const user = useRecoilValue(userAtom);
-  const myProfileInfo = useRecoilValue(profileAtom);
+  const user = JSON.parse(localStorage.getItem('user'));
 
   const { postEdit, postDelete, postReport } = usePostActions(id, user.token, navigate);
 
@@ -258,9 +255,9 @@ const FeedDetailPage = () => {
         <DefaultInputField>
           <DefaultInputField.IconBtn
             iconImg={
-              myProfileInfo.image === 'http://146.56.183.55:5050/Ellipse.png'
+              user.image === 'http://146.56.183.55:5050/Ellipse.png'
                 ? 'https://api.mandarin.weniv.co.kr/Ellipse.png'
-                : myProfileInfo.image
+                : user.image
             }
             handleIconBtnClick={handleProfileClick}
             profile="profile"
