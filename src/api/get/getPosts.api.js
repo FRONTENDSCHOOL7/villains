@@ -26,12 +26,17 @@ const fetchPosts = async ({ pageParam = 0 }) => {
 };
 
 const getPosts = () => {
-  const { data, error, fetchNextPage, hasNextPage, isFetching, isFetchingNextPage, status } =
+  const { data, error, fetchNextPage, hasNextPage, isFetchingNextPage, status } =
     useInfiniteQuery({
       queryKey: ['posts'],
       queryFn: fetchPosts,
       initialPageParam: 0,
-      getNextPageParam: (lastPage, pages) => pages.length * 10,
+      getNextPageParam: (lastPage, pages) => {
+        if (lastPage.length < 10) {
+          return undefined;
+        }
+        return pages.length * 10;
+      },
     });
 
   const posts = data?.pages.flat() || [];

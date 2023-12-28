@@ -17,6 +17,8 @@ const FeedPage = () => {
   const { posts, fetchNextPage, hasNextPage, isFetchingNextPage } = getPosts();
   const lastElementRef = useInfinite(hasNextPage, isFetchingNextPage, fetchNextPage);
 
+  console.log('hasNextPage : ', hasNextPage);
+
   const navigate = useNavigate();
 
   const handleNavigateToWritePage = () => {
@@ -48,6 +50,5 @@ export default FeedPage;
 
 const PostList = styled.ul`
   width: 100%;
-  height: 100%;
-  padding: 20px 20px 78px 20px;
+  padding: 20px 20px 0 20px;
 `;
