@@ -16,9 +16,8 @@ import BackHeader from '../../components/layout/BackHeader';
 import DefaultBtn, { BasicStyle } from '../../components/button/GlobalButton';
 import Tanghulu from '../../components/icon/Tanghulu';
 
-import BackArrow from '../../assets/img/icon-arrow-left.svg';
+import ArrowIcon from '../../components/icon/ArrowIcon';
 import Modal from '../../components/modal/Modal';
-// import logout from "../../components/splash/logout";
 
 const ProfileIndexPage = () => {
   const user = useRouteLoaderData('user');
@@ -83,7 +82,7 @@ const ProfileIndexPage = () => {
       <BackHeader>
         {pathname.split('/').length > 4 ?  (
           <BackArrowBtn variant={'basic'} onClick={handleClickBack}>
-            <img src={BackArrow} alt="뒤로가기" />
+            <ArrowIcon direct={"left"}/>
           </BackArrowBtn>
         ) : <div></div>}
         {location.pathname.includes('edit') ? (
