@@ -155,8 +155,7 @@ const GoodsWritePage = () => {
             <Previewimg src={image.url} alt="이미지" />
           ) : (
             <>
-              <img src={ImageIcon} alt="큰 아이콘"> 
-
+              <img src={ImageIcon} alt="큰 아이콘" />
               <p>
                 오른쪽 하단 버튼을 눌러
                 <br />
