@@ -29,18 +29,18 @@ const SingleImage = ({url, onClick}) => {
     )
 }
 
-//이미지가 여러개인 경우
-const MultiImage = ({imageUrls, onClick}) => {
-    return (
-        <Swiper spaceBetween={10} slidesPerView={1.2} pagination={{ clickable: true }}>
-        {imageUrls.map((url, idx) => (
-            <SwiperSlide key={idx}>
-                <SingleImage url={url} onClick={onClick} idx={idx} />
-            </SwiperSlide>
-        ))}
-        </Swiper>
-    )
-}
+//이미지가 여러개인 경우 -> 페이지 내의 분기처리로 교체
+// const MultiImage = ({imageUrls, onClick}) => {
+//     return (
+//         <Swiper spaceBetween={10} slidesPerView={1.2} pagination={{ clickable: true }}>
+//         {imageUrls.map((url, idx) => (
+//             <SwiperSlide key={idx}>
+//                 <SingleImage url={url} onClick={onClick} idx={idx} />
+//             </SwiperSlide>
+//         ))}
+//         </Swiper>
+//     )
+// }
 
 const Image = {
     Default: DefaultImage,
