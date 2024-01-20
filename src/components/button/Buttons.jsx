@@ -30,26 +30,16 @@ const WhiteLongBtn = ({ text, onClick, disabled }) => {
   );
 };
 
-const IconBtn = ({ text, onClick, disabled, img }) => {
+const IconBtn = ({ children, onClick, disabled}) => {
   const handleClick = (event) => {
     event.preventDefault();
   };
   return (
-    <IconButton onClick={onClick ?? handleClick} disabled={disabled ?? false} img={img}>
-      {text}
+    <IconButton onClick={onClick ?? handleClick} disabled={disabled ?? false}>
+      {children}
     </IconButton>
   );
 };
-// const IconBtn = ({ children, onClick, disabled, img}) => {
-//   const handleClick = (event) => {
-//     event.preventDefault();
-//   };
-//   return (
-//     <IconButton onClick={onClick ?? handleClick} disabled={disabled ?? false}>
-//       {children}
-//     </IconButton>
-//   );
-// };
 
 const BlueSmallBtn = ({ children, onClick, disabled }) => {
   return (
@@ -91,7 +81,7 @@ const IconButton = styled(BlueLongButton)`
   background-color: white;
   background-image: url(${(props) => props.img});
   background-repeat: no-repeat;
-  background-position: ${(props) => (props.img === Email ? '17.5px 51%' : '14px 51%')};
+  background-position: ${(props) => (props.img === EmailIcon ? '17.5px 51%' : '14px 51%')};
   &:disabled {
     background-color: white;
     border-color: #767676;
