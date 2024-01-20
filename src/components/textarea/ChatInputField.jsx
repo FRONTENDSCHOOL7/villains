@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
 import ResizingTextarea from './ResizingTextarea';
-import imageIcon from '../../assets/img/image-icon.svg';
+import ImageIcon from '../icon/ImageIcon';
 
 const ChatInputField = ({ onClick }) => {
   const [text, setText] = useState('');
@@ -19,7 +19,7 @@ const ChatInputField = ({ onClick }) => {
 
   return (
     <StyledInputContainer>
-      <ImageBtn bg={imageIcon} />
+      <ImageBtn bg={ImageIcon} />
       <ResizingTextarea rows="1" placeholder="메시지 입력하기..." onChange={handleInputChange} value={text} />
       <SendBtn onClick={handleSend}>전송</SendBtn>
     </StyledInputContainer>

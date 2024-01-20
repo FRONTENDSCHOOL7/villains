@@ -13,7 +13,7 @@ import { Input, Label } from './Input.style';
 import DropDown from '../option/DropDown';
 
 
-import IconSearch from '../../assets/img/icon-search.svg';
+import SearchIcon from '../icon/SearchIcon';
 
 const SearchSub = ({ which, labelText, placeholder, value }) => {
   const [subOneInfo, setSubOneInfo] = useRecoilState(subOneAtom);
@@ -99,7 +99,7 @@ const StyledWrap = styled.div`
   font-size: 14px;
 `;
 const InputField = styled(Input)`
-  background-image: url(${IconSearch});
+  background-image: url(${SearchIcon});
   background-repeat: no-repeat;
   background-position: 98% 50%;
 `;
