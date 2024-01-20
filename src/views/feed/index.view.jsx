@@ -16,7 +16,7 @@ import UserListBox from '../../components/card/UserListBox';
 import BackHeader from '../../components/layout/BackHeader';
 
 import { BasicStyle } from '../../components/button/GlobalButton';
-import BackArrow from '../../assets/img/icon-arrow-left.svg';
+import ArrowIcon from '../../components/icon/ArrowIcon';
 
 const FeedIndexPage = () => {
   const navigate = useNavigate();
@@ -57,7 +57,7 @@ const FeedIndexPage = () => {
       ) : (
         <BackHeader>
           <BackArrowBtn variant={'basic'} onClick={handleClickBack}>
-            <img src={BackArrow} alt="뒤로가기" />
+            <ArrowIcon direct={'left'} />
           </BackArrowBtn>
         </BackHeader>
       )}

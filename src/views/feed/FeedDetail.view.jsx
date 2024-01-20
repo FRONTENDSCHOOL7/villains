@@ -33,9 +33,8 @@ import swiperStyles from '../../style/swiperStyle';
 
 import profileImage from '../../assets/img/basic-profile.svg';
 import HeartIcon from '../../components/icon/HeartIcon';
-import heartFilled from '../../assets/img/heart-filled.svg';
-import commentIcon from '../../assets/img/message-circle.svg';
-import verticalIcon from '../../assets/img/icon-more-vertical.svg';
+import MessageIcon from '../../components/icon/MessageIcon';
+import MoreIcon from '../../components/icon/MoreIcon';
 
 const usePostActions = (id, token, navigate) => {
   const deleteMutation = useMutation(deletePostQuery(id, token));
@@ -177,13 +176,18 @@ const FeedDetailPage = () => {
       <PageTemplate>
         <PostWrapper>
           <PostContainer>
-            <PostMoreBtn aria-label="댓글 삭제/신고 버튼" onClick={handleBottomSheetShow} />
+            <PostMoreBtn aria-label="댓글 삭제/신고 버튼" onClick={handleBottomSheetShow}>
+              <MoreIcon/>
+            </PostMoreBtn>
             <UserHeader>
-              <ProfileImage>
-                {/* 프로필 기본이미지 수정 필요 */}
-                {/* <img src={post.author.image} alt="" /> */}
-                <img src={profileImage} alt="" />
-              </ProfileImage>
+              <ProfileImage
+                src={
+                  post.author.image === 'http://146.56.183.55:5050/Ellipse.png'
+                    ? 'https://api.mandarin.weniv.co.kr/Ellipse.png'
+                    : post.author.image
+                }
+                alt=""
+              />
               <UserInfo>
                 <UserName>{post.author.username}</UserName>
                 <Accountname>@ {post.author.accountname}</Accountname>
@@ -209,11 +213,12 @@ const FeedDetailPage = () => {
             )}
             <ContentText>{JSON.parse(post.content).contents}</ContentText>
             <IconsContainer>
-              <label onClick={handleHeartClick} title="좋아요 버튼">
+              <IconLabelBtn onClick={handleHeartClick} count={heartCount} aria-label="좋아요 버튼">
                 <HeartIcon filled={isHearted} />
-                {heartCount}
-              </label>
-              <IconLabelBtn icon={commentIcon} count={commentsList.length} alt="코멘트 버튼" />
+              </IconLabelBtn>
+              <IconLabelBtn count={commentsList.length} aria-label="코멘트 버튼">
+                <MessageIcon />
+              </IconLabelBtn>
             </IconsContainer>
           </PostContainer>
         </PostWrapper>
@@ -337,8 +342,11 @@ const PostMoreBtn = styled.button`
 
   width: 40px;
   height: 24px;
-  background: url(${verticalIcon}) no-repeat center right;
-  background-size: 20px 20px;
+  /* background-size: 20px 20px; */
+  
+  display: flex;
+  align-items: center;
+  justify-content: right;
 
   z-index: 100;
 `;

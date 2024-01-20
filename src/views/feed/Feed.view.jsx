@@ -35,7 +35,9 @@ const FeedPage = () => {
         </PostList>
       )}
 
-      <FloatingButton img={write} onClick={handleFeedWriteNav} />
+      <FloatingButton onClick={handleFeedWriteNav}>
+        <WriteIcon />
+      </FloatingButton>
     </PageTemplate>
   );
 };

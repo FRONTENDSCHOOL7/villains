@@ -1,5 +1,4 @@
 import styled from 'styled-components';
-import profileImage from '../../assets/img/basic-profile.svg';
 import { useNavigate } from 'react-router';
 import pageUrlConfig from '../../config/pageUrlConfig';
 import { useRecoilState } from 'recoil';
@@ -10,18 +9,20 @@ const UserCard = ({ user }) => {
   const navigate = useNavigate();
 
   const handleProfileNav = () => {
-    // TODO : 다른유저 프로필 작업 완료되면 경로 변경
-    setQuery("");
-    navigate(pageUrlConfig.profilePage);
+    setQuery('');
+    navigate(`${pageUrlConfig.profilePage}/${user.accountname}`);
   };
 
   return (
     <StyledUserCard onClick={handleProfileNav}>
-      <ProfileImage>
-        {/* 프로필 기본이미지 수정 필요 */}
-        {/* <img src={user.image} alt="" /> */}
-        <img src={profileImage} alt="" />
-      </ProfileImage>
+      <ProfileImage
+        src={
+          user.image === 'http://146.56.183.55:5050/Ellipse.png'
+            ? 'https://api.mandarin.weniv.co.kr/Ellipse.png'
+            : user.image
+        }
+        alt=""
+      />
       <UserInfo>
         <UserName>{user.username}</UserName>
         <Accountname>@ {user.accountname}</Accountname>
@@ -47,6 +48,7 @@ const ProfileImage = styled.div`
   height: 42px;
   border-radius: 50%;
   background-color: #c4c4c4;
+  border: 0.5px solid #c4c4c4;
 `;
 
 const UserInfo = styled.div`
