@@ -2,6 +2,7 @@ import React from 'react';
 import styled, { css } from 'styled-components';
 import EmailIcon from '../icon/EmailIcon';
 import { PrimaryStyle } from './GlobalButton';
+import Size from '../icon/Icon.style';
 
 const BlueLongBtn = ({ text, onClick, disabled }) => {
   return (
@@ -75,17 +76,20 @@ const WhiteLongButton = styled(BlueLongButton)`
   background-color: white;
   color: #3c58c1;
 `;
-
 const IconButton = styled(BlueLongButton)`
   color: #767676;
+  position: relative;
   background-color: white;
-  background-image: url(${(props) => props.img});
-  background-repeat: no-repeat;
-  background-position: ${(props) => (props.img === EmailIcon ? '17.5px 51%' : '14px 51%')};
   &:disabled {
     background-color: white;
     border-color: #767676;
     cursor: default;
+  }
+  & > :first-child{
+    position: absolute;
+    inset: 0;
+    margin: auto;
+    margin-left: 14px;
   }
 `;
 
