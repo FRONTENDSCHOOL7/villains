@@ -40,7 +40,9 @@ const FeedPage = () => {
         [...Array(5)].map((_, idx) => <SkeletonCard key={idx} />)
       )}
 
-      <FloatingButton img={write} onClick={handleNavigateToWritePage} />
+      <FloatingButton onClick={handleFeedWriteNav}>
+        <WriteIcon />
+      </FloatingButton>
     </PageTemplate>
   );
 };

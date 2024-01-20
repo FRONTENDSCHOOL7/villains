@@ -1,13 +1,15 @@
 import styled from 'styled-components';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import 'swiper/css';
-import imageBigIcon from '../../assets/img/image-big-icon.svg';
-import deleteIcon from '../../assets/img/delete-icon.svg';
+import ImageIcon from '../../components/icon/ImageIcon';
+import DeleteIcon from '../../components/icon/DeleteIcon';
 
 const ImagePreview = ({ imageUrls, onDeleteImage }) => {
   if (!imageUrls.length) {
     return (
       <ImagePreviewCont>
+        {/* TODO : 아이콘 사이즈 확인 필요 */}
+        <ImageIcon />
         <PreviewSpan>
           오른쪽 하단 버튼을 눌러
           <br />
@@ -20,8 +22,10 @@ const ImagePreview = ({ imageUrls, onDeleteImage }) => {
   if (imageUrls.length === 1) {
     return (
       <ImageWrapper>
-        <StyledImage src={imageUrls[0].url} alt="" />
-        <DeleteButton onClick={() => onDeleteImage(0)} />
+        <StyledImage src={imageUrls[0]} alt="" />
+        <DeleteButton aria-label="이미지 삭제 버튼" type="button" onClick={() => onDeleteImage(0)}>
+          <DeleteIcon />
+        </DeleteButton>
       </ImageWrapper>
     );
   }
@@ -31,8 +35,10 @@ const ImagePreview = ({ imageUrls, onDeleteImage }) => {
       {imageUrls.map((imageData, idx) => (
         <SwiperSlide key={idx}>
           <ImageWrapper>
-            <StyledImage src={imageData.url} alt="" />
-            <DeleteButton aria-label="이미지 삭제 버튼" type="button" onClick={() => onDeleteImage(idx)} />
+            <StyledImage src={url} alt="" />
+            <DeleteButton aria-label="이미지 삭제 버튼" type="button" onClick={() => onDeleteImage(idx)}>
+              <DeleteIcon />
+            </DeleteButton>
           </ImageWrapper>
         </SwiperSlide>
       ))}
@@ -47,8 +53,11 @@ const ImagePreviewCont = styled.div`
   height: 204px;
   border-radius: 10px;
   border: 0.5px solid #dbdbdb;
-  background: #f4f4f4 url(${imageBigIcon}) no-repeat center 50px;
+  background: #f4f4f4;
   margin-bottom: 30px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 
   color: #c4c4c4;
   text-align: center;
@@ -79,7 +88,11 @@ const DeleteButton = styled.button`
   position: absolute;
   top: 8px;
   right: 8px;
-  background: url(${deleteIcon});
   width: 22px;
   height: 22px;
+
+  background: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 `;

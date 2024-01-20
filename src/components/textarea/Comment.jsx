@@ -12,10 +12,8 @@ import useBottomSheetOptions from '../../hooks/useBottomSheetOptions';
 import useConfirm from '../../hooks/useConfirm';
 import useAlert from '../../hooks/useAlert';
 
-import ConfirmModal from '../modal/ConfirmModal';
-import AlertModal from '../modal/AlertModal';
-
-import verticalIcon from '../../assets/img/icon-more-vertical.svg';
+import Modal from '../modal/Modal';
+import MoreIcon from '../../components/icon/MoreIcon';
 
 const useCommentActions = (id, commentId, removeCommentFromList) => {
   const deleteMutation = useMutation(deleteCommentsQuery(id, commentId));
@@ -100,12 +98,14 @@ const Comment = ({ comment, id, removeCommentFromList }) => {
         <AlertModal
           content={alertMessage}
           confirmText="확인"
-          onConfirm={hideAlert}
+          cancelText={confirmAction ? '취소' : null}
+          onConfirm={handleModalConfirm}
+          onCancel={handleModalCancel}
         />
       )}
       <CommentLi>
         <CommentProfileImage>
-          <img
+        <img
             src={
               comment.author.image === 'http://146.56.183.55:5050/Ellipse.png'
                 ? 'https://api.mandarin.weniv.co.kr/Ellipse.png'
@@ -121,7 +121,9 @@ const Comment = ({ comment, id, removeCommentFromList }) => {
           </CommnetHeader>
           <CommentText>{comment.content}</CommentText>
         </CommentContent>
-        <CommentMoreBtn aria-label="댓글 삭제/신고 버튼" onClick={handleBottomSheetShow} />
+        <CommentMoreBtn aria-label="댓글 삭제/신고 버튼" onClick={handleBottomSheetShow}>
+          <MoreIcon />
+        </CommentMoreBtn>
       </CommentLi>
     </>
   );
@@ -189,6 +191,9 @@ const CommentText = styled.p`
 const CommentMoreBtn = styled.button`
   width: 40px;
   height: 20px;
-  background: url(${verticalIcon}) no-repeat center right;
-  background-size: 18px 18px;
+  /* background-size: 18px 18px; */
+
+  display: flex;
+  align-items: center;
+  justify-content: right;
 `;

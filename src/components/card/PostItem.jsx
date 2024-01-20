@@ -3,7 +3,6 @@ import { IconLabelBtn } from '../button/Buttons';
 import HeartIcon from '../icon/HeartIcon';
 import MessageIcon from '../icon/MessageIcon';
 import IconLabel from '../icon/IconLabel';
-// import comment from '../../assets/img/message-circle.svg';
 
 const PostItem = (args) => {
     const date = new Date(args.createdDate);

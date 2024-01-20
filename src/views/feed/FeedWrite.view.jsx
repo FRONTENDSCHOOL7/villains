@@ -17,8 +17,7 @@ import FloatingButton from '../../components/button/FloatingButton.style';
 import ImagePreview from '../../components/card/ImagePreview';
 import ResizingTextarea from '../../components/textarea/ResizingTextarea';
 
-import imageIcon from '../../assets/img/image-icon.svg';
-import arrowIcon from '../../assets/img/icon-arrow-left.svg';
+import ImageIcon from '../../components/icon/ImageIcon';
 import userPostAtom from '../../atoms/userPostAtom';
 
 const FeedWritePage = () => {
@@ -192,7 +191,9 @@ const FeedWritePage = () => {
           />
 
           <InsertImageBtn htmlFor="file">
-            <FloatingButton img={imageIcon} type="button" onClick={triggerFileInput} />
+            <FloatingButton type="button" onClick={triggerFileInput}>
+              <ImageIcon />
+            </FloatingButton>
           </InsertImageBtn>
           <InputFile
             ref={fileInputRef}

@@ -1,6 +1,6 @@
 import { useNavigate, useRouteError } from 'react-router';
 import { Main } from '../components/PageTemplate.style';
-import NotFoundIcon from '../assets/img/icon-404.svg';
+import ErrorIcon from '../components/icon/ErrorIcon';
 import styled from 'styled-components';
 import { BlueLongBtn } from '../components/Buttons';
 
@@ -13,7 +13,7 @@ const ErrorPage = ({ errorMessage }) => {
   };
   return (
     <PageTemplate>
-      <img src={NotFoundIcon} alt="" />
+      <ErrorIcon />
       <strong>{errorMessage || '페이지를 찾을 수 없습니다. :('}</strong>
       {/* {error.statusText || error.message} */}
       <StyledBtn>

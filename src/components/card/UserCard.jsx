@@ -1,5 +1,4 @@
 import styled from 'styled-components';
-import profileImage from '../../assets/img/basic-profile.svg';
 import { useNavigate } from 'react-router';
 import pageUrlConfig from '../../config/pageUrlConfig';
 import { useRecoilState } from 'recoil';

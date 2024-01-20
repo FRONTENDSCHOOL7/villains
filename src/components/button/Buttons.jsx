@@ -59,10 +59,10 @@ const BlueSmallBtn = ({ children, onClick, disabled }) => {
   );
 };
 
-const IconLabelBtn = ({ icon, count, onClick, disabled, alt }) => {
+const IconLabelBtn = ({ children, count, onClick, disabled }) => {
   return (
     <IconLabelButton onClick={onClick} disabled={disabled}>
-      <img src={icon} alt={alt} />
+      {children}
       <span>{count}</span>
     </IconLabelButton>
   );
