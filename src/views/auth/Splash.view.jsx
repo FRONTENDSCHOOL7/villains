@@ -42,7 +42,7 @@ const SplashPage = () => {
       <SplashField logo={Logo} color={backgroundBlue ? '#3c58c1' : 'white'}>
         {showSnsWrap && (
           <SnsWrap>
-            <IconBtn><EmailIcon/>이메일로 로그인</IconBtn>
+            <IconBtn onClick={moveToLogin}><EmailIcon/>이메일로 로그인</IconBtn>
             <IconBtn disabled={true} ><SocialIcon.KaKao/>카카오톡 계정으로 로그인</IconBtn>
             <IconBtn disabled={true} ><SocialIcon.Google/>구글 계정으로 로그인</IconBtn>
             <IconBtn disabled={true} ><SocialIcon.FaceBook/>페이스북 계정으로 로그인</IconBtn>
