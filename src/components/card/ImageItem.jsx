@@ -29,6 +29,14 @@ const SingleImage = ({url, onClick}) => {
     )
 }
 
+/**
+ * 
+ * {multi && <SwiperWrapper />}
+ * <image />
+ * 
+ * multi ? <Swiper>{children}<Swiepr> : children
+ */
+
 //이미지가 여러개인 경우
 const MultiImage = ({imageUrls, onClick}) => {
     return (

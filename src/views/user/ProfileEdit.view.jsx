@@ -3,18 +3,16 @@ import { useRouteLoaderData, useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 import PageTemplate from '../../components/layout/PageTemplate';
 import { useRecoilValue, useRecoilState } from 'recoil';
-import basicProfile from '../../assets/img/basic-profile.svg';
 import { Input } from '../../components/input/Input.style';
 import profileAtom from '../../atoms/profileAtom';
 import FloatingButton from '../../components/button/FloatingButton.style';
-import imageIcon from '../../assets/img/image-icon.svg';
 import theme from '../../style/theme';
 import ResizingTextarea from '../../components/textarea/ResizingTextarea';
 import triggerAtom from '../../atoms/tirggerAtom';
 import updateUser from '../../api/update/updateUser.api';
 import pageUrlConfig from '../../config/pageUrlConfig';
 import postImage from '../../api/post/postImage.api';
-// import imgIcon from `../assets/img/image-icon.svg`
+import ImageIcon from '../../components/icon/ImageIcon';
 
 const ProfileEditPage = () => {
   const user = useRouteLoaderData('user');
@@ -101,7 +99,7 @@ const ProfileEditPage = () => {
         />
         <InsertImageBtn htmlFor="file">
           <FloatingButton
-            img={imageIcon}
+            img={ImageIcon}
             type="button"
             onClick={triggerFileInput}
             style={{
