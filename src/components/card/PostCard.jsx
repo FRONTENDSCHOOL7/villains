@@ -45,12 +45,12 @@ const PostCard = forwardRef(({ post }, ref) => {
         <Time>{createdDate}</Time>
         <IconsContainer>
           <IconLabelBtn
-            icon={isHearted ? <HeartIcon filled={true}/> : <HeartIcon filled={false}/>}
             count={heartCount}
             onClick={handleHeartClick}
             disabled={loading}
-          />
-          <IconLabelBtn icon={comment} count={post.comments.length} />
+          >
+          {isHearted ? <HeartIcon filled={true}/> : <HeartIcon filled={false}/>}</IconLabelBtn>
+          <IconLabelBtn count={post.comments.length} ><MessageIcon/> </IconLabelBtn>
         </IconsContainer>
       </CardContent>
     </Card>
