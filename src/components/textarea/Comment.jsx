@@ -12,9 +12,7 @@ import useBottomSheetOptions from '../../hooks/useBottomSheetOptions';
 import useModal from '../../hooks/useModal';
 
 import Modal from '../modal/Modal';
-
-import profileImage from '../../assets/img/basic-profile.svg';
-import verticalIcon from '../../assets/img/icon-more-vertical.svg';
+import MoreIcon from '../../components/icon/MoreIcon';
 
 const useCommentActions = (id, commentId, removeCommentFromList) => {
   const deleteMutation = useMutation(deleteCommentsQuery(id, commentId));
@@ -90,16 +88,21 @@ const Comment = ({ comment, id, removeCommentFromList }) => {
         <Modal
           content={modalContent}
           confirmText="확인"
-          cancelText={confirmAction ? "취소" : null}
+          cancelText={confirmAction ? '취소' : null}
           onConfirm={handleModalConfirm}
           onCancel={handleModalCancel}
         />
       )}
       <CommentLi>
         <CommentProfileImage>
-          {/* 프로필 기본이미지 수정 필요 */}
-          {/* <img src={comment.author.image} alt={comment.author.username} /> */}
-          <img src={profileImage} alt={comment.author.username} />
+        <img
+            src={
+              comment.author.image === 'http://146.56.183.55:5050/Ellipse.png'
+                ? 'https://api.mandarin.weniv.co.kr/Ellipse.png'
+                : comment.author.image
+            }
+            alt=""
+          />
         </CommentProfileImage>
         <CommentContent>
           <CommnetHeader>
@@ -108,7 +111,9 @@ const Comment = ({ comment, id, removeCommentFromList }) => {
           </CommnetHeader>
           <CommentText>{comment.content}</CommentText>
         </CommentContent>
-        <CommentMoreBtn aria-label="댓글 삭제/신고 버튼" onClick={handleBottomSheetShow} />
+        <CommentMoreBtn aria-label="댓글 삭제/신고 버튼" onClick={handleBottomSheetShow}>
+          <MoreIcon />
+        </CommentMoreBtn>
       </CommentLi>
     </>
   );
@@ -176,6 +181,9 @@ const CommentText = styled.p`
 const CommentMoreBtn = styled.button`
   width: 40px;
   height: 20px;
-  background: url(${verticalIcon}) no-repeat center right;
-  background-size: 18px 18px;
+  /* background-size: 18px 18px; */
+
+  display: flex;
+  align-items: center;
+  justify-content: right;
 `;
