@@ -4,13 +4,12 @@ import styled from 'styled-components';
 import pageUrlConfig from '../../config/pageUrlConfig';
 import Logo from '/img/Logo.png';
 
-import Kakao from '../../components/icon/SocialIcon';
-import Google from '../../components/icon/SocialIcon';
-import Facebook from '../../components/icon/SocialIcon';
-import EmailIcon from '../../components/icon/SocialIcon';
 
 import { Main } from '../../components/layout/PageTemplate.style';
 import { IconBtn } from '../../components/button/Buttons';
+
+import EmailIcon from '../../components/icon/EmailIcon';
+import SocialIcon from '../../components/icon/SocialIcon';
 
 const SplashPage = () => {
   const navigate = useNavigate();
@@ -43,15 +42,10 @@ const SplashPage = () => {
       <SplashField logo={Logo} color={backgroundBlue ? '#3c58c1' : 'white'}>
         {showSnsWrap && (
           <SnsWrap>
-            <IconBtn
-              img={EmailIcon}
-              onClick={moveToLogin}
-              text={'이메일로 로그인'}
-              disabled={false}
-            ></IconBtn>
-            <IconBtn img={Kakao} disabled={true} text={'카카오톡 계정으로 로그인'}></IconBtn>
-            <IconBtn img={Google} disabled={true} text={'구글 계정으로 로그인'}></IconBtn>
-            <IconBtn img={Facebook} disabled={true} text={'페이스북 계정으로 로그인'}></IconBtn>
+            <IconBtn onClick={moveToLogin}><EmailIcon/>이메일로 로그인</IconBtn>
+            <IconBtn disabled={true} ><SocialIcon.KaKao/>카카오톡 계정으로 로그인</IconBtn>
+            <IconBtn disabled={true} ><SocialIcon.Google/>구글 계정으로 로그인</IconBtn>
+            <IconBtn disabled={true} ><SocialIcon.FaceBook/>페이스북 계정으로 로그인</IconBtn>
             <ButtonWrap>
               <BottomBtn>아이디/비밀번호 찾기</BottomBtn>
               <Line>|</Line>

@@ -7,9 +7,8 @@ import postHeart from '../../api/post/postHeart.api';
 import useFormatDate from '../../hooks/useFormatDate';
 import { IconLabelBtn } from '../button/Buttons';
 
-import heart from '../../assets/img/heart.svg';
-import heartFilled from '../../assets/img/heart-filled.svg';
-import comment from '../../assets/img/message-circle.svg';
+import HeartIcon from '../icon/HeartIcon';
+import MessageIcon from '../icon/MessageIcon';
 
 const PostCard = ({ post }) => {
   const navigate = useNavigate();
@@ -46,12 +45,12 @@ const PostCard = ({ post }) => {
         <Time>{createdDate}</Time>
         <IconsContainer>
           <IconLabelBtn
-            icon={isHearted ? heartFilled : heart}
             count={heartCount}
             onClick={handleHeartClick}
             disabled={loading}
-          />
-          <IconLabelBtn icon={comment} count={post.comments.length} />
+          >
+          {isHearted ? <HeartIcon filled={true}/> : <HeartIcon filled={false}/>}</IconLabelBtn>
+          <IconLabelBtn count={post.comments.length} ><MessageIcon/> </IconLabelBtn>
         </IconsContainer>
       </CardContent>
     </Card>

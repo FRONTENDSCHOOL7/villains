@@ -11,13 +11,14 @@ import { headerBtnOptionsAtom, headerBtnStateAtom } from '../../atoms/headerBtnS
 import Tanghulu from '../../components/icon/Tanghulu';
 import styled from 'styled-components';
 import pageUrlConfig from '../../config/pageUrlConfig';
-import BackArrow from '../../assets/img/icon-arrow-left.svg';
 import { BlueSmallBtn } from '../../components/button/Buttons';
 import UserListBox from '../../components/card/UserListBox';
 import queryAtom from '../../atoms/queryAtom';
 import queryFocusAtom from '../../atoms/queryFocusAtom';
 import { useQuery } from '@tanstack/react-query';
 import searchUserQuery from '../../api/get/getSearchUser.api';
+
+import ArrowIcon from '../../components/icon/ArrowIcon';
 
 const GoodsIndexPage = () => {
   const navigate = useNavigate();
@@ -57,7 +58,7 @@ const GoodsIndexPage = () => {
       return (
         <BackHeader>
           <BackArrowBtn variant={'basic'} onClick={handleBackBtn}>
-            <img src={BackArrow} alt="뒤로가기" />
+            <img src={ArrowIcon} alt="뒤로가기" />
           </BackArrowBtn>
           {user.accountname === realProductAuthor && <Tanghulu></Tanghulu>}
         </BackHeader>
