@@ -17,13 +17,12 @@ import pageUrlConfig from '../../config/pageUrlConfig';
 import useFormatDate from '../../hooks/useFormatDate';
 import useBottomSheetOptions from '../../hooks/useBottomSheetOptions';
 import useConfirm from '../../hooks/useConfirm';
-import useConfirm from '../../hooks/useConfirm';
 
 import PageTemplate from '../../components/layout/PageTemplate';
 import Comment from '../../components/textarea/Comment';
 import { IconLabelBtn } from '../../components/button/Buttons';
 import ConfirmModal from '../../components/modal/ConfirmModal';
-import DefaultTextField from '../../components/textarea/DefaultTextField';
+import DefaultInputField from '../../components/textarea/DefaultInputField';
 
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { Pagination, Navigation } from 'swiper/modules';
@@ -32,7 +31,6 @@ import 'swiper/css/pagination';
 import 'swiper/css/navigation';
 import swiperStyles from '../../style/swiperStyle';
 
-import profileImage from '../../assets/img/basic-profile.svg';
 import HeartIcon from '../../components/icon/HeartIcon';
 import MessageIcon from '../../components/icon/MessageIcon';
 import MoreIcon from '../../components/icon/MoreIcon';
