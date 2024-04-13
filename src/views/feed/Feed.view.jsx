@@ -23,6 +23,7 @@ const FeedPage = () => {
     navigate(pageUrlConfig.feedWritePage);
   };
 
+
   const renderPosts = () =>
     posts.map((post, idx) => (
       <PostCard ref={idx === posts.length - 1 ? lastElementRef : null} post={post} key={idx} />

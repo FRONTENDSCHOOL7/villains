@@ -17,6 +17,7 @@ import DefaultBtn, { BasicStyle } from '../../components/button/GlobalButton';
 import Tanghulu from '../../components/icon/Tanghulu';
 
 import ArrowIcon from '../../components/icon/ArrowIcon';
+
 import ConfirmModal from '../../components/modal/ConfirmModal';
 
 const ProfileIndexPage = () => {
