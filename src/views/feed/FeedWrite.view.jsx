@@ -192,7 +192,7 @@ const FeedWritePage = () => {
 
           <InsertImageBtn htmlFor="file">
             <FloatingButton type="button" onClick={triggerFileInput}>
-              <ImageIcon />
+              <ImageIcon color="#FFFFFF" width="32"/>
             </FloatingButton>
           </InsertImageBtn>
           <InputFile

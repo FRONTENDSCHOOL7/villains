@@ -1,16 +1,16 @@
 import styled from 'styled-components';
 import ResizingTextarea from './ResizingTextarea';
 
-const IconBtn = ({ iconImg, handleIconBtnClick, profile }) => (
-  <StyledIconBtn iconImg={iconImg} onClick={handleIconBtnClick} profile={profile} />
+const IconBtn = ({ children,iconimg, handleIconBtnClick, profile }) => (
+  <StyledIconBtn iconimg={iconimg} onClick={handleIconBtnClick} profile={profile}>
+    {children}
+  </StyledIconBtn>
 );
 
 const TextArea = ({ text, setText, placeholder }) => {
   const handleTextChange = (event) => setText(event.target.value);
 
-  return (
-    <ResizingTextarea rows="1" placeholder={placeholder} onChange={handleTextChange} value={text} />
-  );
+  return <ResizingTextarea rows="1" placeholder={placeholder} onChange={handleTextChange} value={text} />;
 };
 
 const SubmitBtn = ({ text, handleTextFieldSubmit, submitText }) => (
@@ -47,8 +47,8 @@ const StyledIconBtn = styled.button`
   height: 36px;
   border-radius: 50%;
   border: 1px solid #c4c4c4;
-  background: #c4c4c4 url(${(props) => props.iconImg}) no-repeat center;
-  background-size: ${(props) => (props.profile === "profile" ? 'cover' : '22px 22px')};
+  background: #c4c4c4 url(${(props) => props.iconimg}) no-repeat center;
+  background-size: ${(props) => (props.profile === 'profile' ? 'cover' : '22px 22px')};
 `;
 
 const StyledSubmitBtn = styled.button`

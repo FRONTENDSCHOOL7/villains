@@ -12,12 +12,10 @@ import useBottomSheetOptions from '../../hooks/useBottomSheetOptions';
 import useConfirm from '../../hooks/useConfirm';
 import useAlert from '../../hooks/useAlert';
 
-import Modal from '../modal/Modal';
 import MoreIcon from '../../components/icon/MoreIcon';
 import ConfirmModal from '../modal/ConfirmModal';
 import AlertModal from '../modal/AlertModal';
 
-import verticalIcon from '../../assets/img/icon-more-vertical.svg';
 
 const useCommentActions = (id, commentId, removeCommentFromList) => {
   const deleteMutation = useMutation(deleteCommentsQuery(id, commentId));

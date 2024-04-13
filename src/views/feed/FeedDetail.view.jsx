@@ -11,6 +11,7 @@ import getComments from '../../api/get/getComments.api';
 import postComments from '../../api/post/postComments.api';
 import deletePostQuery from '../../api/delete/deletePost.api';
 import postReportQuery from '../../api/post/postReport.api';
+import getUserInfo from '../../api/get/getUserInfo.api';
 
 import pageUrlConfig from '../../config/pageUrlConfig';
 import useFormatDate from '../../hooks/useFormatDate';
@@ -75,6 +76,7 @@ const FeedDetailPage = () => {
   const [isHearted, setIsHearted] = useState(post?.hearted);
   const [heartCount, setHeartCount] = useState(post?.heartCount);
   const [inputComment, setInputComment] = useState('');
+  const [myProfileImg, setMyProfileImg] = useState();
 
   const { fetchPost, loading, error } = getPostDetail();
   const { fetchComments } = getComments();
@@ -91,6 +93,17 @@ const FeedDetailPage = () => {
   const user = JSON.parse(localStorage.getItem('user'));
 
   const { postEdit, postDelete, postReport } = usePostActions(id, user.token, navigate);
+
+  // 내 프로필 이미지 불러오기
+  useEffect(() => {
+    getUserInfo(user.accountname, user.token)
+      .then((result) => {
+        setMyProfileImg(result.data.profile.image);
+      })
+      .catch((error) => {
+        console.error(error);
+      });
+  }, []);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -197,7 +210,7 @@ const FeedDetailPage = () => {
         <PostWrapper>
           <PostContainer>
             <PostMoreBtn aria-label="댓글 삭제/신고 버튼" onClick={handleBottomSheetShow}>
-              <MoreIcon/>
+              <MoreIcon />
             </PostMoreBtn>
             <UserHeader>
               <ProfileImage
@@ -257,10 +270,10 @@ const FeedDetailPage = () => {
         {/* 댓글 작성 폼 */}
         <DefaultInputField>
           <DefaultInputField.IconBtn
-            iconImg={
-              user.image === 'http://146.56.183.55:5050/Ellipse.png'
+            iconimg={
+              myProfileImg === 'http://146.56.183.55:5050/Ellipse.png'
                 ? 'https://api.mandarin.weniv.co.kr/Ellipse.png'
-                : user.image
+                : myProfileImg
             }
             handleIconBtnClick={handleProfileClick}
             profile="profile"
@@ -379,7 +392,7 @@ const PostMoreBtn = styled.button`
   width: 40px;
   height: 24px;
   /* background-size: 20px 20px; */
-  
+
   display: flex;
   align-items: center;
   justify-content: right;

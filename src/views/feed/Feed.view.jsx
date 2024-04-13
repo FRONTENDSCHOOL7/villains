@@ -11,15 +11,11 @@ import SkeletonCard from '../../components/card/SkeletonCard';
 import LoadingSpinner from '../../components/LoadingSpinner';
 
 import WriteIcon from '../../components/icon/WriteIcon';
-import useInfiniteScroll from '../../hooks/useInfiniteScroll';
-import { useEffect, useRef } from 'react';
 import useInfinite from '../../hooks/useInfinite';
 
 const FeedPage = () => {
   const { posts, fetchNextPage, hasNextPage, isFetchingNextPage } = getPosts();
   const lastElementRef = useInfinite(hasNextPage, isFetchingNextPage, fetchNextPage);
-
-  console.log('hasNextPage : ', hasNextPage);
 
   const navigate = useNavigate();
 
@@ -43,7 +39,7 @@ const FeedPage = () => {
         [...Array(5)].map((_, idx) => <SkeletonCard key={idx} />)
       )}
 
-      <FloatingButton onClick={handleFeedWriteNav}>
+      <FloatingButton onClick={handleNavigateToWritePage}>
         <WriteIcon />
       </FloatingButton>
     </PageTemplate>

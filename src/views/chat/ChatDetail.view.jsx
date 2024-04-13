@@ -13,7 +13,7 @@ import userAtom from '../../atoms/userAtom';
 import Modal from '../../components/modal/Modal';
 import pageUrlConfig from '../../config/pageUrlConfig';
 import DefaultInputField from '../../components/textarea/DefaultInputField';
-import imageIcon from '../../assets/img/image-icon.svg';
+import ImageIcon from '../../components/icon/ImageIcon';
 
 const usePostActions = (id, token, navigate) => {
   const deleteMutation = useMutation(deletePostQuery(id, token));
@@ -113,10 +113,12 @@ const ChatDetailPage = () => {
 
         <DefaultInputField>
           <DefaultInputField.IconBtn
-            iconImg={imageIcon}
+            // iconImg={ImageIcon}
             // TODO : 사진 전송 기능
-            handleIconBtnClick={() => console.log('click')}
-          />
+            handleIconBtnClick={(e) => e.preventDefault()}
+          >
+            <ImageIcon color="#FFFFFF" width="24"/>
+          </DefaultInputField.IconBtn>
           <DefaultInputField.TextArea
             text={inputMessage}
             setText={setInputMessage}

@@ -35,8 +35,18 @@ const Overlay = styled.div`
   left: 0;
   width: 100vw;
   height: 100vh;
-  background-color: transparent;
   z-index: 100;
+  
+  &::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 410px;
+    height: 100vh;
+    background: rgba(0, 0, 0, 0.4);
+  }
 `;
 
 const BottomSheetWrapper = styled.div`

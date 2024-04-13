@@ -22,7 +22,7 @@ const ImagePreview = ({ imageUrls, onDeleteImage }) => {
   if (imageUrls.length === 1) {
     return (
       <ImageWrapper>
-        <StyledImage src={imageUrls[0]} alt="" />
+        <StyledImage src={imageUrls[0].url} alt="" />
         <DeleteButton aria-label="이미지 삭제 버튼" type="button" onClick={() => onDeleteImage(0)}>
           <DeleteIcon />
         </DeleteButton>
@@ -35,7 +35,7 @@ const ImagePreview = ({ imageUrls, onDeleteImage }) => {
       {imageUrls.map((imageData, idx) => (
         <SwiperSlide key={idx}>
           <ImageWrapper>
-            <StyledImage src={url} alt="" />
+            <StyledImage src={imageData.url} alt="" />
             <DeleteButton aria-label="이미지 삭제 버튼" type="button" onClick={() => onDeleteImage(idx)}>
               <DeleteIcon />
             </DeleteButton>
@@ -56,6 +56,7 @@ const ImagePreviewCont = styled.div`
   background: #f4f4f4;
   margin-bottom: 30px;
   display: flex;
+  flex-flow: column wrap;
   align-items: center;
   justify-content: center;
 
@@ -66,8 +67,7 @@ const ImagePreviewCont = styled.div`
 `;
 
 const PreviewSpan = styled.span`
-  position: relative;
-  top: 124px;
+  margin-top: 10px;
 `;
 
 const ImageWrapper = styled.div`
