@@ -1,7 +1,6 @@
 import styled from 'styled-components';
 import PageTemplate from '../../components/layout/PageTemplate';
 import Message from '../../components/chat/Message';
-import ChatInputField from '../../components/textarea/ChatInputField';
 import { useState, useEffect } from 'react';
 import { useNavigate, useParams } from 'react-router';
 import getComments from '../../api/get/getComments.api';
@@ -13,6 +12,8 @@ import { useMutation } from '@tanstack/react-query';
 import userAtom from '../../atoms/userAtom';
 import Modal from '../../components/modal/Modal';
 import pageUrlConfig from '../../config/pageUrlConfig';
+import DefaultInputField from '../../components/textarea/DefaultInputField';
+import ImageIcon from '../../components/icon/ImageIcon';
 
 const usePostActions = (id, token, navigate) => {
   const deleteMutation = useMutation(deletePostQuery(id, token));
@@ -34,6 +35,8 @@ const ChatDetailPage = () => {
   const user = useRecoilValue(userAtom);
   const navigate = useNavigate();
   const [messages, setMessages] = useState([]);
+  const [inputMessage, setInputMessage] = useState('');
+
   const { id } = useParams();
   const { fetchComments } = getComments();
   const { uploadComment } = postComments();
@@ -79,12 +82,15 @@ const ChatDetailPage = () => {
     }
   };
 
-  const handleSendChat = async (text) => {
-    const result = await uploadComment(id, text);
-    console.log(result);
+  const handleSendChat = async (event) => {
+    event.preventDefault();
+
+    const result = await uploadComment(id, inputMessage);
     if (result) {
       fetchData();
     }
+
+    setInputMessage('');
   };
 
   return (
@@ -104,7 +110,26 @@ const ChatDetailPage = () => {
             <Message key={message.id} data={message} />
           ))}
         </MessageList>
-        <ChatInputField onClick={handleSendChat} />
+
+        <DefaultInputField>
+          <DefaultInputField.IconBtn
+            // iconImg={ImageIcon}
+            // TODO : 사진 전송 기능
+            handleIconBtnClick={(e) => e.preventDefault()}
+          >
+            <ImageIcon color="#FFFFFF" width="24"/>
+          </DefaultInputField.IconBtn>
+          <DefaultInputField.TextArea
+            text={inputMessage}
+            setText={setInputMessage}
+            placeholder="메시지 입력하기..."
+          />
+          <DefaultInputField.SubmitBtn
+            text={inputMessage}
+            handleTextFieldSubmit={handleSendChat}
+            submitText="게시"
+          />
+        </DefaultInputField>
       </ChatContainer>
     </PageTemplate>
   );
@@ -116,13 +141,13 @@ const ChatContainer = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: flex-end;
-  min-height: calc(100vh - 48px);
+  min-height: 100%;
 `;
 
 const MessageList = styled.div`
   flex-grow: 1;
   display: flex;
   flex-direction: column;
-  padding: 20px 16px 68px 16px;
-  background: #f2f2f2; // 채팅창 배경색
+  padding: 20px 16px 30px 16px;
+  background: #f2f2f2;
 `;

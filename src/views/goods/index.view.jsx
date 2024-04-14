@@ -58,7 +58,7 @@ const GoodsIndexPage = () => {
       return (
         <BackHeader>
           <BackArrowBtn variant={'basic'} onClick={handleBackBtn}>
-            <img src={ArrowIcon} alt="뒤로가기" />
+            <ArrowIcon /> 
           </BackArrowBtn>
           {user.accountname === realProductAuthor && <Tanghulu></Tanghulu>}
         </BackHeader>
@@ -68,7 +68,7 @@ const GoodsIndexPage = () => {
       return (
         <BackHeader>
           <BackArrowBtn variant={'basic'} onClick={handleBackBtn}>
-            <img src={BackArrow} alt="뒤로가기" />
+            <ArrowIcon />
           </BackArrowBtn>
           <BlueSmallBtn disabled={headerBtnState} onClick={headerBtnOptions.callback}>
             {headerBtnOptions.label}

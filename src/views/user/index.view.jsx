@@ -8,7 +8,7 @@ import { bottomSheetOptions, bottomSheetStateAtom } from '../../atoms/bottomShee
 import userAtom from '../../atoms/userAtom';
 
 import pageUrlConfig from '../../config/pageUrlConfig';
-import useModal from '../../hooks/useModal';
+import useConfirm from '../../hooks/useConfirm';
 import useBottomSheetOptions from '../../hooks/useBottomSheetOptions';
 
 import NavMenu from '../../components/layout/NavMenu';
@@ -17,7 +17,8 @@ import DefaultBtn, { BasicStyle } from '../../components/button/GlobalButton';
 import Tanghulu from '../../components/icon/Tanghulu';
 
 import ArrowIcon from '../../components/icon/ArrowIcon';
-import Modal from '../../components/modal/Modal';
+
+import ConfirmModal from '../../components/modal/ConfirmModal';
 
 const ProfileIndexPage = () => {
   const user = useRouteLoaderData('user');
@@ -28,20 +29,24 @@ const ProfileIndexPage = () => {
 
   const [trigger, setTrigger] = useRecoilState(triggerAtom);
   const [bottomSheet, setBottomSheet] = useRecoilState(bottomSheetOptions);
+  const [bottomSheetToggle, setBottomSheetToggle] = useRecoilState(bottomSheetStateAtom);
+
   const setUserInfo = useSetRecoilState(userAtom);
 
-  // useModal 훅 사용
-  const { isModalVisible, modalContent, showModal, handleModalConfirm, handleModalCancel } = useModal();
+    // useConfirm 훅 사용
+    const { isConfirmVisible, confirmMessage, showConfirm, handleConfirm, handleCancel } = useConfirm();
 
   const profileReport = () => {
     alert('신고완료');
   };
 
-  const logout = () => {
+  const logout = (message, callback) => {
+    console.log(bottomSheetToggle)
+    showConfirm(message, callback);
     localStorage.clear();
     setUserInfo(null);
-    setBottomSheetToggle(!bottomSheetToggle);
     navigate(`${import.meta.env.BASE_URL}`);
+    setBottomSheetToggle((prev) => !prev);
   };
 
   const currentAccountname = user.accountname;
@@ -50,17 +55,16 @@ const ProfileIndexPage = () => {
   const options = useBottomSheetOptions({
     currentAccountname,
     authorAccountname,
-    logout: () => showModal('정말 떠나실건가요?', logout),
-    profileReport: () => showModal('어떤 빌런인가요?', profileReport),
+    logout: () => showConfirm('정말 떠나실건가요?', logout),
+    profileReport: () => showConfirm('어떤 빌런인가요?', profileReport),
     type: 'user',
   });
 
-  const [bottomSheetToggle, setBottomSheetToggle] = useRecoilState(bottomSheetStateAtom);
 
   const handleBottomSheetShow = (event) => {
     event.stopPropagation();
     setBottomSheet(options);
-    setBottomSheetToggle(!bottomSheetToggle);
+    setBottomSheetToggle((prev) => !prev);
   };
 
   useEffect(() => {
@@ -93,8 +97,14 @@ const ProfileIndexPage = () => {
           <Tanghulu onClick={handleBottomSheetShow} />
         )}
       </BackHeader>
-      {isModalVisible && (
-        <Modal content={modalContent} confirmText={`응`} cancelText={'미안'} onConfirm={handleModalConfirm} />
+      {isConfirmVisible && (
+        <ConfirmModal
+        content={confirmMessage}
+        confirmText="로그아웃"
+        cancelText="취소"
+        onConfirm={handleConfirm}
+        onCancel={handleCancel}
+      />
       )}
       <Outlet />
       <NavMenu />

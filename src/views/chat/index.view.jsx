@@ -32,7 +32,7 @@ const ChatIndexPage = () => {
       {pathname.split('/').length > 3 && (
         <BackHeader>
           <BackArrowBtn variant={'basic'} onClick={handleClickBack}>
-            <img src={ArrowIcon} alt="뒤로가기" />
+            <ArrowIcon />
           </BackArrowBtn>
           {handleChatHeader()}
         </BackHeader>

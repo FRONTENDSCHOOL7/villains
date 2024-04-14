@@ -61,13 +61,13 @@ const SignInPage = () => {
           password: userPwd,
         },
       });
-      console.log(response);
       // 성공시 localstorage 저장 후 /main 이동
       if (response.status === 200 && response.data.status !== 422) {
         const userInfo = {
           accountname: response.data.user.accountname,
           token: response.data.user.token,
           username: response.data.user.username,
+          image: response.data.user.image,
         };
         localStorage.setItem('user', JSON.stringify(userInfo));
         setUser(userInfo);

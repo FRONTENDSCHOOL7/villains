@@ -155,7 +155,7 @@ const GoodsWritePage = () => {
             <Previewimg src={image.url} alt="이미지" />
           ) : (
             <>
-              <img src={ImageIcon} alt="큰 아이콘" />
+              <ImageIcon />
               <p>
                 오른쪽 하단 버튼을 눌러
                 <br />
@@ -163,7 +163,9 @@ const GoodsWritePage = () => {
               </p>
             </>
           )}
-          <CustomFloatingBtn img={ImageIcon} onClick={handleFloatBtn}></CustomFloatingBtn>
+          <CustomFloatingBtn onClick={handleFloatBtn}>
+            <ImageIcon color="#FFFFFF" width="32"/> 
+          </CustomFloatingBtn>
         </PreviewArea>
         <ImgInput
           type="file"

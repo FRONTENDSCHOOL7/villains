@@ -21,7 +21,7 @@ const BackHeader = ({ onClick, children }) => {
       <StyledHeader>
         {showArrowIcon && (
           <ArrowIconBtn variant={'basic'} onClick={onClick}>
-            <img src={BackArrow} alt="뒤로가기" />
+            <ArrowIcon />
           </ArrowIconBtn>
         )}
         {children}

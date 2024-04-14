@@ -1,6 +1,7 @@
 import styled from 'styled-components';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import 'swiper/css';
+
 /*
 ? 이미지의 개수에 따라서 컴포넌트가 달라진다. 하나의 컴포넌트로 관리할 수 없을까?
 -> discussion open: https://github.com/FRONTENDSCHOOL7/villains/discussions/157

@@ -23,7 +23,7 @@ export default ResizingTextarea;
 const StyledTextarea = styled.textarea`
   width: 100%;
   flex:1;
-  padding:8px 0;
+  padding:8px;
   font-size: 14px;
   border: none;
   resize: none;

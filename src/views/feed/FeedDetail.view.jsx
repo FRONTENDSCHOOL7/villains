@@ -2,27 +2,27 @@ import { useMutation } from '@tanstack/react-query';
 import { useEffect, useState } from 'react';
 import { useNavigate, useParams } from 'react-router';
 import styled from 'styled-components';
-import { useRecoilValue, useSetRecoilState } from 'recoil';
+import { useSetRecoilState } from 'recoil';
 
 import { bottomSheetOptions, bottomSheetStateAtom } from '../../atoms/bottomSheetStateAtom';
-import userAtom from '../../atoms/userAtom';
 import getPostDetail from '../../api/get/getPostDetail.api';
 import postHeart from '../../api/post/postHeart.api';
 import getComments from '../../api/get/getComments.api';
 import postComments from '../../api/post/postComments.api';
 import deletePostQuery from '../../api/delete/deletePost.api';
 import postReportQuery from '../../api/post/postReport.api';
+import getUserInfo from '../../api/get/getUserInfo.api';
 
 import pageUrlConfig from '../../config/pageUrlConfig';
 import useFormatDate from '../../hooks/useFormatDate';
 import useBottomSheetOptions from '../../hooks/useBottomSheetOptions';
-import useModal from '../../hooks/useModal';
+import useConfirm from '../../hooks/useConfirm';
 
 import PageTemplate from '../../components/layout/PageTemplate';
 import Comment from '../../components/textarea/Comment';
-import CommentForm from '../../components/textarea/CommentForm';
 import { IconLabelBtn } from '../../components/button/Buttons';
-import Modal from '../../components/modal/Modal';
+import ConfirmModal from '../../components/modal/ConfirmModal';
+import DefaultInputField from '../../components/textarea/DefaultInputField';
 
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { Pagination, Navigation } from 'swiper/modules';
@@ -31,7 +31,6 @@ import 'swiper/css/pagination';
 import 'swiper/css/navigation';
 import swiperStyles from '../../style/swiperStyle';
 
-import profileImage from '../../assets/img/basic-profile.svg';
 import HeartIcon from '../../components/icon/HeartIcon';
 import MessageIcon from '../../components/icon/MessageIcon';
 import MoreIcon from '../../components/icon/MoreIcon';
@@ -41,7 +40,8 @@ const usePostActions = (id, token, navigate) => {
   const reportMutation = useMutation(postReportQuery(id, token));
 
   const postEdit = () => {
-    navigate(`/feed/edit/${id}`);
+    navigate(`${pageUrlConfig.feedPage}/edit/${id}`);
+    navigate(`${pageUrlConfig.feedPage}/edit/${id}`);
   };
 
   const postDelete = () => {
@@ -73,6 +73,8 @@ const FeedDetailPage = () => {
   const [commentsList, setCommentsList] = useState([]);
   const [isHearted, setIsHearted] = useState(post?.hearted);
   const [heartCount, setHeartCount] = useState(post?.heartCount);
+  const [inputComment, setInputComment] = useState('');
+  const [myProfileImg, setMyProfileImg] = useState();
 
   const { fetchPost, loading, error } = getPostDetail();
   const { fetchComments } = getComments();
@@ -86,9 +88,20 @@ const FeedDetailPage = () => {
   const createdDate = useFormatDate(post?.createdAt);
   const postImage = post?.image.split(',');
 
-  const user = useRecoilValue(userAtom);
+  const user = JSON.parse(localStorage.getItem('user'));
 
   const { postEdit, postDelete, postReport } = usePostActions(id, user.token, navigate);
+
+  // 내 프로필 이미지 불러오기
+  useEffect(() => {
+    getUserInfo(user.accountname, user.token)
+      .then((result) => {
+        setMyProfileImg(result.data.profile.image);
+      })
+      .catch((error) => {
+        console.error(error);
+      });
+  }, []);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -149,12 +162,30 @@ const FeedDetailPage = () => {
     toggleBottomSheetShow();
   };
 
-  // useModal 훅 사용
-  const { isModalVisible, modalContent, showModal, handleModalConfirm, handleModalCancel } = useModal();
+  // useConfirm 훅 사용
+  const { isConfirmVisible, confirmMessage, showConfirm, handleConfirm, handleCancel } = useConfirm();
 
   const confirmAction = (message, callback) => {
-    showModal(message, callback);
+    showConfirm(message, callback);
     toggleBottomSheetShow();
+  };
+
+  const handlePostComments = async (event) => {
+    event.preventDefault();
+
+    const newComment = await uploadComment(id, inputComment);
+
+    if (newComment) {
+      // 새 댓글을 포함하도록 commentsList 상태를 업데이트
+      setCommentsList((prevCommentsList) => [...prevCommentsList, newComment]);
+
+      setInputComment('');
+    }
+  };
+
+  const handleProfileClick = (event) => {
+    event.preventDefault();
+    navigate(pageUrlConfig.profilePage);
   };
 
   if (!post) {
@@ -164,20 +195,20 @@ const FeedDetailPage = () => {
 
   return (
     <>
-      {isModalVisible && (
-        <Modal
-          content={modalContent}
+      {isConfirmVisible && (
+        <ConfirmModal
+          content={confirmMessage}
           confirmText="확인"
           cancelText="취소"
-          onConfirm={handleModalConfirm}
-          onCancel={handleModalCancel}
+          onConfirm={handleConfirm}
+          onCancel={handleCancel}
         />
       )}
       <PageTemplate>
         <PostWrapper>
           <PostContainer>
             <PostMoreBtn aria-label="댓글 삭제/신고 버튼" onClick={handleBottomSheetShow}>
-              <MoreIcon/>
+              <MoreIcon />
             </PostMoreBtn>
             <UserHeader>
               <ProfileImage
@@ -235,12 +266,27 @@ const FeedDetailPage = () => {
         )}
 
         {/* 댓글 작성 폼 */}
-        <CommentForm
-          id={id}
-          uploadComment={uploadComment}
-          setCommentsList={setCommentsList}
-          profileImage={profileImage}
-        />
+        <DefaultInputField>
+          <DefaultInputField.IconBtn
+            iconimg={
+              myProfileImg === 'http://146.56.183.55:5050/Ellipse.png'
+                ? 'https://api.mandarin.weniv.co.kr/Ellipse.png'
+                : myProfileImg
+            }
+            handleIconBtnClick={handleProfileClick}
+            profile="profile"
+          />
+          <DefaultInputField.TextArea
+            text={inputComment}
+            setText={setInputComment}
+            placeholder="댓글 입력하기..."
+          />
+          <DefaultInputField.SubmitBtn
+            text={inputComment}
+            handleTextFieldSubmit={handlePostComments}
+            submitText="게시"
+          />
+        </DefaultInputField>
       </PageTemplate>
     </>
   );
@@ -269,11 +315,12 @@ const UserHeader = styled.div`
   margin-bottom: 20px;
 `;
 
-const ProfileImage = styled.div`
+const ProfileImage = styled.img`
   width: 42px;
   height: 42px;
   border-radius: 50%;
-  background-color: #c4c4c4;
+  object-fit: cover;
+  border: 1px solid #c4c4c4;
 `;
 
 const UserInfo = styled.div`
@@ -343,7 +390,7 @@ const PostMoreBtn = styled.button`
   width: 40px;
   height: 24px;
   /* background-size: 20px 20px; */
-  
+
   display: flex;
   align-items: center;
   justify-content: right;

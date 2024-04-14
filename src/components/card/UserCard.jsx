@@ -39,11 +39,16 @@ const StyledUserCard = styled.li`
   flex-wrap: nowrap;
   align-items: center;
   gap: 12px;
-  margin-bottom: 16px;
   cursor: pointer;
+  padding: 8px 16px;
+
+
+  &:hover {
+    background-color: #f2f2f2;
+  }
 `;
 
-const ProfileImage = styled.div`
+const ProfileImage = styled.img`
   width: 42px;
   height: 42px;
   border-radius: 50%;
