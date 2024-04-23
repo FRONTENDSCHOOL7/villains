@@ -1,74 +1,47 @@
-import { useCallback, useEffect, useState } from 'react';
 import client from '../../config/api.config';
-import useInfiniteScroll from '../../hooks/useInfiniteScroll';
+import { useInfiniteQuery } from '@tanstack/react-query';
+
+const fetchPosts = async ({ pageParam = 0 }) => {
+  const { token } = JSON.parse(localStorage.getItem('user'));
+  const headers = client.BothType(token);
+
+  try {
+    const { data } = await client.get(`/post/feed/?limit=10&skip=${pageParam}`, {}, headers);
+    const responseData = data.posts;
+
+    return responseData
+      .filter((item) => {
+        try {
+          const parsedContent = JSON.parse(item.content);
+          return parsedContent.postId === 'villains';
+        } catch {
+          return false;
+        }
+      })
+      .map((item) => ({ ...item, content: JSON.parse(item.content) }));
+  } catch (error) {
+    console.error('Error fetching posts:', error);
+    return [];
+  }
+};
 
 const getPosts = () => {
-  const [posts, setPosts] = useState([]); // 현재 로드된 게시글
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(null);
-  const [skip, setSkip] = useState(0);
-  const POSTS_REQUEST = 10; // 한 번의 요청에 가져오는 게시글 수
-
-  const fetchPosts = useCallback(async () => {
-    let fetchedPosts = [];
-    let requestCount = 0;
-    let currentSkip = skip;
-    const token = JSON.parse(localStorage.getItem('user')).token;
-    const headers = client.BothType(token);
-
-    while (fetchedPosts.length < POSTS_REQUEST) {
-      setLoading(true);
-      try {
-        const response = await client.get(
-          `/post?limit=${POSTS_REQUEST}&skip=${currentSkip}`,
-          {},
-          { ...headers },
-        );
-        const responseData = response.data.posts;
-
-        const filteredData = responseData.filter((item) => {
-          let parsedContent;
-          try {
-            parsedContent = JSON.parse(item.content);
-          } catch (e) {
-            // JSON 파싱에 실패한 경우
-            return false;
-          }
-          return Boolean(parsedContent.postId === 'villains');
-        });
-
-        fetchedPosts = [...fetchedPosts, ...filteredData];
-        currentSkip += POSTS_REQUEST;
-      } catch (error) {
-        setError(error);
-        setLoading(false);
-        return;
-      }
-
-      requestCount++;
-      if (requestCount >= 10) break; // 게시물을 최대 10번 요청하면 반복문 종료
-    }
-
-    const transformedPosts = fetchedPosts.map((item) => {
-      return {
-        ...item,
-        content: JSON.parse(item.content),
-      };
+  const { data, error, fetchNextPage, hasNextPage, isFetchingNextPage, status } =
+    useInfiniteQuery({
+      queryKey: ['posts'],
+      queryFn: fetchPosts,
+      initialPageParam: 0,
+      getNextPageParam: (lastPage, pages) => {
+        if (lastPage.length < 10) {
+          return undefined;
+        }
+        return pages.length * 10;
+      },
     });
 
-    setPosts((prevPosts) => [...prevPosts, ...transformedPosts]);
-    setLoading(false);
-    setSkip(currentSkip);
-  }, [skip]);
+  const posts = data?.pages.flat() || [];
 
-  useEffect(() => {
-    fetchPosts();
-  }, []);
-
-  // 무한스크롤 -> 리액트 쿼리로 리팩토링 필요
-  useInfiniteScroll(fetchPosts);
-
-  return { posts, loading, error };
+  return { posts, error, fetchNextPage, hasNextPage, isFetchingNextPage, status };
 };
 
 export default getPosts;

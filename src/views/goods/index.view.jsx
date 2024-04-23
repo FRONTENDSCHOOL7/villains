@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { Outlet, useLocation, useNavigate, useParams } from 'react-router';
-import DefaultBtn, { BasicStyle } from '../../components/default/GlobalButton';
+import DefaultBtn, { BasicStyle } from '../../components/button/GlobalButton';
 import NavMenu from '../../components/layout/NavMenu';
 import SearchHeader from '../../components/layout/SearchHeader';
 import BackHeader from '../../components/layout/BackHeader';
@@ -8,16 +8,17 @@ import userAtom from '../../atoms/userAtom';
 import { useRecoilValue, useRecoilState } from 'recoil';
 import realProductAuthorAtom from '../../atoms/realProductAuthorAtom';
 import { headerBtnOptionsAtom, headerBtnStateAtom } from '../../atoms/headerBtnStateAtom';
-import Tanghulu from '../../components/default/Tanghulu';
+import Tanghulu from '../../components/icon/Tanghulu';
 import styled from 'styled-components';
 import pageUrlConfig from '../../config/pageUrlConfig';
-import BackArrow from '../../assets/img/icon-arrow-left.svg';
-import { BlueSmallBtn } from '../../components/default/Buttons';
-import UserListBox from '../../components/searchbar/UserListBox';
+import { BlueSmallBtn } from '../../components/button/Buttons';
+import UserListBox from '../../components/card/UserListBox';
 import queryAtom from '../../atoms/queryAtom';
 import queryFocusAtom from '../../atoms/queryFocusAtom';
 import { useQuery } from '@tanstack/react-query';
 import searchUserQuery from '../../api/get/getSearchUser.api';
+
+import ArrowIcon from '../../components/icon/ArrowIcon';
 
 const GoodsIndexPage = () => {
   const navigate = useNavigate();
@@ -57,7 +58,7 @@ const GoodsIndexPage = () => {
       return (
         <BackHeader>
           <BackArrowBtn variant={'basic'} onClick={handleBackBtn}>
-            <img src={BackArrow} alt="뒤로가기" />
+            <ArrowIcon /> 
           </BackArrowBtn>
           {user.accountname === realProductAuthor && <Tanghulu></Tanghulu>}
         </BackHeader>
@@ -67,7 +68,7 @@ const GoodsIndexPage = () => {
       return (
         <BackHeader>
           <BackArrowBtn variant={'basic'} onClick={handleBackBtn}>
-            <img src={BackArrow} alt="뒤로가기" />
+            <ArrowIcon />
           </BackArrowBtn>
           <BlueSmallBtn disabled={headerBtnState} onClick={headerBtnOptions.callback}>
             {headerBtnOptions.label}

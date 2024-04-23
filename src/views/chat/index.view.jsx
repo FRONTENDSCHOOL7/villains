@@ -2,10 +2,10 @@ import React, { useState, useEffect } from 'react';
 import { Outlet, useLocation, useNavigate, useParams } from 'react-router';
 import NavMenu from '../../components/layout/NavMenu';
 import BackHeader from '../../components/layout/BackHeader';
-import DefaultBtn, { BasicStyle } from '../../components/default/GlobalButton';
-import BackArrow from '../../assets/img/icon-arrow-left.svg';
+import DefaultBtn, { BasicStyle } from '../../components/button/GlobalButton';
+import ArrowIcon from '../../components/icon/ArrowIcon';
 import styled from 'styled-components';
-import Tanghulu from '../../components/default/Tanghulu';
+import Tanghulu from '../../components/icon/Tanghulu';
 import pageUrlConfig from '../../config/pageUrlConfig';
 import userAtom from '../../atoms/userAtom';
 import { useRecoilState, useRecoilValue } from 'recoil';
@@ -32,7 +32,7 @@ const ChatIndexPage = () => {
       {pathname.split('/').length > 3 && (
         <BackHeader>
           <BackArrowBtn variant={'basic'} onClick={handleClickBack}>
-            <img src={BackArrow} alt="뒤로가기" />
+            <ArrowIcon />
           </BackArrowBtn>
           {handleChatHeader()}
         </BackHeader>

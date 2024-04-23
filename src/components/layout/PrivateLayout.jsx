@@ -6,7 +6,7 @@ import userAtom from '../../atoms/userAtom';
 import pageUrlConfig from '../../config/pageUrlConfig';
 import BackHeader from './BackHeader';
 import styled from 'styled-components';
-import Tanghulu from '../default/Tanghulu';
+import Tanghulu from '../icon/Tanghulu';
 import { Wrap } from './PageTemplate.style';
 
 const PrivateLayout = () => {

@@ -6,7 +6,7 @@ import getFollowerList from '../../api/get/getFollowerList.api';
 import getFollowingList from '../../api/get/getFollowingList.api';
 import postFollowQuery from '../../api/post/postFollow.api';
 import deleteFollowQuery from '../../api/delete/deleteFollow.api';
-import Follower from '../../components/Follower';
+import Follower from '../../components/card/Follower';
 import PageTemplate from '../../components/layout/PageTemplate';
 import { useMutation } from '@tanstack/react-query';
 

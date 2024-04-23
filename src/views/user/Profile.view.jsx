@@ -5,21 +5,21 @@ import styled from 'styled-components';
 
 import pageUrlConfig from '../../config/pageUrlConfig';
 import PageTemplate from '../../components/layout/PageTemplate';
-import basicProfile from '../../assets/img/basic-profile.svg';
 import { useRecoilValue, useRecoilState } from 'recoil';
-import PostCard from '../../components/feed/PostCard';
+import PostCard from '../../components/card/PostCard';
 import userPostAtom from '../../atoms/userPostAtom';
 import profileAtom from '../../atoms/profileAtom';
 import getUserInfo from '../../api/get/getUserInfo.api';
-import DefaultBtn, { BasicStyle, PrimaryStyle, SecondaryStyle } from '../../components/default/GlobalButton';
+import DefaultBtn, { BasicStyle, PrimaryStyle, SecondaryStyle } from '../../components/button/GlobalButton';
 import theme from '../../style/theme';
 import contactQuery from '../../api/get/getUserPost.api';
 import Goods from '../../components/Goods';
-import ChatIcon from '../../assets/img/message-circle.svg';
 import getProducts from '../../api/get/getProducts.api';
 import postFollowQuery from '../../api/post/postFollow.api';
 import deleteFollowQuery from '../../api/delete/deleteFollow.api';
-import ShareIcon from '../../components/profile/ShareIcon';
+import basicProfile from '../../assets/img/basic-profile.svg';
+import ShareIcon from '../../components/icon/ShareIcon';
+import MessageIcon from '../../components/icon/MessageIcon';
 
 const ProfilePage = () => {
   const user = useRouteLoaderData('user');
@@ -144,7 +144,7 @@ const ProfilePage = () => {
             <AccountName>@{accountname}</AccountName>
             <ProfileDsc>{profileInfo?.intro ?? `1호선 빌런 꿈나무`}</ProfileDsc>
             <ButtonWrap onClick={handleClickBtns}>
-              <button id="chat"></button>
+              <button id="chat"><MessageIcon/></button>
               {isMy ? (
                 <DefaultBtn id={`edit`}>프로필 수정</DefaultBtn>
               ) : profileInfo.isfollow ? (
@@ -251,7 +251,7 @@ const ProfileDsc = styled.p`
 const ButtonWrap = styled.div`
   display: flex;
   justify-content: center;
-  align-item: center;
+  align-items: center;
   gap: 10px;
   min-height: 2em;
 
@@ -265,10 +265,6 @@ const ButtonWrap = styled.div`
     border-color: ${theme.color.grey};
     width: 44px;
     height: 34px;
-  }
-
-  & > :nth-child(1) {
-    background: url(${ChatIcon}) no-repeat center/70%;
   }
   & > :nth-child(2) {
     padding: 9px;

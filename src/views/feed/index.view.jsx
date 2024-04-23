@@ -12,11 +12,11 @@ import queryFocusAtom from '../../atoms/queryFocusAtom';
 import SearchHeader from '../../components/layout/SearchHeader';
 import pageUrlConfig from '../../config/pageUrlConfig';
 import NavMenu from '../../components/layout/NavMenu';
-import UserListBox from '../../components/searchbar/UserListBox';
+import UserListBox from '../../components/card/UserListBox';
 import BackHeader from '../../components/layout/BackHeader';
 
-import { BasicStyle } from '../../components/default/GlobalButton';
-import BackArrow from '../../assets/img/icon-arrow-left.svg';
+import { BasicStyle } from '../../components/button/GlobalButton';
+import ArrowIcon from '../../components/icon/ArrowIcon';
 
 const FeedIndexPage = () => {
   const navigate = useNavigate();
@@ -57,7 +57,7 @@ const FeedIndexPage = () => {
       ) : (
         <BackHeader>
           <BackArrowBtn variant={'basic'} onClick={handleClickBack}>
-            <img src={BackArrow} alt="뒤로가기" />
+            <ArrowIcon direct={'left'} />
           </BackArrowBtn>
         </BackHeader>
       )}

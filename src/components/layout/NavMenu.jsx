@@ -4,7 +4,7 @@ import pageUrlConfig from '../../config/pageUrlConfig';
 
 import styled, { css } from 'styled-components';
 import { useLocation } from 'react-router-dom';
-import { BasicStyle } from '../default/GlobalButton';
+import { BasicStyle } from '../button/GlobalButton';
 import theme from '../../style/theme';
 import { useRecoilState } from 'recoil';
 import queryAtom from '../../atoms/queryAtom';

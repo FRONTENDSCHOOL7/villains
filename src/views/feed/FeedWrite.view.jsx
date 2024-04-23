@@ -8,17 +8,16 @@ import useBlockToBack from '../../hooks/useBlockToBack';
 import userAtom from '../../atoms/userAtom';
 
 import uploadPost from '../../api/post/postUploadPost.api';
-import postImages from '../../api/post/postImages.api';
+import postImage from '../../api/post/postImage.api';
 import getPostDetail from '../../api/get/getPostDetail.api';
 import putPostEdit from '../../api/update/updatePostEdit.api';
 
 import PageTemplate from '../../components/layout/PageTemplate';
-import FloatingButton from '../../components/default/FloatingButton.style';
-import ImagePreview from '../../components/feed/ImagePreview';
-import ResizingTextarea from '../../components/feed/ResizingTextarea';
+import FloatingButton from '../../components/button/FloatingButton.style';
+import ImagePreview from '../../components/card/ImagePreview';
+import ResizingTextarea from '../../components/textarea/ResizingTextarea';
 
-import imageIcon from '../../assets/img/image-icon.svg';
-import arrowIcon from '../../assets/img/icon-arrow-left.svg';
+import ImageIcon from '../../components/icon/ImageIcon';
 import userPostAtom from '../../atoms/userPostAtom';
 
 const FeedWritePage = () => {
@@ -43,7 +42,7 @@ const FeedWritePage = () => {
       try {
         const result = await fetchPost(id);
         setContent(JSON.parse(result.content).contents);
-        setImagesData(result?.image ? result.image.split(',') : []);
+        setImagesData(result.image ? result.image.split(',').map((url) => ({ url, isNew: false })) : []);
       } catch (error) {
         console.error(error);
       }
@@ -53,10 +52,30 @@ const FeedWritePage = () => {
       setIsEditMode(true);
       fetchData();
     }
-  }, [id]);
+  }, [id, isEditMode]);
 
   const handleContentChange = (event) => {
     setContent(event.target.value);
+  };
+
+  const resetFileInput = () => {
+    if (fileInputRef.current) {
+      fileInputRef.current.value = '';
+    }
+  };
+
+  const readFileAsync = (file) => {
+    return new Promise((resolve, reject) => {
+      const reader = new FileReader();
+
+      reader.onload = () => {
+        resolve(reader.result);
+      };
+
+      reader.onerror = reject;
+
+      reader.readAsDataURL(file);
+    });
   };
 
   const handleImageChange = async (event) => {
@@ -67,12 +86,20 @@ const FeedWritePage = () => {
       return;
     }
 
-    try {
-      const uploadedImageUrls = await postImages(files);
-      setImagesData((prevData) => [...prevData, ...uploadedImageUrls]);
-    } catch (error) {
-      console.error('이미지 업로드에 실패했습니다:', error);
+    for (const file of files) {
+      try {
+        const fileDataUrl = await readFileAsync(file);
+        setImagesData((prevData) => [...prevData, { url: fileDataUrl, file: file, isNew: true }]);
+        resetFileInput();
+      } catch (error) {
+        console.error('Error reading file:', file.name);
+      }
     }
+  };
+
+  const uploadNewImages = async (newImages) => {
+    const uploadPromises = newImages.map((image) => postImage(image.file));
+    return await Promise.all(uploadPromises);
   };
 
   const triggerFileInput = () => {
@@ -81,13 +108,24 @@ const FeedWritePage = () => {
 
   // 프리뷰에 있는 이미지 삭제
   const handleDeleteImage = (index) => {
-    setImagesData((prevData) => {
-      return prevData.filter((_, idx) => idx !== index);
-    });
+    setImagesData((prevData) => prevData.filter((_, idx) => idx !== index));
+    resetFileInput();
   };
 
   const handleSubmitPost = async (event) => {
     event.preventDefault();
+
+    const newImagesFiles = imagesData.filter((image) => image.isNew);
+
+    let newImagesUrls = [];
+    if (newImagesFiles.length > 0) {
+      newImagesUrls = await uploadNewImages(newImagesFiles);
+    }
+
+    const allImagesUrls = [
+      ...imagesData.filter((image) => !image.isNew).map((image) => image.url),
+      ...newImagesUrls,
+    ];
 
     const postData = {
       post: {
@@ -97,13 +135,12 @@ const FeedWritePage = () => {
           latitude: location ? location.latitude : 0,
           longitude: location ? location.longitude : 0,
         }),
-        image: imagesData.join(','),
+        image: allImagesUrls.join(','),
       },
     };
 
     if (isEditMode) {
       // 수정 API 요청
-      // TODO : 리액트 쿼리로 변경
       const updateResult = await putPostEdit(id, postData, token);
       if (updateResult) {
         // 리코일 부분 작동하는지 확인 필요
@@ -131,6 +168,7 @@ const FeedWritePage = () => {
         console.error('게시글 업로드에 실패했습니다.');
       }
     }
+    resetFileInput();
   };
 
   // 입력내용이 있을 시 뒤로가기 제한
@@ -153,7 +191,9 @@ const FeedWritePage = () => {
           />
 
           <InsertImageBtn htmlFor="file">
-            <FloatingButton img={imageIcon} type="button" onClick={triggerFileInput} />
+            <FloatingButton type="button" onClick={triggerFileInput}>
+              <ImageIcon color="#FFFFFF" width="32"/>
+            </FloatingButton>
           </InsertImageBtn>
           <InputFile
             ref={fileInputRef}

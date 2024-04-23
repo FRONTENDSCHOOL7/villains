@@ -1,5 +1,5 @@
 import SearchHeader from './SearchHeader';
-import ListBox from '../searchbar/ListBox';
+import ListBox from '../card/ListBox';
 
 import { useRecoilState, useRecoilValue } from 'recoil';
 import { useLocation, useNavigate } from 'react-router';
@@ -10,7 +10,7 @@ import queryAtom from '../../atoms/queryAtom';
 import pageUrlConfig from '../../config/pageUrlConfig';
 import { useQuery } from '@tanstack/react-query';
 import userAtom from '../../atoms/userAtom';
-import UserListBox from '../searchbar/UserListBox';
+import UserListBox from '../card/UserListBox';
 import searchUserQuery from '../../api/get/getSearchUser.api';
 
 const SearchLayout = ({ children }) => {

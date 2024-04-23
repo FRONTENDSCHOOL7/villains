@@ -7,7 +7,7 @@ import pageUrlConfig from "../../config/pageUrlConfig";
 import getSubTime from "../../api/get/getSubTime.api";
 
 import PageTemplate from "../../components/layout/PageTemplate"
-import DefaultBtn, { PrimaryStyle } from "../../components/default/GlobalButton";
+import DefaultBtn, { PrimaryStyle } from "../../components/button/GlobalButton";
 
 import holiday from '../../database/2023-2024-holiday.json';
 

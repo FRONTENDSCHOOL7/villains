@@ -7,16 +7,15 @@ import client from '../../config/api.config';
 import pageUrlConfig from '../../config/pageUrlConfig';
 
 import PageTemplate from '../../components/layout/PageTemplate';
-import SearchSub from '../../components/SearchSub';
-import { Input, Label } from '../../components/default/Input.style';
-import FloatingButton from '../../components/default/FloatingButton.style';
+import SearchSub from '../../components/input/SearchSub';
+import { Input, Label } from '../../components/input/Input.style';
+import FloatingButton from '../../components/button/FloatingButton.style';
 
 import goodsQueryStartAtom from '../../atoms/goodsQueryStartAtom';
 import goodsQueryEndAtom from '../../atoms/goodsQueryEndAtom';
 import { headerBtnStateAtom, headerBtnOptionsAtom } from '../../atoms/headerBtnStateAtom';
 import userAtom from '../../atoms/userAtom';
-import ImageIcon from '../../assets/img/image-icon.svg';
-import ImageBigIcon from '../../assets/img/image-big-icon.svg';
+import ImageIcon from '../../components/icon/ImageIcon'; // 이미지 빅 아이콘 포함
 
 import updateProduct from '../../api/update/updateProduct.api';
 
@@ -156,7 +155,7 @@ const GoodsWritePage = () => {
             <Previewimg src={image.url} alt="이미지" />
           ) : (
             <>
-              <img src={ImageBigIcon} alt="큰 아이콘" />
+              <ImageIcon />
               <p>
                 오른쪽 하단 버튼을 눌러
                 <br />
@@ -164,7 +163,9 @@ const GoodsWritePage = () => {
               </p>
             </>
           )}
-          <CustomFloatingBtn img={ImageIcon} onClick={handleFloatBtn}></CustomFloatingBtn>
+          <CustomFloatingBtn onClick={handleFloatBtn}>
+            <ImageIcon color="#FFFFFF" width="32"/> 
+          </CustomFloatingBtn>
         </PreviewArea>
         <ImgInput
           type="file"
